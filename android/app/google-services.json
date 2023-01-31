@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "815771983043",
+    "project_id": "offerta-450f5",
+    "storage_bucket": "offerta-450f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815771983043:android:90dba6159f5dd7890f1676",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815771983043-91tgpvrgbaoitk1nrvbn5ahu21knoou1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.awesomeproject",
+            "certificate_hash": "8eb6bf4fb19726030d1658c6268a75d56556862a"
+          }
+        },
+        {
+          "client_id": "815771983043-rg0526cshfu9k3ca5051dmd3sjk9ik4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6NaggbC7SuBk1TcIrjHjVM6CNyNSaB3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815771983043-rg0526cshfu9k3ca5051dmd3sjk9ik4i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

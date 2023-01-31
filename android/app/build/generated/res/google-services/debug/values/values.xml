@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">815771983043-rg0526cshfu9k3ca5051dmd3sjk9ik4i.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">815771983043</string>
+    <string name="google_api_key" translatable="false">AIzaSyA6NaggbC7SuBk1TcIrjHjVM6CNyNSaB3k</string>
+    <string name="google_app_id" translatable="false">1:815771983043:android:90dba6159f5dd7890f1676</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA6NaggbC7SuBk1TcIrjHjVM6CNyNSaB3k</string>
+    <string name="google_storage_bucket" translatable="false">offerta-450f5.appspot.com</string>
+    <string name="project_id" translatable="false">offerta-450f5</string>
+</resources>

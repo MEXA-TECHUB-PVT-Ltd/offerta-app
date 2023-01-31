@@ -1,0 +1,517 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.awesomeproject"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="31" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\debug\AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+13-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:5:9-83
+13-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:5:26-80
+14    <uses-permission android:name="android.permission.CAMERA" />
+14-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:6:1-60
+14-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:6:18-58
+15
+16    <uses-feature
+16-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:7:1-81
+17        android:name="android.hardware.camera"
+17-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:7:15-53
+18        android:required="false" />
+18-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:7:54-78
+19    <uses-feature
+19-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:8:1-87
+20        android:name="android.hardware.camera.front"
+20-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:8:15-59
+21        android:required="false" />
+21-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:8:60-84
+22
+23    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+23-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:9:1-75
+23-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:9:18-72
+24    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+24-->[com.facebook.flipper:flipper:0.125.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4579d77217e00b3eb1409e4f5131b607\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:16:5-76
+24-->[com.facebook.flipper:flipper:0.125.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4579d77217e00b3eb1409e4f5131b607\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:16:22-73
+25    <uses-permission android:name="android.permission.WAKE_LOCK" />
+25-->[:react-native-firebase_auth] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\auth\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-68
+25-->[:react-native-firebase_auth] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\auth\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-65
+26
+27    <queries>
+27-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-13:15
+28        <intent>
+28-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-12:18
+29            <action android:name="android.media.action.IMAGE_CAPTURE" />
+29-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-73
+29-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:21-70
+30        </intent>
+31
+32        <package android:name="com.facebook.katana" />
+32-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:18:9-55
+32-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:18:18-52
+33    </queries>
+34
+35    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Required to access Google Play Licensing -->
+35-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:5-81
+35-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:22-78
+36    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+36-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-73
+36-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-70
+37    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+37-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:16:5-79
+37-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:16:22-76
+38    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+38-->[com.android.installreferrer:installreferrer:1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c2efbc1217a56cd52a660f8722aff355\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:5-110
+38-->[com.android.installreferrer:installreferrer:1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c2efbc1217a56cd52a660f8722aff355\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:22-107
+39
+40    <application
+40-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:11:5-45:19
+41        android:name="com.awesomeproject.MainApplication"
+41-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:12:7-38
+42        android:allowBackup="false"
+42-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:16:7-34
+43        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+43-->[androidx.core:core:1.7.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0647204d58c048d1dd06350cd74722f3\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+44        android:debuggable="true"
+45        android:icon="@mipmap/ic_launcher"
+45-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:14:7-41
+46        android:label="@string/app_name"
+46-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:13:7-39
+47        android:roundIcon="@mipmap/ic_launcher_round"
+47-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:15:7-52
+48        android:supportsRtl="true"
+48-->[com.facebook.android:facebook-android-sdk:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\afc1cd5a0e458e9ad6bdcc46163e07b8\transformed\jetified-facebook-android-sdk-15.2.0\AndroidManifest.xml:16:18-44
+49        android:theme="@style/AppTheme"
+49-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:17:7-38
+50        android:usesCleartextTraffic="true" >
+50-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:18:7-42
+51        <activity
+51-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\debug\AndroidManifest.xml:11:9-111
+52            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+52-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\debug\AndroidManifest.xml:11:19-83
+53            android:exported="false" />
+53-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\debug\AndroidManifest.xml:11:84-108
+54
+55        <meta-data
+55-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:20:4-102
+56            android:name="com.facebook.sdk.ApplicationId"
+56-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:20:15-60
+57            android:value="@string/facebook_app_id" />
+57-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:20:61-100
+58        <meta-data
+58-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:21:5-107
+59            android:name="com.facebook.sdk.ClientToken"
+59-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:21:16-59
+60            android:value="@string/facebook_client_token" />
+60-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:21:60-105
+61
+62        <activity
+62-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:22:7-33:18
+63            android:name="com.awesomeproject.MainActivity"
+63-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:23:9-37
+64            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+64-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:25:9-118
+65            android:exported="true"
+65-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:28:9-32
+66            android:label="@string/app_name"
+66-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:24:9-41
+67            android:launchMode="singleTask"
+67-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:26:9-40
+68            android:windowSoftInputMode="adjustResize" >
+68-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:27:9-51
+69            <intent-filter>
+69-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:29:9-32:25
+70                <action android:name="android.intent.action.MAIN" />
+70-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:30:13-65
+70-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:30:21-62
+71
+72                <category android:name="android.intent.category.LAUNCHER" />
+72-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:31:13-73
+72-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:31:23-70
+73            </intent-filter>
+74        </activity>
+75        <activity
+75-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:35:5-44:16
+76            android:name="com.facebook.CustomTabActivity"
+76-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:36:9-54
+77            android:exported="true" >
+77-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:37:9-32
+78            <intent-filter>
+78-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:38:9-43:25
+79                <action android:name="android.intent.action.VIEW" />
+79-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:13-65
+79-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:21-62
+80
+81                <category android:name="android.intent.category.DEFAULT" />
+81-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:13-72
+81-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:23-69
+82                <category android:name="android.intent.category.BROWSABLE" />
+82-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:13-74
+82-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:23-71
+83
+84                <data android:scheme="@string/fb_login_protocol_scheme" />
+84-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:13-71
+84-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:19-68
+85            </intent-filter>
+86            <intent-filter>
+86-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:31:13-40:29
+87                <action android:name="android.intent.action.VIEW" />
+87-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:13-65
+87-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:21-62
+88
+89                <category android:name="android.intent.category.DEFAULT" />
+89-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:13-72
+89-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:23-69
+90                <category android:name="android.intent.category.BROWSABLE" />
+90-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:13-74
+90-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:23-71
+91
+92                <data
+92-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:13-71
+93                    android:host="cct.com.awesomeproject"
+94                    android:scheme="fbconnect" />
+94-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:19-68
+95            </intent-filter>
+96        </activity>
+97
+98        <meta-data
+98-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-13:36
+99            android:name="app_data_collection_default_enabled"
+99-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-63
+100            android:value="true" />
+100-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-33
+101
+102        <service
+102-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:9-23:19
+103            android:name="com.google.firebase.components.ComponentDiscoveryService"
+103-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-84
+104            android:directBootAware="true"
+104-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:13-43
+105            android:exported="false" >
+105-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:13-37
+106            <meta-data
+106-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-22:85
+107                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+107-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:17-120
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:17-82
+109            <meta-data
+109-->[com.google.firebase:firebase-firestore:24.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\7f1b88995def0a686058259886953fdd\transformed\jetified-firebase-firestore-24.4.1\AndroidManifest.xml:19:13-21:85
+110                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+110-->[com.google.firebase:firebase-firestore:24.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\7f1b88995def0a686058259886953fdd\transformed\jetified-firebase-firestore-24.4.1\AndroidManifest.xml:20:17-111
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[com.google.firebase:firebase-firestore:24.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\7f1b88995def0a686058259886953fdd\transformed\jetified-firebase-firestore-24.4.1\AndroidManifest.xml:21:17-82
+112            <meta-data
+112-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:67:13-69:85
+113                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+113-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:68:17-109
+114                android:value="com.google.firebase.components.ComponentRegistrar" />
+114-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:69:17-82
+115            <meta-data
+115-->[com.google.firebase:firebase-dynamic-links:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\f1e958ae6fd2e1ad311999cda0cb1282\transformed\jetified-firebase-dynamic-links-21.1.0\AndroidManifest.xml:26:13-28:85
+116                android:name="com.google.firebase.components:com.google.firebase.dynamiclinks.internal.FirebaseDynamicLinkRegistrar"
+116-->[com.google.firebase:firebase-dynamic-links:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\f1e958ae6fd2e1ad311999cda0cb1282\transformed\jetified-firebase-dynamic-links-21.1.0\AndroidManifest.xml:27:17-133
+117                android:value="com.google.firebase.components.ComponentRegistrar" />
+117-->[com.google.firebase:firebase-dynamic-links:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\f1e958ae6fd2e1ad311999cda0cb1282\transformed\jetified-firebase-dynamic-links-21.1.0\AndroidManifest.xml:28:17-82
+118            <meta-data
+118-->[com.google.firebase:firebase-storage:20.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\cd7cc9f141812e7a5bd49e58bb4ef7c5\transformed\jetified-firebase-storage-20.1.0\AndroidManifest.xml:32:13-34:85
+119                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+119-->[com.google.firebase:firebase-storage:20.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\cd7cc9f141812e7a5bd49e58bb4ef7c5\transformed\jetified-firebase-storage-20.1.0\AndroidManifest.xml:33:17-107
+120                android:value="com.google.firebase.components.ComponentRegistrar" />
+120-->[com.google.firebase:firebase-storage:20.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\cd7cc9f141812e7a5bd49e58bb4ef7c5\transformed\jetified-firebase-storage-20.1.0\AndroidManifest.xml:34:17-82
+121        </service>
+122
+123        <provider
+123-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:9-29:38
+124            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+124-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-88
+125            android:authorities="com.awesomeproject.reactnativefirebaseappinitprovider"
+125-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:13-86
+126            android:exported="false"
+126-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:13-37
+127            android:initOrder="99" />
+127-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-35
+128        <provider
+128-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:9-26:20
+129            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
+129-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:13-94
+130            android:authorities="com.awesomeproject.provider"
+130-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-60
+131            android:exported="false"
+131-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:13-37
+132            android:grantUriPermissions="true" >
+132-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-47
+133            <meta-data
+133-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+134                android:name="android.support.FILE_PROVIDER_PATHS"
+134-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+135                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
+135-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+136        </provider>
+137
+138        <activity
+138-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:9-30:72
+139            android:name="com.yalantis.ucrop.UCropActivity"
+139-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-60
+140            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+140-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-69
+141
+142        <provider
+142-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+143            android:name="com.imagepicker.ImagePickerProvider"
+143-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-63
+144            android:authorities="com.awesomeproject.imagepickerprovider"
+144-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-71
+145            android:exported="false"
+145-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+146            android:grantUriPermissions="true" >
+146-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+147            <meta-data
+147-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+148                android:name="android.support.FILE_PROVIDER_PATHS"
+148-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+149                android:resource="@xml/imagepicker_provider_paths" />
+149-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+150        </provider>
+151        <provider
+151-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+152            android:name="cl.json.RNShareFileProvider"
+152-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-55
+153            android:authorities="com.awesomeproject.rnshare.fileprovider"
+153-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-72
+154            android:exported="false"
+154-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+155            android:grantUriPermissions="true" >
+155-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+156            <meta-data
+156-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+157                android:name="android.support.FILE_PROVIDER_PATHS"
+157-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+158                android:resource="@xml/share_download_paths" />
+158-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+159        </provider>
+160        <provider
+160-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:34:9-42:20
+161            android:name="com.RNFetchBlob.Utils.FileProvider"
+161-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:35:13-62
+162            android:authorities="com.awesomeproject.provider"
+162-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:36:13-60
+163            android:exported="false"
+163-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:37:13-37
+164            android:grantUriPermissions="true" >
+164-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:38:13-47
+165            <meta-data
+165-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+166                android:name="android.support.FILE_PROVIDER_PATHS"
+166-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+167                android:resource="@xml/provider_paths" />
+167-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+168        </provider>
+169
+170        <activity
+170-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:22:9-25:66
+171            android:name="com.facebook.FacebookActivity"
+171-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:23:13-57
+172            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+172-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:24:13-96
+173            android:theme="@style/com_facebook_activity_theme" />
+173-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:25:13-63
+174        <activity android:name="com.facebook.CustomTabMainActivity" />
+174-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:26:9-71
+174-->[com.facebook.android:facebook-common:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4badcb8e64c84505f8bb24fe8e3838ad\transformed\jetified-facebook-common-15.2.0\AndroidManifest.xml:26:19-68
+175        <!--
+176         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+177         with the application context. This config is merged in with the host app's manifest,
+178         but there can only be one provider with the same authority activated at any given
+179         point; so if the end user has two or more different apps that use Facebook SDK, only the
+180         first one will be able to use the provider. To work around this problem, we use the
+181         following placeholder in the authority to identify each host application as if it was
+182         a completely different provider.
+183        -->
+184        <provider
+184-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:29:9-32:40
+185            android:name="com.facebook.internal.FacebookInitProvider"
+185-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:30:13-70
+186            android:authorities="com.awesomeproject.FacebookInitProvider"
+186-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:31:13-72
+187            android:exported="false" />
+187-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:32:13-37
+188
+189        <receiver
+189-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:34:9-40:20
+190            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+190-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:35:13-86
+191            android:exported="false" >
+191-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:36:13-37
+192            <intent-filter>
+192-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:37:13-39:29
+193                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+193-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:38:17-95
+193-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:38:25-92
+194            </intent-filter>
+195        </receiver>
+196        <receiver
+196-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:41:9-47:20
+197            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
+197-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:42:13-118
+198            android:exported="false" >
+198-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:43:13-37
+199            <intent-filter>
+199-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:44:13-46:29
+200                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
+200-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:45:17-103
+200-->[com.facebook.android:facebook-core:15.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\de208d8f6329a0de7f3d683cf52139cf\transformed\jetified-facebook-core-15.2.0\AndroidManifest.xml:45:25-100
+201            </intent-filter>
+202        </receiver>
+203
+204        <activity
+204-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:23:9-27:75
+205            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+205-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:24:13-93
+206            android:excludeFromRecents="true"
+206-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:25:13-46
+207            android:exported="false"
+207-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:26:13-37
+208            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+208-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:27:13-72
+209        <!--
+210            Service handling Google Sign-In user revocation. For apps that do not integrate with
+211            Google Sign-In, this service will never be started.
+212        -->
+213        <service
+213-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:33:9-37:51
+214            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+214-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:34:13-89
+215            android:exported="true"
+215-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:35:13-36
+216            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+216-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:36:13-107
+217            android:visibleToInstantApps="true" />
+217-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:37:13-48
+218
+219        <activity
+219-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:27:9-44:20
+220            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+220-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:28:13-80
+221            android:excludeFromRecents="true"
+221-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:29:13-46
+222            android:exported="true"
+222-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:30:13-36
+223            android:launchMode="singleTask"
+223-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:31:13-44
+224            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+224-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:32:13-72
+225            <intent-filter>
+225-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:33:13-43:29
+226                <action android:name="android.intent.action.VIEW" />
+226-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:13-65
+226-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:21-62
+227
+228                <category android:name="android.intent.category.DEFAULT" />
+228-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:13-72
+228-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:23-69
+229                <category android:name="android.intent.category.BROWSABLE" />
+229-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:13-74
+229-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:23-71
+230
+231                <data
+231-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:13-71
+232                    android:host="firebase.auth"
+233                    android:path="/"
+234                    android:scheme="genericidp" />
+234-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:19-68
+235            </intent-filter>
+236        </activity>
+237        <activity
+237-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:45:9-62:20
+238            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+238-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:46:13-79
+239            android:excludeFromRecents="true"
+239-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:47:13-46
+240            android:exported="true"
+240-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:48:13-36
+241            android:launchMode="singleTask"
+241-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:49:13-44
+242            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+242-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:50:13-72
+243            <intent-filter>
+243-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:51:13-61:29
+244                <action android:name="android.intent.action.VIEW" />
+244-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:13-65
+244-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:39:21-62
+245
+246                <category android:name="android.intent.category.DEFAULT" />
+246-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:13-72
+246-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:40:23-69
+247                <category android:name="android.intent.category.BROWSABLE" />
+247-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:13-74
+247-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:41:23-71
+248
+249                <data
+249-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:13-71
+250                    android:host="firebase.auth"
+251                    android:path="/"
+252                    android:scheme="recaptcha" />
+252-->E:\MtechubProjects\Offerta_SV_project\After Google Sigin\offerta-app-front-end\android\app\src\main\AndroidManifest.xml:42:19-68
+253            </intent-filter>
+254        </activity>
+255        <activity
+255-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\43a47f35034419d56527adc8180d3679\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+256            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+256-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\43a47f35034419d56527adc8180d3679\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+257            android:exported="false"
+257-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\43a47f35034419d56527adc8180d3679\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+258            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+258-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\43a47f35034419d56527adc8180d3679\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+259
+260        <provider
+260-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:25:9-30:39
+261            android:name="com.google.firebase.provider.FirebaseInitProvider"
+261-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:26:13-77
+262            android:authorities="com.awesomeproject.firebaseinitprovider"
+262-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:27:13-72
+263            android:directBootAware="true"
+263-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:28:13-43
+264            android:exported="false"
+264-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:29:13-37
+265            android:initOrder="100" />
+265-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:30:13-36
+266
+267        <meta-data
+267-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\47b0a75a35b9d53b43a810f4bc8a2582\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+268            android:name="com.google.android.gms.version"
+268-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\47b0a75a35b9d53b43a810f4bc8a2582\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+269            android:value="@integer/google_play_services_version" />
+269-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\47b0a75a35b9d53b43a810f4bc8a2582\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+270
+271        <provider
+271-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+272            android:name="androidx.startup.InitializationProvider"
+272-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+273            android:authorities="com.awesomeproject.androidx-startup"
+273-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+274            android:exported="false" >
+274-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+275            <meta-data
+275-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+276                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+276-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+277                android:value="androidx.startup" />
+277-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\97bc83f13aff2563f29b3d7c47622736\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+278            <meta-data
+278-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\d11c85b860290b9cde7acec14be46a2f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+279                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+279-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\d11c85b860290b9cde7acec14be46a2f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+280                android:value="androidx.startup" />
+280-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\d11c85b860290b9cde7acec14be46a2f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+281        </provider>
+282    </application>
+283
+284</manifest>
