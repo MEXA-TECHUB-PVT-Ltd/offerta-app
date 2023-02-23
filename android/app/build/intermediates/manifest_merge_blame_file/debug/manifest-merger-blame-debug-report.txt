@@ -1,0 +1,1106 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.awesomeproject"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="31" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\debug\AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+13-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:5:9-83
+13-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:5:26-80
+14    <uses-permission android:name="android.permission.CAMERA" />
+14-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:6:1-60
+14-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:6:18-58
+15
+16    <uses-feature
+16-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:7:1-81
+17        android:name="android.hardware.camera"
+17-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:7:15-53
+18        android:required="false" />
+18-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:7:54-78
+19    <uses-feature
+19-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:8:1-87
+20        android:name="android.hardware.camera.front"
+20-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:8:15-59
+21        android:required="false" />
+21-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:8:60-84
+22
+23    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+23-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:9:1-75
+23-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:9:18-72
+24    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+24-->[com.facebook.flipper:flipper:0.125.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4579d77217e00b3eb1409e4f5131b607\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:16:5-76
+24-->[com.facebook.flipper:flipper:0.125.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\4579d77217e00b3eb1409e4f5131b607\transformed\jetified-flipper-0.125.0\AndroidManifest.xml:16:22-73
+25    <uses-permission android:name="android.permission.WAKE_LOCK" />
+25-->[:react-native-firebase_auth] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\auth\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-68
+25-->[:react-native-firebase_auth] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\auth\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-65
+26
+27    <queries>
+27-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:9:5-13:15
+28        <intent>
+28-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-12:18
+29            <action android:name="android.media.action.IMAGE_CAPTURE" />
+29-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-73
+29-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:21-70
+30        </intent>
+31
+32        <package android:name="com.facebook.katana" /> <!-- Added to check the default browser that will host the AuthFlow. -->
+32-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:18:9-55
+32-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:18:18-52
+33        <intent>
+33-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:13:9-17:18
+34            <action android:name="android.intent.action.VIEW" />
+34-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+34-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+35
+36            <data android:scheme="http" />
+36-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+36-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+37        </intent> <!-- Added to check if Chrome is installed for browser-based payment authentication (e.g. 3DS1). -->
+38        <package android:name="com.android.chrome" /> <!-- Needs to be explicitly declared on Android R+ -->
+38-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:11:9-54
+38-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:11:18-51
+39        <package android:name="com.google.android.apps.maps" />
+39-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:33:9-64
+39-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:33:18-61
+40    </queries>
+41
+42    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Required to access Google Play Licensing -->
+42-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:5-81
+42-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:22-78
+43    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+43-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-73
+43-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:22-70
+44    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+44-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:27:5-81
+44-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:27:22-78
+45    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+45-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:28:5-77
+45-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:28:22-74
+46
+47    <uses-feature
+47-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:26:5-28:35
+48        android:glEsVersion="0x00020000"
+48-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:27:9-41
+49        android:required="true" />
+49-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:28:9-32
+50
+51    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+51-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:16:5-79
+51-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:16:22-76
+52
+53    <permission
+53-->[androidx.core:core:1.9.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e025420e093e251ba0425eefb9ee131d\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+54        android:name="com.awesomeproject.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+54-->[androidx.core:core:1.9.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e025420e093e251ba0425eefb9ee131d\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+55        android:protectionLevel="signature" />
+55-->[androidx.core:core:1.9.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e025420e093e251ba0425eefb9ee131d\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+56
+57    <uses-permission android:name="com.awesomeproject.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+57-->[androidx.core:core:1.9.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e025420e093e251ba0425eefb9ee131d\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+57-->[androidx.core:core:1.9.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e025420e093e251ba0425eefb9ee131d\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+58    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+58-->[com.android.installreferrer:installreferrer:1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c2efbc1217a56cd52a660f8722aff355\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:5-110
+58-->[com.android.installreferrer:installreferrer:1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c2efbc1217a56cd52a660f8722aff355\transformed\jetified-installreferrer-1.0\AndroidManifest.xml:9:22-107
+59
+60    <application
+60-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:11:5-48:19
+61        android:name="com.awesomeproject.MainApplication"
+61-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:12:7-38
+62        android:allowBackup="false"
+62-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:16:7-34
+63        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+63-->[androidx.core:core:1.9.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e025420e093e251ba0425eefb9ee131d\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+64        android:debuggable="true"
+65        android:icon="@mipmap/ic_launcher"
+65-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:14:7-41
+66        android:label="@string/app_name"
+66-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:13:7-39
+67        android:roundIcon="@mipmap/ic_launcher_round"
+67-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:15:7-52
+68        android:supportsRtl="true"
+68-->[com.facebook.android:facebook-android-sdk:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\8b306ce4ba46f399ef743ceff07df8c9\transformed\jetified-facebook-android-sdk-16.0.0\AndroidManifest.xml:16:18-44
+69        android:theme="@style/AppTheme"
+69-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:17:7-38
+70        android:usesCleartextTraffic="true" >
+70-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:18:7-42
+71        <activity
+71-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\debug\AndroidManifest.xml:11:9-111
+72            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+72-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\debug\AndroidManifest.xml:11:19-83
+73            android:exported="false" />
+73-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\debug\AndroidManifest.xml:11:84-108
+74
+75        <meta-data
+75-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:20:12-22:63
+76            android:name="com.google.android.geo.API_KEY"
+76-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:21:6-51
+77            android:value="AIzaSyAYEkl4Du9zEcm1X2u1HEepM8DAuk9dYUk" />
+77-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:22:6-61
+78        <meta-data
+78-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:23:4-102
+79            android:name="com.facebook.sdk.ApplicationId"
+79-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:23:15-60
+80            android:value="@string/facebook_app_id" />
+80-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:23:61-100
+81        <meta-data
+81-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:24:5-107
+82            android:name="com.facebook.sdk.ClientToken"
+82-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:24:16-59
+83            android:value="@string/facebook_client_token" />
+83-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:24:60-105
+84
+85        <activity
+85-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:25:7-36:18
+86            android:name="com.awesomeproject.MainActivity"
+86-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:26:9-37
+87            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+87-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:28:9-118
+88            android:exported="true"
+88-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:31:9-32
+89            android:label="@string/app_name"
+89-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:27:9-41
+90            android:launchMode="singleTask"
+90-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:29:9-40
+91            android:windowSoftInputMode="adjustResize" >
+91-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:30:9-51
+92            <intent-filter>
+92-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:32:9-35:25
+93                <action android:name="android.intent.action.MAIN" />
+93-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:33:13-65
+93-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:33:21-62
+94
+95                <category android:name="android.intent.category.LAUNCHER" />
+95-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:34:13-73
+95-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:34:23-70
+96            </intent-filter>
+97        </activity>
+98        <activity
+98-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:38:5-47:16
+99            android:name="com.facebook.CustomTabActivity"
+99-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:39:9-54
+100            android:exported="true" >
+100-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:40:9-32
+101            <intent-filter>
+101-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:41:9-46:25
+102                <action android:name="android.intent.action.VIEW" />
+102-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+102-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+103
+104                <category android:name="android.intent.category.DEFAULT" />
+104-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:13-72
+104-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:23-69
+105                <category android:name="android.intent.category.BROWSABLE" />
+105-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:13-74
+105-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:23-71
+106
+107                <data android:scheme="@string/fb_login_protocol_scheme" />
+107-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+107-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+108            </intent-filter>
+109            <intent-filter>
+109-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:31:13-40:29
+110                <action android:name="android.intent.action.VIEW" />
+110-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+110-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+111
+112                <category android:name="android.intent.category.DEFAULT" />
+112-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:13-72
+112-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:23-69
+113                <category android:name="android.intent.category.BROWSABLE" />
+113-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:13-74
+113-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:23-71
+114
+115                <data
+115-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+116                    android:host="cct.com.awesomeproject"
+117                    android:scheme="fbconnect" />
+117-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+118            </intent-filter>
+119        </activity>
+120
+121        <meta-data
+121-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-13:36
+122            android:name="app_data_collection_default_enabled"
+122-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-63
+123            android:value="true" />
+123-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-33
+124
+125        <service
+125-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:9-23:19
+126            android:name="com.google.firebase.components.ComponentDiscoveryService"
+126-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-84
+127            android:directBootAware="true"
+127-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:13-43
+128            android:exported="false" >
+128-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:13-37
+129            <meta-data
+129-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-22:85
+130                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+130-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:17-120
+131                android:value="com.google.firebase.components.ComponentRegistrar" />
+131-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:17-82
+132            <meta-data
+132-->[com.google.firebase:firebase-firestore:24.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\7f1b88995def0a686058259886953fdd\transformed\jetified-firebase-firestore-24.4.1\AndroidManifest.xml:19:13-21:85
+133                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+133-->[com.google.firebase:firebase-firestore:24.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\7f1b88995def0a686058259886953fdd\transformed\jetified-firebase-firestore-24.4.1\AndroidManifest.xml:20:17-111
+134                android:value="com.google.firebase.components.ComponentRegistrar" />
+134-->[com.google.firebase:firebase-firestore:24.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\7f1b88995def0a686058259886953fdd\transformed\jetified-firebase-firestore-24.4.1\AndroidManifest.xml:21:17-82
+135            <meta-data
+135-->[com.google.firebase:firebase-storage:20.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\cd7cc9f141812e7a5bd49e58bb4ef7c5\transformed\jetified-firebase-storage-20.1.0\AndroidManifest.xml:32:13-34:85
+136                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+136-->[com.google.firebase:firebase-storage:20.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\cd7cc9f141812e7a5bd49e58bb4ef7c5\transformed\jetified-firebase-storage-20.1.0\AndroidManifest.xml:33:17-107
+137                android:value="com.google.firebase.components.ComponentRegistrar" />
+137-->[com.google.firebase:firebase-storage:20.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\cd7cc9f141812e7a5bd49e58bb4ef7c5\transformed\jetified-firebase-storage-20.1.0\AndroidManifest.xml:34:17-82
+138            <meta-data
+138-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:67:13-69:85
+139                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+139-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:68:17-109
+140                android:value="com.google.firebase.components.ComponentRegistrar" />
+140-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:69:17-82
+141        </service>
+142
+143        <provider
+143-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:9-29:38
+144            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+144-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-88
+145            android:authorities="com.awesomeproject.reactnativefirebaseappinitprovider"
+145-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:13-86
+146            android:exported="false"
+146-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:13-37
+147            android:initOrder="99" />
+147-->[:react-native-firebase_app] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-35
+148        <provider
+148-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:9-26:20
+149            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
+149-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:13-94
+150            android:authorities="com.awesomeproject.provider"
+150-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-60
+151            android:exported="false"
+151-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:13-37
+152            android:grantUriPermissions="true" >
+152-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-47
+153            <meta-data
+153-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+154                android:name="android.support.FILE_PROVIDER_PATHS"
+154-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+155                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
+155-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+156        </provider>
+157
+158        <activity
+158-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:9-30:72
+159            android:name="com.yalantis.ucrop.UCropActivity"
+159-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-60
+160            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+160-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-69
+161
+162        <provider
+162-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+163            android:name="com.imagepicker.ImagePickerProvider"
+163-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-63
+164            android:authorities="com.awesomeproject.imagepickerprovider"
+164-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-71
+165            android:exported="false"
+165-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+166            android:grantUriPermissions="true" >
+166-->[:react-native-image-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+167            <meta-data
+167-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+168                android:name="android.support.FILE_PROVIDER_PATHS"
+168-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+169                android:resource="@xml/imagepicker_provider_paths" />
+169-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+170        </provider>
+171        <provider
+171-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+172            android:name="cl.json.RNShareFileProvider"
+172-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-55
+173            android:authorities="com.awesomeproject.rnshare.fileprovider"
+173-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-72
+174            android:exported="false"
+174-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+175            android:grantUriPermissions="true" >
+175-->[:react-native-share] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+176            <meta-data
+176-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+177                android:name="android.support.FILE_PROVIDER_PATHS"
+177-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+178                android:resource="@xml/share_download_paths" />
+178-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+179        </provider>
+180        <provider
+180-->[:react-native-webview] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-18:20
+181            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+181-->[:react-native-webview] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-83
+182            android:authorities="com.awesomeproject.fileprovider"
+182-->[:react-native-webview] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-64
+183            android:exported="false"
+183-->[:react-native-webview] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-37
+184            android:grantUriPermissions="true" >
+184-->[:react-native-webview] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-webview\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:14:13-47
+185            <meta-data
+185-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+186                android:name="android.support.FILE_PROVIDER_PATHS"
+186-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+187                android:resource="@xml/file_provider_paths" />
+187-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+188        </provider>
+189        <provider
+189-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:34:9-42:20
+190            android:name="com.RNFetchBlob.Utils.FileProvider"
+190-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:35:13-62
+191            android:authorities="com.awesomeproject.provider"
+191-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:36:13-60
+192            android:exported="false"
+192-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:37:13-37
+193            android:grantUriPermissions="true" >
+193-->[:rn-fetch-blob] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\rn-fetch-blob\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:38:13-47
+194            <meta-data
+194-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+195                android:name="android.support.FILE_PROVIDER_PATHS"
+195-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+196                android:resource="@xml/provider_paths" />
+196-->[:react-native-image-crop-picker] E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+197        </provider>
+198
+199        <activity
+199-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:22:9-25:66
+200            android:name="com.facebook.FacebookActivity"
+200-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:23:13-57
+201            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+201-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:24:13-96
+202            android:theme="@style/com_facebook_activity_theme" />
+202-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:25:13-63
+203        <activity android:name="com.facebook.CustomTabMainActivity" />
+203-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:26:9-71
+203-->[com.facebook.android:facebook-common:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\068760ca62dbe8d0043bff26c2fefc18\transformed\jetified-facebook-common-16.0.0\AndroidManifest.xml:26:19-68
+204        <activity
+204-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:8:9-11:69
+205            android:name="com.stripe.android.paymentsheet.PaymentSheetActivity"
+205-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:9:13-80
+206            android:exported="false"
+206-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:10:13-37
+207            android:theme="@style/StripePaymentSheetDefaultTheme" />
+207-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:11:13-66
+208        <activity
+208-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:12:9-15:69
+209            android:name="com.stripe.android.paymentsheet.PaymentOptionsActivity"
+209-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:13:13-82
+210            android:exported="false"
+210-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:14:13-37
+211            android:theme="@style/StripePaymentSheetDefaultTheme" />
+211-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:15:13-66
+212        <activity
+212-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:16:9-19:69
+213            android:name="com.stripe.android.paymentsheet.addresselement.AddressElementActivity"
+213-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:17:13-97
+214            android:exported="false"
+214-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:18:13-37
+215            android:theme="@style/StripePaymentSheetDefaultTheme" />
+215-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:19:13-66
+216        <activity
+216-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:20:9-23:69
+217            android:name="com.stripe.android.paymentsheet.paymentdatacollection.polling.PollingActivity"
+217-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:21:13-105
+218            android:exported="false"
+218-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:22:13-37
+219            android:theme="@style/StripePaymentSheetDefaultTheme" />
+219-->[com.stripe:paymentsheet:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\166c2018d6500218969d4ad2d7dd23cc\transformed\jetified-paymentsheet-20.19.3\AndroidManifest.xml:23:13-66
+220        <activity
+220-->[com.stripe:link:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\8594e81bfa5d89b7f7d72b531ddec167\transformed\jetified-link-20.19.3\AndroidManifest.xml:8:9-13:58
+221            android:name="com.stripe.android.link.LinkActivity"
+221-->[com.stripe:link:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\8594e81bfa5d89b7f7d72b531ddec167\transformed\jetified-link-20.19.3\AndroidManifest.xml:9:13-64
+222            android:exported="false"
+222-->[com.stripe:link:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\8594e81bfa5d89b7f7d72b531ddec167\transformed\jetified-link-20.19.3\AndroidManifest.xml:10:13-37
+223            android:label="@string/link"
+223-->[com.stripe:link:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\8594e81bfa5d89b7f7d72b531ddec167\transformed\jetified-link-20.19.3\AndroidManifest.xml:11:13-41
+224            android:theme="@style/LinkBaseTheme"
+224-->[com.stripe:link:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\8594e81bfa5d89b7f7d72b531ddec167\transformed\jetified-link-20.19.3\AndroidManifest.xml:12:13-49
+225            android:windowSoftInputMode="adjustResize" />
+225-->[com.stripe:link:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\8594e81bfa5d89b7f7d72b531ddec167\transformed\jetified-link-20.19.3\AndroidManifest.xml:13:13-55
+226        <activity
+226-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:21:9-64:20
+227            android:name="com.stripe.android.financialconnections.FinancialConnectionsSheetRedirectActivity"
+227-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:22:13-109
+228            android:exported="true" >
+228-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:23:13-36
+229            <intent-filter>
+229-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:24:13-63:29
+230                <action android:name="android.intent.action.VIEW" />
+230-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+230-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+231
+232                <category android:name="android.intent.category.DEFAULT" />
+232-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:13-72
+232-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:23-69
+233                <category android:name="android.intent.category.BROWSABLE" />
+233-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:13-74
+233-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:23-71
+234
+235                <!-- Returning from app2app: return_url is triggered to reopen web AuthFlow and poll accounts. -->
+236                <data
+236-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+237                    android:host="link-accounts"
+238                    android:pathPrefix="/com.awesomeproject/authentication_return"
+239                    android:scheme="stripe-auth" />
+239-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+240
+241                <!-- Returning from app2app: return_url is triggered to reopen native AuthFlow and poll accounts. -->
+242                <data
+242-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+243                    android:host="link-native-accounts"
+244                    android:pathPrefix="/com.awesomeproject/authentication_return"
+245                    android:scheme="stripe-auth" />
+245-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+246
+247                <!-- End of web AuthFlow success and cancel URIs that begin with "stripe-auth://link-accounts/{app-id}/...” -->
+248                <data
+248-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+249                    android:host="link-accounts"
+250                    android:path="/com.awesomeproject/success"
+251                    android:scheme="stripe-auth" />
+251-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+252                <data
+252-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+253                    android:host="link-accounts"
+254                    android:path="/com.awesomeproject/cancel"
+255                    android:scheme="stripe-auth" />
+255-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+256
+257                <!-- Opening app2app: Web flow triggers stripe-auth://native-redirect/{app-id}/http://web-that-redirects-to-native -->
+258                <data
+258-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+259                    android:host="native-redirect"
+260                    android:pathPrefix="/com.awesomeproject"
+261                    android:scheme="stripe-auth" />
+261-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+262
+263                <!-- Accepts success/cancel/fail URIs that begin with "stripe://auth-redirect” -->
+264                <data
+264-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+265                    android:host="auth-redirect"
+266                    android:pathPrefix="/com.awesomeproject"
+267                    android:scheme="stripe" />
+267-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+268            </intent-filter>
+269        </activity>
+270        <activity
+270-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:65:9-68:57
+271            android:name="com.stripe.android.financialconnections.FinancialConnectionsSheetActivity"
+271-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:66:13-101
+272            android:exported="false"
+272-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:67:13-37
+273            android:theme="@style/StripeDefaultTheme" />
+273-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:68:13-54
+274        <activity
+274-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:69:9-73:58
+275            android:name="com.stripe.android.financialconnections.ui.FinancialConnectionsSheetNativeActivity"
+275-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:70:13-110
+276            android:exported="false"
+276-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:71:13-37
+277            android:theme="@style/StripeDefaultTheme"
+277-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:72:13-54
+278            android:windowSoftInputMode="adjustResize" />
+278-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:73:13-55
+279
+280        <provider
+280-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:75:9-79:43
+281            android:name="com.stripe.android.financialconnections.appinitializer.FinancialConnectionsInitializer"
+281-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:76:13-114
+282            android:authorities="com.awesomeproject.financialconnections-init"
+282-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:77:13-77
+283            android:exported="false"
+283-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:78:13-37
+284            android:multiprocess="true" />
+284-->[com.stripe:financial-connections:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\d963f339400c61478ff2e1596c3a2a10\transformed\jetified-financial-connections-20.19.3\AndroidManifest.xml:79:13-40
+285
+286        <activity
+286-->[com.stripe:payments-ui-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\17c9a883ef27b6f7df1d9e997d2e6fcf\transformed\jetified-payments-ui-core-20.19.3\AndroidManifest.xml:8:9-11:69
+287            android:name="com.stripe.android.ui.core.cardscan.CardScanActivity"
+287-->[com.stripe:payments-ui-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\17c9a883ef27b6f7df1d9e997d2e6fcf\transformed\jetified-payments-ui-core-20.19.3\AndroidManifest.xml:9:13-80
+288            android:exported="false"
+288-->[com.stripe:payments-ui-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\17c9a883ef27b6f7df1d9e997d2e6fcf\transformed\jetified-payments-ui-core-20.19.3\AndroidManifest.xml:10:13-37
+289            android:theme="@style/StripePaymentSheetDefaultTheme" />
+289-->[com.stripe:payments-ui-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\17c9a883ef27b6f7df1d9e997d2e6fcf\transformed\jetified-payments-ui-core-20.19.3\AndroidManifest.xml:11:13-66
+290        <activity
+290-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:15:9-18:57
+291            android:name="com.stripe.android.view.AddPaymentMethodActivity"
+291-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:16:13-76
+292            android:exported="false"
+292-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:17:13-37
+293            android:theme="@style/StripeDefaultTheme" />
+293-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:18:13-54
+294        <activity
+294-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:19:9-22:57
+295            android:name="com.stripe.android.view.PaymentMethodsActivity"
+295-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:20:13-74
+296            android:exported="false"
+296-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:21:13-37
+297            android:theme="@style/StripeDefaultTheme" />
+297-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:22:13-54
+298        <activity
+298-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:23:9-26:57
+299            android:name="com.stripe.android.view.PaymentFlowActivity"
+299-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:24:13-71
+300            android:exported="false"
+300-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:25:13-37
+301            android:theme="@style/StripeDefaultTheme" />
+301-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:26:13-54
+302        <activity
+302-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:27:9-31:58
+303            android:name="com.stripe.android.view.PaymentAuthWebViewActivity"
+303-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:28:13-78
+304            android:exported="false"
+304-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:29:13-37
+305            android:theme="@style/StripeDefaultTheme"
+305-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:30:13-54
+306            android:windowSoftInputMode="adjustResize" />
+306-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:31:13-55
+307        <activity
+307-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:32:9-35:61
+308            android:name="com.stripe.android.view.PaymentRelayActivity"
+308-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:33:13-72
+309            android:exported="false"
+309-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:34:13-37
+310            android:theme="@style/StripeTransparentTheme" />
+310-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:35:13-58
+311        <!--
+312        Set android:launchMode="singleTop" so that the StripeBrowserLauncherActivity instance that
+313        launched the browser Activity will also handle the return URL deep link.
+314        -->
+315        <activity
+315-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:41:9-45:61
+316            android:name="com.stripe.android.payments.StripeBrowserLauncherActivity"
+316-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:42:13-85
+317            android:exported="false"
+317-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:43:13-37
+318            android:launchMode="singleTask"
+318-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:44:13-44
+319            android:theme="@style/StripeTransparentTheme" />
+319-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:45:13-58
+320        <activity
+320-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:46:9-63:20
+321            android:name="com.stripe.android.payments.StripeBrowserProxyReturnActivity"
+321-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:47:13-88
+322            android:exported="true"
+322-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:48:13-36
+323            android:launchMode="singleTask"
+323-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:49:13-44
+324            android:theme="@style/StripeTransparentTheme" >
+324-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:50:13-58
+325            <intent-filter>
+325-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:51:13-62:29
+326                <action android:name="android.intent.action.VIEW" />
+326-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+326-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+327
+328                <category android:name="android.intent.category.DEFAULT" />
+328-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:13-72
+328-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:23-69
+329                <category android:name="android.intent.category.BROWSABLE" />
+329-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:13-74
+329-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:23-71
+330
+331                <!-- Must match `DefaultReturnUrl#value`. -->
+332                <data
+332-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+333                    android:host="payment_return_url"
+334                    android:path="/com.awesomeproject"
+335                    android:scheme="stripesdk" />
+335-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+336            </intent-filter>
+337        </activity>
+338        <activity
+338-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:64:9-67:57
+339            android:name="com.stripe.android.payments.core.authentication.threeds2.Stripe3ds2TransactionActivity"
+339-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:65:13-114
+340            android:exported="false"
+340-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:66:13-37
+341            android:theme="@style/StripeDefaultTheme" />
+341-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:67:13-54
+342        <activity
+342-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:68:9-71:66
+343            android:name="com.stripe.android.googlepaylauncher.StripeGooglePayActivity"
+343-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:69:13-88
+344            android:exported="false"
+344-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:70:13-37
+345            android:theme="@style/StripeGooglePayDefaultTheme" />
+345-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:71:13-63
+346        <activity
+346-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:72:9-75:66
+347            android:name="com.stripe.android.googlepaylauncher.GooglePayLauncherActivity"
+347-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:73:13-90
+348            android:exported="false"
+348-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:74:13-37
+349            android:theme="@style/StripeGooglePayDefaultTheme" />
+349-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:75:13-63
+350        <activity
+350-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:76:9-79:66
+351            android:name="com.stripe.android.googlepaylauncher.GooglePayPaymentMethodLauncherActivity"
+351-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:77:13-103
+352            android:exported="false"
+352-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:78:13-37
+353            android:theme="@style/StripeGooglePayDefaultTheme" />
+353-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:79:13-63
+354        <activity
+354-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:80:9-83:62
+355            android:name="com.stripe.android.payments.paymentlauncher.PaymentLauncherConfirmationActivity"
+355-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:81:13-107
+356            android:exported="false"
+356-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:82:13-37
+357            android:theme="@style/PayLauncherDefaultTheme" />
+357-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:83:13-59
+358        <activity
+358-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:84:9-87:61
+359            android:name="com.stripe.android.payments.bankaccount.ui.CollectBankAccountActivity"
+359-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:85:13-97
+360            android:exported="false"
+360-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:86:13-37
+361            android:theme="@style/StripeTransparentTheme" />
+361-->[com.stripe:payments-core:20.19.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\bc63eef186c16b867e827b7773a04b0c\transformed\jetified-payments-core-20.19.3\AndroidManifest.xml:87:13-58
+362        <activity
+362-->[com.stripe:stripe-3ds2-android:6.1.6] C:\Users\mtechubuser\.gradle\caches\transforms-3\5a3d6deb89fc009957f6f7a781a6c462\transformed\jetified-stripe-3ds2-android-6.1.6\AndroidManifest.xml:10:9-13:54
+363            android:name="com.stripe.android.stripe3ds2.views.ChallengeActivity"
+363-->[com.stripe:stripe-3ds2-android:6.1.6] C:\Users\mtechubuser\.gradle\caches\transforms-3\5a3d6deb89fc009957f6f7a781a6c462\transformed\jetified-stripe-3ds2-android-6.1.6\AndroidManifest.xml:11:13-81
+364            android:exported="false"
+364-->[com.stripe:stripe-3ds2-android:6.1.6] C:\Users\mtechubuser\.gradle\caches\transforms-3\5a3d6deb89fc009957f6f7a781a6c462\transformed\jetified-stripe-3ds2-android-6.1.6\AndroidManifest.xml:12:13-37
+365            android:theme="@style/Stripe3DS2Theme" />
+365-->[com.stripe:stripe-3ds2-android:6.1.6] C:\Users\mtechubuser\.gradle\caches\transforms-3\5a3d6deb89fc009957f6f7a781a6c462\transformed\jetified-stripe-3ds2-android-6.1.6\AndroidManifest.xml:13:13-51
+366
+367        <provider
+367-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:31:9-39:20
+368            android:name="androidx.startup.InitializationProvider"
+368-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:32:13-67
+369            android:authorities="com.awesomeproject.androidx-startup"
+369-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:33:13-68
+370            android:exported="false" >
+370-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:34:13-37
+371            <meta-data
+371-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:36:13-38:52
+372                android:name="androidx.work.WorkManagerInitializer"
+372-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:37:17-68
+373                android:value="androidx.startup" />
+373-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:38:17-49
+374            <meta-data
+374-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\d4f1861778a4b3fefc14510cc28bcec6\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+375                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+375-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\d4f1861778a4b3fefc14510cc28bcec6\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+376                android:value="androidx.startup" />
+376-->[androidx.emoji2:emoji2:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\d4f1861778a4b3fefc14510cc28bcec6\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+377            <meta-data
+377-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:30:13-32:52
+378                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+378-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:31:17-85
+379                android:value="androidx.startup" />
+379-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:32:17-49
+380            <meta-data
+380-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\0ffc845097ac4827ed7a0144169a30f9\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+381                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+381-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\0ffc845097ac4827ed7a0144169a30f9\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+382                android:value="androidx.startup" />
+382-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\0ffc845097ac4827ed7a0144169a30f9\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+383        </provider>
+384
+385        <service
+385-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:41:9-46:35
+386            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+386-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:42:13-88
+387            android:directBootAware="false"
+387-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:43:13-44
+388            android:enabled="@bool/enable_system_alarm_service_default"
+388-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:44:13-72
+389            android:exported="false" />
+389-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:45:13-37
+390        <service
+390-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:47:9-53:35
+391            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+391-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:48:13-84
+392            android:directBootAware="false"
+392-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:49:13-44
+393            android:enabled="@bool/enable_system_job_service_default"
+393-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:50:13-70
+394            android:exported="true"
+394-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:51:13-36
+395            android:permission="android.permission.BIND_JOB_SERVICE" />
+395-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:52:13-69
+396        <service
+396-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:54:9-59:35
+397            android:name="androidx.work.impl.foreground.SystemForegroundService"
+397-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:55:13-81
+398            android:directBootAware="false"
+398-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:56:13-44
+399            android:enabled="@bool/enable_system_foreground_service_default"
+399-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:57:13-77
+400            android:exported="false" />
+400-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:58:13-37
+401
+402        <receiver
+402-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:61:9-66:35
+403            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+403-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:62:13-88
+404            android:directBootAware="false"
+404-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:63:13-44
+405            android:enabled="true"
+405-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:64:13-35
+406            android:exported="false" />
+406-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:65:13-37
+407        <receiver
+407-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:67:9-77:20
+408            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+408-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:68:13-106
+409            android:directBootAware="false"
+409-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:69:13-44
+410            android:enabled="false"
+410-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:70:13-36
+411            android:exported="false" >
+411-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:71:13-37
+412            <intent-filter>
+412-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:73:13-76:29
+413                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+413-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:74:17-87
+413-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:74:25-84
+414                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+414-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:75:17-90
+414-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:75:25-87
+415            </intent-filter>
+416        </receiver>
+417        <receiver
+417-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:78:9-88:20
+418            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+418-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:79:13-104
+419            android:directBootAware="false"
+419-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:80:13-44
+420            android:enabled="false"
+420-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:81:13-36
+421            android:exported="false" >
+421-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:82:13-37
+422            <intent-filter>
+422-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:84:13-87:29
+423                <action android:name="android.intent.action.BATTERY_OKAY" />
+423-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:85:17-77
+423-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:85:25-74
+424                <action android:name="android.intent.action.BATTERY_LOW" />
+424-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:86:17-76
+424-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:86:25-73
+425            </intent-filter>
+426        </receiver>
+427        <receiver
+427-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:89:9-99:20
+428            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+428-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:90:13-104
+429            android:directBootAware="false"
+429-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:91:13-44
+430            android:enabled="false"
+430-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:92:13-36
+431            android:exported="false" >
+431-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:93:13-37
+432            <intent-filter>
+432-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:95:13-98:29
+433                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+433-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:96:17-83
+433-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:96:25-80
+434                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+434-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:97:17-82
+434-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:97:25-79
+435            </intent-filter>
+436        </receiver>
+437        <receiver
+437-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:100:9-109:20
+438            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+438-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:101:13-103
+439            android:directBootAware="false"
+439-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:102:13-44
+440            android:enabled="false"
+440-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:103:13-36
+441            android:exported="false" >
+441-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:104:13-37
+442            <intent-filter>
+442-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:106:13-108:29
+443                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+443-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:107:17-79
+443-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:107:25-76
+444            </intent-filter>
+445        </receiver>
+446        <receiver
+446-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:110:9-121:20
+447            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+447-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:111:13-88
+448            android:directBootAware="false"
+448-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:112:13-44
+449            android:enabled="false"
+449-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:113:13-36
+450            android:exported="false" >
+450-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:114:13-37
+451            <intent-filter>
+451-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:116:13-120:29
+452                <action android:name="android.intent.action.BOOT_COMPLETED" />
+452-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:117:17-79
+452-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:117:25-76
+453                <action android:name="android.intent.action.TIME_SET" />
+453-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:118:17-73
+453-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:118:25-70
+454                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+454-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:119:17-81
+454-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:119:25-78
+455            </intent-filter>
+456        </receiver>
+457        <receiver
+457-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:122:9-131:20
+458            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+458-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:123:13-99
+459            android:directBootAware="false"
+459-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:124:13-44
+460            android:enabled="@bool/enable_system_alarm_service_default"
+460-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:125:13-72
+461            android:exported="false" >
+461-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:126:13-37
+462            <intent-filter>
+462-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:128:13-130:29
+463                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+463-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:129:17-98
+463-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:129:25-95
+464            </intent-filter>
+465        </receiver>
+466        <receiver
+466-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:132:9-142:20
+467            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+467-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:133:13-78
+468            android:directBootAware="false"
+468-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:134:13-44
+469            android:enabled="true"
+469-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:135:13-35
+470            android:exported="true"
+470-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:136:13-36
+471            android:permission="android.permission.DUMP" >
+471-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:137:13-57
+472            <intent-filter>
+472-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:139:13-141:29
+473                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+473-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:140:17-88
+473-->[androidx.work:work-runtime:2.7.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\866b54962e236f0b145431e9902f2e45\transformed\work-runtime-2.7.1\AndroidManifest.xml:140:25-85
+474            </intent-filter>
+475        </receiver>
+476
+477        <service
+477-->[androidx.room:room-runtime:2.2.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\4c492ba68ede3b03370cf87f59d0eb5c\transformed\room-runtime-2.2.5\AndroidManifest.xml:25:9-28:40
+478            android:name="androidx.room.MultiInstanceInvalidationService"
+478-->[androidx.room:room-runtime:2.2.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\4c492ba68ede3b03370cf87f59d0eb5c\transformed\room-runtime-2.2.5\AndroidManifest.xml:26:13-74
+479            android:directBootAware="true"
+479-->[androidx.room:room-runtime:2.2.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\4c492ba68ede3b03370cf87f59d0eb5c\transformed\room-runtime-2.2.5\AndroidManifest.xml:27:13-43
+480            android:exported="false" />
+480-->[androidx.room:room-runtime:2.2.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\4c492ba68ede3b03370cf87f59d0eb5c\transformed\room-runtime-2.2.5\AndroidManifest.xml:28:13-37
+481
+482        <activity
+482-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:23:9-27:75
+483            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+483-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:24:13-93
+484            android:excludeFromRecents="true"
+484-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:25:13-46
+485            android:exported="false"
+485-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:26:13-37
+486            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+486-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:27:13-72
+487        <!--
+488            Service handling Google Sign-In user revocation. For apps that do not integrate with
+489            Google Sign-In, this service will never be started.
+490        -->
+491        <service
+491-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:33:9-37:51
+492            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+492-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:34:13-89
+493            android:exported="true"
+493-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:35:13-36
+494            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+494-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:36:13-107
+495            android:visibleToInstantApps="true" /> <!-- Needs to be explicitly declared on P+ -->
+495-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\750928b5e5c17b1e3fffc3d09843a966\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:37:13-48
+496        <uses-library
+496-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:39:9-41:40
+497            android:name="org.apache.http.legacy"
+497-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:40:13-50
+498            android:required="false" />
+498-->[com.google.android.gms:play-services-maps:18.0.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d0457e7668365c0196b28ff865fff30f\transformed\jetified-play-services-maps-18.0.2\AndroidManifest.xml:41:13-37
+499
+500        <activity
+500-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:27:9-44:20
+501            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+501-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:28:13-80
+502            android:excludeFromRecents="true"
+502-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:29:13-46
+503            android:exported="true"
+503-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:30:13-36
+504            android:launchMode="singleTask"
+504-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:31:13-44
+505            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+505-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:32:13-72
+506            <intent-filter>
+506-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:33:13-43:29
+507                <action android:name="android.intent.action.VIEW" />
+507-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+507-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+508
+509                <category android:name="android.intent.category.DEFAULT" />
+509-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:13-72
+509-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:23-69
+510                <category android:name="android.intent.category.BROWSABLE" />
+510-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:13-74
+510-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:23-71
+511
+512                <data
+512-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+513                    android:host="firebase.auth"
+514                    android:path="/"
+515                    android:scheme="genericidp" />
+515-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+516            </intent-filter>
+517        </activity>
+518        <activity
+518-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:45:9-62:20
+519            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+519-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:46:13-79
+520            android:excludeFromRecents="true"
+520-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:47:13-46
+521            android:exported="true"
+521-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:48:13-36
+522            android:launchMode="singleTask"
+522-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:49:13-44
+523            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+523-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:50:13-72
+524            <intent-filter>
+524-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0a4e9d23b78f4c59fce61403d3dc608e\transformed\jetified-firebase-auth-21.1.0\AndroidManifest.xml:51:13-61:29
+525                <action android:name="android.intent.action.VIEW" />
+525-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:13-65
+525-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:42:21-62
+526
+527                <category android:name="android.intent.category.DEFAULT" />
+527-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:13-72
+527-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:43:23-69
+528                <category android:name="android.intent.category.BROWSABLE" />
+528-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:13-74
+528-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:44:23-71
+529
+530                <data
+530-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:13-71
+531                    android:host="firebase.auth"
+532                    android:path="/"
+533                    android:scheme="recaptcha" />
+533-->E:\MtechubProjects\Offerta_SV_project\Git Offerta\offerta-app\android\app\src\main\AndroidManifest.xml:45:19-68
+534            </intent-filter>
+535        </activity>
+536        <activity
+536-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\687d7aa91ada707a5258bb666aa837fe\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+537            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+537-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\687d7aa91ada707a5258bb666aa837fe\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+538            android:exported="false"
+538-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\687d7aa91ada707a5258bb666aa837fe\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+539            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+539-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\687d7aa91ada707a5258bb666aa837fe\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+540
+541        <provider
+541-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:25:9-30:39
+542            android:name="com.google.firebase.provider.FirebaseInitProvider"
+542-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:26:13-77
+543            android:authorities="com.awesomeproject.firebaseinitprovider"
+543-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:27:13-72
+544            android:directBootAware="true"
+544-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:28:13-43
+545            android:exported="false"
+545-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:29:13-37
+546            android:initOrder="100" />
+546-->[com.google.firebase:firebase-common:20.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\e53c305f1ae64109ecbf31c6f80e3e9d\transformed\jetified-firebase-common-20.2.0\AndroidManifest.xml:30:13-36
+547
+548        <meta-data
+548-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\47b0a75a35b9d53b43a810f4bc8a2582\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+549            android:name="com.google.android.gms.version"
+549-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\47b0a75a35b9d53b43a810f4bc8a2582\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+550            android:value="@integer/google_play_services_version" />
+550-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\47b0a75a35b9d53b43a810f4bc8a2582\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+551        <!--
+552         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+553         with the application context. This config is merged in with the host app's manifest,
+554         but there can only be one provider with the same authority activated at any given
+555         point; so if the end user has two or more different apps that use Facebook SDK, only the
+556         first one will be able to use the provider. To work around this problem, we use the
+557         following placeholder in the authority to identify each host application as if it was
+558         a completely different provider.
+559        -->
+560        <provider
+560-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:29:9-32:40
+561            android:name="com.facebook.internal.FacebookInitProvider"
+561-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:30:13-70
+562            android:authorities="com.awesomeproject.FacebookInitProvider"
+562-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:31:13-72
+563            android:exported="false" />
+563-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:32:13-37
+564
+565        <receiver
+565-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:34:9-40:20
+566            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+566-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:35:13-86
+567            android:exported="false" >
+567-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:36:13-37
+568            <intent-filter>
+568-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:37:13-39:29
+569                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+569-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:38:17-95
+569-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:38:25-92
+570            </intent-filter>
+571        </receiver>
+572        <receiver
+572-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:41:9-47:20
+573            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
+573-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:42:13-118
+574            android:exported="false" >
+574-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:43:13-37
+575            <intent-filter>
+575-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:44:13-46:29
+576                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
+576-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:45:17-103
+576-->[com.facebook.android:facebook-core:16.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\0d17fafec91ba1a47bb7139dc049b8cd\transformed\jetified-facebook-core-16.0.0\AndroidManifest.xml:45:25-100
+577            </intent-filter>
+578        </receiver>
+579        <receiver
+579-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:35:9-47:20
+580            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+580-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:36:13-76
+581            android:directBootAware="false"
+581-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:37:13-44
+582            android:enabled="true"
+582-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:38:13-35
+583            android:exported="true"
+583-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:39:13-36
+584            android:permission="android.permission.DUMP" >
+584-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:40:13-57
+585            <intent-filter>
+585-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:41:13-43:29
+586                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+586-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:42:17-91
+586-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:42:25-88
+587            </intent-filter>
+588            <intent-filter>
+588-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:44:13-46:29
+589                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+589-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:45:17-85
+589-->[androidx.profileinstaller:profileinstaller:1.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\217d36486da2717412a9eaa308f64cbd\transformed\jetified-profileinstaller-1.2.0\AndroidManifest.xml:45:25-82
+590            </intent-filter>
+591        </receiver>
+592
+593        <meta-data
+593-->[com.google.android.instantapps:instantapps:1.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c318f0cd0b21d955330f62ea653083a8\transformed\jetified-instantapps-1.1.0\AndroidManifest.xml:10:9-12:33
+594            android:name="aia-compat-api-min-version"
+594-->[com.google.android.instantapps:instantapps:1.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c318f0cd0b21d955330f62ea653083a8\transformed\jetified-instantapps-1.1.0\AndroidManifest.xml:11:13-54
+595            android:value="1" />
+595-->[com.google.android.instantapps:instantapps:1.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\c318f0cd0b21d955330f62ea653083a8\transformed\jetified-instantapps-1.1.0\AndroidManifest.xml:12:13-30
+596    </application>
+597
+598</manifest>
