@@ -26,7 +26,7 @@ import {
 } from "react-native-responsive-screen";
 
 //////////////api function////////////
-import { get_Listing_Search } from "../../../api/GetApis";
+import { get_Listing_Search ,get_Listing_Most_Search} from "../../../api/GetApis";
 
 ////////////image url////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
@@ -40,6 +40,7 @@ const Search = ({ navigation, route }) => {
 
   ////////////get search result data///////////
   const [searchdata, setSearchData] = useState("");
+  const [most_searchdata, setMost_SearchData] = useState("");
 
   ////////////////Search Function////////////
   const listing_Search = (props) => {
@@ -53,8 +54,22 @@ const Search = ({ navigation, route }) => {
         setSearchData("No data Found");
       });
   };
+  ////////////////Search Function////////////
+  const listing_Search_Most = () => {
+    get_Listing_Most_Search()
+      .then((response) => {
+        console.log("here search ", response.data);
+        setMost_SearchData(response.data);
+      })
+      .catch(function (error) {
+        console.log("error", error);
+        setMost_SearchData("No data Found");
+      });
+  };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    listing_Search_Most()
+  }, []);
 
   const renderItem = ({ item }) => (
     <DashboardCard
@@ -69,6 +84,56 @@ const Search = ({ navigation, route }) => {
       }}
     />
   );
+  const renderItem_most_search= ({ item }) => {
+return(
+  <TouchableOpacity
+  onPress={()=> setSearch(item.item)}
+  >
+           <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingHorizontal: wp(5),
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  width: wp(30),
+                }}
+              >
+                <Icon
+                  name={"trending-up-sharp"}
+                  size={25}
+                  color={"black"}
+                  style={{}}
+                />
+
+                <Text style={styles.text}>{item.item}</Text>
+              </View>
+              {/* <Image
+        source={appImages.AddIcon}
+        resizeMode='contain'
+        style={{width:wp(5),height:hp(5)}}
+        /> */}
+              <Icon name={"close"} size={25} color={"black"} style={{}} />
+            </View>
+            <View
+              style={{
+                borderBottomColor: "grey",
+                borderBottomWidth: 0.5,
+                width: wp(90),
+                alignSelf: "center",
+                marginTop: hp(2),
+                marginBottom: hp(2),
+              }}
+            ></View>
+  </TouchableOpacity>
+)
+            }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -95,48 +160,14 @@ const Search = ({ navigation, route }) => {
         {searchdata === "" ? (
           <View>
             <Text style={styles.friendsmaintext}>Trending Searches</Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingHorizontal: wp(5),
-                alignItems: "center",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  width: wp(30),
-                }}
-              >
-                <Icon
-                  name={"trending-up-sharp"}
-                  size={25}
-                  color={"black"}
-                  style={{}}
-                />
-
-                <Text style={styles.text}> Type 01</Text>
-              </View>
-              {/* <Image
-        source={appImages.AddIcon}
-        resizeMode='contain'
-        style={{width:wp(5),height:hp(5)}}
-        /> */}
-              <Icon name={"close"} size={25} color={"black"} style={{}} />
-            </View>
-            <View
-              style={{
-                borderBottomColor: "grey",
-                borderBottomWidth: 0.5,
-                width: wp(90),
-                alignSelf: "center",
-                marginTop: hp(2),
-                marginBottom: hp(2),
-              }}
-            ></View>
+            <FlatList
+            data={most_searchdata}
+            renderItem={renderItem_most_search}
+            keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          />
+     
           </View>
         ) :searchdata === "No data Found" ? (
           <NoDataFound

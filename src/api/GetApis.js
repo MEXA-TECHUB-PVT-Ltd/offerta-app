@@ -112,6 +112,10 @@ export const GetListingViews = async (props) => {
 export const get_Listing_Search = async (props) => {
   return axios.get(BASE_URL + "search.php?search=" + props);
 };
+    //---------->most search
+export const get_Listing_Most_Search = async () => {
+  return axios.get(BASE_URL + "getMostSearchList.php");
+};
 
 ///////////PROMOTIONS////////////
 export const get_Listing_Promotion_Features = async () => {
@@ -128,8 +132,7 @@ export const get_Advertisement_Promotion_List = async () => {
 export const get_Expired_Promotion_List = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(
-    BASE_URL + "getExpairepromotion.php?user_id=1"
-  // + user_id
+    BASE_URL + "getExpairepromotion.php?user_id=" + user_id
   );
 };
 ///////////////////Notification/////////////
