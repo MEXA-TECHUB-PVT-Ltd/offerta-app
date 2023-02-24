@@ -31,38 +31,6 @@ import { appImages } from "../../../constant/images";
 ////////////////////api function/////////////
 import { get_Notifications } from "../../../api/GetApis";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    name: "Username",
-    image: appImages.dogIcon,
-    msgContent: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed.",
-    time: "00:00 pm",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    name: "Username",
-    image: appImages.dogIcon,
-    msgContent: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed.",
-    time: "00:00 pm",
-  },
-
-  {
-    id: "58694a0f-3da13-471f-bd96-147671e29d72",
-    name: "Username",
-    image: appImages.dogIcon,
-    msgContent: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed.",
-    time: "00:00 pm",
-  },
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad43ybb28ba",
-    name: "Username",
-    image: appImages.dogIcon,
-    msgContent: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed.",
-    time: "00:00 pm",
-  },
-];
-
 const Notification = ({ navigation }) => {
   ///////////////////data state///////////
   const [notification, setNotification] = useState("");
@@ -112,9 +80,9 @@ const Notification = ({ navigation }) => {
         </View>
     
         <View style={{ marginLeft: 0 }}>
-          <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
+          {/* <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
             00:00 pm
-          </Text>
+          </Text> */}
         </View>
       </TouchableOpacity>
     )
