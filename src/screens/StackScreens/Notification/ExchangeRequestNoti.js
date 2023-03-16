@@ -41,7 +41,13 @@ import { appImages } from "../../../constant/images";
 //////////////////appImages.//////////////////
 
 const ExchangeNoti = ({ navigation, route }) => {
-  console.log("here data:", route.params);
+  console.log("here data:", route.params.data.list.images[0]);
+
+   /////////price formatter
+   const formatter = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short'
+  });
 
   ////////////////previous Data/////////
   const [predata] = useState(route.params);
@@ -95,7 +101,7 @@ const ExchangeNoti = ({ navigation, route }) => {
               maintext={predata.data.requester_list.title}
               subtext={predata.data.requester_list.location}
               type={"Exchange_Request"}
-              price={formatter.format(predata.data.requester_list.price)}
+              price={predata.data.requester_list.price}
             />
             <Image
               source={appImages.exchangeicon}
@@ -103,11 +109,11 @@ const ExchangeNoti = ({ navigation, route }) => {
               resizeMode="contain"
             />
             <DashboardCard
-              image={IMAGE_URL + predata.list.images[0]} //IMAGE_URL + item.images[0]
-              maintext={predata.list.title}
-              subtext={predata.list.location}
+              image={IMAGE_URL + predata.data.list.images[0]} //IMAGE_URL + item.images[0]
+              maintext={predata.data.list.title}
+              subtext={predata.data.list.location}
               type={"Exchange_Request"}
-              price={formatter.format(predata.list.price)}
+              price={predata.data.list.price}
             />
           </View>
         ) : (

@@ -73,6 +73,7 @@ import { get_Other_UserData } from "../../../api/GetApis";
 import { useIsFocused  } from '@react-navigation/native';
 
 const ChatScreen = ({ route, navigation }) => {
+  console.log("here in chat",route.params)
 
   const isFocused = useIsFocused();
 
@@ -164,6 +165,7 @@ const ChatScreen = ({ route, navigation }) => {
   const [userimage, setImage] = useState("");
   const GetUserData = async () => {
     get_Other_UserData(route.params.userid).then((response) => {
+      console.log('yuser data:',response.data)
       setUsername(response.data.full_name);
       setImage(response.data.image);
       //AllMessages();

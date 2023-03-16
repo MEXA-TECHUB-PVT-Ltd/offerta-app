@@ -56,7 +56,7 @@ const [countryname, setCountryName] = useState('Pak');
   const dispatch = useDispatch();
 
     ////////////list state////////////
-const[shippinglist,setshippinglist]=useState("")
+const[shippinglist,setshippinglist]=useState(null)
 
 useEffect(() => {
     if(isFocused){

@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   dasboardimage: {
     height: hp(15),
-    width: wp(45),
+    width: wp(15),
     borderTopRightRadius:wp(3),
     borderTopLeftRadius:wp(3)
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   pricetext: {
     color: "black",
-    width: wp(5),
+    width: wp(9),
     fontSize: hp(1),
     textAlign: "right",
     fontFamily: fontFamily.Poppins_Regular,

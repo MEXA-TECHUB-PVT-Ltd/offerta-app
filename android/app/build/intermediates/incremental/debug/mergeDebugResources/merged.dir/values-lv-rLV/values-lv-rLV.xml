@@ -135,6 +135,7 @@
     <string name="p24_bank">Przelewy24 banka</string>
     <string name="payment_method_add_new_card">Pievienot jaunu karti…</string>
     <string name="payment_method_add_new_fpx">Atlasīt bankas kontu (FPX)…</string>
+    <string name="paypal_mandate">Apstiprinot maksājumu PayPal, jūs atļaujat %s saskaņā ar viņu noteikumiem iekasēt no jūsu PayPal konta summas par turpmākajiem maksājumiem.</string>
     <string name="pm_set_as_default">Iestatīt kā noklusējuma maksājuma veidu</string>
     <string name="price_free">Bezmaksas</string>
     <string name="processing_error">Radās kļūda, apstrādājot jūsu karti — mēģiniet vēlreiz pēc dažām sekundēm</string>

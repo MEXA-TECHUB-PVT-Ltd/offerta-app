@@ -135,6 +135,7 @@
     <string name="p24_bank">Bank Przelewy24</string>
     <string name="payment_method_add_new_card">Żid kard ġdida…</string>
     <string name="payment_method_add_new_fpx">Agħżel Kont Bankarju (FPX)…</string>
+    <string name="paypal_mandate">Meta tikkonferma l-pagament tiegħek ma\' PayPal, tkun qed tagħti permess lil %s biex fil-ġejjieni tiġbor il-pagamenti mill-kont ta\' PayPal tiegħek skont ir-regoli tagħha.</string>
     <string name="pm_set_as_default">Qiegħed bħala l-metodu tal-pagament standard</string>
     <string name="price_free">Bla ħlas</string>
     <string name="processing_error">Kien hemm żball fl-ipproċessar tal-kard tiegħek -- erġa\' pprova wara ftit sekondi</string>

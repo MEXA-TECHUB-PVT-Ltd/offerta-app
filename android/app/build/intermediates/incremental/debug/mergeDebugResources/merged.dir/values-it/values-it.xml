@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Mostra password</string>
     <string name="payment_method_add_new_card">Aggiungi nuova carta…</string>
     <string name="payment_method_add_new_fpx">Seleziona conto bancario (FPX)…</string>
+    <string name="paypal_mandate">Confermando il tuo pagamento con PayPal, consenti a %s di addebitare i pagamenti futuri sul tuo account PayPal in base a quanto previsto dai relativi termini e condizioni.</string>
     <string name="pm_set_as_default">Imposta come modalità di pagamento predefinita</string>
     <string name="price_free">Gratuita</string>
     <string name="processing_error">Si è verificato un errore durante l\'elaborazione della carta. Riprova fra qualche secondo.</string>

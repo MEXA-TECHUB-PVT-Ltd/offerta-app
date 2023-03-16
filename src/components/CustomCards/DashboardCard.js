@@ -40,7 +40,7 @@ const DashboardCard = (props) => {
                 width:props.type==="Exchange_Request"?wp(90):wp(45),
                 height:props.type==="Exchange_Request"?hp(18):hp(15),
             }]}
-            resizeMode="contain"
+            resizeMode="cover"
           ></Image>
         </View>
         <View style={{ width: props.type==="Exchange_Request"?wp(85):wp(42), paddingLeft: wp(1), marginTop: hp(1) }}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -8,22 +8,16 @@ import {
   Text,
   useWindowDimensions,
   Linking,
-  Button,
 } from "react-native";
 
 ///////////////app icons///////////////
 import Icon from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 /////////////render/////////////////
 import RenderHtml from "react-native-render-html";
 
 ///////////////component////////////
 import Loader from "../../../components/Loader/Loader";
-
-////////////////////redux////////////
-import { useSelector, useDispatch } from "react-redux";
-import { setName, setAge } from "../../../redux/actions";
 
 ////////////////app height and width////////////////
 import {
@@ -35,17 +29,14 @@ import {
 import styles from "./styles";
 import Colors from "../../../utills/Colors";
 
-/////////////////app images///////////
-import { appImages } from "../../../constant/images";
-
 //////////////api function////////////////
 import { get_Blogs_By_id } from "../../../api/Blogs";
 
-////////////key ///////////////////
-import { GoogleApiKey } from "../../../utills/GoogleApiKey";
-
-import VideoPlayer from "react-native-video-player";
+//////////////VIDEO PLAYER/////////////////////
 import YoutubePlayer from "react-native-youtube-iframe";
+
+//////////////IMAGE URL/////////////////
+import { ADMIN_IMAGE_URL } from "../../../utills/ApiRootUrl";
 
 const BlogsDetails = ({ navigation, route }) => {
   console.log("here props:", route.params);
@@ -55,10 +46,6 @@ const BlogsDetails = ({ navigation, route }) => {
 
   ///////////////////loader loading state///////////////
   const [loading, setloading] = useState(true);
-
-  //////////////redux///////////////
-  const { name, age } = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
 
   //////////render html width///////////
   const { width } = useWindowDimensions();
@@ -74,9 +61,6 @@ const BlogsDetails = ({ navigation, route }) => {
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
-
-  //camera and imagepicker
-  const refRBSheet = useRef();
 
   ////////////////data States/////////
   const [blog_name, setBlog_Name] = useState();
@@ -184,7 +168,7 @@ const BlogsDetails = ({ navigation, route }) => {
         ) : (
           <Image
             source={{
-              uri: "https://teamsuit.co/offertaFinal/admin/" + cover_image,
+              uri:ADMIN_IMAGE_URL + cover_image,
             }}
             style={{ height: hp(48), width: wp(100) }}
             resizeMode="cover"

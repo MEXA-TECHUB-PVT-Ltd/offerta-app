@@ -135,6 +135,7 @@
     <string name="p24_bank">Przelewy24 Bank</string>
     <string name="payment_method_add_new_card">Lisage uus kaart ...</string>
     <string name="payment_method_add_new_fpx">Valige pangakonto (FPX) ...</string>
+    <string name="paypal_mandate">Kinnitades oma PayPali makse, lubate ettevõttel %s oma PayPali kontot tulevasteks makseteks vastavalt nende tingimustele debiteerida.</string>
     <string name="pm_set_as_default">Määra vaikimisi makseviisiks</string>
     <string name="price_free">Tasuta</string>
     <string name="processing_error">Kaardi töötlemisel esines tõrge – proovige mõne sekundi pärast uuesti</string>

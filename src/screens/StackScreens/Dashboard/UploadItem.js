@@ -115,6 +115,7 @@ const UploadItem = ({ navigation, route }) => {
         var c_lng=parseFloat(location_lng)
    console.log("here we are:",c_lat,c_lng,user_id,parseFloat(location_lat),parseFloat(location_lng),
    exchangebuychecked,givingawaychecked)
+   shippingprice === " " ?setShippingPrice("0"):setShippingPrice(shippingprice)
     var data = JSON.stringify({
       user_id: user_id,
       title: title,
@@ -163,6 +164,9 @@ const UploadItem = ({ navigation, route }) => {
           setYoutubeLink("")
           setDescription("")
           setShippingPrice("")
+          setExchangebuyChecked(false)
+          setFixedpriceChecked(false)
+          setGivingawayChecked(false)
           setloading(0);
           setdisable(0);
           setModalVisible(true);
@@ -193,26 +197,32 @@ const UploadItem = ({ navigation, route }) => {
     }
   };
   useEffect(() => {}, []);
-  const renderItem = ({ item, index }) => (
-    <View style={{alignItems:'center',justifyContent:'center',marginHorizontal:wp(0),marginRight:index === item_images_array.length - 1?wp(0):wp(2)}}>
-    <Image
-    source={{uri:item.path}}
-    style={{height:hp(20),width:wp(84),borderRadius:wp(3),alignSelf:'center'}}
-     resizeMode="cover"
- />
-       <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}
-      style={{position:'absolute',top:hp(1.3),right:wp(2),backgroundColor:"green",borderRadius:wp(5),alignItems:"center",justifyContent:'center'}}
-      >
-    <Text style={{color:"white",paddingVertical:hp(0.8),paddingHorizontal:wp(3),fontWeight:"bold"}}>
-          Change
-                </Text>
-       </TouchableOpacity>
- {/* <Text style={Uploadstyles.uploadtext}>
-{item.path}
-</Text> */}
-    </View>
-
-  );
+  const renderItem = ({ item, index }) => {
+    console.log('here image data',item)
+    return(
+      <View style={{height:hp(25),width:wp(82),alignItems:'center',justifyContent:'center',marginHorizontal:wp(0),alignSelf:'center',
+      // marginLeft:wp(1.3),
+       //marginRight:index === item_images_array.length - 1?wp(0):wp(2),
+ borderRadius:wp(6)}}>
+       <Image
+       //source={appImages.dogIcon}
+       source={{uri:item.path}}
+       style={{height:hp(25),width:wp(80),borderRadius:wp(6)}}
+       resizeMode="contain"
+    />
+          <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}
+         style={{position:'absolute',top:hp(1.3),right:wp(2),backgroundColor:"green",borderRadius:wp(5),alignItems:"center",justifyContent:'center'}}
+         >
+       <Text style={{color:"white",paddingVertical:hp(0.8),paddingHorizontal:wp(3),fontWeight:"bold"}}>
+             Change
+                   </Text>
+          </TouchableOpacity>
+    {/* <Text style={Uploadstyles.uploadtext}>
+   {item.path}
+   </Text> */}
+       </View>
+    )
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -239,8 +249,8 @@ const UploadItem = ({ navigation, route }) => {
                  </View>
                       </TouchableOpacity>
             ) : (
-              <View style={Uploadstyles.mainview}>
-              <View style={{ alignItems: "center", justifyContent: "center" ,marginTop:hp(0)}}>
+              <View style={[Uploadstyles.mainview,{height:hp(25),width:wp(82),}]}>
+              {/* <View style={{ alignItems: "center", justifyContent: "center" ,marginTop:hp(0),height:hp(0),width:wp(0),}}> */}
                        <FlatList
             data={item_images_array}
             renderItem={renderItem}
@@ -253,7 +263,7 @@ const UploadItem = ({ navigation, route }) => {
                   {item_images_array.length}
                 </Text>
                 <Text style={Uploadstyles.uploadtext}>Images Uploaded</Text> */}
-              </View>
+              {/* </View> */}
               </View>
             )}
     
@@ -314,14 +324,6 @@ const UploadItem = ({ navigation, route }) => {
               onTermChange={(newcountry) => setCondition(newcountry)}
             />
           </TouchableOpacity>
-          {/* <CustomTextInput
-            icon={appImages.email}
-            type={"withouticoninput"}
-            texterror={"invalid"}
-            term={bannerlink}
-            placeholder="Date of listing"
-            onTermChange={(newUsername) => setBannerLink(newUsername)}
-          /> */}
           <CustomTextInput
             icon={appImages.email}
             type={"withouticoninput"}
@@ -334,33 +336,13 @@ const UploadItem = ({ navigation, route }) => {
             icon={appImages.email}
             type={"withouticoninput"}
             texterror={"invalid"}
-            //term={description}
+            term={description}
             multiline={true}
             Lines={4} 
-            //placeholder="Description"
+            placeholder="Description"
             onTermChange={(desc) => setDescription(desc)}
           />
-                 {/* <TextInput style={{
-  color: '#FFFFFF',
-  // flex: 1,
-  top:0,
-  width:300,
-  height:85,
-  left:30,
-  borderWidth:2,
-  paddingTop: 0,
-  fontSize:20,
-  textAlignVertical: "top"
-}}
-          multiline={true}
-          keyboardType='default'
-           //placeholder='Enter User Password'
-           autoCapitalize='none'
-           secureTextEntry={true}
-           borderColor='#B3446C'
-           borderWidth={3}
-           onChangeText={(comment)=>setDescription(comment)}
-           /> */}
+
           <TouchableOpacity onPress={() => navigation.navigate("Location")}>
             <CustomTextInput
               icon={appImages.email}
@@ -417,7 +399,7 @@ const UploadItem = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <Text style={styles.text}>Fixed Price{nav_place}</Text>
+          <Text style={styles.text}>Fixed Price</Text>
           <Checkbox
             status={fixedpricechecked ? "checked" : "unchecked"}
             color={Colors.activetextinput}

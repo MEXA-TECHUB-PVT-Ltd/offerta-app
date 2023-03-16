@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">パスワードを表示</string>
     <string name="payment_method_add_new_card">新しいカードを追加...</string>
     <string name="payment_method_add_new_fpx">銀行口座を選択 (FPX)...</string>
+    <string name="paypal_mandate">PayPal による支払いを確定すると、%s が規約に従って今後の支払いをお客様の PayPal アカウントに請求することを許可することになります。</string>
     <string name="pm_set_as_default">デフォルトの決済手段として設定する</string>
     <string name="price_free">無料</string>
     <string name="processing_error">クレジットカード情報の処理中にエラーが発生しました。数秒後にもう一度お試しください</string>

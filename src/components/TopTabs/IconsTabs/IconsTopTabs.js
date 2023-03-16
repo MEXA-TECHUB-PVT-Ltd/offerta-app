@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   View,
   Text,
-  ActivityIndicator,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -21,7 +20,7 @@ import { IconButton } from "react-native-paper";
 import { fontFamily } from "../../../constant/fonts";
 
 ////////////////amage url//////////
-import { IMAGE_URL } from "../../../utills/ApiRootUrl";
+import { ADMIN_IMAGE_URL } from "../../../utills/ApiRootUrl";
 
 const IconsTopTabs = (props) => {
   console.log("here the data",props.icon)
@@ -31,19 +30,16 @@ const IconsTopTabs = (props) => {
         alignItems: "center",
         justifyContent: "center",
         width: wp(props.width),
-        //paddingHorizontal:wp(3)
       }}
       onPress={props.onpress}
     >
-      {/* //https://teamsuit.co/offertaFinal/api/admin/ */}
       <IconButton
         icon={({ size, color }) => (
           <Image
-            source={{uri:"https://teamsuit.co/offertaFinal/admin"+props.icon}}
+            source={{uri:ADMIN_IMAGE_URL+props.icon}}
             style={{ width:wp(8), height: hp(5) }}
           />
         )}
-       // icon={props.icon}
         color={props.selected === props.id ? Colors.activetextinput : "grey"}
         iconColor={
           props.selected === props.id ? Colors.activetextinput : "grey"

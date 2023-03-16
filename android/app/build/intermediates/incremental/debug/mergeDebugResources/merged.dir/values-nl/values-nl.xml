@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Wachtwoord tonen</string>
     <string name="payment_method_add_new_card">Nieuwe kaart toevoegen…</string>
     <string name="payment_method_add_new_fpx">Bankrekening selecteren (FPX)...</string>
+    <string name="paypal_mandate">Als je je betaling met PayPal bevestigt, geef je %s toestemming om toekomstige betalingen in rekening te brengen op je PayPal-account in overeenstemming met hun voorwaarden.</string>
     <string name="pm_set_as_default">Instellen als standaardbetaalmethode</string>
     <string name="price_free">Gratis</string>
     <string name="processing_error">Er is een fout met de verwerking van je kaart. Probeer het over enkele seconden opnieuw</string>

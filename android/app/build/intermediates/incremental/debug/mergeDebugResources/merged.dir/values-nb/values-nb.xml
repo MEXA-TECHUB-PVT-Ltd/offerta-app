@@ -283,6 +283,7 @@
     <string name="password_toggle_content_description">Vis passordet</string>
     <string name="payment_method_add_new_card">Legg til nytt kort …</string>
     <string name="payment_method_add_new_fpx">Velg bankkonto (FPX) …</string>
+    <string name="paypal_mandate">Ved å bekrefte betalingen med PayPal, tillater du %s å belaste PayPal for fremtidige betalinger i samsvar med vilkårene deres.</string>
     <string name="pm_set_as_default">Angi som standard betalingsmetode</string>
     <string name="price_free">Gratis</string>
     <string name="processing_error">Det oppstod en feil ved prosessering av kortet -- prøv igjen om et par sekunder</string>

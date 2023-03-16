@@ -135,6 +135,7 @@
     <string name="p24_bank">Przelewy24 Bank</string>
     <string name="payment_method_add_new_card">Pridať novú kartu…</string>
     <string name="payment_method_add_new_fpx">Zvoľte bankový účet (FPX)…</string>
+    <string name="paypal_mandate">Potvrdením platby prostredníctvom služby PayPal povolíte spoločnosti %s, aby z vášho účtu PayPal účtovala poplatky za budúce platby v súlade s podmienkami tejto spoločnosti.</string>
     <string name="pm_set_as_default">Nastaviť ako predvolený spôsob platby</string>
     <string name="price_free">Zdarma</string>
     <string name="processing_error">Pri spracovaní vašej karty sa vyskytla chyba -- skúste znova o niekoľko sekúnd</string>

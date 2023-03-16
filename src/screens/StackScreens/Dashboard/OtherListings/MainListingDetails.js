@@ -413,14 +413,14 @@ const MainListingsDetails = ({ navigation, route }) => {
             ) : null}
           </View>
           <View style={styles.btnView}>
-            {fixed_price_status === "false" ? null : (
+            {/* {fixed_price_status === "false" ? null : ( */}
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => navigation.navigate("ConfirmAddress")}
               >
                 <Text style={styles.btnText}>Buy Now</Text>
               </TouchableOpacity>
-            )}
+            {/* )} */}
           </View>
         </View>
       </ScrollView>

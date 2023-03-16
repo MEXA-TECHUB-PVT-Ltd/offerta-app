@@ -40,7 +40,7 @@ const OutGoingExchange = ({ navigation }) => {
                <CustomHeader
           headerlabel={'Out going Exchanges'}
           iconPress={() => {
-            navigation.goBack();a
+            navigation.goBack();
           }}
           icon={'chevron-back'}
         />

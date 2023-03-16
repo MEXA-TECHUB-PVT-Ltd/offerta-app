@@ -8,6 +8,9 @@ import {
   /////////////////Set Item Images array/////////////
   SET_ITEM_IMAGES_ARRAY,
 
+  ////////////signup role/////////////////
+  SET_SIGNUP_ROLE,
+
   //////////DROPDOWNS///////////
   //----------->Category
   SET_CATEGORY_NAME,
@@ -60,6 +63,9 @@ const initialState = {
 
   /////////////////Set Item Images array/////////////
   item_images_array: [],
+
+  //////////////signup role/////////////
+  signup_role:'',
 
   //////////DROPDOWNS///////////
   //-------->Category
@@ -115,6 +121,10 @@ function userReducer(state = initialState, action) {
     /////////////////Set Item Images array/////////////
     case SET_ITEM_IMAGES_ARRAY:
       return { ...state, item_images_array: action.payload };
+
+          /////////////////Signup role/////////////
+    case SET_SIGNUP_ROLE:
+      return { ...state, signup_role: action.payload };
 
     //////////DROPDOWNS///////////
     //----------->Category

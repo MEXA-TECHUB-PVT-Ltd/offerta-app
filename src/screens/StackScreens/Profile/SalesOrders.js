@@ -24,11 +24,21 @@ import { appImages } from "../../../constant/images";
 ////////////////api functions///////////
 import { get_Sales,get_Orders } from "../../../api/Sales&Promotions";
 
+const Top_Tab= [
+  {
+    id: "1",
+    title: "Sales",
+  },
+  {
+    id: "2",
+    title: "Orders",
+  },
+];
 
 const SalesOrders = ({ navigation }) => {
 
   ////////////select state////////////
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState("1");
   ///////////////select function/////////////
   const onselect = (item) => {
     setSelectedId(item);

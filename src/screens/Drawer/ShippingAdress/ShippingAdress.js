@@ -60,7 +60,7 @@ const ShippingAddresss = ({ navigation, route }) => {
   ////////////country picker states/////////////
   const [CountryPickerView, setCountryPickerView] = useState(false);
   const [countryCode, setCountryCode] = useState("92");
-  const [countryname, setCountryName] = useState("Pak");
+  //const [countryname, setCountryName] = useState("Pak");
 
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
@@ -69,7 +69,7 @@ const ShippingAddresss = ({ navigation, route }) => {
   const [shipping_state, setShipping_State] = useState({
     nick_name: "",
     user_name: "",
-    country: countryname,
+    country: country_name,
     city: city_name,
     state: state_name,
     address_1: "",
@@ -84,6 +84,8 @@ const ShippingAddresss = ({ navigation, route }) => {
     setdisable(1);
     post_shipping_Address(props).then((response) => {
       console.log("exchnage response hereL:", response.data);
+      // dispatch(setCityName())
+      // dispatch(setCountryName()) 
       setloading(0);
       setdisable(0);
       setModalVisible(true);

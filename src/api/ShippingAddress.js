@@ -12,7 +12,7 @@ export const get_Shipping_Address = async () => {
 /////////////////////Create Shipping Address////////////
 export const post_shipping_Address = async (props) => {
   var user_id = await AsyncStorage.getItem("Userid");
-  // console.log("here props update:", user_id, props,props.shipping_id);
+console.log("here props update:", user_id, props,props.shipping_id);
   return axios.post(BASE_URL + "createShipping.php", {
     user_id: user_id,
     country:props.country,

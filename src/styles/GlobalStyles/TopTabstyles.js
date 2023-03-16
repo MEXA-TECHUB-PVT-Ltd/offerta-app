@@ -11,13 +11,14 @@ TopTabView:
     {
         flexDirection:'row',
     justifyContent:'space-between',
-   marginHorizontal:wp(3),
-   paddingHorizontal:wp(5),
+   //marginHorizontal:wp(3),
+   paddingHorizontal:wp(3),
    borderRadius:wp(4),
    width:wp(95),
    height:hp(7),
    backgroundColor:'#C7D8EB',
    alignItems:"center",
+   alignSelf:'center',
    marginBottom:hp(1.5)
    },
 

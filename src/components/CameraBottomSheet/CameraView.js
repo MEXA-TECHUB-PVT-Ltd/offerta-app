@@ -61,9 +61,12 @@ function CameraViewScreen({ route, navigation }) {
   }
 
   const takePhotoFromCamera = async () => {
-    const imageDetail = await ImagePicker.openCamera({
-      cropping: true,
+ await ImagePicker.openCamera({
+      // width: 500,
+      // height: 500,
+      //cropping: true,
       useFrontCamera: camera_mode,
+      //compressImageQuality: 0.7,
     }).then((image) => {
       setImage(image.path);
       setImages([...images, image]);
@@ -88,10 +91,10 @@ function CameraViewScreen({ route, navigation }) {
   ////////////////////library image//////////////////
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-      compressImageQuality: 0.7,
+      width: 500,
+      height: 500,
+      //cropping: true,
+     // compressImageQuality: 0.7,
     }).then(image => {
       setImage(image.path);
       setImages([...images, image]);
@@ -141,8 +144,8 @@ function CameraViewScreen({ route, navigation }) {
           <View
             style={{
               borderRadius: 10,
-              width: width / 1.1,
-              height: height / 1.4,
+              width: wp(98),
+              height: hp(70),
               alignItems: "center",
               justifyContent: "center",
               borderWidth: 1,
@@ -156,11 +159,11 @@ function CameraViewScreen({ route, navigation }) {
           <Image
             source={{ uri: image }}
             style={{
-              resizeMode: "contain",
+              resizeMode:"cover",
               padding: 10,
               borderRadius: wp(1),
-              width: width / 1.01,
-              height: height / 1.44,
+              width: wp(98),
+              height: hp(70),
             }}
           />
         )}
@@ -189,6 +192,7 @@ function CameraViewScreen({ route, navigation }) {
                 width: wp(17.3),
                 height: hp(8.5),
                 backgroundColor: "white",
+                
                 marginRight: 10,
               }}
               imageStyle={{

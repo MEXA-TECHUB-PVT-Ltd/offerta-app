@@ -135,6 +135,7 @@
     <string name="p24_bank">Banc Przelewy24</string>
     <string name="payment_method_add_new_card">Afegir nova targeta...</string>
     <string name="payment_method_add_new_fpx">Seleccionar Compte Bancari (FPX)...</string>
+    <string name="paypal_mandate">Si confirmeu el pagament a PayPal, permeteu que %s faci càrrecs al vostre compte de PayPal per a pagaments en el futur d\'acord amb les seves condicions.</string>
     <string name="pm_set_as_default">Configura com a mètode de pagament per defecte</string>
     <string name="price_free">Sense cost</string>
     <string name="processing_error">Hi ha hagut un error processant la teva targeta - torna-ho a intentar en uns segons</string>

@@ -23,8 +23,8 @@ const PromotionTopTabs = (props) => {
         width: wp(props.width),
         height:hp(4.5),
         borderRadius:wp(2),
-        marginHorizontal:props.type === "sales&orders"?wp(6.4):wp(2),
-        backgroundColor:props.selected === props.id ?'#EBEBEB':'white'
+        marginHorizontal:props.type === "sales&orders"?wp(6.4):wp(1),
+        backgroundColor:props.selected === props.id ?'white':'#EBEBEB'
       }}
     >
       <Text

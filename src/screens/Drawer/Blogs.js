@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
-  ScrollView,
   FlatList,
 } from "react-native";
 
