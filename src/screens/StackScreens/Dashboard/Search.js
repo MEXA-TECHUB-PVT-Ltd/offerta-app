@@ -159,7 +159,7 @@ return(
 
         {searchdata === "" ? (
           <View>
-            <Text style={styles.friendsmaintext}>Trending Searches</Text>
+            <Text style={styles.searchmaintext}>Trending Searches</Text>
             <FlatList
             data={most_searchdata}
             renderItem={renderItem_most_search}

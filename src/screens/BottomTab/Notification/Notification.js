@@ -35,6 +35,7 @@ const Notification = ({ navigation }) => {
   ///////////////////data state///////////
   const [notification, setNotification] = useState("");
 
+
   //textfields
   useEffect(() => {
     get_Notifications().then((response) => {

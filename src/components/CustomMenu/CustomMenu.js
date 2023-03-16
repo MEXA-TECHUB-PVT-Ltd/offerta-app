@@ -34,6 +34,7 @@ import { setExchangeOffer_MyListing } from "../../../../redux/actions";
 //////////////////API FUNCTION///////////
 import axios from "axios";
 import { BASE_URL } from "../../utills/ApiRootUrl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /////////////app images/////////////
 import { appImages } from "../../constant/images";
@@ -43,13 +44,14 @@ const CustomMenu = (props) => {
   const navigation = useNavigation();
 
       ////////////////redux/////////////
-      const { listing_id} = useSelector(
+      const { listing_id,exchange_other_listing} = useSelector(
         (state) => state.userReducer
       );
       const dispatch = useDispatch();
   //////////////modal states/////////////
   const [modalVisible, setModalVisible] = React.useState(false);
   const [msgmodalVisible, setMsgModalVisible] = React.useState(false);
+  const [msgmodalVisible1, setMsgModalVisible1] = React.useState(false);
 
   //////////////delete/////////////
   const delete_Listing=()=>{
@@ -96,6 +98,33 @@ const mark_Status_Listing=()=>{
   axios(config)
   .then(function (response) {
     navigation.navigate("Listings")
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+//////////////delete/////////////
+const Report=async()=>{
+  var user_id = await AsyncStorage.getItem("Userid");
+  var data = JSON.stringify({
+    reportedBy_user_id:user_id,
+    reported_user_id:exchange_other_listing.user_id
+  });
+  
+  var config = {
+    method: 'post',
+    url: BASE_URL+'createReport.php',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  axios(config)
+  .then(function (response) {
+    console.log('report here',response.data)
+    setMsgModalVisible(false);
+   // navigation.navigate("Listings")
   })
   .catch(function (error) {
     console.log(error);
@@ -153,6 +182,9 @@ const mark_Status_Listing=()=>{
                           item.label === 'Delete'?
                           setMsgModalVisible(true)
                        :
+                       item.label === 'Report Item'?
+                       setMsgModalVisible1(true)
+                    :
                           null
                           setModalVisible(false)
                         }
@@ -220,6 +252,22 @@ const mark_Status_Listing=()=>{
         }}
         onPress1={() => {
           delete_Listing();
+        }}
+      />
+         <CustomModal
+        modalVisible={msgmodalVisible1}
+        CloseModal={() => setMsgModalVisible1(false)}
+        Icon={appImages.confirm}
+        text={"Confirmation"}
+        type={"confirmation"}
+        subtext={"Do you really want to Report?"}
+        buttontext={"Yes"}
+        buttontext1={"Cancel"}
+        onPress={() => {
+          setMsgModalVisible1(false);
+        }}
+        onPress1={() => {
+          Report();
         }}
       />
     </View>

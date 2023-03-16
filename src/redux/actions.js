@@ -33,6 +33,15 @@ export const setUserImage = (user_image) => (dispatch) => {
     payload: user_image,
   });
 };
+export const SET_SIGNUP_ROLE = "SET_SIGNUP_ROLE";
+
+export const setsignupRole = (signup_role) => (dispatch) => {
+  dispatch({
+    type: SET_SIGNUP_ROLE,
+    payload: signup_role,
+  });
+};
+
 
 /////////////////Set Item Images array/////////////
 export const SET_ITEM_IMAGES_ARRAY = "SET_ITEM_IMAGES_ARRAY";

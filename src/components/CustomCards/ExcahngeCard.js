@@ -21,14 +21,14 @@ console.log("props here:",props)
   });
   const formattedLikes = formatter.format(props.pricetext);
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("SliderScreen", {
-          navplace: "Market",
-          navtype: item.type,
-        })
-      }
-    >
+    // <TouchableOpacity
+    //   onPress={() =>
+    //     navigation.navigate("SliderScreen", {
+    //       navplace: "Market",
+    //       navtype: item.type,
+    //     })
+    //   }
+    // >
       <View style={styles.Exchangecard}>
       {/* <View style={{backgroundColor:'red',height:hp(2),width:wp(5)}}>
   
@@ -62,7 +62,7 @@ console.log("props here:",props)
                             size={20}
                             color={'red'}   
                             style={{right:wp(8.5)}}
-                            onPress={() => navigation.navigate("Search")}
+                            //onPress={() => navigation.navigate("Search")}
                           />
                           :null
   }
@@ -72,7 +72,7 @@ console.log("props here:",props)
 
         {/* </View> */}
       </View>
-    </TouchableOpacity>
+    // </TouchableOpacity>
   );
 };
 

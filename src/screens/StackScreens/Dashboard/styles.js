@@ -112,5 +112,11 @@ const styles = StyleSheet.create({
     height: hp(12),
     width: wp(15),
   },
+  searchmaintext: {
+    color: Colors.Appthemecolor,
+    fontFamily: fontFamily.Poppins_SemiBold,
+    fontSize: hp(2),
+    marginLeft:wp(5)
+  },
 });
 export default styles;

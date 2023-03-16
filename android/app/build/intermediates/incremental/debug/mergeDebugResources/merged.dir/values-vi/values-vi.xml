@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Hiện mật khẩu</string>
     <string name="payment_method_add_new_card">Thêm thẻ mới...</string>
     <string name="payment_method_add_new_fpx">Chọn Tài khoản Ngân hàng (FPX)...</string>
+    <string name="paypal_mandate">Bằng cách xác nhận thanh toán của quý vị với PayPal, quý vị cho phép %s tính phí tài khoản PayPal của quý vị cho các khoản thanh toán trong tương lai theo các điều khoản của họ.</string>
     <string name="pm_set_as_default">Đặt làm phương thức thanh toán mặc định</string>
     <string name="price_free">Miễn phí</string>
     <string name="processing_error">Có lỗi bất ngờ khi xử lý thẻ -- hãy thử lại sau vài giây</string>

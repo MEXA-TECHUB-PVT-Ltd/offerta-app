@@ -63,11 +63,11 @@ useEffect(() => {
           data={shippinglist}
           renderItem={({ item }) => (
                <ShippingAddressCard
-            username={item.country} 
+            username={item.username} 
             address_1={item.address_1} 
             address_2={item.address_2} 
             city={item.city}
-            state={item.state}
+           // state={item.state}
             country={item.country}
           type={"shipping_address"}
             onpress={()=>{    dispatch(setLoginUserShippingAddress(item)),

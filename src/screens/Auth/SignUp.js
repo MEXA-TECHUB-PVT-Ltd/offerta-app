@@ -13,6 +13,9 @@ import CustomButtonhere from "../../components/Button/CustomButton";
 import CustomTextInput from "../../components/TextInput/CustomTextInput";
 import CustomModal from "../../components/Modal/CustomModal";
 
+///////////////////dropdown////////////////
+import SignupRole from "../../components/Dropdowns/SignupRole";
+
 ////////////////app pakages////////////
 import { Snackbar } from "react-native-paper";
 
@@ -38,7 +41,22 @@ import axios from "axios";
 import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
+////////////////////redux////////////
+import { useSelector, useDispatch } from "react-redux";
+import { setsignupRole } from "../../redux/actions";
+
+
 const SignUp = ({ navigation }) => {
+
+  //////////////redux////////////////////
+  const {
+    signup_role,
+  } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+
+    ////////Bottom sheet references/////////
+    const refRBSheet = useRef();
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -94,10 +112,11 @@ const SignUp = ({ navigation }) => {
         email: email.toLowerCase(),
         password: password,
         conformPassword: confirmPassword,
+        role:signup_role,
       },
     })
       .then(async function (response) {
-        console.log("response", JSON.stringify(response.data.data));
+        console.log("response", JSON.stringify(response.data));
         setloading(0);
         setdisable(0);
         if (response.data.message === "User Register successful") {
@@ -233,6 +252,19 @@ const SignUp = ({ navigation }) => {
               secureTextEntry={data.secureTextEntry ? true : false}
               onclick={() => updateSecureTextEntry()}
             />
+                      <TouchableOpacity
+            onPress={() => refRBSheet.current.open()}
+          >
+            <CustomTextInput
+              icon={appImages.downarrow}
+              type={"iconinput"}
+              term={signup_role}
+              editable={false}
+              disable={false}
+              placeholder="Select Role"
+              onTermChange={(newcountry) => setsignupRole(newcountry)}
+            />
+          </TouchableOpacity>
           </View>
         </View>
         <View style={{ marginTop: hp(0) }}>
@@ -285,6 +317,10 @@ const SignUp = ({ navigation }) => {
           onPress={() => {
             setModalVisible(false);
           }}
+        />
+                <SignupRole
+          refRBSheet={refRBSheet}
+          onClose={() => refRBSheet.current.close()}
         />
       </ScrollView>
     </SafeAreaView>

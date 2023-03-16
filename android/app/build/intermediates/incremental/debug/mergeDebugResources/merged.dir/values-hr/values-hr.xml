@@ -285,6 +285,7 @@
     <string name="password_toggle_content_description">Prikaži zaporku</string>
     <string name="payment_method_add_new_card">Dodajte novu karticu...</string>
     <string name="payment_method_add_new_fpx">Odaberite bankovni račun (FPX)...</string>
+    <string name="paypal_mandate">Potvrđivanjem vašeg plaćanja putem usluge PayPal, dopuštate poduzeću %s da tereti vaš račun PayPal za buduća plaćanja u skladu s njegovim uvjetima.</string>
     <string name="pm_set_as_default">Postavi kao zadani način plaćanja</string>
     <string name="price_free">Besplatno</string>
     <string name="processing_error">Došlo je do pogreške u obradi vaše kartice -- pokušajte ponovno za nekoliko sekundi</string>

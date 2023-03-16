@@ -37,7 +37,7 @@ const SucessExchange = ({ navigation }) => {
                <CustomHeader
           headerlabel={'Success Exchanges'}
           iconPress={() => {
-            navigation.goBack();a
+            navigation.goBack();
           }}
           icon={'chevron-back'}
         />

@@ -135,6 +135,7 @@
     <string name="p24_bank">Bangko ng Przelewy24</string>
     <string name="payment_method_add_new_card">Magdagdag ng bagong kard...</string>
     <string name="payment_method_add_new_fpx">Piliin ang Account sa Bangko (FPX)…</string>
+    <string name="paypal_mandate">Sa pagkumpirma sa iyong pagbabayad sa PayPal, pinapayagan mo ang %s na singilin ang iyong PayPal account para sa mga pagbabayad sa hinaharap alinsunod sa kanilang mga tuntunin.</string>
     <string name="pm_set_as_default">I-set bilang default na paraan ng pagbabayad</string>
     <string name="price_free">Libre</string>
     <string name="processing_error">Nagkaroon ng kamalian sa pagproseso ng iyong kard -- subukin muli sa ilang segundo</string>

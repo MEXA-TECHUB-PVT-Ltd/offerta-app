@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Şifreyi göster</string>
     <string name="payment_method_add_new_card">Yeni kart ekle...</string>
     <string name="payment_method_add_new_fpx">Banka Hesabı Seçin (FPX)...</string>
+    <string name="paypal_mandate">PayPal\'la ödemeyi onayladığınızda, %s şirketine gelecekteki ödemeler için kendi koşullarına uygun olarak PayPal hesabınızı ücretlendirme izni vermiş olursunuz.</string>
     <string name="pm_set_as_default">Varsayılan ödeme yöntemi olarak ayarla</string>
     <string name="price_free">Ücretsiz</string>
     <string name="processing_error">Kartınızla işlem yapılırken bir hata oluştu -- birazdan tekrar deneyin</string>

@@ -135,6 +135,7 @@
     <string name="p24_bank">Przelewy24 Bank</string>
     <string name="payment_method_add_new_card">Legg til nytt kort...</string>
     <string name="payment_method_add_new_fpx">Vel bankkonto (FPX)...</string>
+    <string name="paypal_mandate">Når du stadfestar betalinga di med PayPal, gir du %s tillating til å trekkje framtidige betalingar frå PayPal-kontoen din i samsvar med vilkåra deira.</string>
     <string name="pm_set_as_default">Angi som standard betalingsmåte</string>
     <string name="price_free">Gratis</string>
     <string name="processing_error">Det oppstod ei feil under behandlinga av kortet – prøv igjen om nokre få sekund</string>

@@ -135,6 +135,7 @@
     <string name="p24_bank">Τράπεζα Przelewy24</string>
     <string name="payment_method_add_new_card">Προσθήκη νέας κάρτας…</string>
     <string name="payment_method_add_new_fpx">Επιλογή τραπεζικού λογαριασμού (FPX)…</string>
+    <string name="paypal_mandate">Με την επιβεβαίωση της πληρωμής σας μέσω PayPal, επιτρέπετε στην %s να χρεώσει τον λογαριασμό σας PayPal για μελλοντικές πληρωμές σύμφωνα με τους όρους της.</string>
     <string name="pm_set_as_default">Ορισμός ως προεπιλεγμένη μέθοδος πληρωμής</string>
     <string name="price_free">Δωρεάν</string>
     <string name="processing_error">Προέκυψε απροσδόκητο σφάλμα κατά την επεξεργασία της κάρτας σας -- δοκιμάστε ξανά σε μερικά δευτερόλεπτα</string>

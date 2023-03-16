@@ -3474,6 +3474,7 @@ drawable stripe_ic_paymentsheet_pm_paypal
 drawable stripe_ic_paymentsheet_pm_revolut_pay
 drawable stripe_ic_paymentsheet_pm_sepa_debit
 drawable stripe_ic_paymentsheet_pm_upi
+drawable stripe_ic_paymentsheet_pm_zip
 drawable stripe_ic_paymentsheet_polling_failure
 drawable stripe_ic_paymentsheet_primary_button_checkmark
 drawable stripe_ic_radio_no
@@ -3648,7 +3649,6 @@ id book_now
 id borderless
 id bottom
 id bottom_sheet
-id bottom_spacer
 id bounce
 id bounceBoth
 id bounceEnd
@@ -3665,7 +3665,6 @@ id bsb_edit_text
 id bsb_text_input_layout
 id button
 id buttonPanel
-id button_container
 id buyButton
 id buy_now
 id buy_with
@@ -3734,7 +3733,6 @@ id consume_window_insets_tag
 id container
 id content
 id contentPanel
-id content_container
 id contiguous
 id continuousVelocity
 id controls_shadow
@@ -3854,7 +3852,6 @@ id footer_container
 id forever
 id fps_text
 id fragment_container
-id fragment_container_parent
 id fragment_container_view
 id fragment_container_view_tag
 id frost
@@ -3864,10 +3861,8 @@ id ghost_view_holder
 id glide_custom_view_target_tag
 id gone
 id googleMaterial2
-id google_pay_button
 id google_pay_button_content
 id google_pay_button_layout
-id google_pay_divider
 id google_pay_primary_button
 id google_wallet_classic
 id google_wallet_grayscale
@@ -3878,7 +3873,6 @@ id grayscale
 id group_divider
 id grouping
 id groups
-id header
 id header_title
 id hide_in_inspector_tag
 id hideable
@@ -3936,8 +3930,6 @@ id light
 id line1
 id line3
 id linear
-id link_auth
-id link_button
 id listMode
 id list_item
 id lock_icon
@@ -4030,7 +4022,6 @@ id noState
 id none
 id normal
 id north
-id notes
 id notification_background
 id notification_main_column
 id notification_main_column_container
@@ -4120,7 +4111,6 @@ id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
-id scroll_view
 id scrollable
 id search_badge
 id search_bar
@@ -4274,9 +4264,6 @@ id toolbar
 id toolbar_title
 id top
 id topPanel
-id top_bar
-id top_container
-id top_message
 id touch_outside
 id transitionToEnd
 id transitionToStart
@@ -5076,6 +5063,7 @@ string pay_with_googlepay_button_content_description
 string payment_method_add_new_card
 string payment_method_add_new_fpx
 string paymentsheet_payment_method_item_card_number
+string paypal_mandate
 string pm_set_as_default
 string price_free
 string processing_error
@@ -5234,6 +5222,7 @@ string stripe_paymentsheet_payment_method_sepa_debit
 string stripe_paymentsheet_payment_method_sofort
 string stripe_paymentsheet_payment_method_upi
 string stripe_paymentsheet_payment_method_us_bank_account
+string stripe_paymentsheet_payment_method_zip
 string stripe_paymentsheet_primary_button_processing
 string stripe_paymentsheet_remove_bank_account_title
 string stripe_paymentsheet_remove_pm

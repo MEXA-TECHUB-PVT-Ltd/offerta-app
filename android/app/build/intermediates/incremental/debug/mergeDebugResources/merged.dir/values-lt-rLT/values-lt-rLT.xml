@@ -135,6 +135,7 @@
     <string name="p24_bank">Przelewy24 Bank</string>
     <string name="payment_method_add_new_card">Pridėti naują kortelę...</string>
     <string name="payment_method_add_new_fpx">Pasirinkti banko sąskaitą (FPX)...</string>
+    <string name="paypal_mandate">Patvirtindami savo mokėjimą „PayPal“ leidžiate „%s“ nuskaityti mokestį nuo jūsų „PayPal“ sąskaitos vėlesniems mokėjimams pagal jų sąlygas.</string>
     <string name="pm_set_as_default">Nustatyti kaip numatytąjį mokėjimo būdą</string>
     <string name="price_free">Nemokamai</string>
     <string name="processing_error">Įvyko kortelės apdorojimo klaida, po kelių sekundžių bandykite dar kartą</string>

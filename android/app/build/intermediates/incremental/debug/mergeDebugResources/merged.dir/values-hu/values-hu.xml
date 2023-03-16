@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Jelszó megjelenítése</string>
     <string name="payment_method_add_new_card">Új kártya hozzáadása...</string>
     <string name="payment_method_add_new_fpx">Bankszámlaválasztás (FPX)...</string>
+    <string name="paypal_mandate">A fizetés megerősítésével a PayPalon engedélyezi, hogy a(z) %s a feltételeinek megfelelően a jövőbeni kifizetésekkel megterhelje a PayPal számláját.</string>
     <string name="pm_set_as_default">Legyen ez az alapértelmezett fizetési mód</string>
     <string name="price_free">Ingyenes</string>
     <string name="processing_error">Hiba történt kártyája feldolgozása során, próbálja újra néhány másodperc múlva</string>

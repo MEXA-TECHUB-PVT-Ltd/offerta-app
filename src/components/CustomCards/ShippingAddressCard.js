@@ -26,10 +26,10 @@ const ShippingAddressCard = (props) => {
             <Text style={styles.shippinglefttext}>Edit</Text>
             </TouchableOpacity>
     
-                  <View style={styles.shippingview}>
+                  {/* <View style={styles.shippingview}>
                 <Text style={styles.shippinglefttext}>User Name</Text>
                 <Text style={styles.balancetext}>{props.username}</Text>
-          </View>
+          </View> */}
           <View style={styles.shippingview}>
                 <Text style={styles.shippinglefttext}>Address 1</Text>
                 <Text style={styles.balancetext}>{props.address_1}</Text>
@@ -46,10 +46,10 @@ const ShippingAddressCard = (props) => {
                 <Text style={styles.shippinglefttext}>City</Text>
                 <Text style={styles.balancetext}>{props.city}</Text>
           </View>
-          <View style={styles.shippingview}>
+          {/* <View style={styles.shippingview}>
                 <Text style={styles.shippinglefttext}>State</Text>
                 <Text style={styles.balancetext}>{props.state}</Text>
-          </View>
+          </View> */}
           </TouchableOpacity>
           :
           <View style={styles.card}>

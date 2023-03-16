@@ -79,7 +79,7 @@ const Promotions = ({ navigation }) => {
     //GetExpiredPromotionsList()
   }, []);
   ////////////select state////////////
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState("1");
   ///////////////select function/////////////
   const onselect = (item) => {
     setSelectedId(item.id);
@@ -95,7 +95,7 @@ const Promotions = ({ navigation }) => {
     // }> 
          <PromotionTopTabs
     title={item.title} 
-    width={"25%"} 
+    width={"28%"} 
     selected={selectedId}
     id={item.id}
     onpress={() => {onselect(item),item.title === "Urgent"?GetUrgentPromotionsList():

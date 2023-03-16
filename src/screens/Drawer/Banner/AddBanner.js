@@ -36,8 +36,10 @@ import axios from 'axios';
 import { BASE_URL } from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 ///////////upload image///////////////
 import RNFetchBlob from "rn-fetch-blob";
+
 
 /////////////////////app images/////////////////////
 import { appImages } from '../../../constant/images';
@@ -102,9 +104,46 @@ const [bannerlink,  setBannerLink] = React.useState();
 // const [startdate, setStartDate] = React.useState();
 // const [enddate, setEndDate] = React.useState();
  //////////////////////Api Calling/////////////////
+ const CreateProfile = async () => {
+  var user_id=await AsyncStorage.getItem("Userid")
+  const data = [
+    {
+      name: "app_img",
+      filename: "avatar-png.png",
+      type: "image/foo",
+      data: RNFetchBlob.wrap(user_image),
+    },
+    { name: "user_id", data: user_id},
+    { name: "start_date", data: startDate },
+    { name: "end_date", data:endDate},
+    { name: "app_img_link", data:bannerlink },
+  ];
+  RNFetchBlob.fetch(
+    "POST",
+    BASE_URL + "bannerAdApi.php",
+    {
+      Authorization: "Bearer access-token",
+      otherHeader: "foo",
+      "Content-Type": "multipart/form-data",
+    },
+    data
+  )
+    .then((response) => response.json())
+    .then(async (responsehere) => {
+ 
+      console.log(" api result",responsehere)
+    })
+    .catch((error) => {
+      alert("error" + error);
+    });
+};
+ //////////////////////Api Calling/////////////////
  const CreateBanner = async () => {
   var user_id=await AsyncStorage.getItem("Userid")
-  console.log("here data:",user_image,startDate,endDate,bannerlink,user_id)
+
+
+  
+ // console.log("here data:",user_image,startDate,endDate,bannerlink,user_id)
   var formdata = new FormData();
 formdata.append("user_id", user_id);
 formdata.append("start_date", startDate);
@@ -117,10 +156,10 @@ var requestOptions = {
   body: formdata,
   redirect: 'follow'
 };
-
+console.log("here data formdata:",formdata)
 fetch( BASE_URL + "bannerAdApi.php", requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
+  .vvvvvvvvvvvvvv
   .catch(error => console.log('error', error));
 };
 
@@ -329,7 +368,7 @@ const [bannerDescription, setBannerDescription] = useState("");
 <Image
  source={{uri:user_image}}
  style={{height:hp(20),width:wp(83),borderRadius:wp(3)}}
-  resizeMode='contain'
+  resizeMode='cover'
 />
 </View>
 }
@@ -370,7 +409,7 @@ const [bannerDescription, setBannerDescription] = useState("");
             widthset={80}
             topDistance={10}
             onPress={() => {
-              CreateBanner()
+            CreateBanner()
               //navigation.navigate("PaymentMethod");
             }}
           />

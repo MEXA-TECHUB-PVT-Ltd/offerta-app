@@ -286,6 +286,7 @@
     <string name="password_toggle_content_description">Показать пароль</string>
     <string name="payment_method_add_new_card">Добавить новую карту...</string>
     <string name="payment_method_add_new_fpx">Выберите банковский счет (FPX)…</string>
+    <string name="paypal_mandate">Подтверждая оплату через PayPal, вы разрешаете компании %s списывать с вашего счета PayPal суммы будущих платежей согласно ее условиями.</string>
     <string name="pm_set_as_default">Назначить способом оплаты по умолчанию</string>
     <string name="price_free">Бесплатно</string>
     <string name="processing_error">При обработке карты произошла ошибка. Подождите несколько секунд и повторите попытку</string>

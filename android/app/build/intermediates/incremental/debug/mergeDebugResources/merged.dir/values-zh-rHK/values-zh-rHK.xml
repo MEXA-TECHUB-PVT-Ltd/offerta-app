@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">顯示密碼</string>
     <string name="payment_method_add_new_card">添加新卡…</string>
     <string name="payment_method_add_new_fpx">選擇銀行帳戶 (FPX)… </string>
+    <string name="paypal_mandate">確認您的 PayPal 付款，即表示您允許 %s 按照他們的條款從您的 PayPal 扣取未來款項。</string>
     <string name="pm_set_as_default">設置為預設支付方式</string>
     <string name="price_free">免費</string>
     <string name="processing_error">處理您的卡時發生了錯誤 -- 請稍候再試</string>

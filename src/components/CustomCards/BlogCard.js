@@ -2,14 +2,17 @@ import * as React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "./styles";
 
-import Colors from "../../utills/Colors";
+////HEIGHT AND WIDTH////////////////
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-import { appImages } from "../../constant/images";
+///////////////FONTS//////////////////////
 import { fontFamily } from "../../constant/fonts";
+
+//////////////IMAGE URL///////////////////////////
+import { ADMIN_IMAGE_URL } from "../../utills/ApiRootUrl";
 
 const BlogCard = (props) => {
   console.log("props here:", props);
@@ -20,7 +23,7 @@ const BlogCard = (props) => {
     >
       <View style={styles.blogcard}>
         <View style={{ marginBottom: hp(0), marginTop: hp(0) }}>
-          <Image source={{uri:"https://teamsuit.co/offertaFinal/admin/"+props.image}} 
+          <Image source={{uri:ADMIN_IMAGE_URL+props.image}} 
           style={styles.blogimage}
           resizeMode={'cover'}
           ></Image>

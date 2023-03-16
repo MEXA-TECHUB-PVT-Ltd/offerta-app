@@ -283,6 +283,7 @@
     <string name="password_toggle_content_description">Vis adgangskode</string>
     <string name="payment_method_add_new_card">Tilføj nyt kort...</string>
     <string name="payment_method_add_new_fpx">Vælg bankkonto (FPX)...</string>
+    <string name="paypal_mandate">Ved at bekræfte din betaling med PayPal, tillader du %s at debitere din PayPal-konto for fremtidige betalinger i overensstemmelse med deres vilkår.</string>
     <string name="pm_set_as_default">Angiv som standardbetalingsmetode</string>
     <string name="price_free">Gratis</string>
     <string name="processing_error">Der opstod en fejl under behandling af dit kort – prøv igen om et par sekunder</string>

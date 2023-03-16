@@ -201,6 +201,7 @@
     <string name="password_toggle_content_description">Mostrar contraseña</string>
     <string name="payment_method_add_new_card">Agregar nueva tarjeta…</string>
     <string name="payment_method_add_new_fpx">Seleccionar cuenta bancaria (FPX)…</string>
+    <string name="paypal_mandate">Si confirmas tu pago con Paypal, permitirás que %s efectúe cargos de pagos futuros en tu cuenta de Paypal conforme a sus condiciones estipuladas.</string>
     <string name="pm_set_as_default">Establecer como método de pago predeterminado</string>
     <string name="price_free">Gratis</string>
     <string name="processing_error">Hubo un error al procesar tu tarjeta. Vuelve a intentar en unos segundos.</string>

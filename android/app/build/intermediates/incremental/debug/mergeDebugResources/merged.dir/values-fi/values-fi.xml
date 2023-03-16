@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Näytä salasana</string>
     <string name="payment_method_add_new_card">Lisää uusi kortti...</string>
     <string name="payment_method_add_new_fpx">Valitse pankkitili (FPX)...</string>
+    <string name="paypal_mandate">Vahvistamalla maksusi PayPalin kanssa valtuutat kohteen %s veloittamaan tulevia maksuja PayPal-tililtäsi heidän ehtojensa mukaisesti.</string>
     <string name="pm_set_as_default">Aseta oletusarvoiseksi maksutavaksi</string>
     <string name="price_free">Maksuton</string>
     <string name="processing_error">Kortin käsittelyssä tapahtui virhe – kokeile uudelleen muutaman sekunnin kuluttua</string>

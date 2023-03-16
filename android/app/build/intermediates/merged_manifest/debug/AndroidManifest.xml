@@ -204,11 +204,13 @@
         <activity
             android:name="com.stripe.android.paymentsheet.PaymentSheetActivity"
             android:exported="false"
-            android:theme="@style/StripePaymentSheetDefaultTheme" />
+            android:theme="@style/StripePaymentSheetDefaultTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.stripe.android.paymentsheet.PaymentOptionsActivity"
             android:exported="false"
-            android:theme="@style/StripePaymentSheetDefaultTheme" />
+            android:theme="@style/StripePaymentSheetDefaultTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.stripe.android.paymentsheet.addresselement.AddressElementActivity"
             android:exported="false"

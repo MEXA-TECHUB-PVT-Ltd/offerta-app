@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">Tampilkan sandi</string>
     <string name="payment_method_add_new_card">Tambahkan kartu baru...</string>
     <string name="payment_method_add_new_fpx">Pilih Rekening Bank (FPX)…</string>
+    <string name="paypal_mandate">Dengan mengonfirmasi pembayaran menggunakan PayPal, berarti Anda mengizinkan %s mengenakan charge untuk pembayaran mendatang pada akun PayPal Anda sesuai dengan ketentuan mereka.</string>
     <string name="pm_set_as_default">Atur sebagai metode pembayaran default</string>
     <string name="price_free">Gratis</string>
     <string name="processing_error">Ada kesalahan saat memproses kartu Anda -- cobalah lagi dalam beberapa detik</string>

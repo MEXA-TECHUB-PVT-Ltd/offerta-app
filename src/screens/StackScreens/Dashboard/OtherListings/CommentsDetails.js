@@ -105,11 +105,11 @@ else{
               style={{ width: wp(12), height: hp(6), borderRadius: wp(10) }}
               resizeMode="contain"
             />
-            <View style={{ marginLeft: wp(4) }}>
+            <View style={{ marginLeft: wp(4), justifyContent:'center' }}>
               <Text style={styles.usertext}>{item.user.user_name}</Text>
               {/* <View
           style={{alignItems: 'center', alignSelf: 'center', marginTop: hp(3)}}> */}
-              <Rating
+              {/* <Rating
                 type="star"
                 ratingCount={item.user.reviews}
                 imageSize={20}
@@ -117,7 +117,7 @@ else{
                 //startingValue={item.user.reviews}
                 readonly={true}
                 //onFinishRating={ratingCompleted}
-              />
+              /> */}
               {/* </View> */}
             </View>
           </View>

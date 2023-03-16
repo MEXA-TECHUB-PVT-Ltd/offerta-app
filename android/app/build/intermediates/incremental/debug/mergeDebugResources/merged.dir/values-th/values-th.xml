@@ -284,6 +284,7 @@
     <string name="password_toggle_content_description">แสดงรหัสผ่าน</string>
     <string name="payment_method_add_new_card">เพิ่มบัตรใหม่...</string>
     <string name="payment_method_add_new_fpx">เลือกบัญชีธนาคาร (FPX)…</string>
+    <string name="paypal_mandate">การยืนยันการการชำระเงินด้วย PayPal หมายความว่าคุณอนุญาตให้ %s เรียกเก็บเงินจากบัญชี PayPal ของคุณสำหรับการชำระเงินในอนาคตตามเงื่อนไขของผู้ค้ารายดังกล่าว</string>
     <string name="pm_set_as_default">ตั้งเป็นวิธีการชำระเงินเริ่มต้น</string>
     <string name="price_free">ฟรี</string>
     <string name="processing_error">เกิดข้อผิดพลาดขณะประมวลผลบัตร โปรดลองอีกครั้งในอีกสักครู่</string>

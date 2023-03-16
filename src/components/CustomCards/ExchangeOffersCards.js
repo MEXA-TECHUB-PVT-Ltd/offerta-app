@@ -21,14 +21,14 @@ console.log("props here:",props)
   });
   const formattedLikes = formatter.format(props.pricetext);
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("SliderScreen", {
-          navplace: "Market",
-          navtype: item.type,
-        })
-      }
-    >
+    // <TouchableOpacity
+    //   onPress={() =>
+    //     navigation.navigate("SliderScreen", {
+    //       navplace: "Market",
+    //       navtype: item.type,
+    //     })
+    //   }
+    // >
       <View style={styles.Exchangeofferscard}>
 
   <View style={{alignItems:'center',justifyContent:'center'}}>
@@ -53,7 +53,7 @@ console.log("props here:",props)
           </Text>
         </View>
         </View>
-    </TouchableOpacity>
+    // </TouchableOpacity>
   );
 };
 

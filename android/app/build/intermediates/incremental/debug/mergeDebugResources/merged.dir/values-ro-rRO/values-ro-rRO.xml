@@ -135,6 +135,7 @@
     <string name="p24_bank">Banca Przelewy24</string>
     <string name="payment_method_add_new_card">Adăugare card nou...</string>
     <string name="payment_method_add_new_fpx">Selectare cont bancar (FPX)…</string>
+    <string name="paypal_mandate">Prin confirmarea plății cu PayPal, permiteți %s să vă taxeze contul PayPal pentru plățile viitoare în conformitate cu termenii acesteia.</string>
     <string name="pm_set_as_default">Setați ca metodă de plată implicită</string>
     <string name="price_free">Expediere gratuită</string>
     <string name="processing_error">A apărut o eroare la procesarea cardului dvs. -- încercați din nou în câteva secunde</string>
