@@ -55,23 +55,33 @@ const PriceOffer = ({ navigation, route }) => {
 
   ////////////LISTING LIKES//////////
   const Listings_Exchange_Offer = (props) => {
+    // console.log("props   :  ", props);
+    // console.log("exchange_other_listing  :   ", exchange_other_listing.user_id);
+    // console.log("exchange_other_listing  :   ", exchange_other_listing.id);
+    // return;
+
     setList_Date({
       otheruser_id: exchange_other_listing.user_id,
       other_item_id: exchange_other_listing.id,
       item_offerprice: props,
     });
 
-    post_Listings_Price_Offer(exchange_other_listing.user_id,exchange_other_listing.id,offerprice).then((response) => {
+    post_Listings_Price_Offer(
+      exchange_other_listing.user_id,
+      exchange_other_listing.id,
+      offerprice
+    ).then((response) => {
       //dispatch(setExchangeOffer_OtherListing(list_data))
-      console.log("exchnage response hereL:", response.data);
+      console.log("exchnage response hereL:", response?.data);
+
       navigation.navigate("ChatScreen", {
         userid: exchange_other_listing.user_id,
         offerprice: props,
-        offerid:response.data.data.id,
-        item_price:exchange_other_listing.price,
+        offerid: response.data.data.id,
+        item_price: exchange_other_listing.price,
         navtype: "price_offer",
       });
-      //   setListing_Like_User_id(response.data.data.user_id);
+      // setListing_Like_User_id(response.data.data.user_id);
     });
   };
   const [list_data, setList_Date] = useState({
@@ -90,7 +100,7 @@ const PriceOffer = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Price Offer"}
+          headerlabel={"Price Offer "}
           iconPress={() => {
             navigation.goBack();
           }}

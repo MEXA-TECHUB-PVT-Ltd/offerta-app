@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 import { Snackbar } from "react-native-paper";
 
@@ -37,7 +37,6 @@ import { post_Comments_Listings } from "../../api/PostApis";
 import { GetComments } from "../../api/GetApis";
 
 const DescriptionBottomSheet = (props) => {
-
   const navigation = useNavigation();
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,35 +49,33 @@ const DescriptionBottomSheet = (props) => {
   const [description, setDescription] = useState("");
   const [data, setData] = useState({});
 
-    ///////////////button states/////////////
-    const [loading, setloading] = useState(0);
-    const [disable, setdisable] = useState(0);
-    const [visible, setVisible] = useState(false);
-    const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
-    const onDismissSnackBar = () => setVisible(false);
+  ///////////////button states/////////////
+  const [loading, setloading] = useState(0);
+  const [disable, setdisable] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
 
   //-----------like list
   const listing_Comments = (props) => {
-    console.log("here in data:", data);
-    setData({ listing_id,description });
-    post_Comments_Listings(listing_id,description).then((response) => {
-      console.log("here", response.data);
-      setDescription("")
+    setData({ listing_id, description });
+    post_Comments_Listings(listing_id, description).then((response) => {
+      setDescription("");
       setloading(0);
       setdisable(0);
       setModalVisible(true);
-   
     });
   };
   //Api form validation
   const formValidation = async () => {
     // input validation
     if (description == "") {
-      setsnackbarValue({ value: "Please Enter Comment description", color: "red" });
+      setsnackbarValue({
+        value: "Please Enter Comment description",
+        color: "red",
+      });
       setVisible("true");
-    } 
-
-    else {
+    } else {
       setloading(1);
       setdisable(1);
       listing_Comments();
@@ -148,18 +145,18 @@ const DescriptionBottomSheet = (props) => {
         />
       </View>
       <View style={{ marginTop: hp(0) }}>
-          <CustomButtonhere
-            title={"ADD"}
-            widthset={80}
-            topDistance={7}
-            loading={loading}
-            disabled={disable}
-            onPress={() => {
-              //navigation.navigate("Drawerroute");
-              formValidation();
-            }}
-          />
-        </View>
+        <CustomButtonhere
+          title={"ADD"}
+          widthset={80}
+          topDistance={7}
+          loading={loading}
+          disabled={disable}
+          onPress={() => {
+            //navigation.navigate("Drawerroute");
+            formValidation();
+          }}
+        />
+      </View>
       <View style={styles.btnView}>
         {/* <TouchableOpacity
           style={styles.btn}
@@ -167,37 +164,36 @@ const DescriptionBottomSheet = (props) => {
         >
           <Text style={styles.btnText}>{props.btntext}</Text>
         </TouchableOpacity> */}
-
       </View>
       <CustomModal
-          modalVisible={modalVisible}
-          CloseModal={() => setModalVisible(false)}
-          Icon={appImages.sucess}
-          text={"Sucess"}
-          subtext={
-            props.btntext === "REPORT"
-              ? "Report Sucessfully"
-              : "Review Added Successfully"
-          }
-          buttontext={"OK"}
-          onPress={() => {
-            props.onClose()
-         setModalVisible(false)
-//navigation.navigate('CommentsDetails')
-          }}
-        />
+        modalVisible={modalVisible}
+        CloseModal={() => setModalVisible(false)}
+        Icon={appImages.sucess}
+        text={"Sucess"}
+        subtext={
+          props.btntext === "REPORT"
+            ? "Report Sucessfully"
+            : "Review Added Successfully"
+        }
+        buttontext={"OK"}
+        onPress={() => {
+          props.onClose();
+          setModalVisible(false);
+          //navigation.navigate('CommentsDetails')
+        }}
+      />
       <Snackbar
-          duration={400}
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          style={{
-            backgroundColor: snackbarValue.color,
-            marginBottom: hp(9),
-            zIndex: 999,
-          }}
-        >
-          {snackbarValue.value}
-        </Snackbar>
+        duration={400}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(9),
+          zIndex: 999,
+        }}
+      >
+        {snackbarValue.value}
+      </Snackbar>
     </RBSheet>
   );
 };

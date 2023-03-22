@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
-  Text
+  Text,
 } from "react-native";
 
 ///////////////app components////////////////
@@ -34,14 +34,14 @@ import RNFetchBlob from "rn-fetch-blob";
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
 import { setUserImage } from "../../../redux/actions";
-import { setCountryName,setCityName } from "../../../redux/Location/actions";
+import { setCountryName, setCityName } from "../../../redux/Location/actions";
 
 ////////////////////app images////////
 import { appImages } from "../../../constant/images";
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
-import { BASE_URL } from "../../../utills/ApiRootUrl";
+import { BASE_URL, IMAGE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 ///////////////api functions///////////
@@ -85,56 +85,55 @@ const EditProfile = ({ navigation, route }) => {
   const [lname, setlname] = React.useState();
   const [email, setEmail] = React.useState();
 
-
   //////////////////////Api Calling/////////////////
   const Edit_User_Profile = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
     var data = JSON.stringify({
       user_id: user_id,
       full_name: fname,
-      username: username
+      username: username,
     });
-    
-    var config = {
-      method: 'put',
-    maxBodyLength: Infinity,
-      url: BASE_URL+'updateProfile.php',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    
-    axios(config)
-    .then(function (response) {
-      get_user_data()
-      setModalVisible(true)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    
 
+    var config = {
+      method: "put",
+      maxBodyLength: Infinity,
+      url: BASE_URL + "updateProfile.php",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        get_user_data();
+        setModalVisible(true);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
-const get_user_data=()=>{
-  get_Login_UserData().then((response) => {
-    setuser_id(response.data.id);
-    setusername(response.data.user_name);
-    setfname(response.data.full_name);
-    setlname(response.data.full_name);
-    setEmail(response.data.email);
-  });
-}
+  const get_user_data = () => {
+    get_Login_UserData().then((response) => {
+      if (response?.data?.image) {
+        dispatch(setUserImage(IMAGE_URL + response?.data?.image));
+      }
+      setuser_id(response.data.id);
+      setusername(response.data.user_name);
+      setfname(response.data.full_name);
+      setlname(response.data.full_name);
+      setEmail(response.data.email);
+    });
+  };
   useEffect(() => {
-    get_user_data()
+    get_user_data();
   }, []);
 
   /////////error stateand function/////////
-  const[email_error,setEmailError]=useState("")
-  const onpressemail=()=>{
-
-    setEmailError("you can't edit your email")
-  }
+  const [email_error, setEmailError] = useState("");
+  const onpressemail = () => {
+    setEmailError("you can't edit your email");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -172,7 +171,15 @@ const get_user_data=()=>{
             )}
             <TouchableOpacity
               onPress={() => refRBSheet.current.open()}
-              style={{ position: "absolute", bottom: hp(0), right: wp(0) }}
+              style={{
+                position: "absolute",
+                bottom: hp(0),
+                right: wp(0),
+
+                width: wp(12),
+                height: hp(6),
+                borderRadius: hp(6) / 2,
+              }}
             >
               <Image
                 source={appImages.Camera}
@@ -219,20 +226,22 @@ const get_user_data=()=>{
               placeholder="Enter Last Name"
               onTermChange={(newLname) => setlname(newLname)}
             />
- <TouchableOpacity onPress={() => onpressemail()}>
+            <TouchableOpacity onPress={() => onpressemail()}>
               <CustomTextInput
-              onRef={ref_input3}
-              icon={appImages.lock}
-              type={"withouticoninput"}
-              term={email}
-              editable={false}
-              disable={false}
-              placeholder="Enter Email"
-              onTermChange={(newLname) => setlname(newLname)}
-            />
-             </TouchableOpacity> 
-             <Text style={{color:'red',marginLeft:wp(10)}}>{email_error}</Text>
-                              {/* <TouchableOpacity onPress={() => refCountryddRBSheet.current.open()}>
+                onRef={ref_input3}
+                icon={appImages.lock}
+                type={"withouticoninput"}
+                term={email}
+                editable={false}
+                disable={false}
+                placeholder="Enter Email"
+                onTermChange={(newLname) => setlname(newLname)}
+              />
+            </TouchableOpacity>
+            <Text style={{ color: "red", marginLeft: wp(10) }}>
+              {email_error}
+            </Text>
+            {/* <TouchableOpacity onPress={() => refCountryddRBSheet.current.open()}>
             <CustomTextInput
               onRef={ref_input3}
               icon={appImages.lock}
@@ -279,6 +288,7 @@ const get_user_data=()=>{
           onClose={() => refRBSheet.current.close()}
           title={"From Gallery"}
           type={"onepic"}
+          type1={"editProfile"}
         />
         <Snackbar
           duration={400}

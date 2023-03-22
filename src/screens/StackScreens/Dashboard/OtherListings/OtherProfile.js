@@ -65,8 +65,10 @@ const OtherProfile = ({ navigation }) => {
   });
 
   ////////////////redux/////////////
-  const { exchange_other_listing} = useSelector((state) => state.userReducer);
-  const {other_user_followers_count} = useSelector((state) => state.otheruserReducer);
+  const { exchange_other_listing } = useSelector((state) => state.userReducer);
+  const { other_user_followers_count } = useSelector(
+    (state) => state.otheruserReducer
+  );
 
   const dispatch = useDispatch();
 
@@ -79,16 +81,19 @@ const OtherProfile = ({ navigation }) => {
   //-----------like list
   const follow_user = (props) => {
     post_Follow_Users(exchange_other_listing.user_id).then((response) => {
-      console.log("here dat in follow", response.data);
       setFollow_User_id(response.data.user.id);
-      dispatch(setOtherUserFollowersCountINC(response.data.following_user.followers)) 
+      dispatch(
+        setOtherUserFollowersCountINC(response.data.following_user.followers)
+      );
     });
   };
   //-----------unlike list
   const unfollow_user = (props) => {
     post_UnFollow_Users(exchange_other_listing.user_id).then((response) => {
       setFollow_User_id(" ");
-      dispatch(setOtherUserFollowersCountDEC(response.data.following_user.followers)) 
+      dispatch(
+        setOtherUserFollowersCountDEC(response.data.following_user.followers)
+      );
     });
   };
 
@@ -101,7 +106,6 @@ const OtherProfile = ({ navigation }) => {
   const [following, setFollowing] = React.useState();
   const GetAcountDetail = async () => {
     get_Other_UserData(exchange_other_listing.user_id).then((response) => {
-      //console.log("here data in user:",response.data)
       //setFollow_User_id(response.data.id)
       setUserName(response.data.full_name);
       setUseremail(response.data.email);
@@ -109,9 +113,8 @@ const OtherProfile = ({ navigation }) => {
       setFollowing(response.data.following);
       setFollowers(response.data.followers);
       setRatting(response.data.review);
-      follow_user()
-      //dispatch(setOtherUserFollowersCountINC(response.data.following)) 
-
+      follow_user();
+      //dispatch(setOtherUserFollowersCountINC(response.data.following))
     });
   };
   ////////////////LIST DATA/////////
@@ -119,7 +122,6 @@ const OtherProfile = ({ navigation }) => {
 
   useEffect(() => {
     get_User_Listings().then((response) => {
-      //console.log("here data:",response.data)
       if (response.data.message === "No data available") {
         setdata("");
       } else {
@@ -134,7 +136,7 @@ const OtherProfile = ({ navigation }) => {
       getuser();
       //follow_user()
     }
-  }, [isfocussed,ratting]);
+  }, [isfocussed, ratting]);
   const [login_user_id, setlogin_user_id] = useState();
   const getuser = async () => {
     var userid = await AsyncStorage.getItem("Userid");

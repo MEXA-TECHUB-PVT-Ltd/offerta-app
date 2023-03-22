@@ -35,14 +35,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Checkout = ({ navigation, route }) => {
   ////////////////redux/////////////
-  const { exchange_other_listing } = useSelector(
-    (state) => state.userReducer
-  );
+  const { exchange_other_listing } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("here redux item", exchange_other_listing);
-  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -100,21 +95,35 @@ const Checkout = ({ navigation, route }) => {
         </View>
         <View>
           <ExcahangeCard
-            image={IMAGE_URL+exchange_other_listing.images[0]}
-           maintext={exchange_other_listing.title}
-           subtext={exchange_other_listing.description}
-           pricetext={exchange_other_listing.price}
+            image={IMAGE_URL + exchange_other_listing.images[0]}
+            maintext={exchange_other_listing.title}
+            subtext={exchange_other_listing.description}
+            pricetext={exchange_other_listing.price}
             //pricetag={exchange_other_listing.price}
           />
         </View>
-<View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:wp(5)}}>
-<Text style={styles.timelinetext}>Total Items</Text>
-<Text style={styles.timelinetext}>01</Text>
-</View>
-<View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:wp(5)}}>
-<Text style={styles.timelinetext}>Total Price</Text>
-<Text style={styles.timelinetext}>{exchange_other_listing.price}</Text>
-</View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: wp(5),
+          }}
+        >
+          <Text style={styles.timelinetext}>Total Items</Text>
+          <Text style={styles.timelinetext}>01</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: wp(5),
+          }}
+        >
+          <Text style={styles.timelinetext}>Total Price</Text>
+          <Text style={styles.timelinetext}>
+            {exchange_other_listing.price}
+          </Text>
+        </View>
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
             title={"NEXT"}

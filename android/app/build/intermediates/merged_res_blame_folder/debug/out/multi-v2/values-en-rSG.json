@@ -4,7 +4,7 @@
             "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-en-rSG/values-en-rSG.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\4b0792db020f7d450407ad807e1ff524\\transformed\\jetified-play-services-wallet-19.1.0\\res\\values-en-rSG\\values.xml",
+                    "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\4b0792db020f7d450407ad807e1ff524\\transformed\\jetified-play-services-wallet-19.1.0\\res\\values-en-rSG\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",

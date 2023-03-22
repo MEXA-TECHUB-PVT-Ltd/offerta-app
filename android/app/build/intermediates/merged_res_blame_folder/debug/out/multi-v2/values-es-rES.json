@@ -4,7 +4,7 @@
             "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-es-rES/values-es-rES.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\0f2385c3a0734aee75c48a93ccd3c4da\\transformed\\jetified-facebook-login-16.0.0\\res\\values-es-rES\\values-es-rES.xml",
+                    "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\0f2385c3a0734aee75c48a93ccd3c4da\\transformed\\jetified-facebook-login-16.0.0\\res\\values-es-rES\\values-es-rES.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\70ca9f350f5d3833fd8115fb547e6bc1\\transformed\\jetified-stripe-3ds2-android-6.1.7\\res\\values-es-rES\\values-es-rES.xml",
+                    "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\70ca9f350f5d3833fd8115fb547e6bc1\\transformed\\jetified-stripe-3ds2-android-6.1.7\\res\\values-es-rES\\values-es-rES.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",

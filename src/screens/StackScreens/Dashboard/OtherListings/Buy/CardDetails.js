@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 ///////////////////paper///////////////
-import { Checkbox } from 'react-native-paper';
+import { Checkbox } from "react-native-paper";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../../../components/Header/CustomHeader";
@@ -26,7 +26,7 @@ import Colors from "../../../../../utills/Colors";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
 /////////////////////app images/////////////////////
 import { appImages } from "../../../../../constant/images";
@@ -39,18 +39,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { create_order_Listings } from "../../../../../api/Offer";
 
 const CardDetails = ({ navigation, route }) => {
-
-    ////////////////redux/////////////
-    const { exchange_other_listing } = useSelector(
-      (state) => state.userReducer
-    );
-    ////////////////redux/////////////
-    const { login_user_shipping_address } = useSelector(
-      (state) => state.loginuserReducer
-    );
-      //////////////Modal States////////////////////////
+  ////////////////redux/////////////
+  const { exchange_other_listing } = useSelector((state) => state.userReducer);
+  ////////////////redux/////////////
+  const { login_user_shipping_address } = useSelector(
+    (state) => state.loginuserReducer
+  );
+  //////////////Modal States////////////////////////
   const [modalVisible, setModalVisible] = useState(false);
-
 
   /////////////////checkbox////////
   const [checked, setChecked] = React.useState(false);
@@ -64,20 +60,16 @@ const CardDetails = ({ navigation, route }) => {
   const [countryCode, setCountryCode] = useState("92");
   const [countryname, setCountryName] = useState("Pak");
 
-  useEffect(() => {
-console.log("here we go in:",exchange_other_listing,login_user_shipping_address)
-
-  }, []);
-
-      ////////////Create Order//////////
-      const Listing_Create_Order = () => 
-      {
-        create_order_Listings(exchange_other_listing.user_id,exchange_other_listing.id,
-          login_user_shipping_address.id).then((response) => {
-            console.log("here we go in:",response.data)
-            setModalVisible(true)
-          });
-      }
+  ////////////Create Order//////////
+  const Listing_Create_Order = () => {
+    create_order_Listings(
+      exchange_other_listing.user_id,
+      exchange_other_listing.id,
+      login_user_shipping_address.id
+    ).then((response) => {
+      setModalVisible(true);
+    });
+  };
   return (
     <SafeAreaView style={styles.container}>
       {CountryPickerView == true ? (
@@ -213,12 +205,12 @@ console.log("here we go in:",exchange_other_listing,login_user_shipping_address)
         >
           <Text style={styles.timelinetext}>Save Card</Text>
           <Checkbox
-      status={checked ? 'checked' : 'unchecked'}
-      color={Colors.activetextinput}
-      onPress={() => {
-        setChecked(!checked);
-      }}
-    />
+            status={checked ? "checked" : "unchecked"}
+            color={Colors.activetextinput}
+            onPress={() => {
+              setChecked(!checked);
+            }}
+          />
         </View>
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
@@ -226,21 +218,22 @@ console.log("here we go in:",exchange_other_listing,login_user_shipping_address)
             widthset={80}
             topDistance={10}
             onPress={() => {
-              Listing_Create_Order()
-
+              Listing_Create_Order();
             }}
           />
         </View>
       </ScrollView>
-      <CustomModal 
-                modalVisible={modalVisible}
-                CloseModal={() => setModalVisible(false)}
-                Icon={appImages.sucess}
-              text={'Sucess'}
-              subtext={'Payed Successfully'}
-          buttontext={'OK'}
- onPress={()=> { navigation.navigate("BottomTab"),setModalVisible(false)}}
-                /> 
+      <CustomModal
+        modalVisible={modalVisible}
+        CloseModal={() => setModalVisible(false)}
+        Icon={appImages.sucess}
+        text={"Sucess"}
+        subtext={"Payed Successfully"}
+        buttontext={"OK"}
+        onPress={() => {
+          navigation.navigate("BottomTab"), setModalVisible(false);
+        }}
+      />
     </SafeAreaView>
   );
 };

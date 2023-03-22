@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef,useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   SafeAreaView,
   FlatList,
@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 /////////////////////navigation///////////////
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 /////////////////app components/////////
 import Slider from "../../../../components/ImageSlider/Slider";
@@ -45,50 +45,45 @@ import { post_Comments_Listings } from "../../../../api/PostApis";
 /////////////////image url/////////////
 import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
 
-const CommentsDetails = ({ navigation,route }) => {
+const CommentsDetails = ({ navigation, route }) => {
   //////////////redux///////////////
   const { listing_id } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-    ///////////////////loader loading state///////////////
-    const [loading, setloading] = useState(true);
+  ///////////////////loader loading state///////////////
+  const [loading, setloading] = useState(true);
 
   /////////////naviagtion////////////////
   const isFocused = useIsFocused();
 
   //camera and imagepicker
   const refRBSheet = useRef();
-    /////////////Listing Detail states/////////////
-    const [listing_images, setListing_Images] = useState([]);
+  /////////////Listing Detail states/////////////
+  const [listing_images, setListing_Images] = useState([]);
 
   /////////////Comments list states/////////////
   const [Comments, setComments] = useState([]);
 
   useEffect(() => {
-    if(isFocused){
-      doSomethingCallback()
+    if (isFocused) {
+      doSomethingCallback();
     }
+  }, [isFocused, Comments]);
 
-  }, [isFocused,Comments]);
-
-  const doSomethingCallback = useCallback(() => { 
-    GetListingsDetails(listing_id)
-    .then((response) => {
-      console.log("here we go in user adata",response.data)
-      setListing_Images(response.data.images)
-    GetComments(listing_id).then((response) => {
-      if(response.data.msg === "No Result")
-      {
-        setComments([]);
-        setloading(false)
-      }
-else{
-  setComments(response.data);
-  setloading(false)
-}
-    })
-  });
-}, [Comments])
+  const doSomethingCallback = useCallback(() => {
+    GetListingsDetails(listing_id).then((response) => {
+      setListing_Images(response.data.images);
+      GetComments(listing_id).then((response) => {
+        if (response.data.msg === "No Result") {
+          setComments([]);
+          setloading(false);
+        } else {
+          setComments(response.data);
+          setloading(false);
+        }
+      });
+    });
+  }, [Comments]);
   const [ratting, setRatting] = useState(4.5);
   ///////////////ratings function//////////////
   const ratingCompleted = (rating) => {
@@ -98,18 +93,18 @@ else{
 
   const renderItem = (item) => {
     return (
-    <View style={{ paddingHorizontal: wp(5) }}>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={{uri: IMAGE_URL+item.user.image}}
-              style={{ width: wp(12), height: hp(6), borderRadius: wp(10) }}
-              resizeMode="contain"
-            />
-            <View style={{ marginLeft: wp(4), justifyContent:'center' }}>
-              <Text style={styles.usertext}>{item.user.user_name}</Text>
-              {/* <View
+      <View style={{ paddingHorizontal: wp(5) }}>
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={{ uri: IMAGE_URL + item.user.image }}
+            style={{ width: wp(12), height: hp(6), borderRadius: wp(10) }}
+            resizeMode="contain"
+          />
+          <View style={{ marginLeft: wp(4), justifyContent: "center" }}>
+            <Text style={styles.usertext}>{item.user.user_name}</Text>
+            {/* <View
           style={{alignItems: 'center', alignSelf: 'center', marginTop: hp(3)}}> */}
-              {/* <Rating
+            {/* <Rating
                 type="star"
                 ratingCount={item.user.reviews}
                 imageSize={20}
@@ -118,26 +113,26 @@ else{
                 readonly={true}
                 //onFinishRating={ratingCompleted}
               /> */}
-              {/* </View> */}
-            </View>
+            {/* </View> */}
           </View>
-          <View style={{ marginTop: hp(1.5),marginLeft:wp(3)}}>
+        </View>
+        <View style={{ marginTop: hp(1.5), marginLeft: wp(3) }}>
           <Text style={styles.subtext}>{item.comment}</Text>
-          </View>
-       
-          <View
+        </View>
+
+        <View
           style={{
             width: wp(85),
             borderWidth: 0.3,
             borderColor: Colors.inactivetextinput,
             alignSelf: "center",
             marginTop: hp(3),
-            marginBottom:hp(3)
+            marginBottom: hp(3),
           }}
         ></View>
-        </View>
-    )
-        }
+      </View>
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -158,19 +153,13 @@ else{
           <Text style={styles.maintext}>Comments</Text>
         </View>
 
-
-{        Comments.map((item, key) => (
-
-renderItem(item)
-))}
-
+        {Comments.map((item, key) => renderItem(item))}
 
         {/* <FlatList
         data={Comments}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       /> */}
-
 
         <View style={styles.btnView}>
           <TouchableOpacity
@@ -190,7 +179,7 @@ renderItem(item)
         listingID={listing_id}
         onpress={() => {
           {
-            doSomethingCallback()
+            doSomethingCallback();
           }
         }}
       />

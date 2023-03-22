@@ -41,12 +41,10 @@ import { appImages } from "../../../constant/images";
 //////////////////appImages.//////////////////
 
 const ExchangeNoti = ({ navigation, route }) => {
-  console.log("here data:", route.params.data.list.images[0]);
-
-   /////////price formatter
-   const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short'
+  /////////price formatter
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
   });
 
   ////////////////previous Data/////////
@@ -163,7 +161,10 @@ const ExchangeNoti = ({ navigation, route }) => {
             marginTop: hp(3),
           }}
           onPress={() => {
-            navigation.navigate("ChatScreen",{navtype:"chatlist", userid: predata.userid });
+            navigation.navigate("ChatScreen", {
+              navtype: "chatlist",
+              userid: predata.userid,
+            });
           }}
         >
           <Text style={styles.LastText}>Talk on chat</Text>

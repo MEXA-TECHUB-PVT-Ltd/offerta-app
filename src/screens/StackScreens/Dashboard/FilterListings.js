@@ -2,17 +2,19 @@ import React, { useEffect, useState, useRef } from "react";
 import { SafeAreaView, ScrollView, FlatList } from "react-native";
 
 /////////////navigation////////////
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import {   setCategoryName,
+import {
+  setCategoryName,
   setLocationAddress,
   setSortByDD,
   setLocationLat,
   setLocationLng,
   setSliderDistance,
-  setCategoryId,} from "../../../redux/actions";
+  setCategoryId,
+} from "../../../redux/actions";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../components/Header/CustomHeader";
@@ -38,25 +40,28 @@ import { BASE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const FilterListings = ({ navigation, route }) => {
-
-
   const isFocused = useIsFocused();
   /////////////////////previous data//////////////
   const [predata] = useState(route.params);
 
   /////////////redux states///////
-  const { category_id, post_within_value, location_lng, location_lat,sort_by_value,slider_distance  } =
-    useSelector((state) => state.userReducer);
+  const {
+    category_id,
+    post_within_value,
+    location_lng,
+    location_lat,
+    sort_by_value,
+    slider_distance,
+  } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-    ///////////////////loader loading state///////////////
-    const [loading, setloading] = useState(true);
+  ///////////////////loader loading state///////////////
+  const [loading, setloading] = useState(true);
 
   /////////////filter data state/////////////
   const [Categorylist, setCategoryList] = useState("");
   //////////////Api Calling Listing Filter////////////////////
   const ListingsFilter = async () => {
-    console.log("here we go",post_within_value, predata.itemprice,sort_by_value, category_id ,slider_distance )
     axios({
       method: "get",
       url:
@@ -72,8 +77,9 @@ const FilterListings = ({ navigation, route }) => {
         "&time=" +
         post_within_value +
         "&sort=" +
-        sort_by_value+
-      "&distance="+slider_distance ,
+        sort_by_value +
+        "&distance=" +
+        slider_distance,
     })
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
@@ -81,13 +87,13 @@ const FilterListings = ({ navigation, route }) => {
           setCategoryList("no");
         } else {
           setCategoryList(response.data);
-          dispatch(setSortByDD(""))
-          dispatch(setCategoryId(""))
-          dispatch(setCategoryName(""))
-          setloading(false)
+          dispatch(setSortByDD(""));
+          dispatch(setCategoryId(""));
+          dispatch(setCategoryName(""));
+          setloading(false);
           // dispatch(setLocationLat(""))
           // dispatch(setLocationLng(""))
-         }
+        }
       })
       .catch(function (error) {
         if (error) {
@@ -98,12 +104,19 @@ const FilterListings = ({ navigation, route }) => {
       });
   };
   useEffect(() => {
-    if(isFocused)
-    {
+    if (isFocused) {
       ListingsFilter();
     }
 
-    console.log("previos data", category_id, post_within_value, location_lng, location_lat,sort_by_value, predata.itemprice );
+    console.log(
+      "previos data",
+      category_id,
+      post_within_value,
+      location_lng,
+      location_lat,
+      sort_by_value,
+      predata.itemprice
+    );
   }, [isFocused]);
 
   const renderItem = ({ item }) => (
@@ -132,7 +145,7 @@ const FilterListings = ({ navigation, route }) => {
         }}
         icon={"arrow-back"}
       />
-        <Loader isLoading={loading} />
+      <Loader isLoading={loading} />
       {Categorylist === "no" ? (
         <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
       ) : (

@@ -29,7 +29,7 @@ import {
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import {  setCityName } from "../../../redux/Location/actions";
+import { setCityName } from "../../../redux/Location/actions";
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
@@ -39,9 +39,7 @@ const CityDropDown = (props) => {
   const isfocussed = useIsFocused();
 
   /////////////redux states///////
-  const {  country_name } = useSelector(
-    (state) => state.locationReducer
-  );
+  const { country_name } = useSelector((state) => state.locationReducer);
   const dispatch = useDispatch();
 
   //seacrh states
@@ -57,9 +55,7 @@ const CityDropDown = (props) => {
       // Filter the masterDataSource
       // Update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
-        const itemData = item
-          ? item.toUpperCase()
-          : "".toUpperCase();
+        const itemData = item ? item.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -146,17 +142,19 @@ const CityDropDown = (props) => {
           value={search}
         />
       </View>
-      {data === ""&& country_name === "" ? (
-         <NoDataFound icon={"exclamation-thick"} text={"Please Select Country First"} />
+      {data === "" && country_name === "" ? (
+        <NoDataFound
+          icon={"exclamation-thick"}
+          text={"Please Select Country First"}
+        />
       ) : (
         <FlatList
           data={filteredDataSource}
           renderItem={({ item, index, separators }) => (
             <TouchableOpacity
-            activeOpacity={0.7}
+              activeOpacity={0.7}
               onPress={() => {
-                dispatch(setCityName(item)),
-                  props.refRBSheet.current.close();
+                dispatch(setCityName(item)), props.refRBSheet.current.close();
               }}
             >
               <View style={styles.card}>

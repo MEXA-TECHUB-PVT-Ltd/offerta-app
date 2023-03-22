@@ -140,20 +140,30 @@ const Slider = (props) => {
               }
             }}
           />
-               {userdata === exchange_other_listing.user_id &&
+
+          {userdata === exchange_other_listing.user_id &&
           props.type === "listing_details" ? null : userdata ===
               exchange_other_listing.user_id ||
             props.type === "comments" ? null : (
-              <TouchableOpacity onPress={()=>navigation.navigate("ChatScreen",{userid:exchange_other_listing.user_id})}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ChatScreen", {
+                  userid: exchange_other_listing.user_id,
+                });
+              }}
+              style={{ width: wp(15), height: wp(8), left: wp(30) }}
+            >
               <Image
                 source={appImages.sliderchat}
-                style={{ width: wp(15), height: wp(8), left:wp(35) }}
+                style={{
+                  width: wp(15),
+                  height: wp(8),
+                  // left: wp(35),
+                }}
                 resizeMode="contain"
               />
-              </TouchableOpacity>
-
-            )
-            }
+            </TouchableOpacity>
+          )}
 
           {userdata === exchange_other_listing.user_id &&
           props.type === "listing_details" ? null : userdata ===

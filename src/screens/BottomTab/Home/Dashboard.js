@@ -6,6 +6,7 @@ import {
   ScrollView,
   View,
   Text,
+  RefreshControl,
 } from "react-native";
 
 //////////////////app icons////////////////
@@ -55,6 +56,8 @@ import {
   getCurrentLocation,
 } from "../../../api/CurrentLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { colors } from "react-native-swiper-flatlist/src/themes";
+import CustomImageSlider from "../../../components/ImageSlider/CustomImageSlider";
 
 const Home = ({ navigation }) => {
   const { name, age } = useSelector((state) => state.userReducer);
@@ -62,7 +65,7 @@ const Home = ({ navigation }) => {
 
   ///////////////////loader loading state///////////////
   const [loading, setloading] = useState(true);
-
+  const [refreshing, setRefreshing] = useState(false);
   /////////////current location states/////////////
   const [cur_lat, setCur_Lat] = useState("");
   const [cur_lng, setCur_Lng] = useState("");
@@ -78,19 +81,19 @@ const Home = ({ navigation }) => {
   const [banners, setBanners] = useState([]);
   const Get_Banners = async () => {
     get_Banners().then((response) => {
-      console.log("here data:", response.data);
       if (response.data.msg === "No Result") {
         setBanners([]);
       } else {
         setBanners(response.data);
       }
+      console.log("banners list response  :  ", response.data);
     });
   };
   /////////////main menu status states/////////////
   const [Categorylist, setCategoryList] = useState("");
   const GetCategoriesList = async (props) => {
     // get_Categories_Listings_By_Location(props,cur_lat,cur_lng).then((response) => {
-    //   console.log("data here in cat:",response.data)
+
     //   if(response.data.message === "No data available")
     //   {
     //     setCategoryList("");
@@ -101,6 +104,7 @@ const Home = ({ navigation }) => {
 
     // });
     get_Categories_Listings(props).then((response) => {
+      // console.log("response  :   ", response?.data);
       if (response.data.message === "No data available") {
         setCategoryList("");
       } else {
@@ -110,17 +114,30 @@ const Home = ({ navigation }) => {
   };
   const [categorydata, setCategoryData] = useState("");
   useEffect(() => {
-    Get_Banners();
-    GetCategories().then((response) => {
-      dispatch(setExchangeOffer_OtherListing(response.data[0]));
-      setCategoryData(response.data);
-      setSelectedId(response.data[0].id);
-      GetCategoriesList(response.data[0].id);
-      setloading(false);
-    });
-    GetUserData();
-    getLiveLocation();
-    getuser();
+    try {
+      Get_Banners();
+      GetCategories()
+        .then((response) => {
+          dispatch(setExchangeOffer_OtherListing(response.data[0]));
+          setCategoryData(response.data);
+          setSelectedId(response.data[0].id);
+          GetCategoriesList(response.data[0].id);
+          setloading(false);
+        })
+        .catch((err) => {
+          console.log("err  : ", err);
+          setloading(false);
+        });
+      GetUserData().catch((err) =>
+        console.log("error getting user data  : ", err)
+      );
+      getLiveLocation().catch((err) =>
+        console.log("error getting live location : ", err)
+      );
+      getuser().catch((err) => console.log("err getting usr : ", err));
+    } catch (error) {
+      console.log("error raised  : ", error);
+    }
   }, []);
 
   const [login_user_id, setlogin_user_id] = useState();
@@ -132,12 +149,6 @@ const Home = ({ navigation }) => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
       const { latitude, longitude, heading } = await getCurrentLocation();
-      console.log(
-        "get live location after 4 second",
-        latitude,
-        longitude,
-        heading
-      );
       setCur_Lat(latitude);
       setCur_Lng(longitude);
     }
@@ -148,6 +159,37 @@ const Home = ({ navigation }) => {
   const onselect = (item) => {
     setSelectedId(item);
     GetCategoriesList(item);
+  };
+  const handleRefresh = () => {
+    setRefreshing(true);
+    try {
+      Get_Banners();
+      GetCategories()
+        .then((response) => {
+          dispatch(setExchangeOffer_OtherListing(response.data[0]));
+          setCategoryData(response.data);
+          setSelectedId(response.data[0].id);
+          GetCategoriesList(response.data[0].id);
+          setloading(false);
+          setRefreshing(false);
+        })
+        .catch((err) => {
+          console.log("err  : ", err);
+          setloading(false);
+          setRefreshing(false);
+        });
+      GetUserData().catch((err) =>
+        console.log("error getting user data  : ", err)
+      );
+      getLiveLocation().catch((err) =>
+        console.log("error getting live location : ", err)
+      );
+      getuser().catch((err) => console.log("err getting usr : ", err));
+    } catch (error) {
+      console.log("error raised  : ", error);
+      setloading(false);
+      setRefreshing(false);
+    }
   };
 
   const renderItem = ({ item, index }) => (
@@ -160,11 +202,19 @@ const Home = ({ navigation }) => {
       onpress={() => onselect(item.id)}
     />
   );
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[Colors.Appthemecolor]}
+            onRefresh={() => handleRefresh()}
+          />
+        }
       >
         <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <Loader isLoading={loading} />
@@ -212,11 +262,13 @@ const Home = ({ navigation }) => {
           <Text style={styles.welcometext}>{"Welcome"}</Text>
           <Text style={styles.usertext}>{username}</Text>
         </View>
-        <Slider
+        {/* <Slider
           imagearray={banners}
           slidertype={"dashboard"}
           listing_user_id={0}
-        />
+        /> */}
+        <CustomImageSlider imagearray={banners} />
+
         <ViewAll
           headerlabel={"Categories"}
           onpress={() => navigation.navigate("Categories")}
@@ -240,6 +292,7 @@ const Home = ({ navigation }) => {
             marginBottom: hp(3),
           }}
         ></View>
+
         {Categorylist === "" ? null : (
           <FlatList
             data={Categorylist}

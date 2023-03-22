@@ -39,8 +39,6 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import { ADMIN_IMAGE_URL } from "../../../utills/ApiRootUrl";
 
 const BlogsDetails = ({ navigation, route }) => {
-  console.log("here props:", route.params);
-
   //////////////////previous data/////////
   const [predata] = useState(route.params);
 
@@ -72,7 +70,6 @@ const BlogsDetails = ({ navigation, route }) => {
 
   useEffect(() => {
     get_Blogs_By_id(predata.blog_id).then((response) => {
-      console.log("here data:", response.data);
       if (response.data.message === "No data available") {
         setBlog_Name("");
         setBlog_Description("");
@@ -84,7 +81,11 @@ const BlogsDetails = ({ navigation, route }) => {
         setBlog_Name(response.data[0].title);
         setBlog_Description(response.data[0].description);
         setBlog_Reference(response.data[0].reference);
-        setCover_Video(response.data[0].cover_video.includes('v='.toLowerCase())?response.data[0].cover_video.split("v=")[1].split("&")[0]:null)
+        setCover_Video(
+          response.data[0].cover_video.includes("v=".toLowerCase())
+            ? response.data[0].cover_video.split("v=")[1].split("&")[0]
+            : null
+        );
         setCover_Image(response.data[0].cover_img);
         setloading(false);
       }
@@ -168,7 +169,7 @@ const BlogsDetails = ({ navigation, route }) => {
         ) : (
           <Image
             source={{
-              uri:ADMIN_IMAGE_URL + cover_image,
+              uri: ADMIN_IMAGE_URL + cover_image,
             }}
             style={{ height: hp(48), width: wp(100) }}
             resizeMode="cover"

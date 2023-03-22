@@ -35,25 +35,20 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ChatList = ({ navigation }) => {
-
-///////////////////data state///////////
-const[data,setData]=useState([])
+  ///////////////////data state///////////
+  const [data, setData] = useState([]);
 
   //textfields
   useEffect(() => {
-    getuser()
-    get_Chat_Users()
-    .then((response) => {
-        console.log("response get here dispatcher", JSON.stringify(response.data))
-        if(response.data.msg === "No Result")
-        {
-          setData()
-        }
-        else{
-          setData(response.data)
-        }
-    }
-    )
+    getuser();
+    get_Chat_Users().then((response) => {
+      console.log("chat list  response :  ", response?.data);
+      if (response.data.msg === "No Result") {
+        setData();
+      } else {
+        setData(response.data);
+      }
+    });
   }, []);
   const [login_user_id, setlogin_user_id] = useState();
   const getuser = async () => {
@@ -61,11 +56,17 @@ const[data,setData]=useState([])
     setlogin_user_id(user_id);
   };
   ///////////////////flatlist render item///////////////
-  const renderitem=(item)=>{
-    return (
-      item.item.chat_user.id === login_user_id &&  item.item.user.id != login_user_id?
-        <TouchableOpacity onPress={() => navigation.navigate("ChatScreen",{navtype:"chatlist",
-      userid:item.item.user.id})}>
+  const renderitem = (item) => {
+    return item.item.chat_user.id === login_user_id &&
+      item.item.user.id != login_user_id ? (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ChatScreen", {
+            navtype: "chatlist",
+            userid: item.item.user.id,
+          })
+        }
+      >
         <View style={styles.card}>
           <View
             style={{
@@ -77,7 +78,7 @@ const[data,setData]=useState([])
           >
             <View style={{}}>
               <Image
-                source={{uri: IMAGE_URL+item.item.user.image}}
+                source={{ uri: IMAGE_URL + item.item.user.image }}
                 style={styles.userimage}
                 resizeMode="contain"
               />
@@ -111,17 +112,21 @@ const[data,setData]=useState([])
             </View>
           </View>
 
-          <View style={{}}>
-            <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
-              1m ago
-            </Text>
+          {/* <View style={{}}>
+            <Text style={[styles.recomend, { color: "#7A8FA6" }]}>1m ago</Text>
             <Badge style={{ marginTop: hp(2) }}>5</Badge>
-          </View>
+          </View> */}
         </View>
       </TouchableOpacity>
-      :
-      <TouchableOpacity onPress={() => navigation.navigate("ChatScreen",{navtype:"chatlist",
-      userid:item.item.chat_user.id})}>
+    ) : (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ChatScreen", {
+            navtype: "chatlist",
+            userid: item.item.chat_user.id,
+          })
+        }
+      >
         <View style={styles.card}>
           <View
             style={{
@@ -133,7 +138,7 @@ const[data,setData]=useState([])
           >
             <View style={{}}>
               <Image
-                source={{uri: IMAGE_URL+item.item.chat_user.image}}
+                source={{ uri: IMAGE_URL + item.item.chat_user.image }}
                 style={styles.userimage}
                 resizeMode="contain"
               />
@@ -160,38 +165,35 @@ const[data,setData]=useState([])
                   {item.item.chat_user.full_name}
                 </Text>
               </View>
-
               <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
                 {item.subtext}
               </Text>
             </View>
           </View>
 
-          <View style={{}}>
-            <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
-              1m ago
-            </Text>
+          {/* <View style={{}}>
+            <Text style={[styles.recomend, { color: "#7A8FA6" }]}>1m ago</Text>
             <Badge style={{ marginTop: hp(2) }}>5</Badge>
-          </View>
+          </View> */}
         </View>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader headerlabel={"Chats"} />
-      {data === []?
-         <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />:
-         <FlatList
-         data={data}
-         renderItem={renderitem}
-         keyExtractor={(item, index) => index.toString()}
-         scrollEnabled={true}
-         showsHorizontalScrollIndicator={false}
-         showsVerticalScrollIndicator={false}
-       />
-         }
-
+      {data === [] ? (
+        <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={renderitem}
+          keyExtractor={(item, index) => index.toString()}
+          scrollEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </SafeAreaView>
   );
 };

@@ -2356,7 +2356,7 @@
     <string name="data_accessible_type_transactions">transactions</string>
     <string name="default_error_message">"Invalid input"</string>
     <string name="default_popup_window_title" ns1:ignore="ExtraTranslation">"Pop-Up Window"</string>
-    <string name="default_web_client_id" translatable="false">815771983043-rg0526cshfu9k3ca5051dmd3sjk9ik4i.apps.googleusercontent.com</string>
+    <string name="default_web_client_id" translatable="false">1003482259191-66q91u0nc6b4u2m8ehamnhb6fsclujo0.apps.googleusercontent.com</string>
     <string name="delete_payment_method">Delete Payment Method</string>
     <string name="delete_payment_method_prompt_title">Delete payment method?</string>
     <string name="donate_with_googlepay_button_content_description">Donate With Google Pay</string>
@@ -2384,13 +2384,13 @@
     <string name="fb_login_protocol_scheme">fb565536385121542</string>
     <string name="form_label_optional">%s (optional)</string>
     <string name="fpx_bank_offline">%s - Offline</string>
-    <string name="gcm_defaultSenderId" translatable="false">815771983043</string>
+    <string name="gcm_defaultSenderId" translatable="false">1003482259191</string>
     <string name="generic_decline">Your payment method was declined.</string>
-    <string name="google_api_key" translatable="false">AIzaSyA6NaggbC7SuBk1TcIrjHjVM6CNyNSaB3k</string>
-    <string name="google_app_id" translatable="false">1:815771983043:android:90dba6159f5dd7890f1676</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA6NaggbC7SuBk1TcIrjHjVM6CNyNSaB3k</string>
+    <string name="google_api_key" translatable="false">AIzaSyCo-h4nFagkIS903BBJAUV7BRpHk7Dq5JI</string>
+    <string name="google_app_id" translatable="false">1:1003482259191:android:23c4637dcf49935d19bdf2</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCo-h4nFagkIS903BBJAUV7BRpHk7Dq5JI</string>
     <string name="google_pay" translatable="false">Google Pay</string>
-    <string name="google_storage_bucket" translatable="false">offerta-450f5.appspot.com</string>
+    <string name="google_storage_bucket" translatable="false">ofertasv-a3fa7.appspot.com</string>
     <string name="googlepay_button_content_description">Google Pay</string>
     <string name="header_description" translatable="false">Heading</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
@@ -2550,7 +2550,7 @@
     <string name="price_free">Free</string>
     <string name="processing_error">There was an error processing your card -- try again in a few seconds</string>
     <string name="progressbar_description" translatable="false">Progress Bar</string>
-    <string name="project_id" translatable="false">offerta-450f5</string>
+    <string name="project_id" translatable="false">ofertasv-a3fa7</string>
     <string name="radiogroup_description" translatable="false">Radio Group</string>
     <string name="range_end">"Range end"</string>
     <string name="range_start">"Range start"</string>
