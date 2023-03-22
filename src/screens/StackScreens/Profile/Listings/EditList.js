@@ -6,7 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from "react-native";
 
 ////////////////////paper////////////////////
@@ -43,7 +43,7 @@ import {
   setLocationLat,
   setLocationLng,
   setSubCategoryId,
-  setCategoryId
+  setCategoryId,
 } from "../../../../redux/actions";
 
 /////////////////App Api function/////////////////
@@ -61,8 +61,6 @@ import { appImages } from "../../../../constant/images";
 import { GetListingsDetails } from "../../../../api/GetApis";
 
 const EditList = ({ navigation, route }) => {
-
-
   /////////////redux states///////
   const {
     category_name,
@@ -74,7 +72,7 @@ const EditList = ({ navigation, route }) => {
     location_lng,
     location_lat,
     location_address,
-    listing_id
+    listing_id,
   } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
@@ -109,26 +107,44 @@ const EditList = ({ navigation, route }) => {
   //////////////Api Calling////////////////////
   const UploadItemDetail = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
-    var c_lat=parseFloat(location_lat)
-        var c_lng=parseFloat(location_lng)
-   console.log("here we are:",c_lat,c_lng,user_id,category_id,sub_category_id,product_condition,listing_id,location_lat,location_lng,
-   exchangebuychecked,givingawaychecked,youtubelink,description,title)
+    var c_lat = parseFloat(location_lat);
+    var c_lng = parseFloat(location_lng);
+    console.log(
+      "here we are:",
+      c_lat,
+      c_lng,
+      user_id,
+      category_id,
+      sub_category_id,
+      product_condition,
+      listing_id,
+      location_lat,
+      location_lng,
+      exchangebuychecked,
+      givingawaychecked,
+      youtubelink,
+      description,
+      title
+    );
     var data = JSON.stringify({
-        id:listing_id,
+      id: listing_id,
       user_id: user_id,
       title: title,
       description: description,
-      price: givingawaychecked != true ?price:"0.0",
+      price: givingawaychecked != true ? price : "0.0",
       category_id: category_id,
       subcategory_id: sub_category_id,
       product_condition: product_condition,
       fixed_price: fixedpricechecked != true ? "false" : "true",
       location: location_address,
-    //   location_lat: parseFloat(location_lat),
-    //   location_log: parseFloat(location_lng),
+      //   location_lat: parseFloat(location_lat),
+      //   location_log: parseFloat(location_lng),
       exchange: exchangebuychecked != true ? "false" : "true",
       giveaway: givingawaychecked != true ? "false" : "true",
-      shipping_cost: shippingprice === " " || givingawaychecked != true ?shippingprice:"0.0",
+      shipping_cost:
+        shippingprice === " " || givingawaychecked != true
+          ? shippingprice
+          : "0.0",
       youtube_link: youtubelink,
     });
 
@@ -142,17 +158,21 @@ const EditList = ({ navigation, route }) => {
     };
 
     axios(config).then(function (response) {
-      console.log(JSON.stringify(response.data),"................",item_images_array);
+      console.log(
+        JSON.stringify(response.data),
+        "................",
+        item_images_array
+      );
       setModalVisible(true);
-    //   edit_Item_Images({
-    //     item_id: listing_id,
-    //     item_images: item_images_array,
-    //   })
-    //     .then((response) => response.json())
-    //     .then((responseData) => {
-    //       console.log("heer data:",responseData)
-    //       setModalVisible(true);
-    //     });
+      //   edit_Item_Images({
+      //     item_id: listing_id,
+      //     item_images: item_images_array,
+      //   })
+      //     .then((response) => response.json())
+      //     .then((responseData) => {
+      //       console.log("heer data:",responseData)
+      //       setModalVisible(true);
+      //     });
     });
   };
   //Api form validation
@@ -181,26 +201,30 @@ const EditList = ({ navigation, route }) => {
   const GetListData = async () => {
     GetListingsDetails(listing_id)
       .then((response) => {
-        console.log("here daat if list",response.data)
         dispatch(setItemImagesArray(response.data.images));
         dispatch(setLocationAddress(response.data.location));
         dispatch(setLocationLat(response.data.location_lat));
         dispatch(setLocationLng(response.data.location_log));
         dispatch(setProductCondition(response.data.product_condition));
         dispatch(setCategoryName(response.data.category.category_name));
-        dispatch(setCategoryId(response.data.category.category_id))
-        dispatch(setSubCategoryName(response.data.subcategory.sub_category_name));
-        dispatch(setSubCategoryId(response.data.subcategory.sub_category_id))
+        dispatch(setCategoryId(response.data.category.category_id));
+        dispatch(
+          setSubCategoryName(response.data.subcategory.sub_category_name)
+        );
+        dispatch(setSubCategoryId(response.data.subcategory.sub_category_id));
         setPrice(response.data.price);
         setTitle(response.data.title);
         setDescription(response.data.description);
         setShippingPrice(response.data.shipping_cost);
         setYoutubeLink(response.data.youtube_link);
         //-----------------> listings checks
-        setExchangebuyChecked(response.data.exchange === "false"?false:true);
-        setFixedpriceChecked(response.data.fixed_price === "false"?false:true);
-        setGivingawayChecked(response.data.giveaway === "false"?false:true);
- 
+        setExchangebuyChecked(
+          response.data.exchange === "false" ? false : true
+        );
+        setFixedpriceChecked(
+          response.data.fixed_price === "false" ? false : true
+        );
+        setGivingawayChecked(response.data.giveaway === "false" ? false : true);
       })
       .catch((error) => {
         console.error(error);
@@ -212,24 +236,55 @@ const EditList = ({ navigation, route }) => {
 
   ////////////////////images view////////////
   const renderItem = ({ item, index }) => (
-    <View style={{alignItems:'center',justifyContent:'center',marginHorizontal:wp(0),marginRight:index === item_images_array.length - 1?wp(0):wp(2)}}>
-    <Image
-    source={route.params.navtype === "edit_list"?{uri: IMAGE_URL+ item}:{uri: item.path}}
-    style={{height:hp(20),width:wp(84),borderRadius:wp(3),alignSelf:'center'}}
-     resizeMode="cover"
- />
-       <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}
-      style={{position:'absolute',top:hp(1.3),right:wp(2),backgroundColor:"green",borderRadius:wp(5),alignItems:"center",justifyContent:'center'}}
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        marginHorizontal: wp(0),
+        marginRight: index === item_images_array.length - 1 ? wp(0) : wp(2),
+      }}
+    >
+      <Image
+        source={
+          route.params.navtype === "edit_list"
+            ? { uri: IMAGE_URL + item }
+            : { uri: item.path }
+        }
+        style={{
+          height: hp(20),
+          width: wp(84),
+          borderRadius: wp(3),
+          alignSelf: "center",
+        }}
+        resizeMode="cover"
+      />
+      <TouchableOpacity
+        onPress={() => navigation.navigate("CameraViewScreen")}
+        style={{
+          position: "absolute",
+          top: hp(1.3),
+          right: wp(2),
+          backgroundColor: "green",
+          borderRadius: wp(5),
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-    <Text style={{color:"white",paddingVertical:hp(0.8),paddingHorizontal:wp(3),fontWeight:"bold"}}>
+        <Text
+          style={{
+            color: "white",
+            paddingVertical: hp(0.8),
+            paddingHorizontal: wp(3),
+            fontWeight: "bold",
+          }}
+        >
           Change
-                </Text>
-       </TouchableOpacity>
- {/* <Text style={Uploadstyles.uploadtext}>
+        </Text>
+      </TouchableOpacity>
+      {/* <Text style={Uploadstyles.uploadtext}>
 {item.path}
 </Text> */}
     </View>
-
   );
   return (
     <SafeAreaView style={styles.container}>
@@ -239,42 +294,48 @@ const EditList = ({ navigation, route }) => {
       >
         <CustomHeader headerlabel={"Upload Item"} />
         {item_images_array.length === 0 ? (
-        <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}>
-          <View style={Uploadstyles.mainview}>
-   
+          <TouchableOpacity
+            onPress={() => navigation.navigate("CameraViewScreen")}
+          >
+            <View style={Uploadstyles.mainview}>
               <View style={{ alignItems: "center" }}>
-                <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("CameraViewScreen")}
+                >
                   <Image
                     source={appImages.UploadIcpn}
                     style={Uploadstyles.uploadicon}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
-                <Text style={Uploadstyles.uploadtext}>
-                  Upload Images
-                </Text>
+                <Text style={Uploadstyles.uploadtext}>Upload Images</Text>
               </View>
-                 </View>
-                      </TouchableOpacity>
-            ) : (
-              <View style={Uploadstyles.mainview}>
-              <View style={{ alignItems: "center", justifyContent: "center" ,marginTop:hp(0)}}>
-                       <FlatList
-            data={item_images_array}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-          />
-                {/* <Text style={Uploadstyles.uploadtext}>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View style={Uploadstyles.mainview}>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: hp(0),
+              }}
+            >
+              <FlatList
+                data={item_images_array}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                horizontal={true}
+              />
+              {/* <Text style={Uploadstyles.uploadtext}>
                   {item_images_array.length}
                 </Text>
                 <Text style={Uploadstyles.uploadtext}>Images Uploaded</Text> */}
-              </View>
-              </View>
-            )}
-    
+            </View>
+          </View>
+        )}
 
         <View>
           <CustomTextInput
@@ -286,15 +347,15 @@ const EditList = ({ navigation, route }) => {
             onTermChange={(itemtitle) => setTitle(itemtitle)}
           />
           {/* {givingawaychecked === true ? null : ( */}
-            <CustomTextInput
-              icon={appImages.email}
-              type={"withouticoninput"}
-              texterror={"invalid"}
-              term={price}
-              placeholder="Item Price"
-              onTermChange={(itemprice) => setPrice(itemprice)}
-              keyboard_type={"numeric"}
-            />
+          <CustomTextInput
+            icon={appImages.email}
+            type={"withouticoninput"}
+            texterror={"invalid"}
+            term={price}
+            placeholder="Item Price"
+            onTermChange={(itemprice) => setPrice(itemprice)}
+            keyboard_type={"numeric"}
+          />
           {/* )} */}
 
           <TouchableOpacity onPress={() => refddRBSheet.current.open()}>
@@ -371,17 +432,17 @@ const EditList = ({ navigation, route }) => {
           </TouchableOpacity>
 
           {/* {givingawaychecked === true ? null : ( */}
-            <CustomTextInput
-              icon={appImages.email}
-              type={"withouticoninput"}
-              texterror={"invalid"}
-              term={shippingprice}
-              placeholder="Shipping Price"
-              onTermChange={(itemshippingprice) =>
-                setShippingPrice(itemshippingprice)
-              }
-              keyboard_type={"numeric"}
-            />
+          <CustomTextInput
+            icon={appImages.email}
+            type={"withouticoninput"}
+            texterror={"invalid"}
+            term={shippingprice}
+            placeholder="Shipping Price"
+            onTermChange={(itemshippingprice) =>
+              setShippingPrice(itemshippingprice)
+            }
+            keyboard_type={"numeric"}
+          />
           {/* )} */}
         </View>
 
@@ -424,29 +485,29 @@ const EditList = ({ navigation, route }) => {
           />
         </View>
         {/* {fixedpricechecked === true || exchangebuychecked === true ? null : ( */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingHorizontal: wp(8),
-              marginTop: hp(2),
-              alignItems: "center",
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: wp(8),
+            marginTop: hp(2),
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.text}>Giving Away</Text>
+          <Checkbox
+            status={givingawaychecked ? "checked" : "unchecked"}
+            color={Colors.activetextinput}
+            uncheckedColor={Colors.activetextinput}
+            onPress={() => {
+              {
+                setGivingawayChecked(!givingawaychecked),
+                  setPrice(0),
+                  setShippingPrice(0);
+              }
             }}
-          >
-            <Text style={styles.text}>Giving Away</Text>
-            <Checkbox
-              status={givingawaychecked ? "checked" : "unchecked"}
-              color={Colors.activetextinput}
-              uncheckedColor={Colors.activetextinput}
-              onPress={() => {
-                {
-                  setGivingawayChecked(!givingawaychecked),
-                    setPrice(0),
-                    setShippingPrice(0);
-                }
-              }}
-            />
-          </View>
+          />
+        </View>
         {/* )} */}
 
         <View style={{ marginBottom: hp(15) }}>
@@ -499,8 +560,7 @@ const EditList = ({ navigation, route }) => {
           subtext={"Item Updated Sucessfully"}
           buttontext={"OK"}
           onPress={() => {
-            setModalVisible(false),
-            navigation.navigate("Listings")
+            setModalVisible(false), navigation.navigate("Listings");
           }}
         />
       </ScrollView>

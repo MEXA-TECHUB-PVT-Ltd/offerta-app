@@ -1,3 +1,23 @@
+// import { StyleSheet, Text, View } from "react-native";
+// import React, { useState } from "react";
+// import { GiftedChat } from "react-native-gifted-chat";
+// const ChatScreen = () => {
+//   const [messages, setMessages] = useState([]);
+//   return (
+//     <GiftedChat
+//       messages={messages}
+//       // onSend={messages => onSend(messages)}
+//       user={{
+//         _id: 1,
+//       }}
+//     />
+//   );
+// };
+
+// export default ChatScreen;
+
+// const styles = StyleSheet.create({});
+
 import React, {
   useEffect,
   useState,
@@ -48,6 +68,8 @@ import {
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 
+import uuid from "react-native-uuid";
+
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -70,11 +92,9 @@ import { post_User_Chat_Room } from "../../../api/ChatApis";
 /////////////////////get api function////////////
 import { get_Other_UserData } from "../../../api/GetApis";
 
-import { useIsFocused  } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 const ChatScreen = ({ route, navigation }) => {
-  console.log("here in chat",route.params)
-
   const isFocused = useIsFocused();
 
   ////////////////redux/////////////
@@ -118,7 +138,7 @@ const ChatScreen = ({ route, navigation }) => {
         }
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("Camera permission given");
+        // console.log("Camera permission given");
       } else {
         console.log("Camera permission denied");
       }
@@ -154,8 +174,7 @@ const ChatScreen = ({ route, navigation }) => {
           };
         }
       });
-      //console.log("here all messages",allmsg)
-      setCount(count+1)
+      setCount(count + 1);
       setMessages(allmsg);
     });
   };
@@ -165,45 +184,48 @@ const ChatScreen = ({ route, navigation }) => {
   const [userimage, setImage] = useState("");
   const GetUserData = async () => {
     get_Other_UserData(route.params.userid).then((response) => {
-      console.log('yuser data:',response.data)
       setUsername(response.data.full_name);
       setImage(response.data.image);
       //AllMessages();
     });
   };
 
-  const[count,setCount]=useState(0)
-  const countfunc=()=>{
+  const [count, setCount] = useState(0);
+  const countfunc = () => {
     if (count === 0) {
-      setCount(count+1),
-      onSend(),
-      setExchangeOffer_OtherListing(""),
-      setExchangeOffer_MyListing("")
-        }
-  }
+      setCount(count + 1),
+        onSend(),
+        setExchangeOffer_OtherListing(""),
+        setExchangeOffer_MyListing("");
+    }
+  };
   useEffect(() => {
+    if (route?.params?.navtype == "chatlist") {
+      GetUserData();
+      getUserMessages();
+      AllMessages();
+    } else {
+      if (count === 0) {
+        setCount(count + 1),
+          onSend(),
+          setExchangeOffer_OtherListing(""),
+          setExchangeOffer_MyListing("");
+      }
 
-    if (count === 0) {
-      setCount(count+1),
-      onSend(),
-      setExchangeOffer_OtherListing(""),
-      setExchangeOffer_MyListing("")
-        }
-        console.log("previous data", predata,count);
-    GetUserData();
+      GetUserData();
 
-    //getUserMessages()
+      getUserMessages();
+    }
     requestCameraPermission();
-  
   }, [isFocused]);
+
   const onSend = useCallback((messages = []) => {
-    //console.log("here data", messages);
-    setCount(count+1)
+    setCount(count + 1);
     handleSend(messages);
+
     Chat_Room(route.params.userid);
   }, []);
   const handleSend = async (messageArray) => {
-    console.log("here chat message value array", messageArray);
     var user = await AsyncStorage.getItem("Userid");
     const docid =
       route.params.userid > user
@@ -211,7 +233,7 @@ const ChatScreen = ({ route, navigation }) => {
         : route.params.userid + "-" + user;
 
     let myMsg = null;
-   // var count = 0;
+    // var count = 0;
     // if (imageUrl !== "") {
     //   const msg = messageArray[0];
     //   myMsg = {
@@ -227,15 +249,17 @@ const ChatScreen = ({ route, navigation }) => {
     //   };
     // } else {
     const msg = messageArray[0];
-    console.log("here chat message value", msg);
+
     route.params.navtype === "price_offer"
       ? (myMsg = {
           ...msg,
+          _id: uuid.v4(),
           textimg1: exchange_other_listing.images[0],
           textprice: route.params.item_price,
           offerprice: route.params.offerprice,
           offerid: route.params.offerid,
           type: "price_offer",
+          text: "price_offer", //added....
           senderId: user,
           receiverId: route.params.userid,
           user: {
@@ -243,10 +267,11 @@ const ChatScreen = ({ route, navigation }) => {
             name: "ali",
           },
         })
-      : route.params.navtype === "exchange_offer" && count===0
+      : route.params.navtype === "exchange_offer" && count === 0
       ? (myMsg = {
           ...msg,
-          text:"exchange_offer" ,
+          _id: uuid.v4(),
+          text: "exchange_offer",
           textimg1: exchange_other_listing.images[0],
           textimg2: exchange_my_listing.images[0],
           textprice1: route.params.itemprice1,
@@ -260,11 +285,12 @@ const ChatScreen = ({ route, navigation }) => {
             _id: user,
             name: "ali",
           },
-          count:1
+          count: 1,
         })
       : route.params.navtype === "chatlist" && user_image === ""
       ? (myMsg = {
           ...msg,
+          _id: uuid.v4(),
           type: "simple_text",
           senderId: user,
           receiverId: route.params.userid,
@@ -276,6 +302,7 @@ const ChatScreen = ({ route, navigation }) => {
       : route.params.navtype === "chatlist"
       ? (myMsg = {
           ...msg,
+          _id: uuid.v4(),
           text_image: user_image,
           type: "image_text",
           senderId: user,
@@ -286,25 +313,27 @@ const ChatScreen = ({ route, navigation }) => {
           },
         })
       : (myMsg = {
-        ...msg,
-        text_image:"image",
-        //type: "image_text",
-        senderId: user,
-        receiverId: route.params.userid,
-        user: {
-          _id: user,
-          name: "ali",
-        },
-      })
+          ...msg,
+          _id: uuid.v4(),
+          text_image: "image",
+          //type: "image_text",
+          senderId: user,
+          receiverId: route.params.userid,
+          user: {
+            _id: user,
+            name: "ali",
+          },
+        });
     //}
     setExchangeOffer_MyListing("");
     setExchangeOffer_OtherListing("");
-    setCount(count+1)
+    setCount(count + 1);
     //countfunc()
     setMessages([]);
     setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, myMsg),
+      GiftedChat.append(previousMessages, myMsg)
     );
+
     firestore()
       .collection("chats")
       .doc(docid)
@@ -314,8 +343,8 @@ const ChatScreen = ({ route, navigation }) => {
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
     messages.forEach((message) => {});
-   // myMsg = "";
-   setCount(count+1)
+    // myMsg = "";
+    setCount(count + 1);
     AllMessages();
     setImageUrl("");
     setImageData(null);
@@ -329,7 +358,6 @@ const ChatScreen = ({ route, navigation }) => {
       cropping: true,
       compressImageQuality: 0.7,
     }).then((image) => {
-      console.log("here image", image.path);
       setImageData(image.path);
       //uplaodImage(image)
       handleImageUpload(
@@ -340,7 +368,6 @@ const ChatScreen = ({ route, navigation }) => {
   };
 
   const handleImageUpload = useCallback(async (fileName, filePath) => {
-
     try {
       if (!fileName) return;
       // let fileName = file?.path?.split('/').pop();
@@ -358,7 +385,7 @@ const ChatScreen = ({ route, navigation }) => {
         },
         async () => {
           const url = await storage().ref(fileName).getDownloadURL();
-       
+
           setImageUrl(url);
           //onSend(message)
           //handleSend(message, url, );
@@ -370,7 +397,6 @@ const ChatScreen = ({ route, navigation }) => {
   }, []);
 
   const CustomInputToolbar = (props) => {
-
     return (
       <View
         style={{
@@ -466,6 +492,7 @@ const ChatScreen = ({ route, navigation }) => {
             alignItems: "center",
             height: hp(6),
             width: wp(12),
+
             borderRadius: wp(10),
             position: "absolute",
             bottom: hp(0),
@@ -494,7 +521,6 @@ const ChatScreen = ({ route, navigation }) => {
     );
   };
   const CustomBubbleText = (props) => {
-    //console.log("here daata of msg:",props)
     return (
       <View>
         {props.currentMessage.type === "price_offer" ? (
@@ -656,6 +682,7 @@ const ChatScreen = ({ route, navigation }) => {
   function saveComposerValueToDatabase(value) {
     // Save the value to the database
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <ChatHeader
@@ -665,16 +692,17 @@ const ChatScreen = ({ route, navigation }) => {
         onlineStatus={"Online"}
         viewstate={true}
       />
+
       <GiftedChat
         alwaysShowSend
-        //text={composerValue}
-        //onInputTextChanged={setComposerValue}
-        // renderComposer={renderComposer}
         renderInputToolbar={(props) => {
           return <CustomInputToolbar {...props} />;
         }}
         renderSend={(props) => {
           return <SendComponent {...props} />;
+        }}
+        messagesContainerStyle={{
+          paddingBottom: 25,
         }}
         messages={messages}
         onSend={(text) => {
@@ -719,6 +747,7 @@ const ChatScreen = ({ route, navigation }) => {
           return <CustomBubbleText {...props} />;
         }}
       />
+
       <CamerBottomSheet
         refRBSheet={refRBSheet}
         onClose={() => refRBSheet.current.close()}

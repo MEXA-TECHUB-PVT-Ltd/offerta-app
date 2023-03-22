@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  TextInput
+  TextInput,
 } from "react-native";
 
 ////////////////////paper////////////////////
@@ -68,7 +68,7 @@ const UploadItem = ({ navigation, route }) => {
     location_lng,
     location_lat,
     location_address,
-    nav_place
+    nav_place,
   } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
@@ -109,18 +109,118 @@ const UploadItem = ({ navigation, route }) => {
   const [shippingprice, setShippingPrice] = React.useState("");
 
   //////////////Api Calling////////////////////
+  // const UploadItemDetail = async () => {
+  //   var user_id = await AsyncStorage.getItem("Userid");
+  //   var c_lat = parseFloat(location_lat);
+  //   var c_lng = parseFloat(location_lng);
+  //   console.log(
+  //     "here we are:",
+  //     c_lat,
+  //     c_lng,
+  //     user_id,
+  //     parseFloat(location_lat),
+  //     parseFloat(location_lng),
+  //     exchangebuychecked,
+  //     givingawaychecked
+  //   );
+  //   shippingprice === " "
+  //     ? setShippingPrice("0")
+  //     : setShippingPrice(shippingprice);
+  //   var data = JSON.stringify({
+  //     user_id: user_id,
+  //     title: title,
+  //     description: description,
+  //     price: givingawaychecked != true ? price : "0.0",
+  //     category_id: category_id,
+  //     subcategory_id: sub_category_id,
+  //     product_condition: product_condition,
+  //     fixed_price: fixedpricechecked != true ? "false" : "true",
+  //     location: location_address,
+  //     location_lat: parseFloat(location_lat),
+  //     location_log: parseFloat(location_lng),
+  //     exchange: exchangebuychecked != true ? "false" : "true",
+  //     giveaway: givingawaychecked != true ? "false" : "true",
+  //     shipping_cost:
+  //       shippingprice === " " || givingawaychecked != true
+  //         ? shippingprice
+  //         : "0.0",
+  //     youtube_link: youtubelink,
+  //   });
+
+  //   var config = {
+  //     method: "post",
+  //     url: BASE_URL + "PostingList.php",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     data: data,
+  //   };
+
+  //   axios(config).then(function (response) {
+  //     console.log(
+  //       "update item response :     _______________",
+  //       JSON.stringify(response.data)
+  //     );
+
+  //     console.log(
+  //       "item_images_array  ___________________ : ",
+  //       item_images_array
+  //     );
+  //     post_Item_Images({
+  //       item_id: response.data.id,
+  //       item_images: item_images_array,
+  //     })
+  //       .then((response) => response.json())
+  //       .then((responseData) => {
+  //         console.log("heer data:", responseData);
+  //         dispatch(setItemImagesArray([]));
+  //         dispatch(setLocationAddress());
+  //         dispatch(setLocationLat());
+  //         dispatch(setLocationLng());
+  //         dispatch(setProductCondition());
+  //         dispatch(setCategoryName());
+  //         dispatch(setSubCategoryName());
+  //         setPrice("");
+  //         setTitle("");
+  //         setYoutubeLink("");
+  //         setDescription("");
+  //         setShippingPrice("");
+  //         setExchangebuyChecked(false);
+  //         setFixedpriceChecked(false);
+  //         setGivingawayChecked(false);
+  //         setloading(0);
+  //         setdisable(0);
+  //         setModalVisible(true);
+  //       })
+  //       .catch((err) => {
+  //         console.log("error raised : ", err);
+  //         setloading(0);
+  //       });
+  //   });
+  // };
+
   const UploadItemDetail = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
-    var c_lat=parseFloat(location_lat)
-        var c_lng=parseFloat(location_lng)
-   console.log("here we are:",c_lat,c_lng,user_id,parseFloat(location_lat),parseFloat(location_lng),
-   exchangebuychecked,givingawaychecked)
-   shippingprice === " " ?setShippingPrice("0"):setShippingPrice(shippingprice)
+    var c_lat = parseFloat(location_lat);
+    var c_lng = parseFloat(location_lng);
+    console.log(
+      "here we are:",
+      c_lat,
+      c_lng,
+      user_id,
+      parseFloat(location_lat),
+      parseFloat(location_lng),
+      exchangebuychecked,
+      givingawaychecked
+    );
+    shippingprice === " "
+      ? setShippingPrice("0")
+      : setShippingPrice(shippingprice);
     var data = JSON.stringify({
       user_id: user_id,
       title: title,
       description: description,
-      price: givingawaychecked != true ?price:"0.0",
+      price: givingawaychecked != true ? price : "0.0",
       category_id: category_id,
       subcategory_id: sub_category_id,
       product_condition: product_condition,
@@ -130,9 +230,18 @@ const UploadItem = ({ navigation, route }) => {
       location_log: parseFloat(location_lng),
       exchange: exchangebuychecked != true ? "false" : "true",
       giveaway: givingawaychecked != true ? "false" : "true",
-      shipping_cost: shippingprice === " " || givingawaychecked != true ?shippingprice:"0.0",
+      shipping_cost:
+        shippingprice == ""
+          ? "0.0"
+          : shippingprice === " " || givingawaychecked != true
+          ? shippingprice
+          : "0.0",
       youtube_link: youtubelink,
     });
+
+    console.log("data : ", data);
+    // setloading(0);
+    // return;
 
     var config = {
       method: "post",
@@ -143,35 +252,77 @@ const UploadItem = ({ navigation, route }) => {
       data: data,
     };
 
-    axios(config).then(function (response) {
-      console.log(JSON.stringify(response.data));
-      post_Item_Images({
-        item_id: response.data.id,
-        item_images: item_images_array,
-      })
-        .then((response) => response.json())
-        .then((responseData) => {
-          console.log("heer data:",responseData)
-          dispatch(setItemImagesArray([]));
-          dispatch(setLocationAddress());
-          dispatch(setLocationLat());
-          dispatch(setLocationLng());
-          dispatch(setProductCondition());
-          dispatch(setCategoryName());
-          dispatch(setSubCategoryName());
-          setPrice("")
-          setTitle("")
-          setYoutubeLink("")
-          setDescription("")
-          setShippingPrice("")
-          setExchangebuyChecked(false)
-          setFixedpriceChecked(false)
-          setGivingawayChecked(false)
+    axios(config)
+      .then(function (response) {
+        let res = response.data;
+        if (res?.status == false) {
+          setsnackbarValue({
+            value: res?.message,
+            color: "red",
+          });
+          setVisible("true");
           setloading(0);
-          setdisable(0);
-          setModalVisible(true);
-        });
-    });
+        } else {
+          console.log(
+            "item_images_array  ___________________ : ",
+            item_images_array
+          );
+          if (item_images_array?.length > 0) {
+            post_Item_Images({
+              item_id: response.data.id,
+              item_images: item_images_array,
+            })
+              .then((response) => response.json())
+              .then((responseData) => {
+                console.log("heer data:", responseData);
+                dispatch(setItemImagesArray([]));
+                dispatch(setLocationAddress());
+                dispatch(setLocationLat());
+                dispatch(setLocationLng());
+                dispatch(setProductCondition());
+                dispatch(setCategoryName());
+                dispatch(setSubCategoryName());
+                setPrice("");
+                setTitle("");
+                setYoutubeLink("");
+                setDescription("");
+                setShippingPrice("");
+                setExchangebuyChecked(false);
+                setFixedpriceChecked(false);
+                setGivingawayChecked(false);
+                setloading(0);
+                setdisable(0);
+                setModalVisible(true);
+              })
+              .catch((err) => {
+                console.log("error raised : ", err);
+                setloading(0);
+              });
+          } else {
+            dispatch(setItemImagesArray([]));
+            dispatch(setLocationAddress());
+            dispatch(setLocationLat());
+            dispatch(setLocationLng());
+            dispatch(setProductCondition());
+            dispatch(setCategoryName());
+            dispatch(setSubCategoryName());
+            setPrice("");
+            setTitle("");
+            setYoutubeLink("");
+            setDescription("");
+            setShippingPrice("");
+            setExchangebuyChecked(false);
+            setFixedpriceChecked(false);
+            setGivingawayChecked(false);
+            setloading(0);
+            setdisable(0);
+            setModalVisible(true);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log("error raised while adding listing : ", err);
+      });
   };
   //Api form validation
   const formValidation = async () => {
@@ -190,6 +341,30 @@ const UploadItem = ({ navigation, route }) => {
         color: "red",
       });
       setVisible("true");
+    } else if (location_address == "") {
+      setsnackbarValue({
+        value: "Location is required",
+        color: "red",
+      });
+      setVisible("true");
+    } else if (category_id == "") {
+      setsnackbarValue({
+        value: "Please select a category",
+        color: "red",
+      });
+      setVisible("true");
+    } else if (sub_category_id == "") {
+      setsnackbarValue({
+        value: "Please select a sub category",
+        color: "red",
+      });
+      setVisible("true");
+    } else if (product_condition == "") {
+      setsnackbarValue({
+        value: "Please select Product Condition",
+        color: "red",
+      });
+      setVisible("true");
     } else {
       setloading(1);
       setdisable(1);
@@ -198,31 +373,55 @@ const UploadItem = ({ navigation, route }) => {
   };
   useEffect(() => {}, []);
   const renderItem = ({ item, index }) => {
-    console.log('here image data',item)
-    return(
-      <View style={{height:hp(25),width:wp(82),alignItems:'center',justifyContent:'center',marginHorizontal:wp(0),alignSelf:'center',
-      // marginLeft:wp(1.3),
-       //marginRight:index === item_images_array.length - 1?wp(0):wp(2),
- borderRadius:wp(6)}}>
-       <Image
-       //source={appImages.dogIcon}
-       source={{uri:item.path}}
-       style={{height:hp(25),width:wp(80),borderRadius:wp(6)}}
-       resizeMode="contain"
-    />
-          <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}
-         style={{position:'absolute',top:hp(1.3),right:wp(2),backgroundColor:"green",borderRadius:wp(5),alignItems:"center",justifyContent:'center'}}
-         >
-       <Text style={{color:"white",paddingVertical:hp(0.8),paddingHorizontal:wp(3),fontWeight:"bold"}}>
-             Change
-                   </Text>
-          </TouchableOpacity>
-    {/* <Text style={Uploadstyles.uploadtext}>
+    return (
+      <View
+        style={{
+          height: hp(25),
+          width: wp(82),
+          alignItems: "center",
+          justifyContent: "center",
+          marginHorizontal: wp(0),
+          alignSelf: "center",
+          // marginLeft:wp(1.3),
+          //marginRight:index === item_images_array.length - 1?wp(0):wp(2),
+          borderRadius: wp(6),
+        }}
+      >
+        <Image
+          //source={appImages.dogIcon}
+          source={{ uri: item.path }}
+          style={{ height: hp(25), width: wp(80), borderRadius: wp(6) }}
+          resizeMode="contain"
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CameraViewScreen")}
+          style={{
+            position: "absolute",
+            top: hp(1.3),
+            right: wp(2),
+            backgroundColor: "green",
+            borderRadius: wp(5),
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              paddingVertical: hp(0.8),
+              paddingHorizontal: wp(3),
+              fontWeight: "bold",
+            }}
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+        {/* <Text style={Uploadstyles.uploadtext}>
    {item.path}
    </Text> */}
-       </View>
-    )
-  }
+      </View>
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -231,42 +430,44 @@ const UploadItem = ({ navigation, route }) => {
       >
         <CustomHeader headerlabel={"Upload Item"} />
         {item_images_array.length === 0 ? (
-        <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}>
-          <View style={Uploadstyles.mainview}>
-   
+          <TouchableOpacity
+            onPress={() => navigation.navigate("CameraViewScreen")}
+          >
+            <View style={Uploadstyles.mainview}>
               <View style={{ alignItems: "center" }}>
-                <TouchableOpacity onPress={() => navigation.navigate("CameraViewScreen")}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("CameraViewScreen")}
+                >
                   <Image
                     source={appImages.UploadIcpn}
                     style={Uploadstyles.uploadicon}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
-                <Text style={Uploadstyles.uploadtext}>
-                  Upload Images
-                </Text>
+                <Text style={Uploadstyles.uploadtext}>Upload Images</Text>
               </View>
-                 </View>
-                      </TouchableOpacity>
-            ) : (
-              <View style={[Uploadstyles.mainview,{height:hp(25),width:wp(82),}]}>
-              {/* <View style={{ alignItems: "center", justifyContent: "center" ,marginTop:hp(0),height:hp(0),width:wp(0),}}> */}
-                       <FlatList
-            data={item_images_array}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-          />
-                {/* <Text style={Uploadstyles.uploadtext}>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View
+            style={[Uploadstyles.mainview, { height: hp(25), width: wp(82) }]}
+          >
+            {/* <View style={{ alignItems: "center", justifyContent: "center" ,marginTop:hp(0),height:hp(0),width:wp(0),}}> */}
+            <FlatList
+              data={item_images_array}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+            />
+            {/* <Text style={Uploadstyles.uploadtext}>
                   {item_images_array.length}
                 </Text>
                 <Text style={Uploadstyles.uploadtext}>Images Uploaded</Text> */}
-              {/* </View> */}
-              </View>
-            )}
-    
+            {/* </View> */}
+          </View>
+        )}
 
         <View>
           <CustomTextInput
@@ -278,15 +479,15 @@ const UploadItem = ({ navigation, route }) => {
             onTermChange={(itemtitle) => setTitle(itemtitle)}
           />
           {/* {givingawaychecked === true ? null : ( */}
-            <CustomTextInput
-              icon={appImages.email}
-              type={"withouticoninput"}
-              texterror={"invalid"}
-              term={price}
-              placeholder="Item Price"
-              onTermChange={(itemprice) => setPrice(itemprice)}
-              keyboard_type={"numeric"}
-            />
+          <CustomTextInput
+            icon={appImages.email}
+            type={"withouticoninput"}
+            texterror={"invalid"}
+            term={price}
+            placeholder="Item Price"
+            onTermChange={(itemprice) => setPrice(itemprice)}
+            keyboard_type={"numeric"}
+          />
           {/* )} */}
 
           <TouchableOpacity onPress={() => refddRBSheet.current.open()}>
@@ -338,7 +539,7 @@ const UploadItem = ({ navigation, route }) => {
             texterror={"invalid"}
             term={description}
             multiline={true}
-            Lines={4} 
+            Lines={4}
             placeholder="Description"
             onTermChange={(desc) => setDescription(desc)}
           />
@@ -357,17 +558,17 @@ const UploadItem = ({ navigation, route }) => {
           </TouchableOpacity>
 
           {/* {givingawaychecked === true ? null : ( */}
-            <CustomTextInput
-              icon={appImages.email}
-              type={"withouticoninput"}
-              texterror={"invalid"}
-              term={shippingprice}
-              placeholder="Shipping Price"
-              onTermChange={(itemshippingprice) =>
-                setShippingPrice(itemshippingprice)
-              }
-              keyboard_type={"numeric"}
-            />
+          <CustomTextInput
+            icon={appImages.email}
+            type={"withouticoninput"}
+            texterror={"invalid"}
+            term={shippingprice}
+            placeholder="Shipping Price"
+            onTermChange={(itemshippingprice) =>
+              setShippingPrice(itemshippingprice)
+            }
+            keyboard_type={"numeric"}
+          />
           {/* )} */}
         </View>
 
@@ -410,29 +611,29 @@ const UploadItem = ({ navigation, route }) => {
           />
         </View>
         {/* {fixedpricechecked === true || exchangebuychecked === true ? null : ( */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingHorizontal: wp(8),
-              marginTop: hp(2),
-              alignItems: "center",
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: wp(8),
+            marginTop: hp(2),
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.text}>Giving Away</Text>
+          <Checkbox
+            status={givingawaychecked ? "checked" : "unchecked"}
+            color={Colors.activetextinput}
+            uncheckedColor={Colors.activetextinput}
+            onPress={() => {
+              {
+                setGivingawayChecked(!givingawaychecked),
+                  setPrice(0),
+                  setShippingPrice(0);
+              }
             }}
-          >
-            <Text style={styles.text}>Giving Away</Text>
-            <Checkbox
-              status={givingawaychecked ? "checked" : "unchecked"}
-              color={Colors.activetextinput}
-              uncheckedColor={Colors.activetextinput}
-              onPress={() => {
-                {
-                  setGivingawayChecked(!givingawaychecked),
-                    setPrice(0),
-                    setShippingPrice(0);
-                }
-              }}
-            />
-          </View>
+          />
+        </View>
         {/* )} */}
 
         <View style={{ marginBottom: hp(15) }}>
@@ -486,8 +687,9 @@ const UploadItem = ({ navigation, route }) => {
           buttontext={"OK"}
           onPress={() => {
             setModalVisible(false),
-            nav_place === "exchange"?navigation.navigate("ExchangeOfferList"):
-            navigation.navigate("Home")
+              nav_place === "exchange"
+                ? navigation.navigate("ExchangeOfferList")
+                : navigation.navigate("Home");
           }}
         />
       </ScrollView>

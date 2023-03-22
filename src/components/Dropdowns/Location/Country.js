@@ -33,36 +33,34 @@ const CountryDropDown = (props) => {
   const { condition } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-//seacrh states
-const [search, setSearch] = useState('');
-const [filteredDataSource, setFilteredDataSource] = useState([]);
-const [masterDataSource, setMasterDataSource] = useState([]);
+  //seacrh states
+  const [search, setSearch] = useState("");
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
 
-
-    //search textfield
-    const searchFilterFunction = (text) => {
-      // Check if searched text is not blank
-      if (text) {
-        // Inserted text is not blank
-        // Filter the masterDataSource
-        // Update FilteredDataSource
-        const newData = masterDataSource.filter(
-          function (item) {
-            const itemData = item.country
-              ? item.country.toUpperCase()
-              : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-        });
-        setFilteredDataSource(newData);
-        setSearch(text);
-      } else {
-        // Inserted text is blank
-        // Update FilteredDataSource with masterDataSource
-        setFilteredDataSource(masterDataSource);
-        setSearch(text);
-      }
-    };
+  //search textfield
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = masterDataSource.filter(function (item) {
+        const itemData = item.country
+          ? item.country.toUpperCase()
+          : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(masterDataSource);
+      setSearch(text);
+    }
+  };
   //////////dropdownlink data/////////////
   const [data, setdata] = useState();
 
@@ -118,21 +116,21 @@ const [masterDataSource, setMasterDataSource] = useState([]);
       >
         <Text style={styles.bottomsheettext}>Select Country</Text>
       </View>
-       <View style={styles.textView}>
-      <Ionicons name="search" size={20} color="#999" />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Search"
-        placeholderTextColor="#999"
-        onChangeText={(text) => searchFilterFunction(text)}
-        value={search}
-      />
-    </View>
+      <View style={styles.textView}>
+        <Ionicons name="search" size={20} color="#999" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Search"
+          placeholderTextColor="#999"
+          onChangeText={(text) => searchFilterFunction(text)}
+          value={search}
+        />
+      </View>
       <FlatList
-       data={filteredDataSource}
+        data={filteredDataSource}
         renderItem={({ item, index, separators }) => (
           <TouchableOpacity
-          activeOpacity={0.7}
+            activeOpacity={0.7}
             onPress={() => {
               dispatch(setCountryName(item.country)),
                 props.refRBSheet.current.close();

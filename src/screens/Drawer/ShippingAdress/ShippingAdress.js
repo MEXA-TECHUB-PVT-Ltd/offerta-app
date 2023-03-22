@@ -42,6 +42,7 @@ import {
   setStateName,
   setCityName,
 } from "../../../redux/actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ShippingAddresss = ({ navigation, route }) => {
   /////////////////////////redux///////////////////
@@ -77,19 +78,42 @@ const ShippingAddresss = ({ navigation, route }) => {
     zip_code: "",
     phone_number: "",
   });
+
   ////////////LISTING LIKES//////////
-  const create_shippingAddress = (props) => {
-    console.log("shipping states:", props);
+  const create_shippingAddress = async (props) => {
+    let user_id = await AsyncStorage.getItem("Userid");
+    console.log("user_id  :   ", user_id);
+    let data = {
+      user_id: user_id,
+      country: country_name,
+      address_1: shipping_state?.address_1,
+      address_2: shipping_state?.address_2,
+      city: city_name,
+      state: "nill",
+      zip_code: shipping_state?.zip_code,
+      phone_number: shipping_state?.phone_number,
+    };
+    // console.log("data  :   ", data);
+    // return;
+
     setloading(1);
     setdisable(1);
-    post_shipping_Address(props).then((response) => {
-      console.log("exchnage response hereL:", response.data);
-      // dispatch(setCityName())
-      // dispatch(setCountryName()) 
-      setloading(0);
-      setdisable(0);
-      setModalVisible(true);
-    });
+    post_shipping_Address(data)
+      .then((response) => {
+        console.log("exchnage response hereL:", response.data);
+        // dispatch(setCityName())
+        // dispatch(setCountryName())
+        setloading(0);
+        setdisable(0);
+        if (response?.data?.status == false) {
+          alert(response?.data?.message);
+        } else {
+          setModalVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log("err  : ", err);
+      });
   };
   const handleChange = (value, key) => {
     setShipping_State({ ...shipping_state, [key]: value });
@@ -220,8 +244,11 @@ const ShippingAddresss = ({ navigation, route }) => {
           text={"Success"}
           subtext={"Shipping Address Sucessfully"}
           buttontext={"OK"}
-          onPress={() => {   setModalVisible(false),route.params.navtype ==="Buy"?navigation.navigate("ConfirmAddress"):
-          navigation.navigate("ShippingAddressList");
+          onPress={() => {
+            setModalVisible(false),
+              route.params.navtype === "Buy"
+                ? navigation.navigate("ConfirmAddress")
+                : navigation.navigate("ShippingAddressList");
           }}
         />
         <CountryDropDown

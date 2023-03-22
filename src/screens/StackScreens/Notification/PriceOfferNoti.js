@@ -35,7 +35,6 @@ import {
 /////////////////app images///////////////
 import { appImages } from "../../../constant/images";
 
-
 const PriceOfferNoti = ({ navigation, route }) => {
   ////////////////redux/////////////
   const { exchange_other_listing, exchange_my_listing } = useSelector(
@@ -43,30 +42,33 @@ const PriceOfferNoti = ({ navigation, route }) => {
   );
   const dispatch = useDispatch();
 
-    //Modal States
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalVisible1, setModalVisible1] = useState(false);
+  //Modal States
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
 
   ////////////Offer Accept//////////
-  const offerAcceptListings = (props) => 
-  {
-    offer_Accept_Reject_Listings(route.params.offerid,props).then((response) => {
-        setModalVisible(true)
-      });
-  }
+  const offerAcceptListings = (props) => {
+    offer_Accept_Reject_Listings(route.params.offerid, props).then(
+      (response) => {
+        console.log("response  :    ", response?.data);
+        setModalVisible(true);
+      }
+    );
+  };
 
-////////////Offer Reject//////////
-const offerRejectListings = (props) => 
-{
-    console.log("exchnage response hereL:", props);
-    offer_Accept_Reject_Listings(route.params.offerid,props).then((response) => {
-        setModalVisible1(true)
-      });
-}
-
+  ////////////Offer Reject//////////
+  const offerRejectListings = (props) => {
+    // console.log("exchnage response hereL:", props);
+    offer_Accept_Reject_Listings(route.params.offerid, props).then(
+      (response) => {
+        console.log("response  :: ", response?.data);
+        setModalVisible1(true);
+      }
+    );
+  };
 
   useEffect(() => {
-    console.log("image here:", exchange_other_listing,route.params.itemprice );
+    console.log("image here:", exchange_other_listing, route.params.itemprice);
   }, []);
 
   return (
@@ -105,66 +107,70 @@ const offerRejectListings = (props) =>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
-            term={route.params.offer_price+ "$"}
+            term={route.params.offer_price + "$"}
             placeholder="Enter Price"
             editable={false}
-           // onTermChange={(offer_price) => setOfferPrice(offer_price)}
+            // onTermChange={(offer_price) => setOfferPrice(offer_price)}
             keyboard_type={"numeric"}
           />
         </View>
 
         <View style={styles.smallbtnView}>
+          <TouchableOpacity
+            style={styles.smallbtn}
+            onPress={() => offerAcceptListings("accept")}
+          >
+            <Text style={styles.smallbtnText}>Accept</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.smallbtn}
+            onPress={() => offerRejectListings("reject")}
+          >
+            <Text style={styles.smallbtnText}>Reject</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
-          style={styles.smallbtn}
-          onPress={() => offerAcceptListings("accept")}
-        >
-          <Text style={styles.smallbtnText}>Accept</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.smallbtn} 
-          onPress={() => offerRejectListings("reject")}
-        >
-          <Text style={styles.smallbtnText}>Reject</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
           style={{
             alignItems: "center",
             justifyContent: "center",
             marginTop: hp(3),
           }}
           onPress={() => {
-            navigation.navigate("ChatScreen",{navtype:"chatlist", userid: predata.userid });
+            // console.log("predata........", route?.params?.userid);
+            navigation.navigate("ChatScreen", {
+              navtype: "chatlist",
+              // userid: predata.userid,
+              userid: route?.params?.userid,
+            });
           }}
         >
           <Text style={styles.LastText}>Talk on chat</Text>
         </TouchableOpacity>
       </ScrollView>
       <CustomModal
-          modalVisible={modalVisible}
-          CloseModal={() => setModalVisible(false)}
-          Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Offer Accepted Sucessfully"}
-          buttontext={"OK"}
-          onPress={() => {
-            setModalVisible(false);
-            navigation.navigate("BottomTab");
-          }}
-        />
-             <CustomModal
-          modalVisible={modalVisible1}
-          CloseModal={() => setModalVisible1(false)}
-          Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Offer Rejected Sucessfully"}
-          buttontext={"OK"}
-          onPress={() => {
-         
-            setModalVisible1(false);
-            navigation.navigate("BottomTab");
-          }}
-        />
+        modalVisible={modalVisible}
+        CloseModal={() => setModalVisible(false)}
+        Icon={appImages.sucess}
+        text={"Success"}
+        subtext={"Offer Accepted Sucessfully"}
+        buttontext={"OK"}
+        onPress={() => {
+          setModalVisible(false);
+          navigation.navigate("BottomTab");
+        }}
+      />
+      <CustomModal
+        modalVisible={modalVisible1}
+        CloseModal={() => setModalVisible1(false)}
+        Icon={appImages.sucess}
+        text={"Success"}
+        subtext={"Offer Rejected Sucessfully"}
+        buttontext={"OK"}
+        onPress={() => {
+          setModalVisible1(false);
+          navigation.navigate("BottomTab");
+        }}
+      />
     </SafeAreaView>
   );
 };

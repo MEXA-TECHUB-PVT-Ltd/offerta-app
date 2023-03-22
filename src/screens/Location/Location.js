@@ -51,8 +51,6 @@ import {
 } from "../../api/CurrentLocation";
 
 const Location = ({ navigation, route }) => {
-  console.log("here from previous data:", route.params);
-
   ////////////////previous data//////////
   const [predata] = useState(route.params);
 
@@ -110,6 +108,38 @@ const Location = ({ navigation, route }) => {
               coordinate={{
                 latitude: pinlat,
                 longitude: pinlog,
+              }}
+              onDragEnd={(item) => {
+                Geocoder.init(MapKeyApi);
+                Geocoder.from(
+                  item.nativeEvent.coordinate.latitude,
+                  item.nativeEvent.coordinate.longitude
+                )
+                  .then((json) => {
+                    var address = json?.results[0]?.formatted_address;
+                    let geometry = json?.results[0]?.geometry;
+
+                    dispatch(setLocationAddress(address));
+
+                    // var location = json.results[0].geometry.location;
+                    dispatch(setLocationLat(geometry.location?.lat));
+                    dispatch(setLocationLng(geometry.location?.lng));
+                    setPinLat(geometry.location?.lat);
+                    setPinLog(geometry.location?.lng);
+                    setRegion({
+                      latitude: geometry.location?.lat,
+                      longitude: geometry.location?.lng,
+                      latitudeDelta: 0.0462,
+                      longitudeDelta: 0.0261,
+                    });
+                    setMarker({
+                      latitude: geometry.location?.lat,
+                      longitude: geometry.location?.lng,
+                      latitudeDelta: 0.0462,
+                      longitudeDelta: 0.0261,
+                    });
+                  })
+                  .catch((error) => console.warn(error));
               }}
             />
           ) : null}

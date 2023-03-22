@@ -46,7 +46,6 @@ export const DrawerContent = (props) => {
   const [user_fullname, setUser_FullName] = useState("");
   const GetUserData = async () => {
     get_Login_UserData().then((response) => {
-      console.log("here user data in drawer:", response.data);
       setUsername(response.data.user_name);
       setUser_FullName(response.data.full_name);
       setUser_Image(response.data.image);
@@ -55,6 +54,13 @@ export const DrawerContent = (props) => {
   useEffect(() => {
     GetUserData();
   }, []);
+  const handleProfilePress = async () => {
+    let userid = await AsyncStorage.removeItem("Userid");
+    props.navigation.navigate("Profile", {
+      item: "profile",
+      id: userid,
+    });
+  };
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -66,12 +72,9 @@ export const DrawerContent = (props) => {
           <View style={styles.userInfoSection}>
             <View style={{ marginTop: 25, alignSelf: "center" }}>
               <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate("Profile", {
-                    item: "profile",
-                    id: userid,
-                  })
-                }
+                onPress={() => {
+                  handleProfilePress();
+                }}
               >
                 <Avatar.Image
                   source={{ uri: IMAGE_URL + user_image }}

@@ -1,11 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  Image,
-  View,
-  Text,
-} from "react-native";
+import { SafeAreaView, ScrollView, Image, View, Text } from "react-native";
 
 ///////////////app components////////////////
 import CustomButtonhere from "../../components/Button/CustomButton";
@@ -37,10 +31,10 @@ import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
 
-const ResetPassword = ({ navigation,route }) => {
-console.log(" previous data:",route.params)
-/////////////////////previous data//////////////
-const[predata]=useState(route.params)
+const ResetPassword = ({ navigation, route }) => {
+  console.log(" previous data:", route.params);
+  /////////////////////previous data//////////////
+  const [predata] = useState(route.params);
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -74,14 +68,13 @@ const[predata]=useState(route.params)
   const [confirmPassword, setConfirmPassword] = useState("");
   //////////////Api Calling////////////////////
   const ChangePassword = async () => {
-    console.log("here",predata.email);
     axios({
       method: "put",
       url: BASE_URL + "ResetPassword.php",
       data: {
         email: predata.data.email.toLowerCase(),
         password: password,
-        conformPassword:confirmPassword
+        conformPassword: confirmPassword,
       },
     })
       .then(async function (response) {
@@ -104,7 +97,7 @@ const[predata]=useState(route.params)
   //Api form validation
   const formValidation = async () => {
     // input validation
-   if (password == "") {
+    if (password == "") {
       setsnackbarValue({ value: "Please Enter Password", color: "red" });
       setVisible("true");
     } else if (password.length <= 5) {
@@ -140,13 +133,14 @@ const[predata]=useState(route.params)
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-        
-        <Ionicons name={'arrow-back'} size={25} 
-          color= {Colors.Appthemecolor}
-          style={{marginLeft:wp(5),marginTop:hp(3)}}
-          onPress={()=>navigation.goBack()} 
-           /> 
-        <View style={[Logostyles.Logoview,{marginTop:hp(5)}]}>
+        <Ionicons
+          name={"arrow-back"}
+          size={25}
+          color={Colors.Appthemecolor}
+          style={{ marginLeft: wp(5), marginTop: hp(3) }}
+          onPress={() => navigation.goBack()}
+        />
+        <View style={[Logostyles.Logoview, { marginTop: hp(5) }]}>
           <Image
             source={appImages.logo}
             style={Logostyles.logo}
@@ -194,20 +188,23 @@ const[predata]=useState(route.params)
           onDismiss={onDismissSnackBar}
           style={{
             backgroundColor: snackbarValue.color,
-            marginBottom: '20%',
+            marginBottom: "20%",
             zIndex: 999,
-          }}>
+          }}
+        >
           {snackbarValue.value}
         </Snackbar>
-        <CustomModal 
-                modalVisible={modalVisible}
-                CloseModal={() => setModalVisible(false)}
-                Icon={appImages.sucess}
-              text={'Sucess'}
-              subtext={'Passord Updated Sucessfully'}
-          buttontext={'GO BACK'}
- onPress={()=> { setModalVisible(false),navigation.navigate('Login')}}
-                /> 
+        <CustomModal
+          modalVisible={modalVisible}
+          CloseModal={() => setModalVisible(false)}
+          Icon={appImages.sucess}
+          text={"Sucess"}
+          subtext={"Passord Updated Sucessfully"}
+          buttontext={"GO BACK"}
+          onPress={() => {
+            setModalVisible(false), navigation.navigate("Login");
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );

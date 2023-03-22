@@ -85,7 +85,6 @@ const MainListingsDetails = ({ navigation, route }) => {
   //-----------like list
   const listing_like = (props) => {
     post_Like_Listings(props).then((response) => {
-      console.log("here", response.data);
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
@@ -111,14 +110,11 @@ const MainListingsDetails = ({ navigation, route }) => {
   //---------------comments count
   const comments_count = () => {
     GetComments(predata.listing_id).then((response) => {
-      if(response.data.msg === "No Result")
-      {
+      if (response.data.msg === "No Result") {
         setListing_Comments_count(0);
-      }
-      else{
+      } else {
         setListing_Comments_count(response.data.length);
       }
-
     });
   };
   //---------------views count
@@ -249,7 +245,7 @@ const MainListingsDetails = ({ navigation, route }) => {
           </View>
 
           <TouchableOpacity
-            style={[styles.iconview, { width:wp(55)}]}
+            style={[styles.iconview, { width: wp(55) }]}
             onPress={() => {
               navigation.navigate("CommentsDetails", route.params);
             }}
@@ -302,7 +298,7 @@ const MainListingsDetails = ({ navigation, route }) => {
             <TouchableOpacity
               activeOpacity={0.2}
               onPress={() => listing_like(predata.listing_id)}
-              style={[styles.iconview, { width:wp(30) }]}
+              style={[styles.iconview, { width: wp(30) }]}
             >
               <Icon
                 name={"heart-outline"}
@@ -414,12 +410,12 @@ const MainListingsDetails = ({ navigation, route }) => {
           </View>
           <View style={styles.btnView}>
             {/* {fixed_price_status === "false" ? null : ( */}
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => navigation.navigate("ConfirmAddress")}
-              >
-                <Text style={styles.btnText}>Buy Now</Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => navigation.navigate("ConfirmAddress")}
+            >
+              <Text style={styles.btnText}>Buy Now</Text>
+            </TouchableOpacity>
             {/* )} */}
           </View>
         </View>

@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { SafeAreaView, ScrollView, FlatList,View,Text,TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  FlatList,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../../components/Header/CustomHeader";
@@ -7,7 +14,10 @@ import DashboardCard from "../../../../components/CustomCards/DashboardCard";
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setExchangeOffer_MyListing,setNavPlace } from "../../../../redux/actions";
+import {
+  setExchangeOffer_MyListing,
+  setNavPlace,
+} from "../../../../redux/actions";
 
 /////////////app styles////////////////
 import styles from "./styles";
@@ -19,10 +29,12 @@ import { get_User_Listings } from "../../../../api/GetApis";
 import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
 
 ////////////////////app height and width//////////////
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 
 const ExchangeOfferList = ({ navigation, route }) => {
-
   ////////////////redux/////////////
   const { exchange_other_listing } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
@@ -40,19 +52,18 @@ const ExchangeOfferList = ({ navigation, route }) => {
   const [selectedId, setSelectedId] = useState(null);
   ///////////////select function/////////////
   const onselect = (item) => {
-    setSelectedId(item.id)
-    dispatch(setExchangeOffer_MyListing(item))
+    setSelectedId(item.id);
+    dispatch(setExchangeOffer_MyListing(item));
   };
   useEffect(() => {
     get_User_Listings().then((response) => {
-      console.log("here data:",response.data)
       setdata(response.data);
     });
   }, []);
 
   const renderItem = ({ item, index }) => (
     <DashboardCard
-      image={item.images === []?null:IMAGE_URL + item.images[0]} //IMAGE_URL + item.images[0]
+      image={item.images === [] ? null : IMAGE_URL + item.images[0]} //IMAGE_URL + item.images[0]
       maintext={item.title}
       subtext={item.location}
       price={item.price}
@@ -73,10 +84,12 @@ const ExchangeOfferList = ({ navigation, route }) => {
         iconPress={() => {
           navigation.goBack();
         }}
-        type={'left_icon'}
+        type={"left_icon"}
         icon={"arrow-back"}
         searchicon={"plus-box"}
-        onpresseacrh={()=> navigation.navigate('UploadItem',dispatch(setNavPlace("exchange")))}
+        onpresseacrh={() =>
+          navigation.navigate("UploadItem", dispatch(setNavPlace("exchange")))
+        }
       />
       <FlatList
         data={data}
@@ -87,14 +100,14 @@ const ExchangeOfferList = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       />
       {/* </ScrollView> */}
-      <View style={{position:'absolute',bottom:hp(2),left:wp(15)}}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => navigation.navigate("ExchangeOffer")}
-          >
-            <Text style={styles.btnText}>NEXT</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{ position: "absolute", bottom: hp(2), left: wp(15) }}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => navigation.navigate("ExchangeOffer")}
+        >
+          <Text style={styles.btnText}>NEXT</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

@@ -9,7 +9,10 @@ import {
 } from "react-native";
 import React from "react";
 
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -17,7 +20,6 @@ const { width, height } = Dimensions.get("screen");
 import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
 const SlideItem = ({ item }) => {
-
   const translateYImage = new Animated.Value(40);
 
   Animated.timing(translateYImage, {
@@ -30,14 +32,10 @@ const SlideItem = ({ item }) => {
   return (
     <View style={[styles.container]}>
       <Animated.Image
-        source={{uri:IMAGE_URL+item}}
+        source={{ uri: IMAGE_URL + item }}
         resizeMode="cover"
-        style={[
-          styles.image,
-
-        ]}
+        style={[styles.image]}
       />
-
     </View>
   );
 };
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.46,
     shadowRadius: 11.14,
-    
+
     elevation: 17,
     //alignItems: 'center',
     //backgroundColor:'red'
@@ -65,5 +63,4 @@ const styles = StyleSheet.create({
     width: width,
     // height:height/2.3,
   },
-
 });

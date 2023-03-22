@@ -7,6 +7,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 
 //////////////////app components///////////////
@@ -22,7 +23,7 @@ import {
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
-import { BASE_URL,IMAGE_URL } from "../../../utills/ApiRootUrl";
+import { BASE_URL, IMAGE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /////////////////////app images/////////////////////
@@ -31,11 +32,10 @@ import { appImages } from "../../../constant/images";
 ///////////////////app fonts/////////////
 import { fontFamily } from "../../../constant/fonts";
 
-
 const Categories = ({ navigation, route }) => {
-
   /////////////category state and function/////////////
   const [Category, setCategory] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
   const GetCategories = async () => {
     await axios({
       method: "GET",
@@ -43,20 +43,34 @@ const Categories = ({ navigation, route }) => {
     })
       .then(function (response) {
         //console.log("response get here dispatcher", JSON.stringify(response.data))
-        setCategory(response.data)
+        setCategory(response.data);
+        setRefreshing(false);
+        console.log("response.data  :   ", response.data);
       })
       .catch(function (error) {
         console.log("error", error);
+        setRefreshing(false);
       });
   };
   useEffect(() => {
-    GetCategories()
+    GetCategories();
   }, []);
+  const handleRefresh = () => {
+    setRefreshing(true);
+    GetCategories();
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[Colors.Appthemecolor]}
+            onRefresh={() => handleRefresh()}
+          />
+        }
       >
         <CustomHeader
           headerlabel={"Categories"}
@@ -70,7 +84,12 @@ const Categories = ({ navigation, route }) => {
           data={Category}
           numColumns={2}
           renderItem={({ item }) => (
-            <CategoryCard image={item.image_url.replace("{{baseurl}}", "")} maintext={item.name} />
+            <CategoryCard
+              // image={item.image_url.replace("{{baseurl}}", "")}
+              // image={{ uri: IMAGE_URL + item?.image }}
+              image={item?.image}
+              maintext={item.name}
+            />
           )}
           keyExtractor={(item, index) => index}
           showsVerticalScrollIndicator={false}

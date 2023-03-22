@@ -94,6 +94,9 @@ const Login = ({ navigation }) => {
 
   //////////////Api Calling////////////////////
   const LoginUser = async () => {
+    // navigation.navigate("Drawerroute");
+    // return;
+
     axios({
       method: "post",
       url: BASE_URL + "loginUser.php",
@@ -138,15 +141,13 @@ const Login = ({ navigation }) => {
     } else if (password == "") {
       setsnackbarValue({ value: "Please Enter Password", color: "red" });
       setVisible("true");
-    } 
-    else if (password.length <= 5) {
+    } else if (password.length <= 5) {
       setsnackbarValue({
         value: "Please Enter 6 digit Password",
         color: "red",
       });
       setVisible("true");
-    } 
-    else {
+    } else {
       setloading(1);
       setdisable(1);
       LoginUser();
@@ -207,7 +208,7 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     GoogleSignin.configure();
     // checkPermission().then(result => {
-    //   console.log("here in google password",result);
+
     //   setFCMToken(result)
     //   //do something with the result
     // })
@@ -228,8 +229,7 @@ const Login = ({ navigation }) => {
         if (response.data.message) {
           await AsyncStorage.setItem("Userid", response.data.data.id);
           navigation.navigate("Drawerroute");
-        }
-        else {
+        } else {
           setModalVisible(true);
         }
       })
@@ -290,6 +290,7 @@ const Login = ({ navigation }) => {
 
     // Sign-in the user with the credential
     let userinfo = await auth().signInWithCredential(facebookCredential);
+    console.log("userinfo :  ", userinfo);
     if (userinfo != "") {
       console.log("uer fb info here:", userinfo.user.email);
       FacebookSignupUser(userinfo.user.email);
@@ -388,7 +389,7 @@ const Login = ({ navigation }) => {
           </View>
           <View style={styles.forgettextview}>
             <TouchableOpacity
-            activeOpacity={0.4}
+              activeOpacity={0.4}
               onPress={() => navigation.navigate("ForgetPassword")}
             >
               <Text
@@ -474,20 +475,15 @@ const Login = ({ navigation }) => {
         </View>
         <View style={Authlaststyles.lasttextview}>
           <Text style={Authlaststyles.lasttextgrey}>
-          Don't have an account?
+            Don't have an account?
           </Text>
-            <TouchableOpacity 
+          <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => navigation.navigate("SignUp")} style={{width:wp(16),
-        }}>
-           
-            <Text
-              style={Authlaststyles.lasttextblue}
-            >
-              {" Sign Up"}
-              </Text>
-           </TouchableOpacity>
-
+            onPress={() => navigation.navigate("SignUp")}
+            style={{ width: wp(16) }}
+          >
+            <Text style={Authlaststyles.lasttextblue}>{" Sign Up"}</Text>
+          </TouchableOpacity>
         </View>
         <Snackbar
           duration={400}

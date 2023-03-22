@@ -34,7 +34,6 @@ const Insights = ({ navigation, route }) => {
 
   useEffect(() => {
     get_Listings_Insights(predata.list_id).then((response) => {
-      console.log("here data", response.data);
       setPopularity(response.data.popularity);
       setViews(response.data.tatal_view);
       setComments(response.data.tatal_comments);
@@ -47,14 +46,13 @@ const Insights = ({ navigation, route }) => {
 
   const renderItem = ({ item, index }) => {
     return (
-      <View style={{marginHorizontal:wp(1)}}>
-      <View style={styles.rowview}>
-        <Text style={styles.lefttext}>{item.country}</Text>
-        <Text style={styles.righttext}>{item.city}</Text>
+      <View style={{ marginHorizontal: wp(1) }}>
+        <View style={styles.rowview}>
+          <Text style={styles.lefttext}>{item.country}</Text>
+          <Text style={styles.righttext}>{item.city}</Text>
+        </View>
+        <View style={[styles.borderview, { width: wp(87) }]}></View>
       </View>
-              <View style={[styles.borderview,{width:wp(87)}]}></View>
-      </View>
-
     );
   };
 

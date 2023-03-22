@@ -6,13 +6,12 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from "react-native";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../components/Header/CustomHeader";
 import ListCard from "../../../components/CustomCards/ListCard";
-
 
 /////////////app styles////////////////
 import styles from "./styles";
@@ -32,40 +31,33 @@ import { appImages } from "../../../constant/images";
 
 ////////////app api function///////////
 import { get_Login_User_Followers_List } from "../../../api/GetApis";
-  
+
 const Followers = ({ navigation, route }) => {
-
-
   ////////////Folllowr list data///////////
-const [follwer_list, setFollower_List] = React.useState();
-const GetFollowers_List = async () => {
-  get_Login_User_Followers_List().then((response) => {
-    console.log("here we go",response.data)
-    if(response.data.msg === "No follower yet")
-    {
-      setFollower_List("")
-    }
-    else
-    {
-      setFollower_List(response.data);
-    }
-
-  });
-};
+  const [follwer_list, setFollower_List] = React.useState();
+  const GetFollowers_List = async () => {
+    get_Login_User_Followers_List().then((response) => {
+      if (response.data.msg === "No follower yet") {
+        setFollower_List("");
+      } else {
+        setFollower_List(response.data);
+      }
+    });
+  };
 
   useEffect(() => {
-    GetFollowers_List()
+    GetFollowers_List();
   }, []);
 
   const renderItem = ({ item }) => (
-      <ListCard
-              image={{uri: IMAGE_URL+item.user.image}}
-              usename={item.user.user_name}
-              fullname={item.user.full_name}
-              type={item.status}
-              btnstatus={item.status===true?true:false}
-              onpress={()=> navigation.navigate('ListingsDetails')}
-            />
+    <ListCard
+      image={{ uri: IMAGE_URL + item.user.image }}
+      usename={item.user.user_name}
+      fullname={item.user.full_name}
+      type={item.status}
+      btnstatus={item.status === true ? true : false}
+      onpress={() => navigation.navigate("ListingsDetails")}
+    />
   );
   return (
     <SafeAreaView style={styles.container}>
@@ -73,20 +65,20 @@ const GetFollowers_List = async () => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       > */}
-        <CustomHeader
-          headerlabel={"Followers"}
-          iconPress={() => {
-            navigation.goBack();
-          }}
-          icon={"arrow-back"}
-        />
-        <FlatList
-          data={follwer_list}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+      <CustomHeader
+        headerlabel={"Followers"}
+        iconPress={() => {
+          navigation.goBack();
+        }}
+        icon={"arrow-back"}
+      />
+      <FlatList
+        data={follwer_list}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
       {/* </ScrollView> */}
     </SafeAreaView>
   );

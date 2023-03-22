@@ -17,14 +17,10 @@ import Slider from "@react-native-community/slider";
 import { useSelector, useDispatch } from "react-redux";
 import { setSliderDistance } from "../../redux/actions";
 
-
 const SliderModal = (props) => {
-
-    ////////////////redux/////////////
-    const {slider_distance } = useSelector(
-      (state) => state.userReducer
-    );
-    const dispatch = useDispatch();
+  ////////////////redux/////////////
+  const { slider_distance } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
 
   //////////////slider states///////////
   const [mindistance, setMindistance] = useState(0);
@@ -54,17 +50,18 @@ const SliderModal = (props) => {
             maximumValue={1000}
             minimumTrackTintColor="red"
             maximumTrackTintColor="#000000"
-            onSlidingComplete={(i) => {console.log("here like:", i),  dispatch(setSliderDistance(i))}}
+            onSlidingComplete={(i) => {
+              dispatch(setSliderDistance(i));
+            }}
             onValueChange={(j) => {
-              console.log("here calue:", j), setMaxdistance(j),dispatch(setSliderDistance(j));
+              setMaxdistance(j), dispatch(setSliderDistance(j));
             }}
           />
-              <View  style={[styles.ApprovedView,{marginTop:hp(5)}]}>
-        <TouchableOpacity 
-        onPress={props.onPress}>
-        <Text style={styles.Pendingtext}>Done</Text>
-        </TouchableOpacity>
-    </View>
+          <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
+            <TouchableOpacity onPress={props.onPress}>
+              <Text style={styles.Pendingtext}>Done</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>

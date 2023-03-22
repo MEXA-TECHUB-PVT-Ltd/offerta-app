@@ -9,28 +9,38 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
+import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
 const CategoryCard = (props) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
-    activeOpacity={0.9}
-      onPress={() =>
+      activeOpacity={0.9}
+      onPress={() => {
         navigation.navigate("SliderScreen", {
           navplace: "Market",
-          navtype: item.type,
-        })
-      }
+          navtype: props?.item?.type ? props?.item?.type : "",
+        });
+      }}
     >
       <View style={styles.Categoriescard}>
-        <View style={{ marginBottom: hp(4), marginTop: hp(5),alignItems:"center" }}>
-          <Image 
-            source={{uri:"https://teamsuit.co/offertaFinal/admin"+props.image}}
-           style={styles.Categoriesimage}
-          resizeMode='contain'
+        <View
+          style={{
+            marginBottom: hp(4),
+            marginTop: hp(5),
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={{
+              uri: IMAGE_URL + props.image,
+            }}
+            style={styles.Categoriesimage}
+            resizeMode="contain"
           ></Image>
-          <Text  style={styles.Categoriestext}>
-            {props.maintext}
-          </Text>
+          <Text style={styles.Categoriestext}>{props.maintext}</Text>
         </View>
       </View>
     </TouchableOpacity>

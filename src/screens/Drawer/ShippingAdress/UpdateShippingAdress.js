@@ -37,38 +37,47 @@ import { setLoginUserShippingAddress } from "../../../redux/LoginUserActions";
 import { useDispatch, useSelector } from "react-redux";
 
 ////////////////api functions///////////
-import {
-  update_shipping_Address,
-} from "../../../api/ShippingAddress";
+import { update_shipping_Address } from "../../../api/ShippingAddress";
+import { setCityName, setCountryName } from "../../../redux/Location/actions";
 
 const UpdateShippingAddress = ({ navigation, route }) => {
-
   ////////////////redux/////////////
   const { login_user_shipping_address } = useSelector(
     (state) => state.loginuserReducer
   );
+  const { country_name, state_name, city_name } = useSelector(
+    (state) => state.locationReducer
+  );
+
+  console.log(
+    "country_name, state_name, city_name    :   ",
+    country_name,
+    state_name,
+    city_name
+  );
+
   const dispatch = useDispatch();
 
-    //Modal States
-    const [modalVisible, setModalVisible] = useState(false);
+  //Modal States
+  const [modalVisible, setModalVisible] = useState(false);
 
-      //////////////link dropdown////////////////
+  //////////////link dropdown////////////////
   const refCountryddRBSheet = useRef();
   const refCityddRBSheet = useRef();
 
-      ///////////////button states/////////////
+  ///////////////button states/////////////
   const [loading, setloading] = useState(0);
   const [disable, setdisable] = useState(0);
 
   ////////////country picker states/////////////
   const [CountryPickerView, setCountryPickerView] = useState(false);
   const [countryCode, setCountryCode] = useState("92");
-  const [countryname, setCountryName] = useState("Pak");
+  // const [countryname, setCountryName] = useState("Pak");
 
   const [shipping_state, setShipping_State] = useState({
-    shipping_id:login_user_shipping_address.id,
+    shipping_id: login_user_shipping_address.id,
     nick_name: login_user_shipping_address.user_id,
-    user_name:login_user_shipping_address.user_id,
+    user_name: login_user_shipping_address.user_id,
     country: login_user_shipping_address.country,
     city: login_user_shipping_address.city,
     state: login_user_shipping_address.state,
@@ -77,24 +86,57 @@ const UpdateShippingAddress = ({ navigation, route }) => {
     zip_code: login_user_shipping_address.zip_code,
     phone_number: login_user_shipping_address.phone_no,
   });
+
+  useEffect(() => {
+    console.log(
+      "login_user_shipping_address  :   ",
+      login_user_shipping_address
+    );
+    dispatch(setCountryName(login_user_shipping_address.country));
+    dispatch(setCityName(login_user_shipping_address.city));
+  }, []);
+
   ////////////LISTING LIKES//////////
   const update_shippingAddress = (props) => {
     setloading(1);
     setdisable(1);
-    update_shipping_Address(props).then((response) => {
+
+    let data = {
+      shipping_id: shipping_state.shipping_id,
+      nick_name: shipping_state.nick_name,
+      user_name: shipping_state.user_name,
+      country: country_name,
+      city: city_name,
+      state: "nill",
+      address_1: shipping_state.address_1,
+      address_2: shipping_state.address_2,
+      zip_code: shipping_state.zip_code,
+      phone_number: shipping_state.phone_number,
+    };
+    // console.log("data here...", data);
+    // setloading(0);
+    // setdisable(0);
+    // return;
+
+    update_shipping_Address(data).then((response) => {
+      if (response?.data?.status == false) {
+        alert(response?.data?.message);
+      } else {
+        setModalVisible(true);
+      }
       //console.log("exchnage response hereL:", response.data);
       setloading(0);
       setdisable(0);
-      setModalVisible(true)
+
+      console.log("update shipping address response  :   ", response?.data);
     });
   };
+
   const handleChange = (value, key) => {
+    console.log("value  : ", value, key);
     setShipping_State({ ...shipping_state, [key]: value });
   };
 
-  useEffect(() => {
-    console.log("here we go",login_user_shipping_address)
-  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -167,7 +209,7 @@ const UpdateShippingAddress = ({ navigation, route }) => {
             placeholder="Enter address 2"
             onTermChange={(value) => handleChange(value, "address_2")}
           />
-              <TouchableOpacity onPress={() => refCountryddRBSheet.current.open()}>
+          <TouchableOpacity onPress={() => refCountryddRBSheet.current.open()}>
             <CustomTextInput
               icon={appImages.downarrow}
               type={"iconinput"}
@@ -225,11 +267,10 @@ const UpdateShippingAddress = ({ navigation, route }) => {
           subtext={"Update Shipping Address Sucessfully"}
           buttontext={"OK"}
           onPress={() => {
-            setModalVisible(false),
-            navigation.navigate("ShippingAddressList")
+            setModalVisible(false), navigation.navigate("ShippingAddressList");
           }}
         />
-            <CountryDropDown
+        <CountryDropDown
           refRBSheet={refCountryddRBSheet}
           onClose={() => refCountryddRBSheet.current.close()}
         />

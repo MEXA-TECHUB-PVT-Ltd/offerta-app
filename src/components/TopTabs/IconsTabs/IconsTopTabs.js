@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
 /////////////////styles////////////
 import Colors from "../../../utills/Colors";
@@ -23,7 +18,6 @@ import { fontFamily } from "../../../constant/fonts";
 import { ADMIN_IMAGE_URL } from "../../../utills/ApiRootUrl";
 
 const IconsTopTabs = (props) => {
-  console.log("here the data",props.icon)
   return (
     <TouchableOpacity
       style={{
@@ -36,8 +30,8 @@ const IconsTopTabs = (props) => {
       <IconButton
         icon={({ size, color }) => (
           <Image
-            source={{uri:ADMIN_IMAGE_URL+props.icon}}
-            style={{ width:wp(8), height: hp(5) }}
+            source={{ uri: ADMIN_IMAGE_URL + props.icon }}
+            style={{ width: wp(8), height: hp(5) }}
           />
         )}
         color={props.selected === props.id ? Colors.activetextinput : "grey"}
@@ -53,7 +47,7 @@ const IconsTopTabs = (props) => {
           fontSize: hp(1.6),
           fontFamily: fontFamily.Poppins_Medium,
         }}
-      numberOfLines={2}
+        numberOfLines={2}
       >
         {props.title}
       </Text>
