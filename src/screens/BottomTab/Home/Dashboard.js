@@ -86,7 +86,6 @@ const Home = ({ navigation }) => {
       } else {
         setBanners(response.data);
       }
-      console.log("banners list response  :  ", response.data);
     });
   };
   /////////////main menu status states/////////////
@@ -300,7 +299,10 @@ const Home = ({ navigation }) => {
             renderItem={({ item }) =>
               item.user_id === login_user_id ? null : (
                 <DashboardCard
-                  image={item.images === [] ? null : IMAGE_URL + item.images[0]}
+                  image={
+                    item.images?.length == 0 ? null : IMAGE_URL + item.images[0]
+                  }
+                  // image={item}
                   maintext={item.title}
                   subtext={item.location}
                   price={item.price}

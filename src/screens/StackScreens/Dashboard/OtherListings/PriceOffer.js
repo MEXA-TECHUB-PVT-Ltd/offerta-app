@@ -40,6 +40,7 @@ import {
 
 /////////////////app images//////////
 import { appImages } from "../../../../constant/images";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //////////////////appImages.//////////////////
 
@@ -54,7 +55,7 @@ const PriceOffer = ({ navigation, route }) => {
   const [offerprice, setOfferPrice] = React.useState(0);
 
   ////////////LISTING LIKES//////////
-  const Listings_Exchange_Offer = (props) => {
+  const Listings_Exchange_Offer = async (props) => {
     // console.log("props   :  ", props);
     // console.log("exchange_other_listing  :   ", exchange_other_listing.user_id);
     // console.log("exchange_other_listing  :   ", exchange_other_listing.id);
@@ -66,6 +67,8 @@ const PriceOffer = ({ navigation, route }) => {
       item_offerprice: props,
     });
 
+    var user_id = await AsyncStorage.getItem("Userid");
+
     post_Listings_Price_Offer(
       exchange_other_listing.user_id,
       exchange_other_listing.id,
@@ -75,11 +78,14 @@ const PriceOffer = ({ navigation, route }) => {
       console.log("exchnage response hereL:", response?.data);
 
       navigation.navigate("ChatScreen", {
+        buyer_id: user_id,
+        sale_by: exchange_other_listing.user_id,
         userid: exchange_other_listing.user_id,
         offerprice: props,
         offerid: response.data.data.id,
         item_price: exchange_other_listing.price,
         navtype: "price_offer",
+        listing_id: exchange_other_listing.id,
       });
       // setListing_Like_User_id(response.data.data.user_id);
     });

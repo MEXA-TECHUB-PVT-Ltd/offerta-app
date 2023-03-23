@@ -42,7 +42,6 @@ const ChatList = ({ navigation }) => {
   useEffect(() => {
     getuser();
     get_Chat_Users().then((response) => {
-      console.log("chat list  response :  ", response?.data);
       if (response.data.msg === "No Result") {
         setData();
       } else {

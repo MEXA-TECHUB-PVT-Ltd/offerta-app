@@ -200,7 +200,11 @@ const ChatScreen = ({ route, navigation }) => {
     }
   };
   useEffect(() => {
-    if (route?.params?.navtype == "chatlist") {
+    console.log("route?.params :  ", route?.params?.navtype);
+    if (
+      route?.params?.navtype == "chatlist" ||
+      typeof route?.params?.navtype == "undefined"
+    ) {
       GetUserData();
       getUserMessages();
       AllMessages();
@@ -211,11 +215,10 @@ const ChatScreen = ({ route, navigation }) => {
           setExchangeOffer_OtherListing(""),
           setExchangeOffer_MyListing("");
       }
-
       GetUserData();
-
       getUserMessages();
     }
+    console.log("useEffect called.........");
     requestCameraPermission();
   }, [isFocused]);
 
@@ -262,6 +265,9 @@ const ChatScreen = ({ route, navigation }) => {
           text: "price_offer", //added....
           senderId: user,
           receiverId: route.params.userid,
+          buyer_id: route?.params?.buyer_id,
+          sale_by: route?.params?.sale_by,
+          listing_id: route?.params?.listing_id,
           user: {
             _id: user,
             name: "ali",
@@ -367,6 +373,40 @@ const ChatScreen = ({ route, navigation }) => {
     });
   };
 
+  const handleStoreImage = async (image) => {
+    var user = await AsyncStorage.getItem("Userid");
+    const docid =
+      route.params.userid > user
+        ? user + "-" + route.params.userid
+        : route.params.userid + "-" + user;
+    let msgObj = {
+      _id: uuid.v4(),
+      text_image: "image",
+      //type: "image_text",
+      type: "image",
+      text: image,
+      url: image,
+      senderId: user,
+      receiverId: route.params.userid,
+      user: {
+        _id: user,
+        name: "ali",
+      },
+    };
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, msgObj)
+    );
+    firestore()
+      .collection("chats")
+      .doc(docid)
+      .collection("messages")
+      .add({
+        ...msgObj,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+    console.log("msgobj : ", msgObj);
+  };
+
   const handleImageUpload = useCallback(async (fileName, filePath) => {
     try {
       if (!fileName) return;
@@ -446,6 +486,9 @@ const ChatScreen = ({ route, navigation }) => {
             left: wp(2),
             bottom: hp(0),
             marginTop: hp(1),
+            paddingLeft: 25,
+            alignItems: "center",
+            justifyContent: "center",
           }}
           textInputStyle={{ color: "black" }}
           // renderComposer={(props) => (
@@ -463,10 +506,10 @@ const ChatScreen = ({ route, navigation }) => {
           // )}
         />
         {/* <TouchableOpacity onPress={()=> choosePhotoFromLibrary()}> */}
-        <View style={{ position: "absolute", top: hp(3) }}>
+        <View style={{ position: "absolute", top: hp(3), left: 30 }}>
           <MaterialCommunityIcons
             name={"camera"}
-            size={30}
+            size={25}
             color={"black"}
             onPress={() => refRBSheet.current.open()}
           />
@@ -533,16 +576,28 @@ const ChatScreen = ({ route, navigation }) => {
             <View style={{}}>
               <Text
                 style={styles.p_text}
-                onPress={() =>
+                onPress={() => {
+                  // console.log(
+                  //   "props.currentMessage.sale_by  :_____________________________________________  ",
+                  //   props.currentMessage.sale_by
+                  // );
                   navigation.navigate("PriceOfferNoti", {
+                    sale_by: props.currentMessage.sale_by,
+                    buyer_id: props.currentMessage.buyer_id,
+                    offer_type: props.currentMessage.type,
+                    receiverId: props.currentMessage.receiverId,
+                    senderId: props.currentMessage.senderId,
+                    listing_id: props.currentMessage.listing_id,
+
                     item_img: props.currentMessage.textimg1,
                     offer_price: props.currentMessage.offerprice,
                     offerid: props.currentMessage.offerid,
                     itemprice: props.currentMessage.textprice,
                     navtype: "chat",
                     userid: props.currentMessage.receiverId,
-                  })
-                }
+                    // userid: route.params.userid,
+                  });
+                }}
               >
                 {"Item Price " + props.currentMessage.textprice}
               </Text>
@@ -550,6 +605,13 @@ const ChatScreen = ({ route, navigation }) => {
                 style={styles.p_text}
                 onPress={() =>
                   navigation.navigate("PriceOfferNoti", {
+                    sale_by: props.currentMessage.sale_by,
+                    buyer_id: props.currentMessage.buyer_id,
+                    offer_type: props.currentMessage.type,
+                    receiverId: props.currentMessage.receiverId,
+                    senderId: props.currentMessage.senderId,
+                    listing_id: props.currentMessage.listing_id,
+
                     item_img: props.currentMessage.textimg1,
                     offer_price: props.currentMessage.offerprice,
                     offerid: props.currentMessage.offerid,
@@ -657,6 +719,15 @@ const ChatScreen = ({ route, navigation }) => {
               </View>
             </View>
           </View>
+        ) : props.currentMessage.type === "image" ? (
+          <Image
+            source={{ uri: IMAGE_URL + props?.currentMessage?.url }}
+            style={{
+              height: 150,
+              width: 150,
+              resizeMode: "contain",
+            }}
+          />
         ) : (
           <Text
             style={{
@@ -753,6 +824,13 @@ const ChatScreen = ({ route, navigation }) => {
         onClose={() => refRBSheet.current.close()}
         title={"From Gallery"}
         type={"Chat_image"}
+        onImageUpload={(uploaded_url) => {
+          console.log("camera pressed", uploaded_url);
+          handleStoreImage(uploaded_url);
+        }}
+        // onGalleryPress={() => {
+        //   console.log("gallery pressed");
+        // }}
       />
     </SafeAreaView>
   );

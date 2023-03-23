@@ -93,6 +93,35 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
 
   //////////////Api Calling////////////////////
+
+  const checkUserAccountVerification = async (user_id) => {
+    return new Promise((resolve, reject) => {
+      try {
+        let url = BASE_URL + `getUserById.php?user_id=${user_id}`;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("data :  ", data);
+            if (
+              data?.subscription == true ||
+              data?.subscription == "true" ||
+              data?.subscription == "subscribed"
+            ) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          })
+          .catch((err) => {
+            console.log("error raised : :   ", data);
+          });
+      } catch (error) {
+        console.log("error  :  ", error);
+        resolve(false);
+      }
+    });
+  };
+
   const LoginUser = async () => {
     // navigation.navigate("Drawerroute");
     // return;
@@ -110,8 +139,24 @@ const Login = ({ navigation }) => {
         setloading(0);
         setdisable(0);
         if (response.data.message) {
+          let isVerified = await checkUserAccountVerification(
+            response.data.data.id
+          );
           await AsyncStorage.setItem("Userid", response.data.data.id);
-          navigation.navigate("Drawerroute");
+          if (isVerified) {
+            navigation.navigate("Drawerroute");
+          } else {
+            console.log("account not verified");
+            console.log(
+              "user details :::::::      ....   ...  ...  . .  ",
+              response?.data?.data?.role
+            );
+            // signup_role
+            navigation?.navigate("AccountVerification", {
+              signup_role: response?.data?.data?.role,
+              type: "login",
+            });
+          }
         } else {
           setloading(0);
           setdisable(0);

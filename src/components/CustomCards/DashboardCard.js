@@ -2,7 +2,7 @@ import * as React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
 ////////////react native paper/////////////
-import { Checkbox } from 'react-native-paper';
+import { Checkbox } from "react-native-paper";
 
 /////////////styles///////////////
 import styles from "./styles";
@@ -21,29 +21,43 @@ const DashboardCard = (props) => {
   const [checked, setChecked] = React.useState(true);
 
   /////////price formatter
-  const formatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short'
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
   });
   const formattedLikes = formatter.format(props.price);
+
   return (
     <TouchableOpacity onPress={props.onpress} activeOpacity={0.9}>
-      <View style={[styles.dashboardcard,
-        {width:props.type==="Exchange_Request"?wp(90):wp(45),
-        height:props.type==="Exchange_Request"?hp(27):hp(23),
-        }]}>
+      <View
+        style={[
+          styles.dashboardcard,
+          {
+            width: props.type === "Exchange_Request" ? wp(90) : wp(45),
+            height: props.type === "Exchange_Request" ? hp(27) : hp(23),
+          },
+        ]}
+      >
         <View style={{ marginBottom: hp(0), marginTop: hp(0) }}>
           <Image
             source={{ uri: props.image }}
-            style={[styles.dasboardimage,
+            style={[
+              styles.dasboardimage,
               {
-                width:props.type==="Exchange_Request"?wp(90):wp(45),
-                height:props.type==="Exchange_Request"?hp(18):hp(15),
-            }]}
+                width: props.type === "Exchange_Request" ? wp(90) : wp(45),
+                height: props.type === "Exchange_Request" ? hp(18) : hp(15),
+              },
+            ]}
             resizeMode="cover"
           ></Image>
         </View>
-        <View style={{ width: props.type==="Exchange_Request"?wp(85):wp(42), paddingLeft: wp(1), marginTop: hp(1) }}>
+        <View
+          style={{
+            width: props.type === "Exchange_Request" ? wp(85) : wp(42),
+            paddingLeft: wp(1),
+            marginTop: hp(1),
+          }}
+        >
           <View
             style={{
               flexDirection: "row",
@@ -55,26 +69,23 @@ const DashboardCard = (props) => {
               {props.maintext}
             </Text>
             <Text numberOfLines={1} style={styles.pricetext}>
-               {formattedLikes === "0"?"free":"$"+formattedLikes}
+              {formattedLikes === "0" ? "free" : "$" + formattedLikes}
               {/* //+"$"  */}
             </Text>
           </View>
-          { props.type==="Exchange_Request"?null:
-                    <View
-                    style={{ flexDirection: "row" }}
-                  >
-                    <Ionicons
-                      name={"location"}
-                      size={15}
-                      color={Colors.activetextinput}
-                      onPress={() => navigation.toggleDrawer()}
-                    />
-                    <Text numberOfLines={2} style={styles.blogsubtext}>
-                      {props.subtext}
-                    </Text>
-                  </View>
-          }
-
+          {props.type === "Exchange_Request" ? null : (
+            <View style={{ flexDirection: "row" }}>
+              <Ionicons
+                name={"location"}
+                size={15}
+                color={Colors.activetextinput}
+                onPress={() => navigation.toggleDrawer()}
+              />
+              <Text numberOfLines={2} style={styles.blogsubtext}>
+                {props.subtext}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
       {props.selected === true && props.type === "Selected_List" ? (
@@ -98,31 +109,28 @@ const DashboardCard = (props) => {
             onPress={() => navigation.toggleDrawer()}
           />
         </View>
-      )
-    :null}
-    { props.selected === props.id && props.type === "Exchange_Offer"?
-       <View
-       style={{
-         position: "absolute",
-         height: hp(23.3),
-         width: wp(45),
-         marginVertical: hp(3),
-         marginHorizontal: wp(3),
-         borderRadius: wp(4),
- 
-       }}
-     >
-       <Checkbox
-       status={checked ? 'checked' : 'unchecked'}
-       onPress={() => {
-         setChecked(checked);
-       }}
-       color={"red"}
-       //uncheckedColor={Colors.activetextinput}
-     />
-     </View>
-     :null
-    }
+      ) : null}
+      {props.selected === props.id && props.type === "Exchange_Offer" ? (
+        <View
+          style={{
+            position: "absolute",
+            height: hp(23.3),
+            width: wp(45),
+            marginVertical: hp(3),
+            marginHorizontal: wp(3),
+            borderRadius: wp(4),
+          }}
+        >
+          <Checkbox
+            status={checked ? "checked" : "unchecked"}
+            onPress={() => {
+              setChecked(checked);
+            }}
+            color={"red"}
+            //uncheckedColor={Colors.activetextinput}
+          />
+        </View>
+      ) : null}
     </TouchableOpacity>
   );
 };
