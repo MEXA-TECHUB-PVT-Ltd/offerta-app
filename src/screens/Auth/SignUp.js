@@ -5,7 +5,7 @@ import {
   Image,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 
 ///////////////app components////////////////
@@ -41,22 +41,17 @@ import axios from "axios";
 import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
 import { setsignupRole } from "../../redux/actions";
 
-
 const SignUp = ({ navigation }) => {
-
   //////////////redux////////////////////
-  const {
-    signup_role,
-  } = useSelector((state) => state.userReducer);
+  const { signup_role } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-    ////////Bottom sheet references/////////
-    const refRBSheet = useRef();
+  ////////Bottom sheet references/////////
+  const refRBSheet = useRef();
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -112,7 +107,7 @@ const SignUp = ({ navigation }) => {
         email: email.toLowerCase(),
         password: password,
         conformPassword: confirmPassword,
-        role:signup_role,
+        role: signup_role,
       },
     })
       .then(async function (response) {
@@ -124,6 +119,7 @@ const SignUp = ({ navigation }) => {
           await AsyncStorage.setItem("UserEmail", response.data.data.email);
           navigation.navigate("CreateProfile", {
             useremail: response.data.data.email,
+            signup_role: signup_role,
           });
         } else {
           setloading(0);
@@ -144,6 +140,9 @@ const SignUp = ({ navigation }) => {
   };
   //Api form validation
   const formValidation = async () => {
+    // navigation.navigate("AccountVerification");
+    // return;
+
     // input validation
     if (email == "") {
       setsnackbarValue({ value: "Please Enter Email", color: "red" });
@@ -183,8 +182,7 @@ const SignUp = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -252,19 +250,17 @@ const SignUp = ({ navigation }) => {
               secureTextEntry={data.secureTextEntry ? true : false}
               onclick={() => updateSecureTextEntry()}
             />
-                      <TouchableOpacity
-            onPress={() => refRBSheet.current.open()}
-          >
-            <CustomTextInput
-              icon={appImages.downarrow}
-              type={"iconinput"}
-              term={signup_role}
-              editable={false}
-              disable={false}
-              placeholder="Select Role"
-              onTermChange={(newcountry) => setsignupRole(newcountry)}
-            />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => refRBSheet.current.open()}>
+              <CustomTextInput
+                icon={appImages.downarrow}
+                type={"iconinput"}
+                term={signup_role}
+                editable={false}
+                disable={false}
+                placeholder="Select Role"
+                onTermChange={(newcountry) => setsignupRole(newcountry)}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ marginTop: hp(0) }}>
@@ -283,17 +279,14 @@ const SignUp = ({ navigation }) => {
         <View style={[Authlaststyles.lasttextview, { marginTop: hp(25) }]}>
           <Text style={Authlaststyles.lasttextgrey}>
             Already have an account?
-            </Text>
-            <TouchableOpacity 
+          </Text>
+          <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => navigation.navigate("Login")} style={{width:wp(16),
-        }}>
-            <Text
-              style={Authlaststyles.lasttextblue}
-            >
-              {" Sign In"}
-            </Text>
-      </TouchableOpacity>
+            onPress={() => navigation.navigate("Login")}
+            style={{ width: wp(16) }}
+          >
+            <Text style={Authlaststyles.lasttextblue}>{" Sign In"}</Text>
+          </TouchableOpacity>
         </View>
         <Snackbar
           duration={400}
@@ -318,7 +311,7 @@ const SignUp = ({ navigation }) => {
             setModalVisible(false);
           }}
         />
-                <SignupRole
+        <SignupRole
           refRBSheet={refRBSheet}
           onClose={() => refRBSheet.current.close()}
         />

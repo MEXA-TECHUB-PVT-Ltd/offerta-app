@@ -108,6 +108,8 @@ const UploadItem = ({ navigation, route }) => {
   const [description, setDescription] = React.useState("");
   const [shippingprice, setShippingPrice] = React.useState("");
 
+  const [addedListingId, setAddedListingId] = useState("");
+
   //////////////Api Calling////////////////////
   // const UploadItemDetail = async () => {
   //   var user_id = await AsyncStorage.getItem("Userid");
@@ -200,6 +202,10 @@ const UploadItem = ({ navigation, route }) => {
   // };
 
   const UploadItemDetail = async () => {
+    // setloading(0);
+    // setModalVisible(true);
+    // setAddedListingId("70");
+    // return;
     var user_id = await AsyncStorage.getItem("Userid");
     var c_lat = parseFloat(location_lat);
     var c_lng = parseFloat(location_lng);
@@ -292,6 +298,9 @@ const UploadItem = ({ navigation, route }) => {
                 setGivingawayChecked(false);
                 setloading(0);
                 setdisable(0);
+                // listing_id
+                let listing_id = res?.id;
+                setAddedListingId(listing_id);
                 setModalVisible(true);
               })
               .catch((err) => {
@@ -316,6 +325,8 @@ const UploadItem = ({ navigation, route }) => {
             setGivingawayChecked(false);
             setloading(0);
             setdisable(0);
+            let listing_id = res?.id;
+            setAddedListingId(listing_id);
             setModalVisible(true);
           }
         }
@@ -428,7 +439,7 @@ const UploadItem = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <CustomHeader headerlabel={"Upload Item"} />
+        <CustomHeader headerlabel={"Upload Items"} />
         {item_images_array.length === 0 ? (
           <TouchableOpacity
             onPress={() => navigation.navigate("CameraViewScreen")}
@@ -689,6 +700,10 @@ const UploadItem = ({ navigation, route }) => {
             setModalVisible(false),
               nav_place === "exchange"
                 ? navigation.navigate("ExchangeOfferList")
+                : addedListingId != ""
+                ? navigation?.navigate("ListingsDetails", {
+                    listing_id: addedListingId,
+                  })
                 : navigation.navigate("Home");
           }}
         />

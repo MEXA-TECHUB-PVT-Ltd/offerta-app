@@ -36,7 +36,7 @@ import RNFetchBlob from "rn-fetch-blob";
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setCountryName,setCityName } from "../../redux/Location/actions";
+import { setCountryName, setCityName } from "../../redux/Location/actions";
 
 ////////////////////app images////////
 import { appImages } from "../../constant/images";
@@ -56,9 +56,9 @@ const CreateProfile = ({ navigation, route }) => {
   const { country_name, city_name } = useSelector(
     (state) => state.locationReducer
   );
-    //////////////link dropdown////////////////
-    const refCountryddRBSheet = useRef();
-    const refCityddRBSheet = useRef();
+  //////////////link dropdown////////////////
+  const refCountryddRBSheet = useRef();
+  const refCityddRBSheet = useRef();
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -97,8 +97,8 @@ const CreateProfile = ({ navigation, route }) => {
       { name: "email", data: predata.useremail },
       { name: "username", data: username },
       { name: "fullName", data: fname + lname },
-      {name:"city",data:city_name},
-      { name: "country", data:country_name },
+      { name: "city", data: city_name },
+      { name: "country", data: country_name },
     ];
     RNFetchBlob.fetch(
       "POST",
@@ -113,9 +113,12 @@ const CreateProfile = ({ navigation, route }) => {
       .then((response) => response.json())
       .then(async (response) => {
         await AsyncStorage.setItem("Userid", response.data.id);
-        dispatch(setCountryName(""))
-        dispatch(setCityName(""))
-        navigation.navigate("Drawerroute");
+        dispatch(setCountryName(""));
+        dispatch(setCityName(""));
+        // navigation.navigate("Drawerroute");
+        navigation.navigate("AccountVerification", {
+          signup_role: route?.params?.signup_role,
+        });
       })
       .catch((error) => {
         alert("error" + error);
@@ -225,35 +228,36 @@ const CreateProfile = ({ navigation, route }) => {
               placeholder="Enter Last Name"
               onTermChange={(newLname) => setlname(newLname)}
             />
-                      <TouchableOpacity onPress={() => refCountryddRBSheet.current.open()}>
-            <CustomTextInput
-              onRef={ref_input3}
-              icon={appImages.lock}
-              type={"withouticoninput"}
-              term={country_name}
-              editable={false}
-              disable={false}
-              placeholder="Enter Country Name"
-              onTermChange={(newLname) => setCountry(newLname)}
-            />
-                 </TouchableOpacity>
-          <TouchableOpacity onPress={() => refCityddRBSheet.current.open()}>
-          <CustomTextInput
-              onRef={ref_input2}
-              icon={appImages.lock}
-              type={"withouticoninput"}
-              term={city_name}
-              editable={false}
-              disable={false}
-              returnType={"next"}
-              onNext={() => {
-                ref_input3.current.focus();
-              }}
-              placeholder="Enter City Name"
-              onTermChange={(newFname) => setCity(newFname)}
-            />
-          </TouchableOpacity>
-
+            <TouchableOpacity
+              onPress={() => refCountryddRBSheet.current.open()}
+            >
+              <CustomTextInput
+                onRef={ref_input3}
+                icon={appImages.lock}
+                type={"withouticoninput"}
+                term={country_name}
+                editable={false}
+                disable={false}
+                placeholder="Enter Country Name"
+                onTermChange={(newLname) => setCountry(newLname)}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => refCityddRBSheet.current.open()}>
+              <CustomTextInput
+                onRef={ref_input2}
+                icon={appImages.lock}
+                type={"withouticoninput"}
+                term={city_name}
+                editable={false}
+                disable={false}
+                returnType={"next"}
+                onNext={() => {
+                  ref_input3.current.focus();
+                }}
+                placeholder="Enter City Name"
+                onTermChange={(newFname) => setCity(newFname)}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ flex: 0.7, marginTop: hp(0), marginBottom: hp(20) }}>
@@ -297,7 +301,7 @@ const CreateProfile = ({ navigation, route }) => {
             setModalVisible(false);
           }}
         />
-                <CountryDropDown
+        <CountryDropDown
           refRBSheet={refCountryddRBSheet}
           onClose={() => refCountryddRBSheet.current.close()}
         />

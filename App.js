@@ -40,6 +40,8 @@ import ExchangeOffer from "./src/screens/StackScreens/Dashboard/OtherListings/Ex
 import PriceOffer from "./src/screens/StackScreens/Dashboard/OtherListings/PriceOffer";
 import FilterListings from "./src/screens/StackScreens/Dashboard/FilterListings";
 
+import CounterOffer from "./src/screens/StackScreens/Dashboard/OtherListings/CounterOffer";
+
 /////////////////Profile///////////////
 import Listings from "./src/screens/StackScreens/Profile/Listings";
 import LikedItems from "./src/screens/StackScreens/Profile/LikedItems";
@@ -78,6 +80,7 @@ import EditProfile from "./src/screens/StackScreens/Settings/EditProfile";
 import ChangePassword from "./src/screens/StackScreens/Settings/ChangePassword";
 import VerifyCode from "./src/screens/StackScreens/Settings/Verify/VerifyCode";
 import VerifyAccount from "./src/screens/StackScreens/Settings/Verify/VerifyAccount";
+import VerificationDocuments from "./src/screens/StackScreens/Settings/VerificationDocuments";
 
 /////////////////////Notification//////////////////
 import ExchangeNoti from "./src/screens/StackScreens/Notification/ExchangeRequestNoti";
@@ -333,6 +336,13 @@ function App() {
             }}
           />
           <Stack.Screen
+            name="CounterOffer"
+            component={CounterOffer}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="OtherProfile"
             component={OtherProfile}
             options={{
@@ -419,6 +429,13 @@ function App() {
           <Stack.Screen
             name="ShippingAddress"
             component={ShippingAddress}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="VerificationDocuments"
+            component={VerificationDocuments}
             options={{
               headerShown: false,
             }}

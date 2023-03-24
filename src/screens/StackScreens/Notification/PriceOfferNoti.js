@@ -34,6 +34,7 @@ import {
 
 /////////////////app images///////////////
 import { appImages } from "../../../constant/images";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PriceOfferNoti = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -46,11 +47,13 @@ const PriceOfferNoti = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState("");
+
   ////////////Offer Accept//////////
   const offerAcceptListings = (props) => {
     offer_Accept_Reject_Listings(route.params.offerid, props).then(
       (response) => {
-        console.log("response  :    ", response?.data);
+        console.log("response   of accepting offer   :    ", response?.data);
         setModalVisible(true);
       }
     );
@@ -61,16 +64,24 @@ const PriceOfferNoti = ({ navigation, route }) => {
     // console.log("exchnage response hereL:", props);
     offer_Accept_Reject_Listings(route.params.offerid, props).then(
       (response) => {
-        console.log("response  :: ", response?.data);
+        console.log("response  :: ", response?.data?.senderId);
         setModalVisible1(true);
       }
     );
   };
 
-  useEffect(() => {
-    console.log("image here:", exchange_other_listing, route.params.itemprice);
-  }, []);
+  // console.log("route.params  :  ", route.params);
 
+  useEffect(() => {
+    checkData();
+  }, [route?.params]);
+
+  const checkData = async () => {
+    let user_id = await AsyncStorage.getItem("Userid");
+    setCurrentUser(user_id);
+    console.log("route?.params :  ", route?.params?.sale_by);
+    console.log("route.params?.senderId :  ", route.params?.senderId);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -78,7 +89,7 @@ const PriceOfferNoti = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Price Offer"}
+          headerlabel={"Price Offer "}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -115,20 +126,50 @@ const PriceOfferNoti = ({ navigation, route }) => {
           />
         </View>
 
-        <View style={styles.smallbtnView}>
-          <TouchableOpacity
-            style={styles.smallbtn}
-            onPress={() => offerAcceptListings("accept")}
-          >
-            <Text style={styles.smallbtnText}>Accept</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.smallbtn}
-            onPress={() => offerRejectListings("reject")}
-          >
-            <Text style={styles.smallbtnText}>Reject</Text>
-          </TouchableOpacity>
-        </View>
+        {/* {route.params?.sale_by == currentUser && (
+          <View style={{ alignItems: "center", marginTop: 10 }}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() =>
+                navigation.navigate("CounterOffer", {
+                  sale_by: route?.params?.sale_by,
+                  buyer_id: route?.params?.buyer_id,
+                  offer_type: route?.params?.type,
+                  receiverId: route?.params?.receiverId,
+                  senderId: route?.params?.senderId,
+
+                  item_img: route?.params?.textimg1,
+                  offer_price: route?.params?.offerprice,
+                  offerid: route?.params?.offerid,
+                  itemprice: route?.params?.textprice,
+                  navtype: "chat",
+                  userid: route?.params?.receiverId,
+                })
+              }
+              // onPress={() => offerAcceptListings("accept")}
+            >
+              <Text style={styles.smallbtnText}>Make Counter Offer</Text>
+            </TouchableOpacity>
+          </View>
+        )} */}
+
+        {route.params?.senderId == currentUser ? null : (
+          <View style={{ ...styles.smallbtnView, marginTop: 35 }}>
+            <TouchableOpacity
+              style={styles.smallbtn}
+              onPress={() => offerAcceptListings("accept")}
+            >
+              <Text style={styles.smallbtnText}>Accept</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.smallbtn}
+              onPress={() => offerRejectListings("reject")}
+            >
+              <Text style={styles.smallbtnText}>Reject</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         <TouchableOpacity
           style={{
             alignItems: "center",
@@ -136,7 +177,8 @@ const PriceOfferNoti = ({ navigation, route }) => {
             marginTop: hp(3),
           }}
           onPress={() => {
-            // console.log("predata........", route?.params?.userid);
+            console.log("route?.params?.userid :  ", route?.params?.userid);
+
             navigation.navigate("ChatScreen", {
               navtype: "chatlist",
               // userid: predata.userid,

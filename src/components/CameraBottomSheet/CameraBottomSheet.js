@@ -52,11 +52,15 @@ const CamerBottomSheet = (props) => {
       compressImageQuality: 0.7,
     }).then((image) => {
       props.refRBSheet.current.close();
-      props?.type1 === "editProfile" && handleUpdateUserProfile(image);
-      props.type === "Chat_image"
-        ? Uploadpic(image)
-        : dispatch(setUserImage(image.path));
-      setImage(image.path);
+      if (props?.type == "verify") {
+        props?.onCameraImageSelect(image);
+      } else {
+        props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+        props.type === "Chat_image"
+          ? Uploadpic(image)
+          : dispatch(setUserImage(image.path));
+        setImage(image.path);
+      }
     });
   };
   ////////////////////library image//////////////////
@@ -68,12 +72,16 @@ const CamerBottomSheet = (props) => {
       compressImageQuality: 0.7,
     }).then((image) => {
       props.refRBSheet.current.close();
-      props?.type1 === "editProfile" && handleUpdateUserProfile(image);
-      props.type === "Chat_image"
-        ? Uploadpic(image)
-        : dispatch(setUserImage(image.path));
+      if (props?.type == "verify") {
+        props?.onGalleryImageSelect(image);
+      } else {
+        props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+        props.type === "Chat_image"
+          ? Uploadpic(image)
+          : dispatch(setUserImage(image.path));
 
-      setImage(image.path);
+        setImage(image.path);
+      }
     });
   };
 
@@ -112,11 +120,10 @@ const CamerBottomSheet = (props) => {
   };
   const [selectedimage, setselectedimage] = useState(false);
   /////////////////image api calling///////////////
-  const Uploadpic = (props) => {
-    console.log("upload pic called ....");
+  const Uploadpic = (file) => {
     const formData = new FormData();
     formData.append(`image`, {
-      uri: props.path,
+      uri: file.path,
       type: "image/jpeg",
       name: "image.jpg",
     });
@@ -132,6 +139,7 @@ const CamerBottomSheet = (props) => {
       .then((responseData) => {
         console.log("responseData  ::    ", responseData);
         dispatch(setUserImage(responseData.image));
+        props.onImageUpload(responseData.image);
       });
   };
   return (
@@ -182,7 +190,9 @@ const CamerBottomSheet = (props) => {
       <View style={{ justifyContent: "center", marginTop: hp(3) }}>
         <TouchableOpacity
           onPress={() => {
-            props.type === "onepic" || props.type === "Chat_image"
+            props.type === "onepic" ||
+            props.type === "Chat_image" ||
+            props.type === "verify"
               ? takePhotoFromCamera()
               : navigation.navigate("CameraViewScreen", "Take Photo"),
               props.refRBSheet.current.close();
@@ -191,11 +201,7 @@ const CamerBottomSheet = (props) => {
           style={styles.modaltextview}
         >
           <Ionicons name="camera" size={25} color={"#707070"} />
-          {/* <Image
-                 source={require('../../assets/imagepicker/camera.png')}
-                 style={styles.uploadicon}
-                  resizeMode='contain'
-              /> */}
+
           <Text style={styles.optiontext}>Upload from Camera</Text>
         </TouchableOpacity>
         <View
@@ -210,7 +216,9 @@ const CamerBottomSheet = (props) => {
         ></View>
         <TouchableOpacity
           onPress={() => {
-            props.type === "onepic"
+            props.type === "onepic" ||
+            props.type === "Chat_image" ||
+            props.type === "verify"
               ? choosePhotoFromLibrary()
               : navigation.navigate("CameraViewScreen", "Take Photo"),
               props.refRBSheet.current.close();
