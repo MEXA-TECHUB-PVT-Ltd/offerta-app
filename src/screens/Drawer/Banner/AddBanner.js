@@ -12,6 +12,8 @@ import {
 /////////////render/////////////////
 import RenderHtml from "react-native-render-html";
 
+import moment from "moment/moment";
+
 //////////////////app components///////////////
 import CustomHeader from "../../../components/Header/CustomHeader";
 import CustomButtonhere from "../../../components/Button/CustomButton";
@@ -71,7 +73,7 @@ const AddBanner = ({ navigation, route }) => {
       compressImageQuality: 0.7,
     }).then((image) => {
       refRBSheet.current.close();
-      console.log(image);
+
       setImage(image.path);
       let newfile = {
         uri: image.path,
@@ -90,7 +92,6 @@ const AddBanner = ({ navigation, route }) => {
       compressImageQuality: 0.7,
     }).then((image) => {
       refRBSheet.current.close();
-      console.log(image);
       setImage(image.path);
       let newfile = {
         uri: image.path,
@@ -167,6 +168,7 @@ const AddBanner = ({ navigation, route }) => {
       url: BASE_URL + "getbannerDescription.php",
     })
       .then(async function (response) {
+        // console.log("response  :   ", response.data.description);
         setBannerDescription(response.data.description.split[0]);
       })
       .catch(function (error) {
@@ -218,8 +220,14 @@ const AddBanner = ({ navigation, route }) => {
   const [enddateshow, setEndDateShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const [startDate_String, setStartDate_String] = useState("");
+  const [endDate_String, setEndDate_String] = useState("");
+
   const [showyearwise, setshowyearwise] = useState(false);
   const [showdaywise, setshowdaywise] = useState("");
+
+  const [daysDifference, setDaysDifference] = useState(0);
 
   const onstartdateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -236,7 +244,12 @@ const AddBanner = ({ navigation, route }) => {
       console.log(year + "-" + month + "-" + day);
       console.log(typeof (year + "-" + month + "-" + day));
       setshowyearwise(year + "-" + month + "-" + day);
-      setStartDate(year + "-" + month + "-" + day);
+      // setStartDate(year + "-" + month + "-" + day);
+
+      let date_str = year + "-" + month + "-" + day;
+      setStartDate_String(date_str);
+
+      getDaysDifference(selectedDate, endDate, date_str, endDate_String);
       //console('date',showyearwise)
     }
   };
@@ -255,7 +268,10 @@ const AddBanner = ({ navigation, route }) => {
       console.log(year + "-" + month + "-" + day);
       console.log(typeof (year + "-" + month + "-" + day));
       setshowyearwise(year + "-" + month + "-" + day);
-      setEndDate(year + "-" + month + "-" + day);
+      // setEndDate(year + "-" + month + "-" + day);
+      let date_str = year + "-" + month + "-" + day;
+      setEndDate_String(date_str);
+      getDaysDifference(startDate, selectedDate, startDate_String, date_str);
       //console('date',showyearwise)
     }
   };
@@ -278,6 +294,31 @@ const AddBanner = ({ navigation, route }) => {
   const showEndDatepicker = () => {
     showEndDateMode("date");
   };
+
+  const getDaysDifference = async (
+    startDate,
+    endDate,
+    startDate_String,
+    endDate_String
+  ) => {
+    if (startDate_String?.length > 0 && endDate_String?.length > 0) {
+      if (startDate_String == endDate_String) {
+        console.log("days :  1 ");
+        setDaysDifference(1);
+        console.log("both dates are equal");
+      } else {
+        var start = moment(startDate, "YYYY-MM-DD");
+        var end = moment(endDate, "YYYY-MM-DD");
+        let days = moment.duration(end.diff(start)).asDays();
+        console.log("days :  ", days);
+        setDaysDifference(days);
+      }
+    }
+
+    // console.log("start Date  :    ", startDate_String);
+    // console.log("End Date  :    ", endDate_String);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -293,6 +334,7 @@ const AddBanner = ({ navigation, route }) => {
             locale="es-ES"
             themeVariant="light"
             onChange={onstartdateChange}
+            maximumDate={endDate_String ? endDate : null}
             style={{
               shadowColor: "#fff",
               shadowRadius: 0,
@@ -312,6 +354,7 @@ const AddBanner = ({ navigation, route }) => {
             locale="es-ES"
             themeVariant="light"
             onChange={onenddateChange}
+            minimumDate={startDate_String ? startDate : null}
             style={{
               shadowColor: "#fff",
               shadowRadius: 0,
@@ -323,7 +366,7 @@ const AddBanner = ({ navigation, route }) => {
           />
         )}
         <CustomHeader
-          headerlabel={"Add Banner"}
+          headerlabel={"Add Banner "}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -345,7 +388,6 @@ const AddBanner = ({ navigation, route }) => {
             tagsStyles={tagsStyles}
           />
         </View>
-
         {user_image === "" ? (
           <TouchableOpacity onPress={() => refRBSheet.current.open()}>
             <View style={Uploadstyles.mainview}>
@@ -381,7 +423,8 @@ const AddBanner = ({ navigation, route }) => {
             <CustomTextInput
               icon={appImages.lock}
               type={"withouticoninput"}
-              term={startDate}
+              // term={startDate}
+              term={startDate_String}
               editable={false}
               disable={false}
               placeholder="Start Date"
@@ -392,18 +435,31 @@ const AddBanner = ({ navigation, route }) => {
             <CustomTextInput
               icon={appImages.lock}
               type={"withouticoninput"}
-              term={endDate}
+              // term={endDate}
+              term={endDate_String}
               editable={false}
               placeholder="End Date"
               onTermChange={(newLname) => setEndDate(newLname)}
             />
           </TouchableOpacity>
+          <View
+            style={{
+              paddingHorizontal: 30,
+              padding: 20,
+              alignItems: "flex-end",
+            }}
+          >
+            <Text style={styles.toptext}>
+              Total Amount : {bannerPrice * daysDifference}
+              {"$"}
+            </Text>
+          </View>
         </View>
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
             title={"PAY NOW"}
             widthset={80}
-            topDistance={10}
+            topDistance={3}
             onPress={() => {
               CreateBanner();
               //navigation.navigate("PaymentMethod");

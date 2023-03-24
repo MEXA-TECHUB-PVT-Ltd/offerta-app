@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
+  RefreshControl,
 } from "react-native";
 
 ////////////////app components///////////
@@ -35,14 +36,10 @@ const Notification = ({ navigation }) => {
   ///////////////////data state///////////
   const [notification, setNotification] = useState("");
 
-
   //textfields
   useEffect(() => {
     get_Notifications().then((response) => {
-      console.log(
-        "response get here dispatcher",
-   response.data
-      );
+      console.log("response get here dispatcher", response.data);
       //setData(response.data)
       if (response.data.msg === "No Result") {
         setNotification("");
@@ -52,11 +49,17 @@ const Notification = ({ navigation }) => {
     });
   }, []);
 
-  const renderItem=(item)=>{
-    return(
-        <TouchableOpacity style={styles.card}
-        onPress={()=> navigation.navigate("ExchangeNoti",{data:item.item,navtype:"Notification" })}
-        >
+  const renderItem = (item) => {
+    return (
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => {
+          navigation.navigate("ExchangeNoti", {
+            data: item.item,
+            navtype: "Notification",
+          });
+        }}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -67,7 +70,7 @@ const Notification = ({ navigation }) => {
         >
           <View style={{}}>
             <Image
-              source={{uri: IMAGE_URL+ item.item.requester.image}}
+              source={{ uri: IMAGE_URL + item.item.requester.image }}
               style={styles.userimage}
               resizeMode="contain"
             />
@@ -79,16 +82,15 @@ const Notification = ({ navigation }) => {
             </Text>
           </View>
         </View>
-    
+
         <View style={{ marginLeft: 0 }}>
           {/* <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
             00:00 pm
           </Text> */}
         </View>
       </TouchableOpacity>
-    )
-
-  }
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar

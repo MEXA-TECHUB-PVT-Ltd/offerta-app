@@ -8,20 +8,30 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+/////////////app icons/////////////////////
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 //////////////////app components///////////////
 import CustomHeader from "../../../../components/Header/CustomHeader";
+import DashboardCard from "../../../../components/CustomCards/DashboardCard";
 import CustomTextInput from "../../../../components/TextInput/CustomTextInput";
-import CustomModal from "../../../../components/Modal/CustomModal";
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setExchangeOffer_OtherListing } from "../../../redux/actions";
+import { setExchangeOffer_OtherListing } from "../../../../redux/actions";
+
+////////////////app Colors/////////////
+import Colors from "../../../../utills/Colors";
 
 /////////////app styles////////////////
 import styles from "./styles";
 
 //////////////app functions///////////////
-import { offer_Accept_Reject_Listings } from "../../../../api/Offer";
+import {
+  post_Listings_Conter_Offer,
+  post_Listings_Price_Offer,
+} from "../../../../api/PostApis";
+
 /////////////image url/////////////
 import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
 
@@ -31,47 +41,39 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-/////////////////app images///////////////
+/////////////////app images//////////
 import { appImages } from "../../../../constant/images";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { Snackbar } from "react-native-paper";
+import CustomModal from "../../../../components/Modal/CustomModal";
+import { counter_offer_Accept_OR_Reject } from "../../../../api/Offer";
+
+//////////////////appImages.//////////////////
+
 const CounterOffer = ({ navigation, route }) => {
-  console.log("route?.params:  ", route?.params);
   ////////////////redux/////////////
   const { exchange_other_listing, exchange_my_listing } = useSelector(
     (state) => state.userReducer
   );
-
   const dispatch = useDispatch();
+
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
+
+  //////////////////Textinput state////////////
+  const [offerprice, setOfferPrice] = React.useState(0);
+
+  const [snackbarMessage, setsnackbarMessage] = useState("");
+
+  const [currentUser, setCurrentUser] = useState("");
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
-
-  const [currentUser, setCurrentUser] = useState("");
-
-  ////////////Offer Accept//////////
-  const offerAcceptListings = (props) => {
-    offer_Accept_Reject_Listings(route.params.offerid, props).then(
-      (response) => {
-        console.log("response   of accepting offer   :    ", response?.data);
-        setModalVisible(true);
-      }
-    );
-  };
-
-  ////////////Offer Reject//////////
-  const offerRejectListings = (props) => {
-    // console.log("exchnage response hereL:", props);
-    offer_Accept_Reject_Listings(route.params.offerid, props).then(
-      (response) => {
-        console.log("response  :: ", response?.data?.senderId);
-        setModalVisible1(true);
-      }
-    );
-  };
-
-  // console.log("route.params  :  ", route.params);
 
   useEffect(() => {
     checkData();
@@ -80,9 +82,134 @@ const CounterOffer = ({ navigation, route }) => {
   const checkData = async () => {
     let user_id = await AsyncStorage.getItem("Userid");
     setCurrentUser(user_id);
-    console.log("route?.params :  ", route?.params?.sale_by);
-    console.log("route.params?.senderId :  ", route.params?.senderId);
   };
+
+  ////////////LISTING LIKES//////////
+  const Listings_Exchange_Offer = async (props) => {
+    // console.log("props   :  ", props);
+    // console.log("exchange_other_listing  :   ", exchange_other_listing.user_id);
+    // console.log("exchange_other_listing  :   ", exchange_other_listing.id);
+    // return;
+
+    if (offerprice == "" || offerprice == 0) {
+      setsnackbarMessage("Please Enter Offer Price");
+      onToggleSnackBar();
+      return;
+    }
+
+    var user_id = await AsyncStorage.getItem("Userid");
+    console.log("logged in user id  :  ", user_id);
+    console.log("sale_by  :   ", route?.params?.sale_by);
+    console.log("listing_id  :   ", route?.params?.listing_id);
+    console.log("offer price  :   ", offerprice);
+
+    console.log("buyer_id  :  ", route?.params?.buyer_id);
+    route.params.navtype = "counter_offer";
+    // console.log("route?.params?.navtype", route?.params?.navtype);
+    // navigation.replace("ChatScreen", {
+    //   buyer_id: route?.params?.buyer_id,
+    //   sale_by: route?.params?.sale_by,
+    //   userid: route?.params?.buyer_id,
+    //   offerprice: offerprice,
+    //   // offerid: response.data.data.id,
+    //   offerid: "-1",
+    //   item_price: route?.params.itemprice,
+    //   navtype: "counter_offer",
+    //   listing_id: route?.params?.listing_id,
+    //   listing_image: route?.params?.item_img,
+    // });
+
+    // return;
+
+    setList_Date({
+      otheruser_id: exchange_other_listing.user_id,
+      other_item_id: exchange_other_listing.id,
+      item_offerprice: props,
+    });
+
+    console.log("user_id :  ", user_id);
+    console.log("list_Date :  ", list_data);
+
+    // navigation.replace("ChatScreen", {
+    //   buyer_id: route?.params?.buyer_id,
+    //   sale_by: route?.params?.sale_by,
+    //   userid: route?.params?.buyer_id,
+    //   offerprice: offerprice,
+    //   // offerid: response.data.data.id,
+    //   offerid: -23,
+    //   item_price: route?.params.itemprice,
+    //   navtype: "counter_offer",
+    //   listing_id: route?.params?.listing_id,
+    //   listing_image: route?.params?.item_img,
+    // });
+    // return;
+
+    post_Listings_Conter_Offer(
+      route?.params?.buyer_id,
+      route?.params?.sale_by,
+      route?.params?.listing_id,
+      offerprice
+    ).then((response) => {
+      //dispatch(setExchangeOffer_OtherListing(list_data))
+      console.log(
+        "counter offfer response   : :   :: ::  :   :  :: :  ::::: : : ::",
+        response?.data
+      );
+
+      if (response?.data?.status == true) {
+        navigation.replace("ChatScreen", {
+          buyer_id: route?.params?.buyer_id,
+          sale_by: route?.params?.sale_by,
+          userid: route?.params?.buyer_id,
+          offerprice: offerprice,
+          offerid: response.data.data.id,
+          item_price: route?.params.itemprice,
+          navtype: "counter_offer",
+          listing_id: route?.params?.listing_id,
+          listing_image: route?.params?.item_img,
+        });
+      } else {
+        setsnackbarMessage(response?.data?.message);
+        onToggleSnackBar();
+      }
+      // setListing_Like_User_id(response.data.data.user_id);
+    });
+  };
+  const [list_data, setList_Date] = useState({
+    otheruser_id: exchange_other_listing.user_id,
+    other_item_id: exchange_other_listing.id,
+    item_offerprice: offerprice,
+  });
+
+  // useEffect(() => {
+  //   console.log("image here:", exchange_other_listing);
+  // }, []);
+
+  const handleCountOfferAccept_Reject = (status) => {
+    console.log("offer id  :::   ", route?.params?.offerid);
+    console.log("status ::   ", status);
+
+    counter_offer_Accept_OR_Reject(route?.params?.offerid, status).then(
+      (response) => {
+        console.log(
+          "counter offer accepting/rejecting response  :    ",
+          response?.data
+        );
+
+        if (response?.data?.status == true) {
+          if (status == "accept") {
+            setModalVisible(true);
+          } else {
+            setModalVisible1(true);
+          }
+        } else {
+          setsnackbarMessage(response?.data?.message);
+          onToggleSnackBar();
+        }
+      }
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -90,7 +217,7 @@ const CounterOffer = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Price Offer "}
+          headerlabel={"Counter Offer "}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -98,106 +225,127 @@ const CounterOffer = ({ navigation, route }) => {
           icon={"arrow-back"}
         />
         <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Image
-            source={{ uri: IMAGE_URL + route.params.item_img }}
-            style={{ width: wp(90), height: hp(30), borderRadius: wp(4) }}
-            resizeMode="cover"
-          />
+          {route?.params?.item_img && (
+            <Image
+              source={{ uri: IMAGE_URL + route?.params?.item_img }}
+              style={{ width: wp(90), height: hp(30), borderRadius: wp(4) }}
+              resizeMode="cover"
+            />
+          )}
         </View>
         <View style={{ paddingHorizontal: wp(3), marginTop: hp(3) }}>
           <Text style={{ color: "black" }}>Item Price</Text>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
-            term={route.params.itemprice + "$"}
+            term={route?.params.itemprice + "$"}
             placeholder="Shipping Price"
             editable={false}
             //onTermChange={(my_price) => setMyPrice(my_price)}
             keyboard_type={"numeric"}
           />
+
           <Text style={{ color: "black" }}>Offer Price</Text>
-          <CustomTextInput
+          {route?.params?.senderId == currentUser ||
+          route?.params?.type == "view" ? (
+            <CustomTextInput
+              type={"withouticoninput"}
+              texterror={"invalid"}
+              term={route?.params?.offer_price + "$"}
+              editable={false}
+              placeholder="Enter Price"
+              onTermChange={(offer_price) => setOfferPrice(offer_price)}
+              keyboard_type={"numeric"}
+            />
+          ) : (
+            <CustomTextInput
+              type={"withouticoninput"}
+              texterror={"invalid"}
+              term={offerprice}
+              placeholder="Enter Price"
+              onTermChange={(offer_price) => setOfferPrice(offer_price)}
+              keyboard_type={"numeric"}
+            />
+          )}
+
+          {/* <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
-            term={route.params.offer_price + "$"}
+            term={route?.params?.offer_price + "$"}
             placeholder="Enter Price"
-            editable={false}
-            // onTermChange={(offer_price) => setOfferPrice(offer_price)}
+            onTermChange={(offer_price) => setOfferPrice(offer_price)}
             keyboard_type={"numeric"}
-          />
+            editable={false}
+          /> */}
         </View>
 
-        {route.params?.sale_by == currentUser && (
-          <View style={{ alignItems: "center", marginTop: 10 }}>
+        {route?.params?.senderId == currentUser ? null : route?.params
+            ?.sale_by == currentUser ? (
+          <View style={styles.btnView}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={() => navigation.navigate("CounterOffer")}
-              // onPress={() => offerAcceptListings("accept")}
+              onPress={() => Listings_Exchange_Offer(offerprice)}
             >
-              <Text style={styles.smallbtnText}>Make Counter Offer</Text>
+              <Text style={styles.btnText}>SUBMIT</Text>
             </TouchableOpacity>
           </View>
-        )}
-
-        {route.params?.senderId == currentUser ? null : (
+        ) : (
           <View style={{ ...styles.smallbtnView, marginTop: 35 }}>
             <TouchableOpacity
               style={styles.smallbtn}
-              onPress={() => offerAcceptListings("accept")}
+              onPress={() => handleCountOfferAccept_Reject("accept")}
             >
               <Text style={styles.smallbtnText}>Accept</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.smallbtn}
-              onPress={() => offerRejectListings("reject")}
+              onPress={() => handleCountOfferAccept_Reject("reject")}
             >
               <Text style={styles.smallbtnText}>Reject</Text>
             </TouchableOpacity>
           </View>
         )}
-        <TouchableOpacity
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: hp(3),
-          }}
-          onPress={() => {
-            console.log("route?.params?.userid :  ", route?.params?.userid);
 
-            navigation.navigate("ChatScreen", {
-              navtype: "chatlist",
-              // userid: predata.userid,
-              userid: route?.params?.userid,
-            });
+        <Snackbar
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          duration={400}
+          style={{
+            backgroundColor: "red",
+            marginBottom: hp(9),
+            zIndex: 999,
           }}
         >
-          <Text style={styles.LastText}>Talk on chat</Text>
-        </TouchableOpacity>
+          {snackbarMessage}
+        </Snackbar>
+
+        <CustomModal
+          modalVisible={modalVisible}
+          CloseModal={() => setModalVisible(false)}
+          Icon={appImages.sucess}
+          text={"Success"}
+          subtext={"Offer Accepted Sucessfully"}
+          buttontext={"OK"}
+          onPress={() => {
+            setModalVisible(false);
+            // navigation.navigate("BottomTab");
+            navigation?.goBack();
+          }}
+        />
+        <CustomModal
+          modalVisible={modalVisible1}
+          CloseModal={() => setModalVisible1(false)}
+          Icon={appImages.sucess}
+          text={"Success"}
+          subtext={"Offer Rejected Sucessfully"}
+          buttontext={"OK"}
+          onPress={() => {
+            setModalVisible1(false);
+            // navigation.navigate("BottomTab");
+            navigation?.goBack();
+          }}
+        />
       </ScrollView>
-      <CustomModal
-        modalVisible={modalVisible}
-        CloseModal={() => setModalVisible(false)}
-        Icon={appImages.sucess}
-        text={"Success"}
-        subtext={"Offer Accepted Sucessfully"}
-        buttontext={"OK"}
-        onPress={() => {
-          setModalVisible(false);
-          navigation.navigate("BottomTab");
-        }}
-      />
-      <CustomModal
-        modalVisible={modalVisible1}
-        CloseModal={() => setModalVisible1(false)}
-        Icon={appImages.sucess}
-        text={"Success"}
-        subtext={"Offer Rejected Sucessfully"}
-        buttontext={"OK"}
-        onPress={() => {
-          setModalVisible1(false);
-          navigation.navigate("BottomTab");
-        }}
-      />
     </SafeAreaView>
   );
 };

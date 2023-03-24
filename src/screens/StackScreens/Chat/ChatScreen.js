@@ -24,7 +24,6 @@ import React, {
   useRef,
   useCallback,
   useLayoutEffect,
-  TouchableOpacity,
   Button,
   TextInput,
 } from "react";
@@ -34,6 +33,7 @@ import {
   Image,
   PermissionsAndroid,
   Text,
+  TouchableOpacity,
 } from "react-native";
 
 ///////////////import app components/////////////
@@ -100,6 +100,8 @@ const ChatScreen = ({ route, navigation }) => {
   ////////////////redux/////////////
   const { exchange_other_listing, exchange_my_listing, user_image } =
     useSelector((state) => state.userReducer);
+
+  const [navType, setNavType] = useState("");
 
   ////////////previos data//////////
   const [predata] = useState(route.params);
@@ -183,6 +185,7 @@ const ChatScreen = ({ route, navigation }) => {
   const [username, setUsername] = useState("");
   const [userimage, setImage] = useState("");
   const GetUserData = async () => {
+    console.log("route.params.userid  :  ", route.params.userid);
     get_Other_UserData(route.params.userid).then((response) => {
       setUsername(response.data.full_name);
       setImage(response.data.image);
@@ -199,17 +202,42 @@ const ChatScreen = ({ route, navigation }) => {
         setExchangeOffer_MyListing("");
     }
   };
+
+  // useEffect(() => {
+  //   console.log("reotue____________________________________________");
+  // }, [route?.params]);
+
   useEffect(() => {
-    console.log("route?.params :  ", route?.params?.navtype);
+    // setNavType(route?.params?.navtype);
+    // GetUserData();
+    // getUserMessages();
+    // AllMessages();
+
+    // console.log("count_______________________________", count);
+    // return;
+
     if (
       route?.params?.navtype == "chatlist" ||
       typeof route?.params?.navtype == "undefined"
     ) {
+      console.log("if called  ...........");
       GetUserData();
       getUserMessages();
       AllMessages();
     } else {
+      // if (route?.params?.navtype == "counter_offer") {
+      //   console.log(
+      //     "+++++++++++++++++++++++++++++++++++++counter offer called................................."
+      //   );
+      //   setCount(count + 1),
+      //     setC(count + 1),
+      //     onSend(),
+      //     setExchangeOffer_OtherListing(""),
+      //     setExchangeOffer_MyListing("");
+      // } else
+
       if (count === 0) {
+        console.log("count is 0 now_____________________________________");
         setCount(count + 1),
           onSend(),
           setExchangeOffer_OtherListing(""),
@@ -218,7 +246,7 @@ const ChatScreen = ({ route, navigation }) => {
       GetUserData();
       getUserMessages();
     }
-    console.log("useEffect called.........");
+    // console.log("useEffect called.........");
     requestCameraPermission();
   }, [isFocused]);
 
@@ -230,11 +258,22 @@ const ChatScreen = ({ route, navigation }) => {
   }, []);
   const handleSend = async (messageArray) => {
     var user = await AsyncStorage.getItem("Userid");
-    const docid =
-      route.params.userid > user
-        ? user + "-" + route.params.userid
-        : route.params.userid + "-" + user;
 
+    let docid = "";
+    if (route?.params?.navtype == "counter_offer") {
+      // console.log("route?.params ::::::::: : :: : : : :: :  ", route?.params);
+      docid =
+        route.params.buyer_id > user
+          ? user + "-" + route.params.buyer_id
+          : route.params.buyer_id + "-" + user;
+    } else {
+      docid =
+        route.params.userid > user
+          ? user + "-" + route.params.userid
+          : route.params.userid + "-" + user;
+    }
+
+    // return;
     let myMsg = null;
     // var count = 0;
     // if (imageUrl !== "") {
@@ -252,8 +291,32 @@ const ChatScreen = ({ route, navigation }) => {
     //   };
     // } else {
     const msg = messageArray[0];
-
-    route.params.navtype === "price_offer"
+    console.log(
+      "route?.params?.navtype  :::::::::::::::::::::::::::::",
+      route?.params?.navtype
+    );
+    route?.params?.navtype == "counter_offer"
+      ? (myMsg = {
+          ...msg,
+          _id: uuid.v4(),
+          textimg1: route?.params?.listing_image,
+          textprice: route.params.item_price,
+          offerprice: route.params.offerprice,
+          offerid: route.params.offerid,
+          type: "counter_offer",
+          text: "counter_offer", //added....
+          senderId: user,
+          // receiverId: route.params.userid,
+          receiverId: route.params.buyer_id,
+          buyer_id: route?.params?.buyer_id,
+          sale_by: route?.params?.sale_by,
+          listing_id: route?.params?.listing_id,
+          user: {
+            _id: user,
+            name: "ali",
+          },
+        })
+      : route.params.navtype === "price_offer"
       ? (myMsg = {
           ...msg,
           _id: uuid.v4(),
@@ -331,6 +394,10 @@ const ChatScreen = ({ route, navigation }) => {
           },
         });
     //}
+
+    // console.log("myMsg  ___________________________", myMsg);
+    // return;
+
     setExchangeOffer_MyListing("");
     setExchangeOffer_OtherListing("");
     setCount(count + 1);
@@ -348,6 +415,17 @@ const ChatScreen = ({ route, navigation }) => {
         ...myMsg,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
+    // .finally(() => {
+    //   if (route?.params?.navtype == "counter_offer") {
+    //     route.params.navtype = null;
+    //     console.log(
+    //       "parms is null now+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    //     );
+    //   }
+    // });
+
+    //remove navtype from route params
+
     messages.forEach((message) => {});
     // myMsg = "";
     setCount(count + 1);
@@ -355,7 +433,6 @@ const ChatScreen = ({ route, navigation }) => {
     setImageUrl("");
     setImageData(null);
   };
-
   ////////////////////library image//////////////////
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -566,7 +643,63 @@ const ChatScreen = ({ route, navigation }) => {
   const CustomBubbleText = (props) => {
     return (
       <View>
-        {props.currentMessage.type === "price_offer" ? (
+        {props.currentMessage.type === "counter_offer" ? (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.p_mainview}
+            onPress={() => {
+              // let obj = {
+              //   sale_by: props.currentMessage.sale_by,
+              //   buyer_id: props.currentMessage.buyer_id,
+              //   offer_type: props.currentMessage.type,
+              //   receiverId: props.currentMessage.receiverId,
+              //   senderId: props.currentMessage.senderId,
+              //   listing_id: props.currentMessage.listing_id,
+
+              //   item_img: props.currentMessage.textimg1,
+              //   offer_price: props.currentMessage.offerprice,
+              //   offerid: props.currentMessage.offerid,
+              //   itemprice: props.currentMessage.textprice,
+              //   navtype: "chat",
+              //   userid: props.currentMessage.receiverId,
+              // };
+
+              // console.log("obj    :::   ", obj);
+
+              navigation.navigate("CounterOffer", {
+                sale_by: props.currentMessage.sale_by,
+                buyer_id: props.currentMessage.buyer_id,
+                offer_type: props.currentMessage.type,
+                receiverId: props.currentMessage.receiverId,
+                senderId: props.currentMessage.senderId,
+                listing_id: props.currentMessage.listing_id,
+
+                item_img: props.currentMessage.textimg1,
+                offer_price: props.currentMessage.offerprice,
+                offerid: props.currentMessage.offerid,
+                itemprice: props.currentMessage.textprice,
+                navtype: "chat",
+                userid: props.currentMessage.receiverId,
+                type: "view",
+                // userid: route.params.userid,
+              });
+            }}
+          >
+            <Image
+              source={{ uri: IMAGE_URL + props.currentMessage.textimg1 }}
+              style={styles.p_image}
+              resizeMode="cover"
+            />
+            <View style={{}}>
+              <Text style={styles.p_text}>
+                {"Item Price " + props.currentMessage.textprice}
+              </Text>
+              <Text style={styles.p_text}>
+                {"Offer Price " + props.currentMessage.offerprice}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ) : props.currentMessage.type === "price_offer" ? (
           <View style={styles.p_mainview}>
             <Image
               source={{ uri: IMAGE_URL + props.currentMessage.textimg1 }}

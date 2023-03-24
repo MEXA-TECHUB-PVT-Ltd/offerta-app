@@ -65,6 +65,30 @@ export const post_Listings_Price_Offer = async (
   });
 };
 
+/////////////////////Counter Offer////////////
+export const post_Listings_Conter_Offer = async (
+  user_id,
+  sale_by,
+  listing_id,
+  price
+) => {
+  // var user_id = await AsyncStorage.getItem("Userid");
+
+  console.log("data passed to create counter offer  :   ", {
+    user_id,
+    sale_by,
+    listing_id,
+    price,
+  });
+
+  return axios.post(BASE_URL + "counterOffert.php", {
+    user_id: user_id,
+    sale_by: sale_by,
+    listing_id: listing_id,
+    price: price,
+  });
+};
+
 ///////////////////User Functions////////////
 //-------------->Follow Users
 export const post_Follow_Users = async (props) => {

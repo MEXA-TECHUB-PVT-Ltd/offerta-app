@@ -44,6 +44,8 @@ import {
 } from "../../../redux/actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { Snackbar } from "react-native-paper";
+
 const ShippingAddresss = ({ navigation, route }) => {
   /////////////////////////redux///////////////////
   const { country_name, state_name, city_name } = useSelector(
@@ -61,6 +63,11 @@ const ShippingAddresss = ({ navigation, route }) => {
   ////////////country picker states/////////////
   const [CountryPickerView, setCountryPickerView] = useState(false);
   const [countryCode, setCountryCode] = useState("92");
+
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
+
   //const [countryname, setCountryName] = useState("Pak");
 
   ///////////////button states/////////////
@@ -82,7 +89,6 @@ const ShippingAddresss = ({ navigation, route }) => {
   ////////////LISTING LIKES//////////
   const create_shippingAddress = async (props) => {
     let user_id = await AsyncStorage.getItem("Userid");
-    console.log("user_id  :   ", user_id);
     let data = {
       user_id: user_id,
       country: country_name,
@@ -106,7 +112,11 @@ const ShippingAddresss = ({ navigation, route }) => {
         setloading(0);
         setdisable(0);
         if (response?.data?.status == false) {
-          alert(response?.data?.message);
+          setsnackbarValue({
+            value: response?.data?.message,
+            color: "red",
+          });
+          setVisible("true");
         } else {
           setModalVisible(true);
         }
@@ -133,9 +143,21 @@ const ShippingAddresss = ({ navigation, route }) => {
           }}
           icon={"arrow-back"}
         />
+        <Snackbar
+          duration={400}
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          style={{
+            backgroundColor: snackbarValue.color,
+            marginBottom: hp(9),
+            zIndex: 999,
+          }}
+        >
+          {snackbarValue.value}
+        </Snackbar>
 
         <View>
-          <CustomTextInput
+          {/* <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={shipping_state.nick_name}
@@ -147,7 +169,7 @@ const ShippingAddresss = ({ navigation, route }) => {
             term={shipping_state.user_name}
             placeholder="Enter your name"
             onTermChange={(value) => handleChange(value, "user_name")}
-          />
+          /> */}
           <CustomTextInput
             type={"withouticoninput"}
             term={shipping_state.address_1}

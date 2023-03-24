@@ -14,21 +14,33 @@ import { get_User_Listings } from "../../../api/GetApis";
 
 ///////////////image url///////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Listings = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
 
-  useEffect(() => {
-    get_User_Listings().then((response) => {
-      if (response.data.message === "No data available") {
-        setdata("");
-      } else {
-        setdata(response.data);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   get_User_Listings().then((response) => {
+  //     if (response.data.message === "No data available") {
+  //       setdata("");
+  //     } else {
+  //       setdata(response.data);
+  //     }
+  //   });
+  // }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      get_User_Listings().then((response) => {
+        if (response.data.message === "No data available") {
+          setdata("");
+        } else {
+          setdata(response.data);
+        }
+      });
+    }, [])
+  );
   const renderItem = ({ item }) => (
     <DashboardCard
       image={item.images === [] ? null : IMAGE_URL + item.images[0]}
