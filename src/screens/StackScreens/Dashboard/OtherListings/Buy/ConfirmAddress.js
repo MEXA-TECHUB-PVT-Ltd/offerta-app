@@ -69,6 +69,8 @@ const ConfirmAddress = ({ navigation, route }) => {
   ////////////list state////////////
   const [shippinglist, setshippinglist] = useState(null);
 
+  const [selectedAddress, setSelectedAddress] = useState("");
+
   useEffect(() => {
     console.log("useEffect  : ", isFocused);
     if (isFocused) {
@@ -201,6 +203,9 @@ const ConfirmAddress = ({ navigation, route }) => {
               data={shippinglist}
               renderItem={({ item }) => (
                 <ShippingAddressCard
+                  style={{
+                    elevation: item?.id == selectedAddress ? 10 : 1,
+                  }}
                   username={item.country}
                   address_1={item.address_1}
                   address_2={item.address_2}
@@ -214,6 +219,9 @@ const ConfirmAddress = ({ navigation, route }) => {
                   onpress={() => {
                     dispatch(setLoginUserShippingAddress(item));
                     navigation.navigate("UpdateShippingAddress");
+                  }}
+                  onLongPress={() => {
+                    setSelectedAddress(item?.id);
                   }}
                 />
               )}

@@ -55,7 +55,7 @@ export const DrawerContent = (props) => {
     GetUserData();
   }, []);
   const handleProfilePress = async () => {
-    let userid = await AsyncStorage.removeItem("Userid");
+    let userid = await AsyncStorage.getItem("Userid");
     props.navigation.navigate("Profile", {
       item: "profile",
       id: userid,

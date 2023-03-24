@@ -126,32 +126,48 @@ const PriceOfferNoti = ({ navigation, route }) => {
           />
         </View>
 
-        {/* {route.params?.sale_by == currentUser && (
+        {route.params?.sale_by == currentUser && (
           <View style={{ alignItems: "center", marginTop: 10 }}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={() =>
-                navigation.navigate("CounterOffer", {
-                  sale_by: route?.params?.sale_by,
+              onPress={() => {
+                navigation.replace("CounterOffer", {
                   buyer_id: route?.params?.buyer_id,
-                  offer_type: route?.params?.type,
-                  receiverId: route?.params?.receiverId,
-                  senderId: route?.params?.senderId,
-
-                  item_img: route?.params?.textimg1,
-                  offer_price: route?.params?.offerprice,
+                  item_img: route?.params?.item_img,
+                  itemprice: route?.params?.itemprice,
+                  listing_id: route?.params?.listing_id,
+                  navtype: route?.params?.navtype,
+                  offer_price: route?.params?.offer_price,
+                  offer_type: route?.params?.offer_type,
+                  price_offer: route?.params?.price_offer,
                   offerid: route?.params?.offerid,
-                  itemprice: route?.params?.textprice,
-                  navtype: "chat",
-                  userid: route?.params?.receiverId,
-                })
-              }
+                  receiverId: route?.params?.receiverId,
+                  sale_by: route?.params?.sale_by,
+                  senderId: route?.params?.senderId,
+                  userId: route?.params?.userId,
+                });
+
+                // navigation.navigate("CounterOffer", {
+                //   sale_by: route?.params?.sale_by,
+                //   buyer_id: route?.params?.buyer_id,
+                //   offer_type: route?.params?.type,
+                //   receiverId: route?.params?.receiverId,
+                //   senderId: route?.params?.senderId,
+
+                //   item_img: route?.params?.textimg1,
+                //   offer_price: route?.params?.offerprice,
+                //   offerid: route?.params?.offerid,
+                //   itemprice: route?.params?.textprice,
+                //   navtype: "chat",
+                //   userid: route?.params?.receiverId,
+                // });
+              }}
               // onPress={() => offerAcceptListings("accept")}
             >
               <Text style={styles.smallbtnText}>Make Counter Offer</Text>
             </TouchableOpacity>
           </View>
-        )} */}
+        )}
 
         {route.params?.senderId == currentUser ? null : (
           <View style={{ ...styles.smallbtnView, marginTop: 35 }}>

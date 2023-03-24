@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
 ////////app styles////////////
@@ -12,10 +12,29 @@ import {
 
 ////////////////colors/////////////
 import Colors from "../../utills/Colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { get_Login_UserData } from "../../api/GetApis";
 
 const ShippingAddressCard = (props) => {
+  const [current_username, setCurrent_username] = useState("");
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    get_Login_UserData().then((response) => {
+      if (response?.data?.full_name) {
+        setCurrent_username(response.data.full_name);
+      }
+    });
+  };
   return props.type === "Buy" ? (
-    <TouchableOpacity onPress={props.cardonpress} style={styles.card}>
+    <TouchableOpacity
+      onPress={props.cardonpress}
+      style={{ ...styles.card, ...props.style }}
+      onLongPress={props?.onLongPress}
+      activeOpacity={0.8}
+    >
       <TouchableOpacity
         style={{
           alignItems: "center",
@@ -57,7 +76,11 @@ const ShippingAddressCard = (props) => {
           </View> */}
     </TouchableOpacity>
   ) : (
-    <View style={styles.card}>
+    <TouchableOpacity
+      onLongPress={props?.onLongPress}
+      activeOpacity={0.8}
+      style={styles.card}
+    >
       <TouchableOpacity
         style={{
           alignItems: "center",
@@ -74,7 +97,8 @@ const ShippingAddressCard = (props) => {
       </TouchableOpacity>
       <View style={styles.shippingview}>
         <Text style={styles.shippinglefttext}>User Name</Text>
-        <Text style={styles.balancetext}>{props.username}</Text>
+        {/* <Text style={styles.balancetext}>{props.username}</Text> */}
+        <Text style={styles.balancetext}>{current_username}</Text>
       </View>
       <View style={styles.shippingview}>
         <Text style={styles.shippinglefttext}>Address 1</Text>
@@ -92,11 +116,11 @@ const ShippingAddressCard = (props) => {
         <Text style={styles.shippinglefttext}>City</Text>
         <Text style={styles.balancetext}>{props.city}</Text>
       </View>
-      <View style={styles.shippingview}>
+      {/* <View style={styles.shippingview}>
         <Text style={styles.shippinglefttext}>State</Text>
         <Text style={styles.balancetext}>{props.state}</Text>
-      </View>
-    </View>
+      </View> */}
+    </TouchableOpacity>
   );
 };
 

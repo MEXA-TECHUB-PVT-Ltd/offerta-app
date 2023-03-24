@@ -52,6 +52,7 @@ const ChatList = ({ navigation }) => {
   const [login_user_id, setlogin_user_id] = useState();
   const getuser = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
+
     setlogin_user_id(user_id);
   };
   ///////////////////flatlist render item///////////////

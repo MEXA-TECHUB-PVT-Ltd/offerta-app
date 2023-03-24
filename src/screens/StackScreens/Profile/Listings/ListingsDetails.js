@@ -224,24 +224,24 @@ const ListingsDetails = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <Loader isLoading={loading} />
-        {listingImages?.length > 0 && (
-          <Slider
-            imagearray={listingImages}
-            menuitem1onpress={() => {
-              {
-                navigation.navigate("OtherProfile");
-              }
-            }}
-            menuitem2onpress={() => {
-              {
-                refRBSheet.current.open();
-              }
-            }}
-            type={"promote"}
-            listing_user_id={listing_user_id}
-            menuoptions={my_listing_options}
-          />
-        )}
+        {/* {listingImages?.length > 0 && ( */}
+        <Slider
+          imagearray={listingImages}
+          menuitem1onpress={() => {
+            {
+              navigation.navigate("OtherProfile");
+            }
+          }}
+          menuitem2onpress={() => {
+            {
+              refRBSheet.current.open();
+            }
+          }}
+          type={"promote"}
+          listing_user_id={listing_user_id}
+          menuoptions={my_listing_options}
+        />
+        {/* )} */}
         {/* <Slider
           imagearray={SliderImages}
           menuitem1onpress={() => {
@@ -257,7 +257,12 @@ const ListingsDetails = ({ navigation, route }) => {
           type={"promote"}
           menuoptions={my_listing_options}
         /> */}
-        <View style={{ marginTop: hp(4), marginHorizontal: wp(7) }}>
+        <View
+          style={{
+            marginTop: listingImages?.length == 0 ? hp(8) : hp(4),
+            marginHorizontal: wp(7),
+          }}
+        >
           <Text style={styles.pricetext}>
             {giveaway_status === "true" ? "Free" : listing_item_price + " $"}
           </Text>
