@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-night-v8/values-night-v8.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\2467f141b71aed932b5f1aeb440bbc49\\transformed\\jetified-payments-ui-core-20.19.5\\res\\values-night-v8\\values-night-v8.xml",

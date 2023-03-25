@@ -32,12 +32,9 @@ const BannerSliderItem = ({ item }) => {
     <View style={[styles.container]}>
       <View style={styles.imageview}>
         <Image
-          source={{uri:IMAGE_URL+item.app_img_link}}
+          source={{ uri: IMAGE_URL + item.app_img_link }}
           resizeMode="cover"
-          style={[
-            styles.image,
-        
-          ]}
+          style={[styles.image]}
         />
       </View>
     </View>
@@ -73,6 +70,6 @@ const styles = StyleSheet.create({
     bordercolor: Colors.inactivetextinput,
     borderWidth: 0.5,
     alignItems: "center",
-    justifyContent:'center'
+    justifyContent: "center",
   },
 });

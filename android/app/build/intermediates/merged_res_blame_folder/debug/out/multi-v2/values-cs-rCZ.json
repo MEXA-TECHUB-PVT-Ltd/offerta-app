@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-cs-rCZ/values-cs-rCZ.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-cs-rCZ/values-cs-rCZ.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\39a269f4ccf70e22adbe2b1621d9d1ab\\transformed\\jetified-stripe-ui-core-20.19.5\\res\\values-cs-rCZ\\values-cs-rCZ.xml",

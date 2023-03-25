@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-mk/values-mk.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-mk/values-mk.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\d7fd8dd5feeb327b13033adca6f15c52\\transformed\\jetified-ui-1.3.3\\res\\values-mk\\values-mk.xml",

@@ -47,6 +47,9 @@ import axios from "axios";
 import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
+import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
+
+import messaging from "@react-native-firebase/messaging";
 
 const Login = ({ navigation }) => {
   //Modal States
@@ -61,6 +64,8 @@ const Login = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
+
+  const [modalVisible2, setModalVisible2] = useState(false);
 
   //password eye function and states
   const [data, setData] = React.useState({
@@ -122,9 +127,30 @@ const Login = ({ navigation }) => {
     });
   };
 
+  const getUserFCMToken = async () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (enabled) {
+          const fcmToken = await messaging().getToken();
+          resolve(fcmToken);
+        } else {
+          resolve("");
+        }
+      } catch (error) {
+        resolve("");
+      }
+    });
+  };
+
   const LoginUser = async () => {
     // navigation.navigate("Drawerroute");
     // return;
+    // let fcm_token = await getUserFCMToken();
+    // console.log("fcm token", fcm_token);
 
     axios({
       method: "post",
@@ -135,28 +161,45 @@ const Login = ({ navigation }) => {
       },
     })
       .then(async function (response) {
-        console.log("response", JSON.stringify(response.data));
+        // console.log("response", JSON.stringify(response.data));
         setloading(0);
         setdisable(0);
         if (response.data.message) {
-          let isVerified = await checkUserAccountVerification(
-            response.data.data.id
-          );
-          await AsyncStorage.setItem("Userid", response.data.data.id);
-          if (isVerified) {
-            navigation.navigate("Drawerroute");
-          } else {
-            console.log("account not verified");
-            console.log(
-              "user details :::::::      ....   ...  ...  . .  ",
-              response?.data?.data?.role
-            );
-            // signup_role
+          // let isVerified = await checkUserAccountVerification(
+          //   response.data.data.id
+          // );
+
+          // return;
+
+          let verification_status = response?.data?.data?.subscription;
+          console.log("verification_status", verification_status);
+          if (verification_status == false || verification_status == "false") {
+            //not uploaded verification documents
             navigation?.navigate("AccountVerification", {
               signup_role: response?.data?.data?.role,
               type: "login",
             });
+          } else if (
+            verification_status == true ||
+            verification_status == "true"
+          ) {
+            //waiting for aprroval
+            setModalVisible2(true);
+          } else {
+            navigation.navigate("Drawerroute");
+            await AsyncStorage.setItem("Userid", response.data.data.id);
           }
+          // if (isVerified) {
+          //   navigation.navigate("Drawerroute");
+          // } else {
+          //   console.log("account not verified");
+          //   console.log(
+          //     "user details :::::::      ....   ...  ...  . .  ",
+          //     response?.data?.data?.role
+          //   );
+          //   // signup_role
+
+          // }
         } else {
           setloading(0);
           setdisable(0);
@@ -272,8 +315,25 @@ const Login = ({ navigation }) => {
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
         if (response.data.message) {
-          await AsyncStorage.setItem("Userid", response.data.data.id);
-          navigation.navigate("Drawerroute");
+          let verification_status = response?.data?.data?.subscription;
+          console.log("verification_status", verification_status);
+          if (verification_status == false || verification_status == "false") {
+            //not uploaded verification documents
+            navigation?.navigate("AccountVerification", {
+              signup_role: response?.data?.data?.role,
+              type: "login",
+            });
+          } else if (
+            verification_status == true ||
+            verification_status == "true"
+          ) {
+            //waiting for aprroval
+            setModalVisible2(true);
+          } else {
+            navigation.navigate("Drawerroute");
+            await AsyncStorage.setItem("Userid", response.data.data.id);
+          }
+          // navigation.navigate("Drawerroute");
         } else {
           setModalVisible(true);
         }
@@ -354,8 +414,25 @@ const Login = ({ navigation }) => {
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
         if (response.data.message) {
-          await AsyncStorage.setItem("Userid", response.data.data.id);
-          navigation.navigate("Drawerroute");
+          // await AsyncStorage.setItem("Userid", response.data.data.id);
+          // navigation.navigate("Drawerroute");
+          let verification_status = response?.data?.data?.subscription;
+          console.log("verification_status", verification_status);
+          if (verification_status == false || verification_status == "false") {
+            //not uploaded verification documents
+            navigation?.navigate("AccountVerification", {
+              signup_role: response?.data?.data?.role,
+              type: "login",
+            });
+          } else if (
+            verification_status == true ||
+            verification_status == "true"
+          ) {
+            //waiting for aprroval
+            setModalVisible2(true);
+          } else {
+            navigation.navigate("Drawerroute");
+          }
         }
       })
       .catch(function (error) {
@@ -551,6 +628,16 @@ const Login = ({ navigation }) => {
           buttontext={"GO BACK"}
           onPress={() => {
             setModalVisible(false);
+          }}
+        />
+
+        <PendingAccountApproval
+          modalVisible={modalVisible2}
+          CloseModal={() => setModalVisible2(false)}
+          Icon={appImages.pending_account}
+          text={"Pending Account Approval"}
+          onPress={() => {
+            setModalVisible2(false);
           }}
         />
       </ScrollView>

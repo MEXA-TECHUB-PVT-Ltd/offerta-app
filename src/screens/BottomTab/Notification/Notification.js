@@ -31,33 +31,60 @@ import { appImages } from "../../../constant/images";
 
 ////////////////////api function/////////////
 import { get_Notifications } from "../../../api/GetApis";
+import { useDispatch } from "react-redux";
+import { setExchangeOffer_OtherListing } from "../../../redux/actions";
 
 const Notification = ({ navigation }) => {
+  const dispatch = useDispatch();
   ///////////////////data state///////////
   const [notification, setNotification] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
 
   //textfields
   useEffect(() => {
-    get_Notifications().then((response) => {
-      console.log("response get here dispatcher", response.data);
-      //setData(response.data)
-      if (response.data.msg === "No Result") {
-        setNotification("");
-      } else {
-        setNotification(response.data);
-      }
-    });
+    get_user_notifications();
   }, []);
+  const get_user_notifications = async () => {
+    get_Notifications()
+      .then((response) => {
+        //setData(response.data)
+        setRefreshing(false);
+        if (response.data.msg === "No Result") {
+          setNotification("");
+        } else {
+          setNotification(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log("Error : ", err);
+      });
+  };
+  const handleRefresh = () => {
+    setRefreshing(true);
+    get_user_notifications();
+  };
+
+  const handleNotificationPress = async (item) => {
+    if (item?.type == "Price Offer") {
+      console.log("notification is price offer");
+      dispatch(setExchangeOffer_OtherListing(item?.list));
+
+      navigation.navigate("ConfirmAddress");
+    } else {
+      console.log("other type that is not handled yet  :  ", item?.type);
+    }
+  };
 
   const renderItem = (item) => {
     return (
       <TouchableOpacity
         style={styles.card}
         onPress={() => {
-          navigation.navigate("ExchangeNoti", {
-            data: item.item,
-            navtype: "Notification",
-          });
+          handleNotificationPress(item?.item);
+          // navigation.navigate("ExchangeNoti", {
+          //   data: item.item,
+          //   navtype: "Notification",
+          // });
         }}
       >
         <View
@@ -99,8 +126,15 @@ const Notification = ({ navigation }) => {
       />
       <CustomHeader headerlabel={"Notifications"} />
 
-      <View style={styles.postcard}>
+      <View style={{ ...styles.postcard, marginTop: 0 }}>
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              colors={[Colors.Appthemecolor]}
+              onRefresh={() => handleRefresh()}
+            />
+          }
           data={notification}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}

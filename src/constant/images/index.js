@@ -30,9 +30,9 @@ const appImages = {
   ///////////////slider//////////
   sliderchat: require(IMAGES_DIR + "chatmenu.png"),
 
-   ///////////////Exchange Icon//////////
-   exchangeicon: require(IMAGES_DIR + "Exchange.png"),
-   horizontalexchangeicon: require(IMAGES_DIR + "horiexchange.png"),
+  ///////////////Exchange Icon//////////
+  exchangeicon: require(IMAGES_DIR + "Exchange.png"),
+  horizontalexchangeicon: require(IMAGES_DIR + "horiexchange.png"),
 
   /////////////////modal imgaes///////////
   sucess: require(IMAGES_DIR + "modalsucess.png"),
@@ -75,10 +75,10 @@ const appImages = {
   /////////////////selected image////////
   selectedbg: require(IMAGES_DIR + "selectedimage.png"),
 
-/////////////////////Chat//////////////////
-offlinechatdot:require(IMAGES_DIR + "offlinedot.png"),
-onlinechatdot:require(IMAGES_DIR + "onlinedot.png"),
-sendicon:require(IMAGES_DIR + "send.png"),
+  /////////////////////Chat//////////////////
+  offlinechatdot: require(IMAGES_DIR + "offlinedot.png"),
+  onlinechatdot: require(IMAGES_DIR + "onlinedot.png"),
+  sendicon: require(IMAGES_DIR + "send.png"),
 
   /////////////////selected image////////
   Icon_Chat: require(IMAGES_DIR + "chat_icon.png"),
@@ -86,6 +86,6 @@ sendicon:require(IMAGES_DIR + "send.png"),
   /////////////////selttings image////////
   send_email: require(IMAGES_DIR + "send_email.png"),
   verify_email: require(IMAGES_DIR + "verify_email.png"),
-
+  pending_account: require(IMAGES_DIR + "pending_account.png"),
 };
 export { appImages };

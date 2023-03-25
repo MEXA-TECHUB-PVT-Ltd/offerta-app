@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-de/values-de.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-de/values-de.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\c71292433d1b368d798679fd90d5520d\\transformed\\jetified-ucrop-2.2.6-native\\res\\values-de\\values-de.xml",

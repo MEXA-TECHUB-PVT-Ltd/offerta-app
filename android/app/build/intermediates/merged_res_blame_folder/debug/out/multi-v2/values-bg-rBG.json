@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-bg-rBG/values-bg-rBG.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-bg-rBG/values-bg-rBG.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\70ca9f350f5d3833fd8115fb547e6bc1\\transformed\\jetified-stripe-3ds2-android-6.1.7\\res\\values-bg-rBG\\values-bg-rBG.xml",

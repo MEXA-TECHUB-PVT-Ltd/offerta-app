@@ -227,6 +227,7 @@ const ListingsDetails = ({ navigation, route }) => {
         {/* {listingImages?.length > 0 && ( */}
         <Slider
           imagearray={listingImages}
+          listing_owner_id={listing_user_id}
           menuitem1onpress={() => {
             {
               navigation.navigate("OtherProfile");

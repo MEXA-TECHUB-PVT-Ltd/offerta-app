@@ -42,6 +42,7 @@ const ChatList = ({ navigation }) => {
   useEffect(() => {
     getuser();
     get_Chat_Users().then((response) => {
+      console.log("response  : ", response?.data);
       if (response.data.msg === "No Result") {
         setData();
       } else {
@@ -57,13 +58,13 @@ const ChatList = ({ navigation }) => {
   };
   ///////////////////flatlist render item///////////////
   const renderitem = (item) => {
-    return item.item.chat_user.id === login_user_id &&
-      item.item.user.id != login_user_id ? (
+    return item?.item?.chat_user?.id === login_user_id &&
+      item?.item?.user?.id != login_user_id ? (
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("ChatScreen", {
             navtype: "chatlist",
-            userid: item.item.user.id,
+            userid: item?.item?.user?.id,
           })
         }
       >
@@ -78,7 +79,7 @@ const ChatList = ({ navigation }) => {
           >
             <View style={{}}>
               <Image
-                source={{ uri: IMAGE_URL + item.item.user.image }}
+                source={{ uri: IMAGE_URL + item?.item?.user?.image }}
                 style={styles.userimage}
                 resizeMode="contain"
               />
@@ -86,7 +87,7 @@ const ChatList = ({ navigation }) => {
                 style={{ position: "absolute", bottom: 0, right: hp(-1.5) }}
               >
                 <Image
-                  source={item.status}
+                  source={item?.status}
                   style={{ width: wp(10), height: hp(2) }}
                   resizeMode="contain"
                 />
@@ -102,12 +103,12 @@ const ChatList = ({ navigation }) => {
                     fontWeight: "700",
                   }}
                 >
-                  {item.item.user.full_name}
+                  {item?.item?.user?.full_name}
                 </Text>
               </View>
 
               <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
-                {item.subtext}
+                {item?.subtext}
               </Text>
             </View>
           </View>
@@ -138,7 +139,7 @@ const ChatList = ({ navigation }) => {
           >
             <View style={{}}>
               <Image
-                source={{ uri: IMAGE_URL + item.item.chat_user.image }}
+                source={{ uri: IMAGE_URL + item?.item?.chat_user?.image }}
                 style={styles.userimage}
                 resizeMode="contain"
               />
@@ -146,7 +147,7 @@ const ChatList = ({ navigation }) => {
                 style={{ position: "absolute", bottom: 0, right: hp(-1.5) }}
               >
                 <Image
-                  source={item.status}
+                  source={item?.status}
                   style={{ width: wp(10), height: hp(2) }}
                   resizeMode="contain"
                 />
@@ -162,11 +163,11 @@ const ChatList = ({ navigation }) => {
                     fontWeight: "700",
                   }}
                 >
-                  {item.item.chat_user.full_name}
+                  {item?.item?.chat_user?.full_name}
                 </Text>
               </View>
               <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
-                {item.subtext}
+                {item?.subtext}
               </Text>
             </View>
           </View>
