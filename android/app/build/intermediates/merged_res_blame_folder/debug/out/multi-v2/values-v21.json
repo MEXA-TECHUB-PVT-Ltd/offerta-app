@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-v21/values-v21.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-v21/values-v21.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\f2733c892653c530bd5177f6e56e1382\\transformed\\media-1.0.0\\res\\values-v21\\values-v21.xml",

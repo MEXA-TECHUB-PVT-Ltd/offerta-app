@@ -1,46 +1,46 @@
 [
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-mdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-hdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-hdpi/ic_launcher.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/drawable_rn_edit_text_material.xml.flat",
-        "source": "com.awesomeproject.app-main-100:/drawable/rn_edit_text_material.xml"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.awesomeproject.app-main-101:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.awesomeproject.app-merged_res-98:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.awesomeproject.app-main-100:/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.awesomeproject.app-merged_res-99:/drawable_rn_edit_text_material.xml.flat",
+        "source": "com.awesomeproject.app-main-101:/drawable/rn_edit_text_material.xml"
     }
 ]

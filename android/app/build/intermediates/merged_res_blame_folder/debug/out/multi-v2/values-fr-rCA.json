@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-fr-rCA/values-fr-rCA.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-fr-rCA/values-fr-rCA.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\687d7aa91ada707a5258bb666aa837fe\\transformed\\jetified-play-services-base-18.1.0\\res\\values-fr-rCA\\values.xml",

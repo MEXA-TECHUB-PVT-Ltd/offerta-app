@@ -85,6 +85,7 @@ import VerificationDocuments from "./src/screens/StackScreens/Settings/Verificat
 /////////////////////Notification//////////////////
 import ExchangeNoti from "./src/screens/StackScreens/Notification/ExchangeRequestNoti";
 import PriceOfferNoti from "./src/screens/StackScreens/Notification/PriceOfferNoti";
+import { navigationRef } from "./RootNavigation";
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -130,7 +131,7 @@ function App() {
   // }, []);
   return (
     <Provider store={Store}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator initialRouteName={initialRoute}>
           <Stack.Screen
             name="AuthNav"

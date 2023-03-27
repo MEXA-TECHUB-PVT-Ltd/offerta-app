@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-96:/values-hu/values-hu.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-97:/values-hu/values-hu.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abbas\\.gradle\\caches\\transforms-3\\d4d641ff7c6a42324316d901b38d80af\\transformed\\jetified-stripe-core-20.19.5\\res\\values-hu\\values-hu.xml",

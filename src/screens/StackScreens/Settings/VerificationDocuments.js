@@ -54,6 +54,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../../constant/fonts";
 import CamerBottomSheet from "../../../components/CameraBottomSheet/CameraBottomSheet";
 import { Snackbar } from "react-native-paper";
+import CustomHeader from "../../../components/Header/CustomHeader";
 
 const VerificationDocuments = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -172,29 +173,14 @@ const VerificationDocuments = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Ionicons
-          name={"arrow-back"}
-          size={25}
-          color={Colors.Appthemecolor}
-          style={{ marginLeft: wp(5), marginTop: hp(3) }}
-          onPress={() => navigation.goBack()}
-        />
-
-        <View style={[Logostyles.Logoview, { marginTop: hp(5) }]}>
-          <Image
-            source={appImages.logo}
-            style={Logostyles.logo}
-            resizeMode="contain"
-          />
-        </View>
-        <Text
-          style={{
-            ...Authstyles.maintext,
-            textAlign: "center",
+        <CustomHeader
+          headerlabel={"Verification Documents"}
+          iconPress={() => {
+            navigation.goBack();
           }}
-        >
-          Verification Documents
-        </Text>
+          icon={"arrow-back"}
+          type={"singleicon"}
+        />
 
         <View>
           <Text
@@ -206,16 +192,18 @@ const VerificationDocuments = ({ navigation, route }) => {
               fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            Your Picture :
+            Profile Picture :
           </Text>
           <View style={style.card}>
             <View style={{ alignItems: "center" }}>
               <View style={style.imageView}>
-                <Image
-                  source={{ uri: userImage.uri }}
-                  style={style.imageView}
-                  resizeMode={"contain"}
-                />
+                {userImage.uri && (
+                  <Image
+                    source={{ uri: userImage.uri }}
+                    style={style.imageView}
+                    resizeMode={"contain"}
+                  />
+                )}
               </View>
             </View>
           </View>
@@ -231,16 +219,18 @@ const VerificationDocuments = ({ navigation, route }) => {
               fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            CNIC :
+            Documents :
           </Text>
           <View style={style.card}>
             <View style={{ alignItems: "center" }}>
               <View style={style.imageView}>
-                <Image
-                  source={{ uri: cnicImage.uri }}
-                  style={style.imageView}
-                  resizeMode={"contain"}
-                />
+                {cnicImage.uri && (
+                  <Image
+                    source={{ uri: cnicImage.uri }}
+                    style={style.imageView}
+                    resizeMode={"contain"}
+                  />
+                )}
               </View>
             </View>
           </View>
@@ -317,7 +307,7 @@ export default VerificationDocuments;
 const style = StyleSheet.create({
   card: {
     width: wp(85),
-    height: wp(42),
+    height: wp(55),
     borderRadius: 20,
     borderWidth: 1.5,
     alignSelf: "center",
@@ -331,7 +321,7 @@ const style = StyleSheet.create({
   },
   imageView: {
     width: wp(85),
-    height: wp(42),
+    height: wp(55),
     borderRadius: 20,
   },
 });

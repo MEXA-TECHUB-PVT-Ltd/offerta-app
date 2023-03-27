@@ -52,9 +52,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
 import CamerBottomSheet from "../../components/CameraBottomSheet/CameraBottomSheet";
 import { Snackbar } from "react-native-paper";
+import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [cnicImage, setCnicImage] = useState({
     uri: "",
     type: "",
@@ -121,7 +123,10 @@ const AccountVerification = ({ navigation, route }) => {
         .then((response) => {
           console.log("rsponse :  ", response);
           if (response?.status == true) {
-            navigation.navigate("Drawerroute");
+            // navigation.navigate("Drawerroute");
+            // setModalVisible2(true);
+            navigation?.popToTop();
+            navigation?.navigate("Login");
           } else {
             setsnackbarValue({
               value: response?.message,
@@ -154,7 +159,9 @@ const AccountVerification = ({ navigation, route }) => {
           onPress={() => navigation.goBack()}
         />
 
-        <View style={[Logostyles.Logoview, { marginTop: hp(5) }]}>
+        <View
+          style={[Logostyles.Logoview, { marginTop: hp(2), marginBottom: 2 }]}
+        >
           <Image
             source={appImages.logo}
             style={Logostyles.logo}
@@ -169,118 +176,143 @@ const AccountVerification = ({ navigation, route }) => {
         >
           Verify Account
         </Text>
+        <View>
+          <Text
+            style={{
+              marginLeft: 30,
+              color: "#000",
+              fontSize: hp(2),
+              marginTop: 25,
+              fontFamily: fontFamily.Poppins_Regular,
+            }}
+          >
+            Profile Picture :
+          </Text>
 
-        <TouchableOpacity
-          onPress={() => {
-            setSelected(0);
-            refRBSheet?.current?.open();
-          }}
-        >
-          <View style={style.card}>
-            <View style={{ alignItems: "center" }}>
-              {userImage?.uri == "" ? (
-                <TouchableOpacity
-                  style={{ alignItems: "center" }}
-                  onPress={() => {
-                    refRBSheet?.current?.open();
-                    setSelected(0);
-                  }}
-                  // onPress={() => navigation.navigate("CameraViewScreen")}
-                >
-                  <Image
-                    source={appImages.UploadIcpn}
-                    style={{
-                      width: wp("10%"),
-                      height: wp("10%"),
+          <TouchableOpacity
+            onPress={() => {
+              setSelected(0);
+              refRBSheet?.current?.open();
+            }}
+          >
+            <View style={style.card}>
+              <View style={{ alignItems: "center" }}>
+                {userImage?.uri == "" ? (
+                  <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(0);
                     }}
-                    resizeMode="contain"
-                  />
-                  <Text
-                    style={{
-                      color: Colors.appgreycolor,
-                      fontSize: hp(1.8),
-                      marginTop: hp(3),
-                      fontFamily: fontFamily.Poppins_Regular,
-                    }}
+                    // onPress={() => navigation.navigate("CameraViewScreen")}
                   >
-                    Upload your Picture
-                  </Text>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    refRBSheet?.current?.open();
-                    setSelected(0);
-                  }}
-                  style={style.imageView}
-                >
-                  <Image
-                    source={{ uri: userImage.uri }}
+                    <Image
+                      source={appImages.UploadIcpn}
+                      style={{
+                        width: wp("10%"),
+                        height: wp("10%"),
+                      }}
+                      resizeMode="contain"
+                    />
+                    <Text
+                      style={{
+                        color: Colors.appgreycolor,
+                        fontSize: hp(1.8),
+                        marginTop: hp(3),
+                        fontFamily: fontFamily.Poppins_Regular,
+                      }}
+                    >
+                      Upload your Picture
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(0);
+                    }}
                     style={style.imageView}
-                    resizeMode={"contain"}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            setSelected(1);
-            refRBSheet?.current?.open();
-          }}
-        >
-          <View style={style.card}>
-            <View style={{ alignItems: "center" }}>
-              {cnicImage?.uri == "" ? (
-                <TouchableOpacity
-                  style={{ alignItems: "center" }}
-                  onPress={() => {
-                    refRBSheet?.current?.open();
-                    setSelected(1);
-                  }}
-                  // onPress={() => navigation.navigate("CameraViewScreen")}
-                >
-                  <Image
-                    source={appImages.UploadIcpn}
-                    style={{
-                      width: wp("10%"),
-                      height: wp("10%"),
-                    }}
-                    resizeMode="contain"
-                  />
-
-                  <Text
-                    style={{
-                      color: Colors.appgreycolor,
-                      fontSize: hp(1.8),
-                      marginTop: hp(3),
-                      fontFamily: fontFamily.Poppins_Regular,
-                    }}
                   >
-                    Upload CNIC Image
-                  </Text>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    refRBSheet?.current?.open();
-                    setSelected(1);
-                  }}
-                  style={style.imageView}
-                >
-                  <Image
-                    source={{ uri: cnicImage.uri }}
-                    style={style.imageView}
-                    resizeMode={"contain"}
-                  />
-                </TouchableOpacity>
-              )}
+                    <Image
+                      source={{ uri: userImage.uri }}
+                      style={style.imageView}
+                      resizeMode={"contain"}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Text
+            style={{
+              marginLeft: 30,
+              color: "#000",
+              fontSize: hp(2),
+              marginTop: 25,
+              fontFamily: fontFamily.Poppins_Regular,
+            }}
+          >
+            Upload Documents :
+          </Text>
 
+          <TouchableOpacity
+            onPress={() => {
+              setSelected(1);
+              refRBSheet?.current?.open();
+            }}
+          >
+            <View style={style.card}>
+              <View style={{ alignItems: "center" }}>
+                {cnicImage?.uri == "" ? (
+                  <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(1);
+                    }}
+                    // onPress={() => navigation.navigate("CameraViewScreen")}
+                  >
+                    <Image
+                      source={appImages.UploadIcpn}
+                      style={{
+                        width: wp("10%"),
+                        height: wp("10%"),
+                      }}
+                      resizeMode="contain"
+                    />
+
+                    <Text
+                      style={{
+                        color: Colors.appgreycolor,
+                        fontSize: hp(1.8),
+                        marginTop: hp(3),
+                        fontFamily: fontFamily.Poppins_Regular,
+                      }}
+                    >
+                      Upload Documents
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(1);
+                    }}
+                    style={style.imageView}
+                  >
+                    <Image
+                      source={{ uri: cnicImage.uri }}
+                      style={style.imageView}
+                      resizeMode={"contain"}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
         <View style={{ height: 120 }}>
           <CustomButtonhere
             title={"VERIFY"}
@@ -353,6 +385,16 @@ const AccountVerification = ({ navigation, route }) => {
             setModalVisible(false);
           }}
         />
+
+        <PendingAccountApproval
+          modalVisible={modalVisible2}
+          CloseModal={() => setModalVisible2(false)}
+          Icon={appImages.pending_account}
+          text={"Pending Account Approval"}
+          onPress={() => {
+            setModalVisible2(false);
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -363,7 +405,7 @@ export default AccountVerification;
 const style = StyleSheet.create({
   card: {
     width: wp(85),
-    height: wp(42),
+    height: wp(45),
     borderRadius: 20,
     borderWidth: 1.5,
     alignSelf: "center",
@@ -377,7 +419,7 @@ const style = StyleSheet.create({
   },
   imageView: {
     width: wp(85),
-    height: wp(42),
+    height: wp(45),
     borderRadius: 20,
   },
 });

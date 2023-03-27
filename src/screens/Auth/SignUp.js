@@ -45,6 +45,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSelector, useDispatch } from "react-redux";
 import { setsignupRole } from "../../redux/actions";
 
+import messaging from "@react-native-firebase/messaging";
+
 const SignUp = ({ navigation }) => {
   //////////////redux////////////////////
   const { signup_role } = useSelector((state) => state.userReducer);
@@ -98,8 +100,27 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const getUserFCMToken = async () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (enabled) {
+          const fcmToken = await messaging().getToken();
+          resolve(fcmToken);
+        } else {
+          resolve("");
+        }
+      } catch (error) {
+        resolve("");
+      }
+    });
+  };
   //////////////Api Calling////////////////////
   const SignupUser = async () => {
+    let fcm_token = await getUserFCMToken();
     axios({
       method: "post",
       url: BASE_URL + "regisrationApi.php",
@@ -108,6 +129,7 @@ const SignUp = ({ navigation }) => {
         password: password,
         conformPassword: confirmPassword,
         role: signup_role,
+        fcm: fcm_token,
       },
     })
       .then(async function (response) {
