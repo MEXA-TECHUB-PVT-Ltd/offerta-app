@@ -28,10 +28,10 @@ const Blogs = ({ navigation, route }) => {
   const renderItem = (item) => {
     return (
       <BlogCard
-        image={item.item.cover_img}
-        maintext={item.item.title}
-        subtext={item.item.category.category_name}
-        subtext1={item.item.sub_category.sub_category_name}
+        image={item?.item?.cover_img}
+        maintext={item?.item?.title}
+        subtext={item?.item?.category?.category_name}
+        subtext1={item?.item?.sub_category?.sub_category_name}
         onpress={() =>
           navigation.navigate("BlogsDetails", { blog_id: item.item.id })
         }

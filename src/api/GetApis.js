@@ -13,6 +13,21 @@ export const get_Login_UserData = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getUserById.php?user_id=" + user_id);
 };
+
+export const get_user_status = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return new Promise((resolve, reject) => {
+    axios
+      .get(BASE_URL + "getUserById.php?user_id=" + user_id)
+      .then((response) => {
+        resolve(response?.data?.status);
+      })
+      .finally(() => {
+        resolve(false);
+      });
+  });
+};
+
 //////////////Get Specific User //////////
 export const get_Other_UserData = async (props) => {
   console.log(":here id user:", props);
@@ -112,7 +127,7 @@ export const GetListingViews = async (props) => {
 export const get_Listing_Search = async (props) => {
   return axios.get(BASE_URL + "search.php?search=" + props);
 };
-    //---------->most search
+//---------->most search
 export const get_Listing_Most_Search = async () => {
   return axios.get(BASE_URL + "getMostSearchList.php");
 };
@@ -131,9 +146,7 @@ export const get_Advertisement_Promotion_List = async () => {
 };
 export const get_Expired_Promotion_List = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
-  return axios.get(
-    BASE_URL + "getExpairepromotion.php?user_id=" + user_id
-  );
+  return axios.get(BASE_URL + "getExpairepromotion.php?user_id=" + user_id);
 };
 ///////////////////Notification/////////////
 export const get_Notifications = async (props) => {

@@ -50,6 +50,9 @@ import RNFetchBlob from "rn-fetch-blob";
 /////////////////////app images/////////////////////
 import { appImages } from "../../../constant/images";
 
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
+
 const AddBanner = ({ navigation, route }) => {
   //camera and imagepicker
   const refRBSheet = useRef();
@@ -63,6 +66,8 @@ const AddBanner = ({ navigation, route }) => {
 
   ///////////picker state/////////
   const [image, setImage] = useState("");
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   //////////////////////cameraimage//////////////////
   const takePhotoFromCamera = () => {
@@ -141,6 +146,12 @@ const AddBanner = ({ navigation, route }) => {
   };
   //////////////////////Api Calling/////////////////
   const CreateBanner = async () => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     var user_id = await AsyncStorage.getItem("Userid");
 
     var formdata = new FormData();
@@ -158,7 +169,7 @@ const AddBanner = ({ navigation, route }) => {
 
     fetch(BASE_URL + "bannerAdApi.php", requestOptions)
       .then((response) => response.text())
-      .vvvvvvvvvvvvvv.catch((error) => console.log("error", error));
+      .catch((error) => console.log("error", error));
   };
 
   const [bannerDescription, setBannerDescription] = useState("");
@@ -321,6 +332,8 @@ const AddBanner = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -388,7 +401,7 @@ const AddBanner = ({ navigation, route }) => {
             tagsStyles={tagsStyles}
           />
         </View>
-        {user_image === "" ? (
+        {user_image === "" || user_image?.length == 0 ? (
           <TouchableOpacity onPress={() => refRBSheet.current.open()}>
             <View style={Uploadstyles.mainview}>
               <TouchableOpacity onPress={() => refRBSheet.current.open()}>

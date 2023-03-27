@@ -45,7 +45,8 @@ import { BASE_URL, IMAGE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 ///////////////api functions///////////
-import { get_Login_UserData } from "../../../api/GetApis";
+import { get_Login_UserData, get_user_status } from "../../../api/GetApis";
+import BlockUserView from "../../../components/BlockUserView";
 
 const EditProfile = ({ navigation, route }) => {
   /////////////previous data////////////
@@ -85,8 +86,16 @@ const EditProfile = ({ navigation, route }) => {
   const [lname, setlname] = React.useState();
   const [email, setEmail] = React.useState();
 
+  const [showBlockModal, setShowBlockModal] = useState(false);
   //////////////////////Api Calling/////////////////
   const Edit_User_Profile = async () => {
+    let user_status = await get_user_status();
+    console.log("user_status :    ", user_status);
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     var user_id = await AsyncStorage.getItem("Userid");
     var data = JSON.stringify({
       user_id: user_id,
@@ -141,6 +150,7 @@ const EditProfile = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor={"#26295E"} barStyle="light-content" />
+
         <CustomHeader
           headerlabel={"Edit Profile"}
           iconPress={() => {
@@ -302,6 +312,10 @@ const EditProfile = ({ navigation, route }) => {
         >
           {snackbarValue.value}
         </Snackbar>
+        <BlockUserView
+          visible={showBlockModal}
+          setVisible={setShowBlockModal}
+        />
         <CustomModal
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}

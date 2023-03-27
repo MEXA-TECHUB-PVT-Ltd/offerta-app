@@ -49,6 +49,8 @@ import { Snackbar } from "react-native-paper";
 import CustomModal from "../../../../components/Modal/CustomModal";
 import { counter_offer_Accept_OR_Reject } from "../../../../api/Offer";
 
+import { GetListingsDetails } from "../../../../api/GetApis";
+
 //////////////////appImages.//////////////////
 
 const CounterOffer = ({ navigation, route }) => {
@@ -210,6 +212,19 @@ const CounterOffer = ({ navigation, route }) => {
     );
   };
 
+  const getListingDetail = async () => {
+    GetListingsDetails(route?.params?.listing_id)
+      .then((response) => {
+        // setListing_Images(response.data.images);
+        // navigation?.goBack();
+        dispatch(setExchangeOffer_OtherListing(response?.data));
+        navigation.navigate("ConfirmAddress");
+      })
+      .catch(() => {
+        navigation?.goBack();
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -329,7 +344,8 @@ const CounterOffer = ({ navigation, route }) => {
           onPress={() => {
             setModalVisible(false);
             // navigation.navigate("BottomTab");
-            navigation?.goBack();
+            // navigation?.goBack();
+            getListingDetail();
           }}
         />
         <CustomModal

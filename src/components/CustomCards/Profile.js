@@ -14,6 +14,8 @@ import {
 
 ////////////app icons////////////
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 //////////////app pakages/////////////
 import { Avatar } from "react-native-paper";
@@ -26,7 +28,7 @@ const ProfileCard = (props) => {
 
   const navigation = useNavigation();
   return (
-    <View style={styles.profilecard}>
+    <View style={{ ...styles.profilecard, ...props.style }}>
       {props.userlogo === "" ? (
         <Avatar.Text
           size={wp(25)}
@@ -51,48 +53,73 @@ const ProfileCard = (props) => {
           width:wp(60)
         }}> */}
 
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: hp(2),
-          alignItems: "center",
-          width: wp(78),
-          justifyContent: "center",
-        }}
-      >
-        <Text style={styles.itemmaintext}>{props.username}</Text>
-        {props.type === "other_user" ? (
-          <TouchableOpacity
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View>
+          <View
             style={{
-              backgroundColor: Colors.inactivetextinput,
+              flexDirection: "row",
+              marginTop: hp(2),
               alignItems: "center",
+              width: wp(78),
               justifyContent: "center",
-              paddingVertical: hp(0.4),
-              paddingHorizontal: wp(3),
-              borderRadius: wp(5),
-              marginLeft: wp(0.8),
             }}
-            onPress={
-              props.followStatus === "follow"
-                ? props.onfollowpress
-                : props.onunfollowpress
-            }
           >
-            <Text
-              style={styles.verticletext}
-              onPress={
-                props.followStatus === "follow"
-                  ? props.onfollowpress
-                  : props.onunfollowpress
-              }
-            >
-              {props.followStatus}
-            </Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
+            <Text style={styles.itemmaintext}>{props.username}</Text>
+            {props.type === "other_user" ? (
+              <TouchableOpacity
+                style={{
+                  backgroundColor: Colors.inactivetextinput,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingVertical: hp(0.4),
+                  paddingHorizontal: wp(3),
+                  borderRadius: wp(5),
+                  marginLeft: wp(0.8),
+                }}
+                onPress={
+                  props.followStatus === "follow"
+                    ? props.onfollowpress
+                    : props.onunfollowpress
+                }
+              >
+                <Text
+                  style={styles.verticletext}
+                  onPress={
+                    props.followStatus === "follow"
+                      ? props.onfollowpress
+                      : props.onunfollowpress
+                  }
+                >
+                  {props.followStatus}
+                </Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
 
-      <Text style={styles.itemsubtext}>{props.useremail}</Text>
+          <Text style={styles.itemsubtext}>{props.useremail}</Text>
+        </View>
+        {props?.verificationStatus == "subscribed" ? (
+          <MaterialIcons
+            name="verified-user"
+            size={25}
+            color={props?.userRole == "user" ? "blue" : "orange"}
+            style={{
+              position: "absolute",
+              right: props.type === "other_user" ? wp(3) : wp(10),
+            }}
+          />
+        ) : (
+          <MaterialCommunityIcons
+            name="shield-alert-outline"
+            size={25}
+            color={"red"}
+            style={{
+              position: "absolute",
+              right: props.type === "other_user" ? wp(3) : wp(10),
+            }}
+          />
+        )}
+      </View>
       <View
         style={{
           flexDirection: "row",
@@ -114,7 +141,11 @@ const ProfileCard = (props) => {
 
           <Text
             style={styles.verticletext}
-            onPress={() => props.type === "other_user"?null :navigation.navigate("Followers")}
+            onPress={() =>
+              props.type === "other_user"
+                ? null
+                : navigation.navigate("Followers")
+            }
           >
             {props.following_text}
           </Text>
@@ -128,8 +159,11 @@ const ProfileCard = (props) => {
           )}
           <Text
             style={styles.verticletext}
-            
-            onPress={() => props.type === "other_user"?null :navigation.navigate("Followings")}
+            onPress={() =>
+              props.type === "other_user"
+                ? null
+                : navigation.navigate("Followings")
+            }
           >
             {props.followers_text}
           </Text>

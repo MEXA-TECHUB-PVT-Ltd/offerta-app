@@ -38,10 +38,10 @@ import { appImages } from "../../../../constant/images";
 import axios from "axios";
 import { BASE_URL } from "../../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import BlockUserView from "../../../../components/BlockUserView";
+import { get_user_status } from "../../../../api/GetApis";
 
 const VerifyAccount = ({ navigation }) => {
-
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -51,7 +51,6 @@ const VerifyAccount = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
-
 
   ///////////email//////////////////
   const handleValidEmail = (val) => {
@@ -67,91 +66,102 @@ const VerifyAccount = ({ navigation }) => {
 
   ///////////////data states////////////////////
   const [email, setEmail] = React.useState("");
-//Api Calling
-const ForgetUserPassword=async() => {
-  console.log('email here:',email)
- axios({
-   method: 'post',
-   url: BASE_URL+'AccountVerifyByEmail.php',
-   data:{  
-       email : email.toLowerCase(),    
-   },
- })
- .then(function (response) {
-   console.log("response", JSON.stringify(response.data))
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  //Api Calling
+  const ForgetUserPassword = async () => {
+    console.log("email here:", email);
+    axios({
+      method: "post",
+      url: BASE_URL + "AccountVerifyByEmail.php",
+      data: {
+        email: email.toLowerCase(),
+      },
+    })
+      .then(function (response) {
+        console.log("response", JSON.stringify(response.data));
 
-   if(response.data.message!=" ")
-   {
-    setloading(0);
-    setdisable(0);
-    navigation.navigate('VerifyCode',{code:response.data.code,email:email})
-   }
-   else
-    {
-      setloading(0);
-      setdisable(0);
-      setModalVisible(true)
-     }
- })
- .catch(function (error) {
-   console.log("error", error)
- })
-}
-//Api form validation
-const formValidation = async () => {
- // input validation
- if (email == '') {
-   setsnackbarValue({value: "Please Enter Email", color: 'red'});
-   setVisible('true');
- }
-    
- else if (!handleValidEmail(email)) {
-   setsnackbarValue({value: "Incorrect Email", color: 'red'});
-   setVisible('true');
-}
- else{
-   setloading(1);
-   setdisable(1);
-   ForgetUserPassword()
- }
-}
+        if (response.data.message != " ") {
+          setloading(0);
+          setdisable(0);
+          navigation.navigate("VerifyCode", {
+            code: response.data.code,
+            email: email,
+          });
+        } else {
+          setloading(0);
+          setdisable(0);
+          setModalVisible(true);
+        }
+      })
+      .catch(function (error) {
+        console.log("error", error);
+      });
+  };
+  //Api form validation
+  const formValidation = async () => {
+    let user_status = await get_user_status();
+
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+    // input validation
+    if (email == "") {
+      setsnackbarValue({ value: "Please Enter Email", color: "red" });
+      setVisible("true");
+    } else if (!handleValidEmail(email)) {
+      setsnackbarValue({ value: "Incorrect Email", color: "red" });
+      setVisible("true");
+    } else {
+      setloading(1);
+      setdisable(1);
+      ForgetUserPassword();
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-                       <CustomHeader
-          headerlabel={'Settings'}
+        <CustomHeader
+          headerlabel={"Settings"}
           iconPress={() => {
             navigation.goBack();
           }}
-          icon={'arrow-back'}
+          icon={"arrow-back"}
         />
-        <View style={{alignItems:"center",justifyContent:'center'}}>
-        <Image
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <Image
             source={appImages.send_email}
-            style={{height:hp(30),width:wp(70)}}
+            style={{ height: hp(30), width: wp(70) }}
             resizeMode="contain"
           />
         </View>
-        <View style={{alignItems:'center',justifyContent:'center',marginBottom:hp(4)}}>
-        <Text style={styles.toptext}>Enter your email for account verification</Text>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: hp(4),
+          }}
+        >
+          <Text style={styles.toptext}>
+            Enter your email for account verification
+          </Text>
         </View>
 
-          <View>
-            <CustomTextInput
-              icon={appImages.email}
-              type={"iconinput"}
-              texterror={"invalid"}
-              term={email}
-              placeholder="Email Address"
-              onTermChange={(newEmail) => setEmail(newEmail)}
-            />
-          </View>
+        <View>
+          <CustomTextInput
+            icon={appImages.email}
+            type={"iconinput"}
+            texterror={"invalid"}
+            term={email}
+            placeholder="Email Address"
+            onTermChange={(newEmail) => setEmail(newEmail)}
+          />
+        </View>
 
-
-        <View style={{ marginTop: hp(0) ,marginBottom:hp(35)}}>
+        <View style={{ marginTop: hp(0), marginBottom: hp(35) }}>
           <CustomButtonhere
             title={"SEND"}
             widthset={80}
@@ -159,8 +169,8 @@ const formValidation = async () => {
             loading={loading}
             disabled={disable}
             onPress={() => {
-              formValidation()
-             }}
+              formValidation();
+            }}
           />
         </View>
         <Snackbar
@@ -175,15 +185,22 @@ const formValidation = async () => {
         >
           {snackbarValue.value}
         </Snackbar>
-        <CustomModal 
-                modalVisible={modalVisible}
-                CloseModal={() => setModalVisible(false)}
-                Icon={appImages.failed}
-              text={'Error'}
-              subtext={'Something went wrong'}
-          buttontext={'GO BACK'}
- onPress={()=> {setModalVisible(false)}}
-                /> 
+
+        <BlockUserView
+          visible={showBlockModal}
+          setVisible={setShowBlockModal}
+        />
+        <CustomModal
+          modalVisible={modalVisible}
+          CloseModal={() => setModalVisible(false)}
+          Icon={appImages.failed}
+          text={"Error"}
+          subtext={"Something went wrong"}
+          buttontext={"GO BACK"}
+          onPress={() => {
+            setModalVisible(false);
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );

@@ -44,6 +44,8 @@ const { width, height } = Dimensions.get("screen");
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
 import { setExchangeOffer_MyListing } from "../../../../redux/actions";
+import BlockUserView from "../BlockUserView";
+import { get_user_status } from "../../api/GetApis";
 
 const Slider = (props) => {
   ////////////////redux/////////////
@@ -52,6 +54,7 @@ const Slider = (props) => {
 
   const navigation = useNavigation();
   const [current_user_id, setCurrent_user_id] = useState("");
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   //////////share function///////////
   const share = () => {
@@ -110,9 +113,24 @@ const Slider = (props) => {
     setUserData(user_id);
     setCurrent_user_id(user_id);
   };
+  const handleChatPress = async () => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+    navigation.navigate("ChatScreen", {
+      userid: exchange_other_listing.user_id,
+    });
+  };
   return (
     <View>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <FlatList
+        ListEmptyComponent={() => {
+          return <View style={{ height: showBlockModal ? 250 : 10 }}></View>;
+        }}
         data={props.imagearray}
         renderItem={({ item }) =>
           props.slidertype === "dashboard" ? (
@@ -150,9 +168,7 @@ const Slider = (props) => {
               props.type === "comments" ? null : (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate("ChatScreen", {
-                    userid: exchange_other_listing.user_id,
-                  });
+                  handleChatPress();
                 }}
                 style={{ width: wp(15), height: wp(8), left: wp(30) }}
               >
@@ -172,7 +188,10 @@ const Slider = (props) => {
           props.type === "listing_details" ? null : userdata ===
               exchange_other_listing.user_id ||
             props.type === "comments" ? null : (
-            <CustomMenu menudata={props.menuoptions} />
+            <CustomMenu
+              menudata={props.menuoptions}
+              setShowBlockModal={setShowBlockModal}
+            />
           )}
           {/* <Text style={styles.price}>item.price</Text> */}
         </View>

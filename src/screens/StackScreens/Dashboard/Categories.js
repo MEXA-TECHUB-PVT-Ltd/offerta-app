@@ -83,13 +83,48 @@ const Categories = ({ navigation, route }) => {
         <FlatList
           data={Category}
           numColumns={2}
+          // renderItem={({ item }) => (
+          //   <CategoryCard
+          //     // image={item.image_url.replace("{{baseurl}}", "")}
+          //     // image={{ uri: IMAGE_URL + item?.image }}
+          //     image={item?.image}
+          //     maintext={item.name}
+          //   />
+          // )}
           renderItem={({ item }) => (
-            <CategoryCard
-              // image={item.image_url.replace("{{baseurl}}", "")}
-              // image={{ uri: IMAGE_URL + item?.image }}
-              image={item?.image}
-              maintext={item.name}
-            />
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                // navigation.navigate("SliderScreen", {
+                //   navplace: "Market",
+                //   navtype: props?.item?.type ? props?.item?.type : "",
+                // });
+
+                navigation.navigate("AllListingsByCategory", {
+                  id: item?.id,
+                  name: item?.name,
+                });
+              }}
+            >
+              <View style={styles.Categoriescard}>
+                <View
+                  style={{
+                    marginBottom: hp(4),
+                    marginTop: hp(5),
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri: IMAGE_URL + item.image,
+                    }}
+                    style={styles.Categoriesimage}
+                    resizeMode="contain"
+                  ></Image>
+                  <Text style={styles.Categoriestext}>{item?.name}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index}
           showsVerticalScrollIndicator={false}

@@ -65,6 +65,11 @@ import {
   generic_options,
 } from "../../../../data/Menulists";
 
+import BlockUserView from "../../../../components/BlockUserView";
+import { get_user_status } from "../../../../api/GetApis";
+
+import ProfileCard from "../../../../components/CustomCards/Profile";
+
 const MainListingsDetails = ({ navigation, route }) => {
   ///////////////PREVIOUS DATA////////////
   const [predata] = useState(route.params);
@@ -83,27 +88,39 @@ const MainListingsDetails = ({ navigation, route }) => {
   const [listing_like_user_id, setListing_Like_User_id] = useState("");
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
   //-----------like list
-  const listing_like = (props) => {
+  const listing_like = async (props) => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
     post_Like_Listings(props).then((response) => {
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
   };
   //-----------unlike list
-  const listing_unlike = (props) => {
+  const listing_unlike = async (props) => {
+    let user_status = await get_user_status();
+
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     post_UnLike_Listings(props).then((response) => {
       setListing_Like_User_id(" ");
       likes_count();
     });
   };
   //----------likes count
-  const likes_count = () => {
+  const likes_count = async () => {
     GetLikes(predata.listing_id).then((response) => {
       if (response.data.msg === "No one liked yet") {
         setListing_Likes_count(0);
       } else {
         setListing_Likes_count(response.data.Total);
-        listing_like(predata.listing_id);
+        // listing_like(predata.listing_id);
       }
     });
   };
@@ -149,14 +166,20 @@ const MainListingsDetails = ({ navigation, route }) => {
   const [listingLat, setListingLat] = useState();
   const [listingLng, setListingLng] = useState();
 
+  const [listing_user_detail, setListing_user_detail] = useState(null);
+
   //-----------------> listings checks
   const [exchange_status, setExchnage_Status] = useState();
   const [fixed_price_status, setFixedPrice_Status] = useState();
   const [giveaway_status, setGiveaway_Status] = useState();
 
+  const [showBlockModal, setShowBlockModal] = useState(false);
+
   const GetListData = async () => {
     GetListingsDetails(predata.listing_id)
       .then((response) => {
+        setListing_user_detail(response?.data?.user);
+
         setListing_User_Id(response.data.user_id);
         dispatch(setExchangeOffer_OtherListing(response.data));
         setListing_Images(response.data.images);
@@ -216,8 +239,27 @@ const MainListingsDetails = ({ navigation, route }) => {
   const handlePress = () => {
     Linking.openURL(youtube_link);
   };
+
+  const handleCommentPress = async () => {
+    let user_status = await get_user_status();
+
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+    navigation.navigate("CommentsDetails", route.params);
+  };
+  const handleBuyNow = async () => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+    navigation.navigate("ConfirmAddress");
+  };
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -247,7 +289,7 @@ const MainListingsDetails = ({ navigation, route }) => {
           <TouchableOpacity
             style={[styles.iconview, { width: wp(55) }]}
             onPress={() => {
-              navigation.navigate("CommentsDetails", route.params);
+              handleCommentPress();
             }}
           >
             <Icon
@@ -408,11 +450,49 @@ const MainListingsDetails = ({ navigation, route }) => {
               </MapView>
             ) : null}
           </View>
+          <Text style={{ ...styles.maintext, marginTop: 20, marginLeft: 20 }}>
+            Seller Details :{" "}
+          </Text>
+          {listing_user_detail && (
+            <View style={{ padding: 20, alignItems: "center" }}>
+              {/* <Text style={styles.maintext}>Owner Info : </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: wp(80),
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.maintext}>User Name : </Text>
+                <Text style={styles.pricetext}>
+                  {listing_user_detail?.user_name}
+                </Text>
+              </View>{" "}
+              */}
+              <ProfileCard
+                style={{ marginBottom: -30, elevation: 0 }}
+                verificationStatus={listing_user_detail?.subscription}
+                userRole={listing_user_detail?.role}
+                userlogo={listing_user_detail?.image}
+                username={listing_user_detail?.user_name}
+                useremail={listing_user_detail?.email}
+                followers={listing_user_detail?.followers}
+                following={listing_user_detail?.following}
+                ratting={listing_user_detail?.review}
+                ratting_text={"Rate"}
+                following_text={"Follwers"}
+                followers_text={"Followings"}
+                // followStatus={
+                //   follow_user_id === login_user_id ? "Unfollow" : "follow"
+                // }
+              />
+            </View>
+          )}
           <View style={styles.btnView}>
             {/* {fixed_price_status === "false" ? null : ( */}
             <TouchableOpacity
-              style={styles.btn}
-              onPress={() => navigation.navigate("ConfirmAddress")}
+              style={{ ...styles.btn, marginTop: 0 }}
+              onPress={() => handleBuyNow()}
             >
               <Text style={styles.btnText}>Buy Now</Text>
             </TouchableOpacity>

@@ -59,6 +59,9 @@ import {
 import { my_listing_options } from "../../../../data/Menulists";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import BlockUserView from "../../../../components/BlockUserView";
+import { get_user_status } from "../../../../api/GetApis";
+
 const ListingsDetails = ({ navigation, route }) => {
   ///////////previous data///////////
   const [predata] = useState(route.params);
@@ -68,6 +71,8 @@ const ListingsDetails = ({ navigation, route }) => {
 
   const { name, age } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   ///////////////////loader loading state///////////////
   const [loading, setloading] = useState(true);
@@ -219,6 +224,8 @@ const ListingsDetails = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -435,17 +442,28 @@ const ListingsDetails = ({ navigation, route }) => {
         <View style={styles.btnView}>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() =>
-              navigation.navigate("Insights", { list_id: listing_id })
-            }
+            onPress={async () => {
+              let user_status = await get_user_status();
+              if (user_status == "block") {
+                setShowBlockModal(true);
+                return;
+              }
+              navigation.navigate("Insights", { list_id: listing_id });
+            }}
           >
             <Text style={styles.btnText}>VIEW INSIGHTS</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() =>
-              navigation.navigate("Promote", { list_id: listing_id })
-            }
+            onPress={async () => {
+              let user_status = await get_user_status();
+              if (user_status == "block") {
+                setShowBlockModal(true);
+                return;
+              }
+
+              navigation.navigate("Promote", { list_id: listing_id });
+            }}
           >
             <Text style={styles.btnText}>PROMOTE</Text>
           </TouchableOpacity>
