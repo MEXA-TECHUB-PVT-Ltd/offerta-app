@@ -19,6 +19,11 @@ import styles from "./Banner/styles";
 ////////////////////api function////////////////////
 import { get_Terms_Condition } from "../../api/Blogs";
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 const TermsCondition = ({ navigation }) => {
   //////////render html width///////////
   const { width } = useWindowDimensions();
@@ -38,19 +43,17 @@ const TermsCondition = ({ navigation }) => {
   const tagsStyles = {
     p: {
       fontSize: hp(2),
-      color: 'black',
-      width:wp(90),
-      marginHorizontal:wp(5)
+      color: "black",
+      width: wp(90),
+      marginHorizontal: wp(5),
     },
-    ul:{
-      marginHorizontal:wp(3)
+    ul: {
+      marginHorizontal: wp(3),
     },
-    li:
-    {
+    li: {
       fontSize: hp(1.7),
-      color: 'black',
-
-    }
+      color: "black",
+    },
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +75,7 @@ const TermsCondition = ({ navigation }) => {
               <RenderHtml
                 contentWidth={width}
                 source={{ html: termsAndConditions }}
-                tagsStyles={tagsStyles} 
+                tagsStyles={tagsStyles}
               />
             </View>
           </Text>

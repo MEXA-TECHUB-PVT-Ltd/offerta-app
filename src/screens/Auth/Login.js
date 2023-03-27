@@ -162,33 +162,39 @@ const Login = ({ navigation }) => {
     })
       .then(async function (response) {
         // console.log("response", JSON.stringify(response.data));
+        console.log("respo nkfsdfjsf", response?.data);
         setloading(0);
         setdisable(0);
-        if (response.data.message) {
+        if (response.data.status == true) {
+          navigation.navigate("Drawerroute");
+          await AsyncStorage.setItem("Userid", response.data.data.id);
+
+          // console.log(" response.data.data.id  :  ", response.data.data.id);
+
           // let isVerified = await checkUserAccountVerification(
           //   response.data.data.id
           // );
-
           // return;
-
-          let verification_status = response?.data?.data?.subscription;
-          console.log("verification_status", verification_status);
-          if (verification_status == false || verification_status == "false") {
-            //not uploaded verification documents
-            navigation?.navigate("AccountVerification", {
-              signup_role: response?.data?.data?.role,
-              type: "login",
-            });
-          } else if (
-            verification_status == true ||
-            verification_status == "true"
-          ) {
-            //waiting for aprroval
-            setModalVisible2(true);
-          } else {
-            navigation.navigate("Drawerroute");
-            await AsyncStorage.setItem("Userid", response.data.data.id);
-          }
+          // let verification_status = response?.data?.data?.subscription;
+          // console.log("verification_status", verification_status);
+          // if (verification_status == false || verification_status == "false") {
+          //   //not uploaded verification documents
+          //   navigation?.navigate("AccountVerification", {
+          //     signup_role: response?.data?.data?.role,
+          //     type: "login",
+          //   });
+          // } else if (
+          //   verification_status == true ||
+          //   verification_status == "true"
+          // ) {
+          //   //waiting for aprroval
+          //   setModalVisible2(true);
+          // } else {
+          //   navigation.navigate("Drawerroute");
+          //   await AsyncStorage.setItem("Userid", response.data.data.id);
+          // }
+          // navigation.navigate("Drawerroute");
+          // await AsyncStorage.setItem("Userid", response.data.data.id);
           // if (isVerified) {
           //   navigation.navigate("Drawerroute");
           // } else {
@@ -198,12 +204,13 @@ const Login = ({ navigation }) => {
           //     response?.data?.data?.role
           //   );
           //   // signup_role
-
           // }
         } else {
           setloading(0);
           setdisable(0);
-          setModalVisible(true);
+          // setModalVisible(true);
+          setsnackbarValue({ value: response?.data?.message, color: "red" });
+          setVisible("true");
         }
       })
       .catch(function (error) {
@@ -315,25 +322,26 @@ const Login = ({ navigation }) => {
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
         if (response.data.message) {
-          let verification_status = response?.data?.data?.subscription;
-          console.log("verification_status", verification_status);
-          if (verification_status == false || verification_status == "false") {
-            //not uploaded verification documents
-            navigation?.navigate("AccountVerification", {
-              signup_role: response?.data?.data?.role,
-              type: "login",
-            });
-          } else if (
-            verification_status == true ||
-            verification_status == "true"
-          ) {
-            //waiting for aprroval
-            setModalVisible2(true);
-          } else {
-            navigation.navigate("Drawerroute");
-            await AsyncStorage.setItem("Userid", response.data.data.id);
-          }
-          // navigation.navigate("Drawerroute");
+          // let verification_status = response?.data?.data?.subscription;
+          // console.log("verification_status", verification_status);
+          // if (verification_status == false || verification_status == "false") {
+          //   //not uploaded verification documents
+          //   navigation?.navigate("AccountVerification", {
+          //     signup_role: response?.data?.data?.role,
+          //     type: "login",
+          //   });
+          // } else if (
+          //   verification_status == true ||
+          //   verification_status == "true"
+          // ) {
+          //   //waiting for aprroval
+          //   setModalVisible2(true);
+          // } else {
+          //   navigation.navigate("Drawerroute");
+          //   await AsyncStorage.setItem("Userid", response.data.data.id);
+          // }
+          await AsyncStorage.setItem("Userid", response.data.data.id);
+          navigation.navigate("Drawerroute");
         } else {
           setModalVisible(true);
         }
@@ -414,25 +422,26 @@ const Login = ({ navigation }) => {
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
         if (response.data.message) {
-          // await AsyncStorage.setItem("Userid", response.data.data.id);
-          // navigation.navigate("Drawerroute");
-          let verification_status = response?.data?.data?.subscription;
-          console.log("verification_status", verification_status);
-          if (verification_status == false || verification_status == "false") {
-            //not uploaded verification documents
-            navigation?.navigate("AccountVerification", {
-              signup_role: response?.data?.data?.role,
-              type: "login",
-            });
-          } else if (
-            verification_status == true ||
-            verification_status == "true"
-          ) {
-            //waiting for aprroval
-            setModalVisible2(true);
-          } else {
-            navigation.navigate("Drawerroute");
-          }
+          await AsyncStorage.setItem("Userid", response.data.data.id);
+          navigation.navigate("Drawerroute");
+
+          // let verification_status = response?.data?.data?.subscription;
+          // console.log("verification_status", verification_status);
+          // if (verification_status == false || verification_status == "false") {
+          //   //not uploaded verification documents
+          //   navigation?.navigate("AccountVerification", {
+          //     signup_role: response?.data?.data?.role,
+          //     type: "login",
+          //   });
+          // } else if (
+          //   verification_status == true ||
+          //   verification_status == "true"
+          // ) {
+          //   //waiting for aprroval
+          //   setModalVisible2(true);
+          // } else {
+          //   navigation.navigate("Drawerroute");
+          // }
         }
       })
       .catch(function (error) {

@@ -40,15 +40,24 @@ import {
   getCurrentLocation,
 } from "../../../api/CurrentLocation";
 
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
+
 const Filter = ({ navigation, route }) => {
   /////////////redux states///////
-  const { category_name, post_within, location_address, sort_by,slider_distance } = useSelector(
-    (state) => state.userReducer
-  );
+  const {
+    category_name,
+    post_within,
+    location_address,
+    sort_by,
+    slider_distance,
+  } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   ////////Bottom sheet references/////////
   const refddRBSheet = useRef();
@@ -70,12 +79,14 @@ const Filter = ({ navigation, route }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Apply Filters"+slider_distance}
+          headerlabel={"Apply Filters" + slider_distance}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -141,7 +152,12 @@ const Filter = ({ navigation, route }) => {
               topDistance={10}
               // loading={loading}
               // disabled={disable}
-              onPress={() => {
+              onPress={async () => {
+                let user_status = await get_user_status();
+                if (user_status == "block") {
+                  setShowBlockModal(true);
+                  return;
+                }
                 navigation.navigate("FilterListings", {
                   itemprice: listing_price,
                 });

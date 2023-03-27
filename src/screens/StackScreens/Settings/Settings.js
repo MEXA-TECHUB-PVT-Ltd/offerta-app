@@ -33,11 +33,33 @@ import RNFetchBlob from "rn-fetch-blob";
 
 /////////////////////app images/////////////////////
 import { appImages } from "../../../constant/images";
+import { get_Login_UserData } from "../../../api/GetApis";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Settings = ({ navigation }) => {
+  const [verificationStatus, setVerificationStatus] = useState(null);
+  const [userRole, setUserRole] = useState("");
+
   const logout = async () => {
     await AsyncStorage.removeItem("Userid");
     navigation.navigate("Login");
+  };
+
+  // navigation.navigate("AccountVerification", {
+  //   signup_role: route?.params?.signup_role,
+  // });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getLoginUserDetail();
+    }, [])
+  );
+
+  const getLoginUserDetail = async () => {
+    get_Login_UserData().then((response) => {
+      setVerificationStatus(response?.data?.subscription);
+      setUserRole(response?.data?.role);
+    });
   };
 
   return (
@@ -75,11 +97,26 @@ const Settings = ({ navigation }) => {
         icon={"shield-check"}
         labelPress={() => navigation.navigate("VerifyAccount")}
       />
-      <SettingsMenu
-        label={"View Verification Documents"}
-        icon={"shield-check"}
-        labelPress={() => navigation.navigate("VerificationDocuments")}
-      />
+      {verificationStatus == "subscribed" ? (
+        <SettingsMenu
+          label={"View Verification Docs"}
+          icon={"shield-check"}
+          color={"blue"}
+          labelPress={() => navigation.navigate("VerificationDocuments")}
+        />
+      ) : (
+        <SettingsMenu
+          label={"Upload Verification Docs"}
+          icon={"shield-alert-outline"}
+          color={"red"}
+          labelPress={() => {
+            navigation.navigate("AccountVerification", {
+              signup_role: userRole,
+            });
+          }}
+        />
+      )}
+
       {/* <SettingsMenu
        label={'Allow user to call you'}
        icon={'phone'}

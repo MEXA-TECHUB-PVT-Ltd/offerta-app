@@ -42,6 +42,9 @@ import {
 import { appImages } from "../../../../constant/images";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import BlockUserView from "../../../../components/BlockUserView";
+import { get_user_status } from "../../../../api/GetApis";
+
 //////////////////appImages.//////////////////
 
 const PriceOffer = ({ navigation, route }) => {
@@ -54,8 +57,16 @@ const PriceOffer = ({ navigation, route }) => {
   //////////////////Textinput state////////////
   const [offerprice, setOfferPrice] = React.useState(0);
 
+  const [showBlockModal, setShowBlockModal] = useState(false);
+
   ////////////LISTING LIKES//////////
   const Listings_Exchange_Offer = async (props) => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     // console.log("props   :  ", props);
     // console.log("exchange_other_listing  :   ", exchange_other_listing.user_id);
     // console.log("exchange_other_listing  :   ", exchange_other_listing.id);
@@ -101,6 +112,8 @@ const PriceOffer = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

@@ -33,26 +33,44 @@ import { appImages } from "../../../constant/images";
 import { get_Notifications } from "../../../api/GetApis";
 import { useDispatch } from "react-redux";
 import { setExchangeOffer_OtherListing } from "../../../redux/actions";
+import Loader from "../../../components/Loader/Loader";
+import { useFocusEffect } from "@react-navigation/native";
+
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
 
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
   ///////////////////data state///////////
   const [notification, setNotification] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   //textfields
   useEffect(() => {
-    get_user_notifications();
+    setLoading(true);
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      get_user_notifications();
+    }, [])
+  );
+
   const get_user_notifications = async () => {
     get_Notifications()
       .then((response) => {
         //setData(response.data)
         setRefreshing(false);
+        setLoading(false);
         if (response.data.msg === "No Result") {
           setNotification("");
         } else {
-          setNotification(response.data);
+          console.log("response.data  : ", response.data?.length);
+          if (response.data?.length > 0) {
+            setNotification(response.data?.reverse());
+          }
         }
       })
       .catch((err) => {
@@ -65,11 +83,57 @@ const Notification = ({ navigation }) => {
   };
 
   const handleNotificationPress = async (item) => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     if (item?.type == "Price Offer") {
       console.log("notification is price offer");
       dispatch(setExchangeOffer_OtherListing(item?.list));
+      console.log("item :::", item?.offer_status);
+      if (item?.offer_status == "reject") {
+        //handle offer reject
+        let obj = {
+          sale_by: item?.offer?.sale_by,
+          buyer_id: item?.offer?.user_id,
+          offer_type: "price_offer",
+          receiverId: item?.offer?.sale_by,
+          senderId: item?.offer?.user_id,
+          listing_id: item?.list?.id,
 
-      navigation.navigate("ConfirmAddress");
+          item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+          offer_price: item?.offer?.price,
+          offerid: item?.offer?.id,
+          itemprice: item?.list?.price,
+          navtype: "notification",
+          userid: item?.offer?.sale_by,
+        };
+
+        navigation.navigate("PriceOfferNoti", obj);
+      } else {
+        navigation.navigate("ConfirmAddress");
+      }
+    } else if (item?.type == "Counter Offer") {
+      console.log("counter offer_________________");
+      let obj = {
+        buyer_id: item?.offer?.user_id,
+        item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+        itemprice: item?.list?.price,
+        listing_id: item?.list?.id,
+        navtype: "notification",
+        offer_price: item?.offer?.price,
+        offer_type: "counter_offer",
+        price_offer: item?.offer?.price,
+        offerid: item?.offer?.id,
+        receiverId: item?.offer?.user_id,
+        sale_by: item?.offer?.sale_by,
+        senderId: item?.offer?.sale_by,
+        userId: item?.offer?.sale_by,
+      };
+      console.log("obj   ::  ", obj);
+      navigation.navigate("CounterOffer", obj);
     } else {
       console.log("other type that is not handled yet  :  ", item?.type);
     }
@@ -125,8 +189,9 @@ const Notification = ({ navigation }) => {
         barStyle="light-content"
       />
       <CustomHeader headerlabel={"Notifications"} />
-
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
       <View style={{ ...styles.postcard, marginTop: 0 }}>
+        <Loader isLoading={loading} />
         <FlatList
           refreshControl={
             <RefreshControl
@@ -141,6 +206,13 @@ const Notification = ({ navigation }) => {
           scrollEnabled={true}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => {
+            return (
+              <View style={{ height: 200 }}>
+                <Text style={{ color: "#000" }}>No Record Found</Text>
+              </View>
+            );
+          }}
         />
       </View>
     </SafeAreaView>

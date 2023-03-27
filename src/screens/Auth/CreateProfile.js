@@ -115,10 +115,10 @@ const CreateProfile = ({ navigation, route }) => {
         await AsyncStorage.setItem("Userid", response.data.id);
         dispatch(setCountryName(""));
         dispatch(setCityName(""));
-        // navigation.navigate("Drawerroute");
-        navigation.navigate("AccountVerification", {
-          signup_role: route?.params?.signup_role,
-        });
+        navigation.navigate("Drawerroute");
+        // navigation.navigate("AccountVerification", {
+        //   signup_role: route?.params?.signup_role,
+        // });
       })
       .catch((error) => {
         alert("error" + error);

@@ -85,6 +85,10 @@ import VerificationDocuments from "./src/screens/StackScreens/Settings/Verificat
 /////////////////////Notification//////////////////
 import ExchangeNoti from "./src/screens/StackScreens/Notification/ExchangeRequestNoti";
 import PriceOfferNoti from "./src/screens/StackScreens/Notification/PriceOfferNoti";
+
+import AllListingsByCategory from "./src/screens/StackScreens/Profile/Listings/AllListingsByCategory";
+import AccountVerification from "./src/screens/Auth/AccountVerification";
+
 import { navigationRef } from "./RootNavigation";
 
 const Stack = createNativeStackNavigator();
@@ -486,6 +490,21 @@ function App() {
           <Stack.Screen
             name="VerifyCode"
             component={VerifyCode}
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="AllListingsByCategory"
+            component={AllListingsByCategory}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AccountVerification"
+            component={AccountVerification}
             options={{
               headerShown: false,
             }}

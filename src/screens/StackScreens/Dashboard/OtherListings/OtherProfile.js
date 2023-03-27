@@ -104,8 +104,15 @@ const OtherProfile = ({ navigation }) => {
   const [ratting, setRatting] = React.useState();
   const [followers, setFollowers] = React.useState();
   const [following, setFollowing] = React.useState();
+
+  const [verificationStatus, setVerificationStatus] = useState(null);
+  const [userRole, setUserRole] = useState("");
+
   const GetAcountDetail = async () => {
     get_Other_UserData(exchange_other_listing.user_id).then((response) => {
+      setVerificationStatus(response?.data?.subscription);
+      setUserRole(response?.data?.role);
+
       //setFollow_User_id(response.data.id)
       setUserName(response.data.full_name);
       setUseremail(response.data.email);
@@ -129,7 +136,6 @@ const OtherProfile = ({ navigation }) => {
       }
     });
   }, [ratting]);
-
   useEffect(() => {
     if (isfocussed) {
       GetAcountDetail();
@@ -197,6 +203,9 @@ const OtherProfile = ({ navigation }) => {
         }}
       >
         <ProfileCard
+          verificationStatus={verificationStatus}
+          userRole={userRole}
+          //
           userlogo={userimage}
           username={username}
           useremail={useremail}

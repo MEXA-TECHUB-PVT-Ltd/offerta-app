@@ -51,8 +51,11 @@ import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
 import CamerBottomSheet from "../../components/CameraBottomSheet/CameraBottomSheet";
-import { Snackbar } from "react-native-paper";
+import { Modal, Snackbar } from "react-native-paper";
 import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
+import { get_user_status } from "../../api/GetApis";
+import { Block_user_message } from "../../utills/AppStrings";
+import BlockUserView from "../../components/BlockUserView";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -77,6 +80,8 @@ const AccountVerification = ({ navigation, route }) => {
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [showBlockModal, setShowBlockModal] = useState(false);
+
   useEffect(() => {
     if (route?.params?.type == "login") {
       setsnackbarValue({
@@ -88,6 +93,21 @@ const AccountVerification = ({ navigation, route }) => {
   }, [route?.params]);
 
   const handleVerifyAccount = async () => {
+    // console.log("varification called.....");
+    // setsnackbarValue({
+    //   value: "Please Verify your account",
+    //   color: "red",
+    // });
+    // setVisible(true);
+    // return;
+    let user_status = await get_user_status();
+
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
+    setLoading(true);
     let user_id = await AsyncStorage.getItem("Userid");
     console.log("user_id  :   ", user_id);
     if (!user_id) {
@@ -123,10 +143,9 @@ const AccountVerification = ({ navigation, route }) => {
         .then((response) => {
           console.log("rsponse :  ", response);
           if (response?.status == true) {
-            // navigation.navigate("Drawerroute");
-            // setModalVisible2(true);
-            navigation?.popToTop();
-            navigation?.navigate("Login");
+            // navigation?.popToTop();
+            // navigation?.navigate("Login");
+            navigation?.goBack();
           } else {
             setsnackbarValue({
               value: response?.message,
@@ -336,6 +355,11 @@ const AccountVerification = ({ navigation, route }) => {
         >
           {snackbarValue.value}
         </Snackbar>
+
+        <BlockUserView
+          visible={showBlockModal}
+          setVisible={setShowBlockModal}
+        />
 
         <CamerBottomSheet
           refRBSheet={refRBSheet}

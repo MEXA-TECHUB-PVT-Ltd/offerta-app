@@ -214,7 +214,11 @@ const PriceOfferNoti = ({ navigation, route }) => {
         buttontext={"OK"}
         onPress={() => {
           setModalVisible(false);
-          navigation.navigate("BottomTab");
+          // navigation.navigate("BottomTab");
+          console.log(".......", route?.params?.listing_id);
+          navigation.navigate("ListingsDetails", {
+            listing_id: route?.params?.listing_id,
+          });
         }}
       />
       <CustomModal

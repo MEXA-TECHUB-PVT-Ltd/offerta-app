@@ -26,7 +26,7 @@ import { Checkbox } from "react-native-paper";
 import { useSelector } from "react-redux";
 import Colors from "../../utills/Colors";
 
-const SettingsMenu = ({ navigation, label, labelPress, icon }) => {
+const SettingsMenu = ({ navigation, label, labelPress, icon, color }) => {
   ////////////////////redux/////////////////////
   const { theme } = useSelector((state) => state.userReducer);
 
@@ -45,7 +45,7 @@ const SettingsMenu = ({ navigation, label, labelPress, icon }) => {
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialCommunityIcons
             name={icon}
-            color={"#404040"}
+            color={color ? color : "#404040"}
             size={22}
             onPress={labelPress}
           />
@@ -66,7 +66,6 @@ const SettingsMenu = ({ navigation, label, labelPress, icon }) => {
             onPress={() => {
               setChecked(!checked);
             }}
-            
           />
         ) : (
           <Ionicons

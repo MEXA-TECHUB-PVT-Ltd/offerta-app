@@ -8,6 +8,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import { Divider, Badge } from "react-native-paper";
 
@@ -33,33 +34,46 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 
 ///////////////////async//////////////
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Loader from "../../../components/Loader/Loader";
 
 const ChatList = ({ navigation }) => {
   ///////////////////data state///////////
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   //textfields
   useEffect(() => {
+    setLoading(true);
+    getDetails();
+  }, []);
+  const getDetails = async () => {
     getuser();
     get_Chat_Users().then((response) => {
-      console.log("response  : ", response?.data);
+      setLoading(false);
+      setRefreshing(false);
       if (response.data.msg === "No Result") {
         setData();
       } else {
         setData(response.data);
       }
     });
-  }, []);
+  };
   const [login_user_id, setlogin_user_id] = useState();
   const getuser = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
 
     setlogin_user_id(user_id);
   };
+  const handleRefresh = () => {
+    setRefreshing(true);
+    getDetails();
+  };
   ///////////////////flatlist render item///////////////
   const renderitem = (item) => {
-    return item?.item?.chat_user?.id === login_user_id &&
-      item?.item?.user?.id != login_user_id ? (
+    return item?.item?.chat_user == null ||
+      item?.item?.user == null ? null : item?.item?.chat_user?.id ===
+        login_user_id && item?.item?.user?.id != login_user_id ? (
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("ChatScreen", {
@@ -183,18 +197,28 @@ const ChatList = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader headerlabel={"Chats"} />
-      {data === [] ? (
-        <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
-      ) : (
-        <FlatList
-          data={data}
-          renderItem={renderitem}
-          keyExtractor={(item, index) => index.toString()}
-          scrollEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <Loader isLoading={loading} />
+
+      <FlatList
+        data={data}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[Colors.Appthemecolor]}
+            onRefresh={() => handleRefresh()}
+          />
+        }
+        renderItem={renderitem}
+        keyExtractor={(item, index) => index.toString()}
+        scrollEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => {
+          return (
+            <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          );
+        }}
+      />
     </SafeAreaView>
   );
 };

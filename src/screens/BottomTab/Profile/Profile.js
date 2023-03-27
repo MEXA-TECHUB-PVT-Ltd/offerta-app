@@ -18,6 +18,8 @@ import CustomHeader from "../../../components/Header/CustomHeader";
 import ProfileCard from "../../../components/CustomCards/Profile";
 import SettingsMenu from "../../../components/SettingsView/SettingsMenu";
 
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
 ////////////////api////////////////
 import axios from "axios";
 import { BASE_URL } from "../../../utills/ApiRootUrl";
@@ -35,21 +37,32 @@ import Colors from "../../../utills/Colors";
 import { appImages } from "../../../constant/images";
 
 ///////////////api function///////////
-import { get_Login_UserData,get_Login_User_Followers,get_Login_User_Followings } from "../../../api/GetApis"; 
+import {
+  get_Login_UserData,
+  get_Login_User_Followers,
+  get_Login_User_Followings,
+} from "../../../api/GetApis";
 
 const Profile = ({ navigation }) => {
   ////////////isfocused//////////
   const isfocussed = useIsFocused();
 
   ///////////////data states////////////////////
-  const [username, setUserName] = React.useState('');
+  const [username, setUserName] = React.useState("");
   const [userimage, setUserImage] = React.useState();
   const [useremail, setUseremail] = React.useState();
   const [ratting, setRatting] = React.useState();
   const [followers, setFollowers] = React.useState();
   const [following, setFollowing] = React.useState();
+
+  const [verificationStatus, setVerificationStatus] = useState(null);
+  const [userRole, setUserRole] = useState("");
+
   const GetAcountDetail = async () => {
     get_Login_UserData().then((response) => {
+      setVerificationStatus(response?.data?.subscription);
+      setUserRole(response?.data?.role);
+
       setUserName(response.data.full_name);
       setUseremail(response.data.email);
       setUserImage(response.data.image);
@@ -59,47 +72,43 @@ const Profile = ({ navigation }) => {
     });
   };
 
-//////////////////////Follower detail////////////
-const [userfollwer, setUserfollower] = React.useState();
-const GetFollowers = async () => {
-  get_Login_User_Followers().then((response) => {
-    if(response.data.msg === "No follower yet")
-    {
-      setUserfollower(0)
-    }
-    else
-    {
-      setUserfollower(response.data.Total);
-    }
+  //////////////////////Follower detail////////////
+  const [userfollwer, setUserfollower] = React.useState();
+  const GetFollowers = async () => {
+    get_Login_User_Followers().then((response) => {
+      if (response.data.msg === "No follower yet") {
+        setUserfollower(0);
+      } else {
+        setUserfollower(response.data.Total);
+      }
+    });
+  };
 
-  });
-};
-//////////////////////Following detail////////////
-const [userfollwings, setUserfollowings] = React.useState();
-const GetFollowings = async () => {
-  get_Login_User_Followings().then((response) => {
-    console.log('here total:',response.data)
-    if(response.data === "No following yet")
-    {
-      setUserfollowings(0)
-    }
-    else
-    {
-      setUserfollowings(response.data.Total);
-    }
-
-  });
-};
+  //////////////////////Following detail////////////
+  const [userfollwings, setUserfollowings] = React.useState();
+  const GetFollowings = async () => {
+    get_Login_User_Followings().then((response) => {
+      console.log("here total:", response.data);
+      if (response.data === "No following yet") {
+        setUserfollowings(0);
+      } else {
+        setUserfollowings(response.data.Total);
+      }
+    });
+  };
   useEffect(() => {
     if (isfocussed) {
       GetAcountDetail();
-      GetFollowers()
-      GetFollowings()
+      GetFollowers();
+      GetFollowings();
     }
   }, [isfocussed]);
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={Colors.Appthemecolor} barStyle="light-content" />
+      <StatusBar
+        backgroundColor={Colors.Appthemecolor}
+        barStyle="light-content"
+      />
 
       <View style={styles.header}>
         <View style={{ alignSelf: "flex-end", marginTop: wp(5) }}>
@@ -118,7 +127,6 @@ const GetFollowings = async () => {
           showsHorizontalScrollIndicator={false}
         >
           <View style={{ marginTop: hp(23), marginBottom: hp(2) }}>
-    
             <SettingsMenu
               label={"Listings"}
               labelPress={() => navigation.navigate("Listings")}
@@ -134,11 +142,11 @@ const GetFollowings = async () => {
 
             <SettingsMenu
               label={"Promotions"}
-              labelPress={()=>navigation.navigate('Promotions')}
+              labelPress={() => navigation.navigate("Promotions")}
             />
             <SettingsMenu
               label={"Sale & Orders"}
-              labelPress={()=>navigation.navigate('SalesOrders')}
+              labelPress={() => navigation.navigate("SalesOrders")}
             />
           </View>
         </ScrollView>
@@ -152,6 +160,8 @@ const GetFollowings = async () => {
         }}
       >
         <ProfileCard
+          verificationStatus={verificationStatus}
+          userRole={userRole}
           userlogo={userimage}
           username={username}
           useremail={useremail}

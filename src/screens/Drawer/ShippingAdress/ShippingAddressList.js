@@ -24,6 +24,9 @@ import { get_Shipping_Address } from "../../../api/ShippingAddress";
 import { setLoginUserShippingAddress } from "../../../redux/LoginUserActions";
 import { useDispatch, useSelector } from "react-redux";
 
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
+
 const ShippingAddressList = ({ navigation }) => {
   ////////////////navigation/////////////////
   const isFocused = useIsFocused();
@@ -33,6 +36,8 @@ const ShippingAddressList = ({ navigation }) => {
     (state) => state.loginuserReducer
   );
   const dispatch = useDispatch();
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   ////////////list state////////////
   const [shippinglist, setshippinglist] = useState();
@@ -50,6 +55,8 @@ const ShippingAddressList = ({ navigation }) => {
   }, [isFocused]);
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <CustomHeader
         headerlabel={"Shipping Address"}
         iconPress={() => {
@@ -58,9 +65,14 @@ const ShippingAddressList = ({ navigation }) => {
         icon={"chevron-back"}
         searchicon={"plus"}
         type={"left_icon"}
-        onpresseacrh={() =>
-          navigation.navigate("ShippingAddress", { navtype: "shippin_list" })
-        }
+        onpresseacrh={async () => {
+          let user_status = await get_user_status();
+          if (user_status == "block") {
+            setShowBlockModal(true);
+            return;
+          }
+          navigation.navigate("ShippingAddress", { navtype: "shippin_list" });
+        }}
       />
 
       <View style={{ flex: 1 }}>
@@ -75,7 +87,13 @@ const ShippingAddressList = ({ navigation }) => {
               // state={item.state}
               country={item.country}
               type={"shipping_address"}
-              onpress={() => {
+              onpress={async () => {
+                let user_status = await get_user_status();
+                if (user_status == "block") {
+                  setShowBlockModal(true);
+                  return;
+                }
+
                 dispatch(setLoginUserShippingAddress(item)),
                   navigation.navigate("UpdateShippingAddress");
               }}

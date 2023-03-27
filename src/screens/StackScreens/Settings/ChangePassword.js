@@ -1,11 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  Image,
-  View,
-  Text,
-} from "react-native";
+import { SafeAreaView, ScrollView, Image, View, Text } from "react-native";
 
 ///////////////app components////////////////
 import CustomHeader from "../../../components/Header/CustomHeader";
@@ -37,10 +31,12 @@ import axios from "axios";
 import { BASE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../../constant/fonts";
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
 
-const ChangePassword = ({ navigation,route }) => {
-/////////////////////previous data//////////////
-const[predata]=useState(route.params)
+const ChangePassword = ({ navigation, route }) => {
+  /////////////////////previous data//////////////
+  const [predata] = useState(route.params);
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -73,18 +69,18 @@ const[predata]=useState(route.params)
   const [old_password, setOldPassword] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showBlockModal, setShowBlockModal] = useState(false);
   //////////////Api Calling////////////////////
   const ChangePassword = async () => {
-
     var user_id = await AsyncStorage.getItem("Userid");
     axios({
       method: "put",
       url: BASE_URL + "changePasswordApi.php",
       data: {
-        "id":user_id,
-        "password":old_password,
-        "newpassword":password,
-        "confirmpassword":confirmPassword
+        id: user_id,
+        password: old_password,
+        newpassword: password,
+        confirmpassword: confirmPassword,
       },
     })
       .then(async function (response) {
@@ -106,12 +102,19 @@ const[predata]=useState(route.params)
   };
   //Api form validation
   const formValidation = async () => {
+    let user_status = await get_user_status();
+
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     // input validation
     if (old_password == "") {
-        setsnackbarValue({ value: "Please Enter Old Password", color: "red" });
-        setVisible("true");
-      }
-   if (password == "") {
+      setsnackbarValue({ value: "Please Enter Old Password", color: "red" });
+      setVisible("true");
+    }
+    if (password == "") {
       setsnackbarValue({ value: "Please Enter Password", color: "red" });
       setVisible("true");
     } else if (password.length <= 5) {
@@ -147,17 +150,16 @@ const[predata]=useState(route.params)
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-                       <CustomHeader
-          headerlabel={'Settings'}
+        <CustomHeader
+          headerlabel={"Settings"}
           iconPress={() => {
             navigation.goBack();
           }}
-          icon={'arrow-back'}
+          icon={"arrow-back"}
         />
         <View>
-    
           <View>
-          <CustomTextInput
+            <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={old_password}
@@ -199,20 +201,27 @@ const[predata]=useState(route.params)
           onDismiss={onDismissSnackBar}
           style={{
             backgroundColor: snackbarValue.color,
-            marginBottom: '20%',
+            marginBottom: "20%",
             zIndex: 999,
-          }}>
+          }}
+        >
           {snackbarValue.value}
         </Snackbar>
-        <CustomModal 
-                modalVisible={modalVisible}
-                CloseModal={() => setModalVisible(false)}
-                Icon={appImages.sucess}
-              text={'Sucess'}
-              subtext={'Password Changed Successfully'}
-          buttontext={'GO BACK'}
- onPress={()=> { setModalVisible(false),navigation.navigate('Settings        ')}}
-                /> 
+        <BlockUserView
+          visible={showBlockModal}
+          setVisible={setShowBlockModal}
+        />
+        <CustomModal
+          modalVisible={modalVisible}
+          CloseModal={() => setModalVisible(false)}
+          Icon={appImages.sucess}
+          text={"Sucess"}
+          subtext={"Password Changed Successfully"}
+          buttontext={"GO BACK"}
+          onPress={() => {
+            setModalVisible(false), navigation.navigate("Settings        ");
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );

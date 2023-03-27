@@ -116,7 +116,38 @@ const styles = StyleSheet.create({
     color: Colors.Appthemecolor,
     fontFamily: fontFamily.Poppins_SemiBold,
     fontSize: hp(2),
-    marginLeft:wp(5)
+    marginLeft: wp(5),
+  },
+
+  Categoriescard: {
+    marginVertical: hp(2),
+    margin: wp(0),
+    alignItems: "center",
+    marginHorizontal: wp(4.2),
+    backgroundColor: "white",
+    width: wp(41),
+    height: hp(22),
+    borderRadius: wp(3),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+  Categoriesimage: {
+    height: hp(5),
+    width: wp(20),
+    resizeMode: "contain",
+  },
+  Categoriestext: {
+    color: Colors.activetextinput,
+    marginTop: hp(5),
+    fontSize: hp(1.8),
+    fontFamily: fontFamily.Poppins_Medium,
   },
 });
 export default styles;

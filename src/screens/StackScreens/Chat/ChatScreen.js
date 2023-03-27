@@ -94,6 +94,9 @@ import { get_Other_UserData } from "../../../api/GetApis";
 
 import { useIsFocused } from "@react-navigation/native";
 
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
+
 const ChatScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
 
@@ -105,6 +108,8 @@ const ChatScreen = ({ route, navigation }) => {
 
   ////////////previos data//////////
   const [predata] = useState(route.params);
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   ////////Bottom sheet references/////////
   const refRBSheet = useRef();
@@ -257,6 +262,12 @@ const ChatScreen = ({ route, navigation }) => {
     Chat_Room(route.params.userid);
   }, []);
   const handleSend = async (messageArray) => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     var user = await AsyncStorage.getItem("Userid");
 
     let docid = "";
@@ -513,6 +524,55 @@ const ChatScreen = ({ route, navigation }) => {
     }
   }, []);
 
+  const handleCounterOfferPress = async (props) => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
+    navigation.navigate("CounterOffer", {
+      sale_by: props.currentMessage.sale_by,
+      buyer_id: props.currentMessage.buyer_id,
+      offer_type: props.currentMessage.type,
+      receiverId: props.currentMessage.receiverId,
+      senderId: props.currentMessage.senderId,
+      listing_id: props.currentMessage.listing_id,
+
+      item_img: props.currentMessage.textimg1,
+      offer_price: props.currentMessage.offerprice,
+      offerid: props.currentMessage.offerid,
+      itemprice: props.currentMessage.textprice,
+      navtype: "chat",
+      userid: props.currentMessage.receiverId,
+      type: "view",
+      // userid: route.params.userid,
+    });
+  };
+
+  const handlePriceOfferPress = async (props) => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+    navigation.navigate("PriceOfferNoti", {
+      sale_by: props.currentMessage.sale_by,
+      buyer_id: props.currentMessage.buyer_id,
+      offer_type: props.currentMessage.type,
+      receiverId: props.currentMessage.receiverId,
+      senderId: props.currentMessage.senderId,
+      listing_id: props.currentMessage.listing_id,
+
+      item_img: props.currentMessage.textimg1,
+      offer_price: props.currentMessage.offerprice,
+      offerid: props.currentMessage.offerid,
+      itemprice: props.currentMessage.textprice,
+      navtype: "chat",
+      userid: props.currentMessage.receiverId,
+      // userid: route.params.userid,
+    });
+  };
   const CustomInputToolbar = (props) => {
     return (
       <View
@@ -588,7 +648,14 @@ const ChatScreen = ({ route, navigation }) => {
             name={"camera"}
             size={25}
             color={"black"}
-            onPress={() => refRBSheet.current.open()}
+            onPress={async () => {
+              let user_status = await get_user_status();
+              if (user_status == "block") {
+                setShowBlockModal(true);
+                return;
+              }
+              refRBSheet.current.open();
+            }}
           />
         </View>
         {/* </TouchableOpacity> */}
@@ -648,41 +715,7 @@ const ChatScreen = ({ route, navigation }) => {
             activeOpacity={0.7}
             style={styles.p_mainview}
             onPress={() => {
-              // let obj = {
-              //   sale_by: props.currentMessage.sale_by,
-              //   buyer_id: props.currentMessage.buyer_id,
-              //   offer_type: props.currentMessage.type,
-              //   receiverId: props.currentMessage.receiverId,
-              //   senderId: props.currentMessage.senderId,
-              //   listing_id: props.currentMessage.listing_id,
-
-              //   item_img: props.currentMessage.textimg1,
-              //   offer_price: props.currentMessage.offerprice,
-              //   offerid: props.currentMessage.offerid,
-              //   itemprice: props.currentMessage.textprice,
-              //   navtype: "chat",
-              //   userid: props.currentMessage.receiverId,
-              // };
-
-              // console.log("obj    :::   ", obj);
-
-              navigation.navigate("CounterOffer", {
-                sale_by: props.currentMessage.sale_by,
-                buyer_id: props.currentMessage.buyer_id,
-                offer_type: props.currentMessage.type,
-                receiverId: props.currentMessage.receiverId,
-                senderId: props.currentMessage.senderId,
-                listing_id: props.currentMessage.listing_id,
-
-                item_img: props.currentMessage.textimg1,
-                offer_price: props.currentMessage.offerprice,
-                offerid: props.currentMessage.offerid,
-                itemprice: props.currentMessage.textprice,
-                navtype: "chat",
-                userid: props.currentMessage.receiverId,
-                type: "view",
-                // userid: route.params.userid,
-              });
+              handleCounterOfferPress(props);
             }}
           >
             <Image
@@ -700,64 +733,30 @@ const ChatScreen = ({ route, navigation }) => {
             </View>
           </TouchableOpacity>
         ) : props.currentMessage.type === "price_offer" ? (
-          <View style={styles.p_mainview}>
+          <TouchableOpacity
+            onPress={() => {
+              // console.log(
+              //   "props.currentMessage.sale_by  :_____________________________________________  ",
+              //   props.currentMessage.sale_by
+              // );
+              handlePriceOfferPress(props);
+            }}
+            style={styles.p_mainview}
+          >
             <Image
               source={{ uri: IMAGE_URL + props.currentMessage.textimg1 }}
               style={styles.p_image}
               resizeMode="cover"
             />
             <View style={{}}>
-              <Text
-                style={styles.p_text}
-                onPress={() => {
-                  // console.log(
-                  //   "props.currentMessage.sale_by  :_____________________________________________  ",
-                  //   props.currentMessage.sale_by
-                  // );
-                  navigation.navigate("PriceOfferNoti", {
-                    sale_by: props.currentMessage.sale_by,
-                    buyer_id: props.currentMessage.buyer_id,
-                    offer_type: props.currentMessage.type,
-                    receiverId: props.currentMessage.receiverId,
-                    senderId: props.currentMessage.senderId,
-                    listing_id: props.currentMessage.listing_id,
-
-                    item_img: props.currentMessage.textimg1,
-                    offer_price: props.currentMessage.offerprice,
-                    offerid: props.currentMessage.offerid,
-                    itemprice: props.currentMessage.textprice,
-                    navtype: "chat",
-                    userid: props.currentMessage.receiverId,
-                    // userid: route.params.userid,
-                  });
-                }}
-              >
+              <Text style={styles.p_text}>
                 {"Item Price " + props.currentMessage.textprice}
               </Text>
-              <Text
-                style={styles.p_text}
-                onPress={() =>
-                  navigation.navigate("PriceOfferNoti", {
-                    sale_by: props.currentMessage.sale_by,
-                    buyer_id: props.currentMessage.buyer_id,
-                    offer_type: props.currentMessage.type,
-                    receiverId: props.currentMessage.receiverId,
-                    senderId: props.currentMessage.senderId,
-                    listing_id: props.currentMessage.listing_id,
-
-                    item_img: props.currentMessage.textimg1,
-                    offer_price: props.currentMessage.offerprice,
-                    offerid: props.currentMessage.offerid,
-                    itemprice: props.currentMessage.textprice,
-                    navtype: "chat",
-                    userid: props.currentMessage.receiverId,
-                  })
-                }
-              >
+              <Text style={styles.p_text}>
                 {"Offer Price " + props.currentMessage.offerprice}
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ) : props.currentMessage.type === "exchange_offer" ? (
           <View>
             <View style={styles.e_mainview}>
@@ -889,6 +888,8 @@ const ChatScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <ChatHeader
         onPress={() => {}}
         username={username}

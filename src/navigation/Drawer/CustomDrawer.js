@@ -99,7 +99,7 @@ export const DrawerContent = (props) => {
             }}
           ></View>
           <Drawer.Section style={styles.drawerSection} showDivider={false}>
-            <DrawerItem
+            {/* <DrawerItem
               icon={({ color, size }) => (
                 <Image
                   source={appImages.drawerpayment}
@@ -112,7 +112,7 @@ export const DrawerContent = (props) => {
               onPress={() => {
                 props.navigation.navigate("StripePayments");
               }}
-            />
+            /> */}
 
             <DrawerItem
               icon={({ color, size }) => (

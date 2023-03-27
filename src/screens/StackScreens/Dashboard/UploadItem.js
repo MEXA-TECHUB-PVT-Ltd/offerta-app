@@ -56,6 +56,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 /////////////////////app images/////////////////////
 import { appImages } from "../../../constant/images";
 
+import BlockUserView from "../../../components/BlockUserView";
+import { get_user_status } from "../../../api/GetApis";
+
 const UploadItem = ({ navigation, route }) => {
   /////////////redux states///////
   const {
@@ -76,6 +79,8 @@ const UploadItem = ({ navigation, route }) => {
   const [exchangebuychecked, setExchangebuyChecked] = React.useState(false);
   const [fixedpricechecked, setFixedpriceChecked] = React.useState(false);
   const [givingawaychecked, setGivingawayChecked] = React.useState(false);
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   ////////Bottom sheet references/////////
   const refRBSheet = useRef();
@@ -336,7 +341,14 @@ const UploadItem = ({ navigation, route }) => {
       });
   };
   //Api form validation
+
   const formValidation = async () => {
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
     // input validation
     if (title == "") {
       setsnackbarValue({ value: "Please Enter Item Title", color: "red" });
@@ -435,6 +447,8 @@ const UploadItem = ({ navigation, route }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
