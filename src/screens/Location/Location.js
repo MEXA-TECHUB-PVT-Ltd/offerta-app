@@ -95,7 +95,7 @@ const Location = ({ navigation, route }) => {
         <MapView
           style={[styles.mapStyle]}
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          initialRegion={{
+          region={{
             latitude: pinlat,
             longitude: pinlog,
             latitudeDelta: 0.0922,
@@ -149,20 +149,62 @@ const Location = ({ navigation, route }) => {
       <View
         style={{ marginLeft: wp(3), marginTop: hp(2), marginBottom: hp(1) }}
       >
-        <Ionicons
-          name={"chevron-back"}
-          size={30}
-          color={Colors.Appthemecolor}
-          onPress={() => navigation.goBack()}
-        />
+        {/* <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: 10,
+            zIndex: 999,
+            // backgroundColor: "red",
+          }}
+        >
+          <Ionicons
+            name={"chevron-back"}
+            size={30}
+            color={Colors.Appthemecolor}
+            onPress={() => navigation.goBack()}
+          />
+        </TouchableOpacity> */}
       </View>
       <View style={{ alignItems: "center" }}>
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: wp(3),
+            left: wp(5),
+            zIndex: 999,
+            // backgroundColor: "red",
+          }}
+        >
+          <Ionicons
+            name={"chevron-back"}
+            size={30}
+            color={Colors.Appthemecolor}
+            onPress={() => navigation.goBack()}
+          />
+        </TouchableOpacity>
         <GooglePlacesAutocomplete
           //ref={ref}
           placeholder="Search"
+          placeholderTextColor={Colors.appgreycolor}
+          // styles={{
+          //   textInputContainer: {
+          //     backgroundColor: "grey",
+          //     width: wp(90),
+          //   },
+          //   textInput: {
+          //     height: 38,
+          //     color: "#5d5d5d",
+          //     fontSize: 16,
+          //     paddingHorizontal: wp(10),
+          //     height: 45,
+          //   },
+          //   predefinedPlacesDescription: {
+          //     color: "#1faadb",
+          //   },
+          // }}
           styles={{
             textInputContainer: styles.locationInput,
-            textInput: styles.inputTextStyles,
+            textInput: { ...styles.inputTextStyles, paddingHorizontal: wp(10) },
             listView: styles.listView,
             description: styles.desc,
             predefinedPlacesDescription: {
@@ -171,17 +213,21 @@ const Location = ({ navigation, route }) => {
           }}
           onPress={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
-            console.log(data, details);
-            console.log(data, details.description);
+
             dispatch(setLocationAddress(details.description));
             Geocoder.init(MapKeyApi);
             Geocoder.from(details.description)
               .then((json) => {
                 var location = json.results[0].geometry.location;
+                console.log("location.lat  :   ", location.lat);
                 dispatch(setLocationLat(location.lat));
                 dispatch(setLocationLng(location.lng));
                 setPinLat(location.lat);
                 setPinLog(location.lng);
+
+                // setPinLat(latitude);
+                // setPinLog(longitude);
+
                 setRegion({
                   latitude: location.lat,
                   longitude: location.lng,

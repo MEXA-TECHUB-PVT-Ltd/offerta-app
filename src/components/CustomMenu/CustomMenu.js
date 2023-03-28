@@ -243,15 +243,17 @@ const CustomMenu = (props) => {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <TouchableOpacity onPress={() => handleMenuPress()}>
-        <MaterialCommunityIcons
-          name={"dots-vertical"}
-          color={"#404040"}
-          size={22}
-          // onPress={() => setModalVisible(true)}
-          onPress={() => handleMenuPress()}
-        />
-      </TouchableOpacity>
+      {props?.hideMenu == true ? null : (
+        <TouchableOpacity onPress={() => handleMenuPress()}>
+          <MaterialCommunityIcons
+            name={"dots-vertical"}
+            color={"#404040"}
+            size={22}
+            // onPress={() => setModalVisible(true)}
+            onPress={() => handleMenuPress()}
+          />
+        </TouchableOpacity>
+      )}
       <CustomModal
         modalVisible={msgmodalVisible}
         CloseModal={() => setMsgModalVisible(false)}

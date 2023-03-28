@@ -670,30 +670,47 @@ const ChatScreen = ({ route, navigation }) => {
       <Send
         {...props}
         containerStyle={{
-          borderWidth: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          height: hp(6),
+          width: wp(12),
+          borderRadius: wp(10),
+          position: "absolute",
+          bottom: hp(0),
+          right: -wp(13.5),
+          backgroundColor: "white",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
         }}
       >
         <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            height: hp(6),
-            width: wp(12),
-
-            borderRadius: wp(10),
-            position: "absolute",
-            bottom: hp(0),
-            left: wp(2),
-            backgroundColor: "white",
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-          }}
+          style={
+            {
+              // justifyContent: "center",
+              // alignItems: "center",
+              // height: hp(6),
+              // width: wp(12),
+              // borderRadius: wp(10),
+              // position: "absolute",
+              // bottom: hp(0),
+              // left: wp(2),
+              // backgroundColor: "white",
+              // shadowColor: "#000",
+              // shadowOffset: {
+              //   width: 0,
+              //   height: 2,
+              // },
+              // shadowOpacity: 0.25,
+              // shadowRadius: 3.84,
+              // elevation: 5,
+            }
+          }
         >
           <Image
             source={appImages.sendicon}

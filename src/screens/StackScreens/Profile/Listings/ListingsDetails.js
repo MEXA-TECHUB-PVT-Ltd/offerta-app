@@ -5,6 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 
 //////////////map////////////////
@@ -65,6 +66,8 @@ import { get_user_status } from "../../../../api/GetApis";
 const ListingsDetails = ({ navigation, route }) => {
   ///////////previous data///////////
   const [predata] = useState(route.params);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   //camera and imagepicker
   const refRBSheet = useRef();
@@ -195,10 +198,13 @@ const ListingsDetails = ({ navigation, route }) => {
         //listing_like(predata.listing_id)
         let imagesList = response?.data?.images ? response?.data?.images : [];
         setListingImages(imagesList);
-        setloading(false);
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setRefreshing(false);
+        setloading(false);
       });
   };
   useEffect(() => {
@@ -222,13 +228,25 @@ const ListingsDetails = ({ navigation, route }) => {
     Linking.openURL(youtube_link);
   };
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    GetListData();
+    listing_views();
+    dispatch(setListingId(predata.listing_id));
+  };
   return (
     <SafeAreaView style={styles.container}>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[Colors.Appthemecolor]}
+            onRefresh={() => handleRefresh()}
+          />
+        }
       >
         <Loader isLoading={loading} />
         {/* {listingImages?.length > 0 && ( */}
@@ -282,16 +300,19 @@ const ListingsDetails = ({ navigation, route }) => {
                     navigation.navigate("CommentsDetails", route.params);
                 }}
           > */}
-        <View style={styles.iconview}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("CommentsDetails", route.params);
+          }}
+          style={styles.iconview}
+        >
           <Icon
             name={"chatbox-sharp"}
             size={20}
             color={Colors.activetextinput}
             style={{ marginRight: wp(3) }}
             onPress={() => {
-              {
-                navigation.navigate("CommentsDetails", route.params);
-              }
+              navigation.navigate("CommentsDetails", route.params);
             }}
           />
           <Text style={styles.icontext}>{listing_comments_count} comments</Text>
@@ -306,7 +327,7 @@ const ListingsDetails = ({ navigation, route }) => {
             //   }
             // }}
           />
-        </View>
+        </TouchableOpacity>
 
         {/* </TouchableOpacity> */}
         {listing_like_user_id === login_user_id ? (

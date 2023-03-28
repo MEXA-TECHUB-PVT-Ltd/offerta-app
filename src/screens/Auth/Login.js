@@ -532,7 +532,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -569,9 +569,9 @@ const Login = ({ navigation }) => {
               borderColor: Colors.inactivetextinput,
             }}
           />
-        </View>
+        </View> */}
 
-        <View
+        {/* <View
           style={{
             marginHorizontal: wp(5),
             flexDirection: "row",
@@ -589,7 +589,7 @@ const Login = ({ navigation }) => {
             bgcolor={"#4285F4"}
             onpress={() => gmailLoginHandler()}
           />
-        </View>
+        </View> */}
 
         <View style={{ marginTop: hp(0) }}>
           <CustomButtonhere

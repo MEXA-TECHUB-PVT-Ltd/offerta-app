@@ -128,6 +128,7 @@ const Slider = (props) => {
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
 
       <FlatList
+        style={{ marginTop: 35 }}
         ListEmptyComponent={() => {
           return <View style={{ height: showBlockModal ? 250 : 10 }}></View>;
         }}
@@ -148,7 +149,7 @@ const Slider = (props) => {
         viewabilityConfig={viewabilityConfig}
       />
       {props.slidertype === "dashboard" ? null : (
-        <View style={styles.content}>
+        <View style={{ ...styles.content, backgroundColor: "#FFF" }}>
           <Icon
             name={"arrow-back"}
             size={25}
@@ -189,6 +190,7 @@ const Slider = (props) => {
               exchange_other_listing.user_id ||
             props.type === "comments" ? null : (
             <CustomMenu
+              hideMenu={props?.hideMenu}
               menudata={props.menuoptions}
               setShowBlockModal={setShowBlockModal}
             />
@@ -238,13 +240,16 @@ const styles = StyleSheet.create({
   },
   content: {
     //flex: 0.4,,
-    width: wp(93),
+    // width: wp(93),
+    width: wp(100),
     alignSelf: "center",
     alignItems: "center",
     position: "absolute",
     flexDirection: "row",
     justifyContent: "space-between",
     // backgroundColor: "red",
-    marginTop: hp(2),
+    // marginTop: hp(2),
+    padding: 10,
+    backgroundColor: "#FFFFFF",
   },
 });

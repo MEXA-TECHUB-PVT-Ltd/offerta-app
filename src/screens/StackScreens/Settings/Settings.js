@@ -92,21 +92,23 @@ const Settings = ({ navigation }) => {
           navigation.navigate("Location", { navplace: "Location" })
         }
       />
-      <SettingsMenu
+      {/* <SettingsMenu
         label={"Verify Account"}
         icon={"shield-check"}
         labelPress={() => navigation.navigate("VerifyAccount")}
-      />
+      /> */}
       {verificationStatus == "subscribed" ? (
         <SettingsMenu
-          label={"View Verification Docs"}
+          // label={"View Verification Docs"}
+          label={"Verify Account"}
           icon={"shield-check"}
           color={"blue"}
           labelPress={() => navigation.navigate("VerificationDocuments")}
         />
       ) : (
         <SettingsMenu
-          label={"Upload Verification Docs"}
+          // label={"Upload Verification Docs"}
+          label={"Verify Account"}
           icon={"shield-alert-outline"}
           color={"red"}
           labelPress={() => {

@@ -42,7 +42,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
 
 const ForgetPassword = ({ navigation }) => {
-
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -52,7 +51,6 @@ const ForgetPassword = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
-
 
   ///////////email//////////////////
   const handleValidEmail = (val) => {
@@ -68,66 +66,67 @@ const ForgetPassword = ({ navigation }) => {
 
   ///////////////data states////////////////////
   const [email, setEmail] = React.useState("");
-//Api Calling
-const ForgetUserPassword=async() => {
-  console.log('email here:',email)
- axios({
-   method: 'post',
-   url: BASE_URL+'forgetPassword.php',
-   data:{  
-       email : email.toLowerCase(),    
-   },
- })
- .then(function (response) {
-   console.log("response", JSON.stringify(response.data))
+  //Api Calling
+  const ForgetUserPassword = async () => {
+    console.log("email here:", email);
+    axios({
+      method: "post",
+      url: BASE_URL + "forgetPassword.php",
+      data: {
+        email: email.toLowerCase(),
+      },
+    })
+      .then(function (response) {
+        console.log("response", response?.data);
 
-   if(response.data.message!=" ")
-   {
-    setloading(0);
-    setdisable(0);
-    navigation.navigate('Verification',response.data)
-   }
-   else
-    {
-      setloading(0);
-      setdisable(0);
-      setModalVisible(true)
-     }
- })
- .catch(function (error) {
-   console.log("error", error)
- })
-}
-//Api form validation
-const formValidation = async () => {
- // input validation
- if (email == '') {
-   setsnackbarValue({value: "Please Enter Email", color: 'red'});
-   setVisible('true');
- }
-    
- else if (!handleValidEmail(email)) {
-   setsnackbarValue({value: "Incorrect Email", color: 'red'});
-   setVisible('true');
-}
- else{
-   setloading(1);
-   setdisable(1);
-   ForgetUserPassword()
- }
-}
+        // setsnackbarValue({ value: "Incorrect Email", color: "red" });
+        // setVisible("true");
+        if (response.data.status == true) {
+          setloading(0);
+          setdisable(0);
+          navigation.navigate("Verification", response.data);
+        } else if (response.data.status == false) {
+          setsnackbarValue({ value: response?.data?.message, color: "red" });
+          setVisible("true");
+        } else {
+          setloading(0);
+          setdisable(0);
+          setModalVisible(true);
+        }
+      })
+      .catch(function (error) {
+        console.log("error", error);
+      });
+  };
+  //Api form validation
+  const formValidation = async () => {
+    // input validation
+    if (email == "") {
+      setsnackbarValue({ value: "Please Enter Email", color: "red" });
+      setVisible("true");
+    } else if (!handleValidEmail(email)) {
+      setsnackbarValue({ value: "Incorrect Email", color: "red" });
+      setVisible("true");
+    } else {
+      setloading(1);
+      setdisable(1);
+      ForgetUserPassword();
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >
-                        <Ionicons name={'arrow-back'} size={25} 
-          color= {Colors.Appthemecolor}
-          style={{marginLeft:wp(5),marginTop:hp(3)}}
-          onPress={()=>navigation.goBack()} 
-           /> 
-        <View style={[Logostyles.Logoview,{marginTop:hp(5)}]}>
+        <Ionicons
+          name={"arrow-back"}
+          size={25}
+          color={Colors.Appthemecolor}
+          style={{ marginLeft: wp(5), marginTop: hp(3) }}
+          onPress={() => navigation.goBack()}
+        />
+        <View style={[Logostyles.Logoview, { marginTop: hp(5) }]}>
           <Image
             source={appImages.logo}
             style={Logostyles.logo}
@@ -138,7 +137,7 @@ const formValidation = async () => {
           <View style={Authstyles.textview}>
             <Text style={Authstyles.maintext}>Forget Password</Text>
             <Text style={Authstyles.subtext}>
-            Enter email to get a verification code
+              Enter email to get a verification code
             </Text>
           </View>
           <View>
@@ -153,7 +152,7 @@ const formValidation = async () => {
           </View>
         </View>
 
-        <View style={{ marginTop: hp(0) ,marginBottom:hp(35)}}>
+        <View style={{ marginTop: hp(0), marginBottom: hp(35) }}>
           <CustomButtonhere
             title={"GET CODE"}
             widthset={80}
@@ -161,8 +160,8 @@ const formValidation = async () => {
             loading={loading}
             disabled={disable}
             onPress={() => {
-              formValidation()
-             }}
+              formValidation();
+            }}
           />
         </View>
         <Snackbar
@@ -177,15 +176,17 @@ const formValidation = async () => {
         >
           {snackbarValue.value}
         </Snackbar>
-        <CustomModal 
-                modalVisible={modalVisible}
-                CloseModal={() => setModalVisible(false)}
-                Icon={appImages.failed}
-              text={'Error'}
-              subtext={'Something went wrong'}
-          buttontext={'GO BACK'}
- onPress={()=> {setModalVisible(false)}}
-                /> 
+        <CustomModal
+          modalVisible={modalVisible}
+          CloseModal={() => setModalVisible(false)}
+          Icon={appImages.failed}
+          text={"Error"}
+          subtext={"Something went wrong"}
+          buttontext={"GO BACK"}
+          onPress={() => {
+            setModalVisible(false);
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
