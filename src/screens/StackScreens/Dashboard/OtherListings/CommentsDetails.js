@@ -8,6 +8,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 
 /////////////////////navigation///////////////
@@ -50,6 +51,8 @@ const CommentsDetails = ({ navigation, route }) => {
   const { listing_id } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
+  const [refreshing, setRefreshing] = useState(false);
+
   ///////////////////loader loading state///////////////
   const [loading, setloading] = useState(true);
 
@@ -73,18 +76,25 @@ const CommentsDetails = ({ navigation, route }) => {
   const doSomethingCallback = useCallback(() => {
     GetListingsDetails(listing_id).then((response) => {
       setListing_Images(response.data.images);
-      GetComments(listing_id).then((response) => {
-        if (response.data.msg === "No Result") {
-          setComments([]);
-          setloading(false);
-        } else {
-          setComments(response.data);
-          setloading(false);
-        }
-      });
+      GetComments(listing_id)
+        .then((response) => {
+          if (response.data.msg === "No Result") {
+            setComments([]);
+            setloading(false);
+          } else {
+            setComments(response.data);
+            setloading(false);
+          }
+        })
+        .finally(() => setRefreshing(false));
     });
   }, [Comments]);
   const [ratting, setRatting] = useState(4.5);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    doSomethingCallback();
+  };
   ///////////////ratings function//////////////
   const ratingCompleted = (rating) => {
     console.log("Rating is: " + rating);
@@ -138,6 +148,13 @@ const CommentsDetails = ({ navigation, route }) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[Colors.Appthemecolor]}
+            onRefresh={() => handleRefresh()}
+          />
+        }
       >
         <StatusBar backgroundColor={"black"} barStyle="light-content" />
         <Loader isLoading={loading} />

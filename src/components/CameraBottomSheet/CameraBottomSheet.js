@@ -49,7 +49,7 @@ const CamerBottomSheet = (props) => {
       compressImageMaxWidth: 300,
       compressImageMaxHeight: 300,
       cropping: true,
-      compressImageQuality: 0.7,
+      compressImageQuality: 0.1,
     }).then((image) => {
       props.refRBSheet.current.close();
       if (props?.type == "verify") {
@@ -69,7 +69,7 @@ const CamerBottomSheet = (props) => {
       width: 300,
       height: 300,
       cropping: true,
-      compressImageQuality: 0.7,
+      compressImageQuality: 0.5,
     }).then((image) => {
       props.refRBSheet.current.close();
       if (props?.type == "verify") {
@@ -121,14 +121,20 @@ const CamerBottomSheet = (props) => {
   const [selectedimage, setselectedimage] = useState(false);
   /////////////////image api calling///////////////
   const Uploadpic = (file) => {
+    console.log("file  :;  ", file);
+    console.log("file path  :  ", file.path);
     const formData = new FormData();
-    formData.append(`image`, {
+    let imageobj = {
       uri: file.path,
-      type: "image/jpeg",
-      name: "image.jpg",
-    });
+      type: file.mime,
+      name: file.path.split("/").pop(),
+    };
+    formData.append(`image`, imageobj);
+    console.log("image obj  : ", imageobj);
+    let url = BASE_URL + "uploadImage.php";
+    console.log("url  :  ", url);
 
-    fetch(BASE_URL + "uploadImage.php", {
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -140,6 +146,9 @@ const CamerBottomSheet = (props) => {
         console.log("responseData  ::    ", responseData);
         dispatch(setUserImage(responseData.image));
         props.onImageUpload(responseData.image);
+      })
+      .catch((err) => {
+        console.log("error raised while uploading image :  ", err);
       });
   };
   return (

@@ -197,6 +197,9 @@ const SignUp = ({ navigation }) => {
     } else if (password != confirmPassword) {
       setsnackbarValue({ value: "Please Enter Same Password", color: "red" });
       setVisible("true");
+    } else if (signup_role == "" || signup_role?.length == 0) {
+      setsnackbarValue({ value: "Please Select Role", color: "red" });
+      setVisible("true");
     } else {
       setloading(1);
       setdisable(1);
@@ -285,30 +288,37 @@ const SignUp = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ marginTop: hp(0) }}>
-          <CustomButtonhere
-            title={"SIGN UP"}
-            widthset={80}
-            topDistance={22}
-            loading={loading}
-            disabled={disable}
-            onPress={() => {
-              formValidation();
-            }}
-          />
-        </View>
+        <View
+          style={{
+            flex: 1,
+            marginTop: hp(10),
+          }}
+        >
+          <View style={{ marginTop: hp(0) }}>
+            <CustomButtonhere
+              title={"SIGN UP"}
+              widthset={80}
+              topDistance={0}
+              loading={loading}
+              disabled={disable}
+              onPress={() => {
+                formValidation();
+              }}
+            />
+          </View>
 
-        <View style={[Authlaststyles.lasttextview, { marginTop: hp(25) }]}>
-          <Text style={Authlaststyles.lasttextgrey}>
-            Already have an account?
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => navigation.navigate("Login")}
-            style={{ width: wp(16) }}
-          >
-            <Text style={Authlaststyles.lasttextblue}>{" Sign In"}</Text>
-          </TouchableOpacity>
+          <View style={[Authlaststyles.lasttextview, { marginTop: hp(1) }]}>
+            <Text style={Authlaststyles.lasttextgrey}>
+              Already have an account?
+            </Text>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => navigation.navigate("Login")}
+              style={{ width: wp(16) }}
+            >
+              <Text style={Authlaststyles.lasttextblue}>{" Sign In"}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <Snackbar
           duration={400}

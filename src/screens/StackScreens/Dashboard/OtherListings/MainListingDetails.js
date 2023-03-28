@@ -6,6 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 //////////////map////////////////
 import MapView, {
@@ -69,6 +70,8 @@ import BlockUserView from "../../../../components/BlockUserView";
 import { get_user_status } from "../../../../api/GetApis";
 
 import ProfileCard from "../../../../components/CustomCards/Profile";
+import CustomMenu from "../../../../components/CustomMenu/CustomMenu";
+import CustomMenu1 from "../../../../components/CustomMenu/CustomMenu1";
 
 const MainListingsDetails = ({ navigation, route }) => {
   ///////////////PREVIOUS DATA////////////
@@ -84,6 +87,7 @@ const MainListingsDetails = ({ navigation, route }) => {
   const {} = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
+  const [refreshing, setRefreshing] = useState(false);
   ////////////Listing Checks//////////////
   const [listing_like_user_id, setListing_Like_User_id] = useState("");
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
@@ -219,10 +223,13 @@ const MainListingsDetails = ({ navigation, route }) => {
         likes_count();
         views_count();
         //listing_like(predata.listing_id)
-        setloading(false);
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setRefreshing(false);
+        setloading(false);
       });
   };
   useEffect(() => {
@@ -257,12 +264,25 @@ const MainListingsDetails = ({ navigation, route }) => {
     }
     navigation.navigate("ConfirmAddress");
   };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    GetListData();
+    listing_views();
+  };
   return (
     <SafeAreaView style={styles.container}>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[Colors.Appthemecolor]}
+            onRefresh={() => handleRefresh()}
+          />
+        }
       >
         <StatusBar backgroundColor={"black"} barStyle="light-content" />
         <Loader isLoading={loading} />
@@ -271,6 +291,7 @@ const MainListingsDetails = ({ navigation, route }) => {
             imagearray={listing_images}
             listing_user_id={listing_user_id}
             type={"listing_detail"}
+            hideMenu={true}
             menuoptions={
               exchange_status === "true"
                 ? exchange_options
@@ -480,7 +501,7 @@ const MainListingsDetails = ({ navigation, route }) => {
                 following={listing_user_detail?.following}
                 ratting={listing_user_detail?.review}
                 ratting_text={"Rate"}
-                following_text={"Follwers"}
+                following_text={"Followers"}
                 followers_text={"Followings"}
                 // followStatus={
                 //   follow_user_id === login_user_id ? "Unfollow" : "follow"
@@ -488,6 +509,7 @@ const MainListingsDetails = ({ navigation, route }) => {
               />
             </View>
           )}
+
           <View style={styles.btnView}>
             {/* {fixed_price_status === "false" ? null : ( */}
             <TouchableOpacity
@@ -498,6 +520,17 @@ const MainListingsDetails = ({ navigation, route }) => {
             </TouchableOpacity>
             {/* )} */}
           </View>
+
+          <CustomMenu1
+            menudata={
+              exchange_status === "true"
+                ? exchange_options
+                : fixed_price_status === "false"
+                ? offer_options
+                : generic_options
+            }
+            setShowBlockModal={true}
+          />
         </View>
       </ScrollView>
       <DescriptionBottomSheet
