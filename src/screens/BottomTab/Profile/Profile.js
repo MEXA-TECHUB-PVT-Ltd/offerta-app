@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 
 ///////////////////icons///////////
@@ -58,6 +59,8 @@ const Profile = ({ navigation }) => {
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [userRole, setUserRole] = useState("");
 
+  const [refreshing, setRefreshing] = useState(false);
+
   const GetAcountDetail = async () => {
     get_Login_UserData().then((response) => {
       setVerificationStatus(response?.data?.subscription);
@@ -105,11 +108,13 @@ const Profile = ({ navigation }) => {
   }, [isfocussed]);
   return (
     <View style={styles.container}>
+      {/* <ScrollView
+        contentContainerStyle={{ height: hp(100), backgroundColor: "red" }}
+      > */}
       <StatusBar
         backgroundColor={Colors.Appthemecolor}
         barStyle="light-content"
       />
-
       <View style={styles.header}>
         <View style={{ alignSelf: "flex-end", marginTop: wp(5) }}>
           <Icon
@@ -169,13 +174,14 @@ const Profile = ({ navigation }) => {
           following={following}
           ratting={ratting}
           ratting_text={"Rate"}
-          following_text={"Follwers"}
+          following_text={"Followers"}
           followers_text={"Followings"}
           // followStatus={
           //   follow_user_id === login_user_id ? "Unfollow" : "follow"
           // }
         />
       </View>
+      {/* </ScrollView> */}
     </View>
   );
 };

@@ -40,6 +40,7 @@ import {
 
 /////////////////app images//////////
 import { appImages } from "../../../../constant/images";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //////////////////appImages.//////////////////
 
@@ -62,11 +63,21 @@ const ExchangeOffer = ({ navigation, route }) => {
   ////////////LISTING LIKES//////////
   const Listings_Exchange_Offer = (props) => {
     post_Listings_Exchange_Offer(props).then((response) => {
-      console.log("exchnage response hereL:",response.data)
-      navigation.navigate("ChatScreen",{navtype:"exchange_offer", userid: exchange_other_listing.user_id,
-      item1:exchange_my_listing.title,item2:exchange_other_listing.title,itemprice1:exchange_my_listing.price,
-      itemprice2:exchange_other_listing.price
-    })
+      console.log(
+        "exchnage response hereL::::::::::::::::::::::::::::::",
+        response.data
+      );
+      console.log("response :  ", response?.data);
+      navigation.navigate("ChatScreen", {
+        navtype: "exchange_offer",
+        userid: exchange_other_listing.user_id,
+        item1: exchange_my_listing.title,
+        item2: exchange_other_listing.title,
+        itemprice1: exchange_my_listing.price,
+        itemprice2: exchange_other_listing.price,
+        offerId: response?.data?.data?.id,
+        offer_detail: response?.data?.data,
+      });
       //   setListing_Like_User_id(response.data.data.user_id);
     });
   };
@@ -76,7 +87,6 @@ const ExchangeOffer = ({ navigation, route }) => {
     my_item_id: exchange_my_listing.id,
     other_item_id: exchange_other_listing.id,
   });
-  useEffect(() => {}, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -84,43 +94,43 @@ const ExchangeOffer = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-      <CustomHeader
-        headerlabel={"Exchange Offer"}
-        iconPress={() => {
-          navigation.goBack();
-        }}
-        type={"no_icon"}
-        icon={"arrow-back"}
-      />
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <DashboardCard
-          image={IMAGE_URL + exchange_my_listing.images[0]} //IMAGE_URL + item.images[0]
-          maintext={exchange_my_listing.title}
-          subtext={exchange_my_listing.location}
-          type={"Exchange_Request"}
-          price={exchange_my_listing.price}
+        <CustomHeader
+          headerlabel={"Exchange Offer"}
+          iconPress={() => {
+            navigation.goBack();
+          }}
+          type={"no_icon"}
+          icon={"arrow-back"}
         />
-        {/* <MaterialCommunityIcons
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <DashboardCard
+            image={IMAGE_URL + exchange_my_listing.images[0]} //IMAGE_URL + item.images[0]
+            maintext={exchange_my_listing.title}
+            subtext={exchange_my_listing.location}
+            type={"Exchange_Request"}
+            price={exchange_my_listing.price}
+          />
+          {/* <MaterialCommunityIcons
                         name={"swap-vertical-bold"}
                         color={Colors.activetextinput}
                         size={30}
                       /> */}
-        <Image
-          source={appImages.exchangeicon}
-          style={{ width: wp(5.5), height: hp(6) }}
-          resizeMode="contain"
-        />
-        <DashboardCard
-          image={IMAGE_URL + exchange_other_listing.images[0]} //IMAGE_URL + item.images[0]
-          maintext={exchange_other_listing.title}
-          subtext={exchange_other_listing.location}
-          type={"Exchange_Request"}
-          price={exchange_other_listing.price}
-          //onpress={() => onselect(item)}
-        />
-      </View>
-  
-      <View style={styles.btnView}>
+          <Image
+            source={appImages.exchangeicon}
+            style={{ width: wp(5.5), height: hp(6) }}
+            resizeMode="contain"
+          />
+          <DashboardCard
+            image={IMAGE_URL + exchange_other_listing.images[0]} //IMAGE_URL + item.images[0]
+            maintext={exchange_other_listing.title}
+            subtext={exchange_other_listing.location}
+            type={"Exchange_Request"}
+            price={exchange_other_listing.price}
+            //onpress={() => onselect(item)}
+          />
+        </View>
+
+        <View style={styles.btnView}>
           <TouchableOpacity
             style={styles.btn}
             onPress={() => Listings_Exchange_Offer(list_data)}

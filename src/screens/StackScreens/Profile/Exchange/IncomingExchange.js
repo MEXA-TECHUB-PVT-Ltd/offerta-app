@@ -11,6 +11,7 @@ import styles from "./styles";
 
 /////////////////////api function//////////////
 import { get_Incoming_Exchnages } from "../../../../api/GetExchanges";
+import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
 
 const IncomingExchange = ({ navigation }) => {
   ////////////////LIST DATA/////////

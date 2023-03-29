@@ -106,6 +106,12 @@ const ChatScreen = ({ route, navigation }) => {
 
   const [navType, setNavType] = useState("");
 
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+  });
+  // const formattedLikes = formatter.format(props.pricetext);
+
   ////////////previos data//////////
   const [predata] = useState(route.params);
 
@@ -258,7 +264,6 @@ const ChatScreen = ({ route, navigation }) => {
   const onSend = useCallback((messages = []) => {
     setCount(count + 1);
     handleSend(messages);
-
     Chat_Room(route.params.userid);
   }, []);
   const handleSend = async (messageArray) => {
@@ -352,12 +357,14 @@ const ChatScreen = ({ route, navigation }) => {
           ...msg,
           _id: uuid.v4(),
           text: "exchange_offer",
-          textimg1: exchange_other_listing.images[0],
-          textimg2: exchange_my_listing.images[0],
+          textimg1: exchange_my_listing.images[0],
+          textimg2: exchange_other_listing.images[0],
           textprice1: route.params.itemprice1,
           textprice2: route.params.itemprice2,
           itemname1: route.params.item1,
           itemname2: route.params.item2,
+          offerId: route.params.offerId,
+          offer_detail: route.params.offer_detail,
           type: "exchange_offer",
           senderId: user,
           receiverId: route.params.userid,
@@ -742,10 +749,18 @@ const ChatScreen = ({ route, navigation }) => {
             />
             <View style={{}}>
               <Text style={styles.p_text}>
-                {"Item Price " + props.currentMessage.textprice}
+                {/* {"Item Price " + props.currentMessage.textprice} */}
+                Item Price : $
+                {props.currentMessage.textprice
+                  ? formatter.format(props.currentMessage.textprice)
+                  : props.currentMessage.textprice}
               </Text>
               <Text style={styles.p_text}>
-                {"Offer Price " + props.currentMessage.offerprice}
+                {/* {"Offer Price " + props.currentMessage.offerprice} */}
+                Offer Price : $
+                {props.currentMessage.offerprice
+                  ? formatter.format(props.currentMessage.offerprice)
+                  : props.currentMessage.offerprice}
               </Text>
             </View>
           </TouchableOpacity>
@@ -767,15 +782,41 @@ const ChatScreen = ({ route, navigation }) => {
             />
             <View style={{}}>
               <Text style={styles.p_text}>
-                {"Item Price " + props.currentMessage.textprice}
+                {/* {"Item Price " + props.currentMessage.textprice} */}
+                Item Price : $
+                {props.currentMessage.textprice
+                  ? formatter.format(props.currentMessage.textprice)
+                  : props.currentMessage.textprice}
               </Text>
               <Text style={styles.p_text}>
-                {"Offer Price " + props.currentMessage.offerprice}
+                {/* {"Offer Price " + props.currentMessage.offerprice} */}
+                Offer Price : $
+                {props.currentMessage.offerprice
+                  ? formatter.format(props.currentMessage.offerprice)
+                  : props.currentMessage.offerprice}
               </Text>
             </View>
           </TouchableOpacity>
         ) : props.currentMessage.type === "exchange_offer" ? (
-          <View>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              navigation.navigate("ExchangeNoti", {
+                item_img1: props.currentMessage.textimg1,
+                item_img2: props.currentMessage.textimg2,
+                itemname1: props.currentMessage.itemname1,
+                itemname2: props.currentMessage.itemname2,
+                itemprice1: props.currentMessage.textprice1,
+                itemprice2: props.currentMessage.textprice2,
+                navtype: "chat",
+                userid: props.currentMessage.receiverId,
+                receiverId: props.currentMessage.receiverId,
+                senderId: props.currentMessage.senderId,
+                offerId: props.currentMessage.offerId,
+                offer_detail: props.currentMessage.offer_detail,
+              });
+            }}
+          >
             <View style={styles.e_mainview}>
               <View style={styles.e_itemview}>
                 <Image
@@ -783,39 +824,14 @@ const ChatScreen = ({ route, navigation }) => {
                   style={styles.e_image}
                   resizeMode="contain"
                 />
-                <Text
-                  style={styles.e_text}
-                  onPress={() =>
-                    navigation.navigate("ExchangeNoti", {
-                      item_img1: props.currentMessage.textimg1,
-                      item_img2: props.currentMessage.textimg2,
-                      itemprice1: props.currentMessage.textprice1,
-                      itemname1: props.currentMessage.itemname1,
-                      itemname2: props.currentMessage.itemname2,
-                      itemprice2: props.currentMessage.textprice2,
-                      navtype: "chat",
-                      userid: props.currentMessage.receiverId,
-                    })
-                  }
-                >
+                <Text style={styles.e_text}>
                   {props.currentMessage.itemname1}
                 </Text>
-                <Text
-                  style={styles.e_text}
-                  onPress={() =>
-                    navigation.navigate("ExchangeNoti", {
-                      item_img1: props.currentMessage.textimg1,
-                      item_img2: props.currentMessage.textimg2,
-                      itemname1: props.currentMessage.itemname1,
-                      itemname2: props.currentMessage.itemname2,
-                      itemprice1: props.currentMessage.textprice1,
-                      itemprice2: props.currentMessage.textprice2,
-                      navtype: "chat",
-                      userid: props.currentMessage.receiverId,
-                    })
-                  }
-                >
-                  {props.currentMessage.textprice2}
+                <Text style={styles.e_text}>
+                  {/* {props.currentMessage.textprice1} */}$
+                  {props.currentMessage.textprice1
+                    ? formatter.format(props.currentMessage.textprice1)
+                    : props.currentMessage.textprice1}
                 </Text>
               </View>
 
@@ -863,11 +879,14 @@ const ChatScreen = ({ route, navigation }) => {
                     })
                   }
                 >
-                  {props.currentMessage.textprice2}
+                  {/* {props.currentMessage.textprice2} */}$
+                  {props.currentMessage.textprice2
+                    ? formatter.format(props.currentMessage.textprice2)
+                    : props.currentMessage.textprice2}
                 </Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ) : props.currentMessage.type === "image" ? (
           <Image
             source={{ uri: IMAGE_URL + props?.currentMessage?.url }}
@@ -945,7 +964,7 @@ const ChatScreen = ({ route, navigation }) => {
                     props.currentMessage.text != ""
                       ? Colors.Appthemecolor
                       : "orange",
-                  width: props.currentMessage.text != "" ? wp(80) : wp(70),
+                  // width: props.currentMessage.text != "" ? wp(80) : wp(70),
                   marginBottom: hp(1.2),
                   paddingTop: hp(2),
                   paddingHorizontal: wp(3),
