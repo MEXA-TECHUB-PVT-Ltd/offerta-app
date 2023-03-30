@@ -27,6 +27,18 @@ export const get_user_status = async () => {
       });
   });
 };
+export const get_specific_user_detail = async (user_id) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(BASE_URL + "getUserById.php?user_id=" + user_id)
+      .then((response) => {
+        resolve(response?.data);
+      })
+      .finally(() => {
+        resolve(false);
+      });
+  });
+};
 
 //////////////Get Specific User //////////
 export const get_Other_UserData = async (props) => {

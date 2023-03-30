@@ -302,6 +302,7 @@ const Home = ({ navigation }) => {
                   image={
                     item.images?.length == 0 ? null : IMAGE_URL + item.images[0]
                   }
+                  sold={item?.sold}
                   // image={item}
                   maintext={item.title}
                   subtext={item.location}

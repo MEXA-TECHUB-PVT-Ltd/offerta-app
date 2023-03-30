@@ -29,6 +29,7 @@ import Settings from "./src/screens/StackScreens/Settings/Settings";
 //////////////////Home screens/////////////
 import MainListingsDetails from "./src/screens/StackScreens/Dashboard/OtherListings/MainListingDetails";
 //////////////Buy//////////////
+import PaymentOptions from "./src/screens/StackScreens/Dashboard/OtherListings/Buy/PaymentOptions";
 import ConfirmAddress from "./src/screens/StackScreens/Dashboard/OtherListings/Buy/ConfirmAddress";
 import Checkout from "./src/screens/StackScreens/Dashboard/OtherListings/Buy/Checkout";
 import CardDetails from "./src/screens/StackScreens/Dashboard/OtherListings/Buy/CardDetails";
@@ -308,6 +309,13 @@ function App() {
           <Stack.Screen
             name="MainListingsDetails"
             component={MainListingsDetails}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PaymentOptions"
+            component={PaymentOptions}
             options={{
               headerShown: false,
             }}

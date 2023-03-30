@@ -73,6 +73,7 @@ const Listings = ({ navigation, route }) => {
       image={item.images === [] ? null : IMAGE_URL + item.images[0]}
       maintext={item.title}
       subtext={item.location}
+      sold={item?.sold}
       price={item.price}
       onpress={() =>
         navigation.navigate("ListingsDetails", { listing_id: item.id })

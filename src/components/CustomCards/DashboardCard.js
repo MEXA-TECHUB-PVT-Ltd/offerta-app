@@ -16,8 +16,10 @@ import {
 
 //////////////////app icons////////////////
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { fontFamily } from "../../constant/fonts";
 
 const DashboardCard = (props) => {
+  console.log("props  :  ", props);
   const [checked, setChecked] = React.useState(true);
 
   /////////price formatter
@@ -50,6 +52,28 @@ const DashboardCard = (props) => {
             ]}
             resizeMode="cover"
           ></Image>
+          {props?.sold == "sold" && (
+            <View
+              style={{
+                backgroundColor: "red",
+                position: "absolute",
+                right: 0,
+                borderBottomLeftRadius: 8,
+                paddingHorizontal: 8,
+                paddingTop: 3,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fontFamily.Poppins_Regular,
+                  color: "#fff",
+                }}
+              >
+                Sold
+              </Text>
+            </View>
+          )}
         </View>
         <View
           style={{

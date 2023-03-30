@@ -73,6 +73,7 @@ const AllListingsByCategory = ({ navigation, route }) => {
       maintext={item.title}
       subtext={item.location}
       price={item.price}
+      sold={item?.sold}
       onpress={() => {
         // navigation.navigate("ListingsDetails", { listing_id: item.id });
         navigation.navigate("MainListingsDetails", {

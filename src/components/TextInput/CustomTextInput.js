@@ -9,6 +9,8 @@ import {
 
 /////////app icons//////////
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 ////////////app colors///////////////
 import Colors from "../../utills/Colors";
@@ -39,7 +41,7 @@ const CustomTextInput = ({
   onclick,
   multiline,
   keyboard_type,
-  Lines
+  Lines,
 }) => {
   const [isfocused, setisFocused] = useState(false);
   return (
@@ -47,10 +49,8 @@ const CustomTextInput = ({
       <View
         style={[
           styles.TextFieldView,
-          {  width:
-            length === "small"
-              ? wp(39)
-              : wp(84),
+          {
+            width: length === "small" ? wp(39) : wp(84),
             borderColor:
               isfocused == true
                 ? Colors.activetextinput
@@ -93,6 +93,17 @@ const CustomTextInput = ({
           numberOfLines={Lines}
           multiline={multiline}
         ></TextInput>
+
+        {type == "phone" && (
+          <TouchableOpacity style={{ position: "absolute", right: 0 }}>
+            <MaterialCommunityIcons
+              name="phone"
+              color={"#818181"}
+              size={19}
+              style={{ marginRight: wp(4) }}
+            />
+          </TouchableOpacity>
+        )}
         {type === "iconinput" && mode === "password" ? (
           <TouchableOpacity onPress={onclick}>
             {secureTextEntry ? (
@@ -111,8 +122,15 @@ const CustomTextInput = ({
               />
             )}
           </TouchableOpacity>
-        ) : type === "iconinput" || type ==="iconinput_short" ? (
-          <Image source={icon} style={[styles.icon,{marginRight:type ==="iconinput_short" ?wp(8):wp(6)}]} resizeMode="contain" />
+        ) : type === "iconinput" || type === "iconinput_short" ? (
+          <Image
+            source={icon}
+            style={[
+              styles.icon,
+              { marginRight: type === "iconinput_short" ? wp(8) : wp(6) },
+            ]}
+            resizeMode="contain"
+          />
         ) : null}
       </View>
     </View>
@@ -126,7 +144,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Regular,
     color: "#6B6B6B",
     width: wp(20),
-   //backgroundColor:'red'
+    //backgroundColor:'red'
   },
   TextFieldView: {
     flexDirection: "row",

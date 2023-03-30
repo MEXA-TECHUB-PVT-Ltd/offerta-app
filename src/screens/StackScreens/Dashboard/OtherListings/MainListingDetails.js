@@ -262,7 +262,8 @@ const MainListingsDetails = ({ navigation, route }) => {
       setShowBlockModal(true);
       return;
     }
-    navigation.navigate("ConfirmAddress");
+    // navigation.navigate("ConfirmAddress");
+    navigation.navigate("PaymentOptions");
   };
 
   const handleRefresh = () => {
