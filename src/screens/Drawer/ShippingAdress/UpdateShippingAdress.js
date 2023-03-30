@@ -103,8 +103,8 @@ const UpdateShippingAddress = ({ navigation, route }) => {
 
     let data = {
       shipping_id: shipping_state.shipping_id,
-      nick_name: shipping_state.nick_name,
-      user_name: shipping_state.user_name,
+      // nick_name: shipping_state.nick_name,
+      // user_name: shipping_state.user_name,
       country: country_name,
       city: city_name,
       state: "nill",
@@ -184,7 +184,7 @@ const UpdateShippingAddress = ({ navigation, route }) => {
         />
 
         <View>
-          <CustomTextInput
+          {/* <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={shipping_state.nick_name}
@@ -196,7 +196,7 @@ const UpdateShippingAddress = ({ navigation, route }) => {
             term={shipping_state.user_name}
             placeholder="Enter your name"
             onTermChange={(value) => handleChange(value, "user_name")}
-          />
+          /> */}
           <CustomTextInput
             type={"withouticoninput"}
             term={shipping_state.address_1}

@@ -38,7 +38,8 @@ export const DrawerContent = (props) => {
 
   const logout = async () => {
     await AsyncStorage.removeItem("Userid");
-    props.navigation.navigate("Login");
+    // props.navigation.navigate("Login");
+    props.navigation.replace("AuthNav", { screen: "Login" });
   };
   /////////////main menu status states/////////////
   const [username, setUsername] = useState("");

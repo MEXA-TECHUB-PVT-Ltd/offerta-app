@@ -81,9 +81,9 @@ const ForgetPassword = ({ navigation }) => {
 
         // setsnackbarValue({ value: "Incorrect Email", color: "red" });
         // setVisible("true");
+        setloading(0);
+        setdisable(0);
         if (response.data.status == true) {
-          setloading(0);
-          setdisable(0);
           navigation.navigate("Verification", response.data);
         } else if (response.data.status == false) {
           setsnackbarValue({ value: response?.data?.message, color: "red" });

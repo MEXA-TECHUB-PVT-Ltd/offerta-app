@@ -27,6 +27,11 @@ export const counter_offer_Accept_OR_Reject = async (oferid, status) => {
   });
 };
 
+////////////////////// Exchange_Offer Accept/Reject ///////////////////////////////
+export const update_exchange_offer = async (data) => {
+  return axios.put(BASE_URL + "updateExchange.php", data);
+};
+
 ////////////LISTING UNLIKES//////////
 export const create_order_Listings = async (
   listing_user,

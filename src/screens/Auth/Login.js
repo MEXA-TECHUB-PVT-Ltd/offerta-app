@@ -152,12 +152,14 @@ const Login = ({ navigation }) => {
     // let fcm_token = await getUserFCMToken();
     // console.log("fcm token", fcm_token);
 
+    let fcm_token = await getUserFCMToken();
     axios({
       method: "post",
       url: BASE_URL + "loginUser.php",
       data: {
         email: email,
         password: password,
+        fcm: fcm_token,
       },
     })
       .then(async function (response) {
@@ -166,8 +168,8 @@ const Login = ({ navigation }) => {
         setloading(0);
         setdisable(0);
         if (response.data.status == true) {
-          navigation.navigate("Drawerroute");
           await AsyncStorage.setItem("Userid", response.data.data.id);
+          navigation.replace("Drawerroute");
 
           // console.log(" response.data.data.id  :  ", response.data.data.id);
 

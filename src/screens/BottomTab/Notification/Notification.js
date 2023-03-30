@@ -39,6 +39,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 
+import moment from "moment";
+
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
   ///////////////////data state///////////
@@ -134,6 +136,33 @@ const Notification = ({ navigation }) => {
       };
       console.log("obj   ::  ", obj);
       navigation.navigate("CounterOffer", obj);
+    } else if (item?.type == "exchange") {
+      //item1  : requester_list
+      //item2 : list
+
+      let obj = {
+        item_img1: item?.requester_list?.images[0],
+        item_img2: item?.list?.images[0],
+        itemname1: item?.requester_list?.title,
+        itemname2: item?.list?.title,
+        itemprice1: item?.requester_list?.price,
+        itemprice2: item?.list?.price,
+        navtype: "notification",
+
+        userid: item?.list?.user_id,
+        receiverId: item?.list?.user_id,
+        senderId: item?.requester_list?.user_id,
+        offerId: item?.offer?.id,
+        offer_detail: {
+          id: item?.offer?.id,
+          user_id: item?.offer?.user_id,
+          second_user: item?.list?.user_id,
+          item: item?.offer?.item,
+          item2: item?.offer?.item2,
+        },
+      };
+      console.log("obj : ", obj);
+      navigation.navigate("ExchangeNoti", obj);
     } else {
       console.log("other type that is not handled yet  :  ", item?.type);
     }
@@ -175,9 +204,9 @@ const Notification = ({ navigation }) => {
         </View>
 
         <View style={{ marginLeft: 0 }}>
-          {/* <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
-            00:00 pm
-          </Text> */}
+          <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
+            {item?.item?.created_at && moment(item?.item?.created_at).fromNow()}
+          </Text>
         </View>
       </TouchableOpacity>
     );

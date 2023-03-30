@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Divider } from "react-native-paper";
 
 import { useNavigation } from "@react-navigation/native";
@@ -32,6 +32,8 @@ import ImagePicker from "react-native-image-crop-picker";
 //////////////////app Images////////////////
 import { appImages } from "../../constant/images";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Image } from "react-native-compressor";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 const CamerBottomSheet = (props) => {
   const navigation = useNavigation();
@@ -44,43 +46,133 @@ const CamerBottomSheet = (props) => {
   const [image, setImage] = useState("");
 
   //////////////////////cameraimage//////////////////
-  const takePhotoFromCamera = () => {
-    ImagePicker.openCamera({
-      compressImageMaxWidth: 300,
-      compressImageMaxHeight: 300,
-      cropping: true,
-      compressImageQuality: 0.1,
-    }).then((image) => {
-      props.refRBSheet.current.close();
-      if (props?.type == "verify") {
-        props?.onCameraImageSelect(image);
+  // const takePhotoFromCamera = () => {
+  //   ImagePicker.openCamera({
+  //     // compressImageMaxWidth: 300,
+  //     // compressImageMaxHeight: 300,
+  //     cropping: true,
+  //     width: 300,
+  //     height: 300,
+  //     compressImageQuality: 0.2,
+  //   }).then(async (image) => {
+  //     // const result = await Image.compress(image.path, {
+  //     //   // compressionMethod: "manual",
+  //     //   maxWidth: 200,
+  //     //   quality: 0.2,
+  //     // });
+  //     // let compressedImageObj = {
+  //     //   path: result,
+  //     //   mime: "image/jpeg",
+  //     // };
+
+  //     // console.log("compressed image :::::     :::  :::  ::  ", result);
+
+  //     props.refRBSheet.current.close();
+  //     if (props?.type == "verify") {
+  //       props?.onCameraImageSelect(image);
+  //     } else {
+  //       props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+  //       props.type === "Chat_image"
+  //         ? Uploadpic(image)
+  //         : dispatch(setUserImage(image.path));
+  //       setImage(image.path);
+  //     }
+  //   });
+  // };
+
+  const takePhotoFromCamera = async () => {
+    var options = {
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.5,
+    };
+
+    await launchCamera(options).then(async (res) => {
+      if (res.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (res.error) {
+        console.log("ImagePicker Error: ", res.error);
+      } else if (res.customButton) {
+        console.log("User tapped custom button: ", res.customButton);
       } else {
-        props?.type1 === "editProfile" && handleUpdateUserProfile(image);
-        props.type === "Chat_image"
-          ? Uploadpic(image)
-          : dispatch(setUserImage(image.path));
-        setImage(image.path);
+        let image = {
+          path: res.assets[0].uri,
+          mime: res.assets[0].type,
+          name: res.assets[0].fileName,
+        };
+        props.refRBSheet.current.close();
+        if (props?.type == "verify") {
+          props?.onCameraImageSelect(image);
+        } else {
+          props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+          props.type === "Chat_image"
+            ? Uploadpic(image)
+            : dispatch(setUserImage(image.path));
+          setImage(image.path);
+        }
       }
     });
   };
-  ////////////////////library image//////////////////
-  const choosePhotoFromLibrary = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-      compressImageQuality: 0.5,
-    }).then((image) => {
-      props.refRBSheet.current.close();
-      if (props?.type == "verify") {
-        props?.onGalleryImageSelect(image);
-      } else {
-        props?.type1 === "editProfile" && handleUpdateUserProfile(image);
-        props.type === "Chat_image"
-          ? Uploadpic(image)
-          : dispatch(setUserImage(image.path));
 
-        setImage(image.path);
+  ////////////////////library image//////////////////
+  // const choosePhotoFromLibrary = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 300,
+  //     cropping: true,
+  //     compressImageQuality: 0.5,
+  //   }).then((image) => {
+  //     props.refRBSheet.current.close();
+  //     if (props?.type == "verify") {
+  //       props?.onGalleryImageSelect(image);
+  //     } else {
+  //       props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+  //       props.type === "Chat_image"
+  //         ? Uploadpic(image)
+  //         : dispatch(setUserImage(image.path));
+
+  //       setImage(image.path);
+  //     }
+  //   });
+  // };
+
+  const choosePhotoFromLibrary = async () => {
+    var options = {
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.5,
+    };
+    await launchImageLibrary(options).then((res) => {
+      if (res.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (res.error) {
+        console.log("ImagePicker Error: ", res.error);
+      } else if (res.customButton) {
+        console.log("User tapped custom button: ", res.customButton);
+      } else {
+        let image = {
+          path: res.assets[0].uri,
+          mime: res.assets[0].type,
+          name: res.assets[0].fileName,
+        };
+        props.refRBSheet.current.close();
+        if (props?.type == "verify") {
+          props?.onGalleryImageSelect(image);
+        } else {
+          props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+          props.type === "Chat_image"
+            ? Uploadpic(image)
+            : dispatch(setUserImage(image.path));
+          setImage(image.path);
+        }
       }
     });
   };

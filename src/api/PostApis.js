@@ -39,7 +39,7 @@ export const post_Comments_Listings = async (listing_id, description) => {
   });
 };
 
-/////////////////////Exchange Offer////////////
+/////////////////////Exchange Offer////////////                   
 export const post_Listings_Exchange_Offer = async (props) => {
   return axios.post(BASE_URL + "createExchange.php", {
     user_id: props.myuser_id,

@@ -42,7 +42,9 @@ const Settings = ({ navigation }) => {
 
   const logout = async () => {
     await AsyncStorage.removeItem("Userid");
-    navigation.navigate("Login");
+    // navigation.navigate("Login");
+    navigation.popToTop();
+    navigation.replace("AuthNav", { screen: "Login" });
   };
 
   // navigation.navigate("AccountVerification", {

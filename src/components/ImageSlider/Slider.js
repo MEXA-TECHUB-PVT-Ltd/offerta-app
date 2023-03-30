@@ -126,7 +126,6 @@ const Slider = (props) => {
   return (
     <View>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
-
       <FlatList
         style={{ marginTop: 35 }}
         ListEmptyComponent={() => {

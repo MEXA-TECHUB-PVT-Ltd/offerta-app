@@ -12,6 +12,7 @@ import {
 import CustomHeader from "../../../components/Header/CustomHeader";
 import DashboardCard from "../../../components/CustomCards/DashboardCard";
 import CustomModal from "../../../components/Modal/CustomModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
@@ -24,7 +25,10 @@ import Colors from "../../../utills/Colors";
 import styles from "./styles";
 
 //////////////app functions///////////////
-import { offer_Accept_Reject_Listings } from "../../../api/Offer";
+import {
+  offer_Accept_Reject_Listings,
+  update_exchange_offer,
+} from "../../../api/Offer";
 
 /////////////image url/////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
@@ -59,23 +63,52 @@ const ExchangeNoti = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
 
+  const [current_user, setCurrent_user] = useState("");
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [route?.params]);
+
+  const getCurrentUser = async () => {
+    console.log("route?.params :  ", route?.params);
+    let user_id = await AsyncStorage.getItem("Userid");
+
+    setCurrent_user(user_id);
+  };
+
   ////////////Offer Accept//////////
   const offerAcceptListings = (props) => {
-    offer_Accept_Reject_Listings(route.params.offerid, props).then(
-      (response) => {
-        setModalVisible(true);
-      }
-    );
+    let obj = {
+      id: route?.params?.offer_detail?.id,
+      user_id: route?.params?.offer_detail?.user_id,
+      second_user: route?.params?.offer_detail?.second_user,
+      item: route?.params?.offer_detail?.item,
+      item2: route?.params?.offer_detail?.item2,
+      status: props,
+    };
+    console.log("obj : ", obj);
+    update_exchange_offer(obj).then((response) => {
+      console.log("offer accept response :   ", response?.data);
+      setModalVisible(true);
+    });
   };
 
   ////////////Offer Reject//////////
   const offerRejectListings = (props) => {
     console.log("exchnage response hereL:", props);
-    offer_Accept_Reject_Listings(route.params.offerid, props).then(
-      (response) => {
-        setModalVisible1(true);
-      }
-    );
+    let obj = {
+      id: route?.params?.offer_detail?.id,
+      user_id: route?.params?.offer_detail?.user_id,
+      second_user: route?.params?.offer_detail?.second_user,
+      item: route?.params?.offer_detail?.item,
+      item2: route?.params?.offer_detail?.item2,
+      status: props,
+    };
+    console.log("obj : ", obj);
+    update_exchange_offer(obj).then((response) => {
+      console.log("offer accept response :   ", response?.data);
+      setModalVisible1(true);
+    });
   };
 
   return (
@@ -140,20 +173,23 @@ const ExchangeNoti = ({ navigation, route }) => {
           </View>
         )}
 
-        <View style={styles.smallbtnView}>
-          <TouchableOpacity
-            style={styles.smallbtn}
-            onPress={() => offerAcceptListings("accept")}
-          >
-            <Text style={styles.smallbtnText}>Accept</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.smallbtn}
-            onPress={() => offerRejectListings("reject")}
-          >
-            <Text style={styles.smallbtnText}>Reject</Text>
-          </TouchableOpacity>
-        </View>
+        {predata?.senderId == current_user ? null : (
+          <View style={styles.smallbtnView}>
+            <TouchableOpacity
+              style={styles.smallbtn}
+              onPress={() => offerAcceptListings("incomming")}
+            >
+              <Text style={styles.smallbtnText}>Accept</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.smallbtn}
+              onPress={() => offerRejectListings("reject")}
+            >
+              <Text style={styles.smallbtnText}>Reject</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         <TouchableOpacity
           style={{
             alignItems: "center",
@@ -163,7 +199,8 @@ const ExchangeNoti = ({ navigation, route }) => {
           onPress={() => {
             navigation.navigate("ChatScreen", {
               navtype: "chatlist",
-              userid: predata.userid,
+              // userid: predata.userid,
+              userid: predata.senderId,
             });
           }}
         >

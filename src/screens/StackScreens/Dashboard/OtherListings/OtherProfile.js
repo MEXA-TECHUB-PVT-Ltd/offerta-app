@@ -120,10 +120,11 @@ const OtherProfile = ({ navigation }) => {
       setFollowing(response.data.following);
       setFollowers(response.data.followers);
       setRatting(response.data.review);
-      follow_user();
+      // follow_user();
       //dispatch(setOtherUserFollowersCountINC(response.data.following))
     });
   };
+
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
 
@@ -148,6 +149,7 @@ const OtherProfile = ({ navigation }) => {
     var userid = await AsyncStorage.getItem("Userid");
     setlogin_user_id(userid);
   };
+
   const renderItem = ({ item }) => (
     <DashboardCard
       image={item.images === [] ? null : IMAGE_URL + item.images[0]}
@@ -157,6 +159,7 @@ const OtherProfile = ({ navigation }) => {
       onpress={() => navigation.navigate("MainListingsDetails")}
     />
   );
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -210,7 +213,7 @@ const OtherProfile = ({ navigation }) => {
           username={username}
           useremail={useremail}
           ratting_text={"Rate"}
-          following_text={"FollOwers"}
+          following_text={"Follower"}
           followers_text={"Followings"}
           ratting={ratting}
           followers={other_user_followers_count}

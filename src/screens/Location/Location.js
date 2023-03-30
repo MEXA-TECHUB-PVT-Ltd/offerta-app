@@ -185,7 +185,9 @@ const Location = ({ navigation, route }) => {
         <GooglePlacesAutocomplete
           //ref={ref}
           placeholder="Search"
-          placeholderTextColor={Colors.appgreycolor}
+          textInputProps={{
+            placeholderTextColor: Colors.appgreycolor,
+          }}
           // styles={{
           //   textInputContainer: {
           //     backgroundColor: "grey",
