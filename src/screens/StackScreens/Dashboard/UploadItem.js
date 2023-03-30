@@ -58,6 +58,7 @@ import { appImages } from "../../../constant/images";
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
+import CustomModal1 from "../../../components/Modal/CustomModal1";
 
 const UploadItem = ({ navigation, route }) => {
   /////////////redux states///////
@@ -588,7 +589,8 @@ const UploadItem = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={shippingprice}
-            placeholder="Shipping Price"
+            // placeholder="Shipping Price"
+            placeholder=" PICKUP or Delivery shipping price"
             onTermChange={(itemshippingprice) =>
               setShippingPrice(itemshippingprice)
             }
@@ -596,76 +598,104 @@ const UploadItem = ({ navigation, route }) => {
           />
           {/* )} */}
         </View>
+        <View style={{ paddingHorizontal: wp(8) }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: wp(8),
-            marginTop: hp(2),
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.text}>Exchange to Buy</Text>
-          <Checkbox
-            status={exchangebuychecked ? "checked" : "unchecked"}
-            color={Colors.activetextinput}
-            uncheckedColor={Colors.activetextinput}
-            onPress={() => {
-              setExchangebuyChecked(!exchangebuychecked);
+              marginTop: hp(2),
+              alignItems: "center",
             }}
-          />
+          >
+            <Text style={styles.text}>Exchange to Buy</Text>
+            <Checkbox
+              status={exchangebuychecked ? "checked" : "unchecked"}
+              color={Colors.activetextinput}
+              uncheckedColor={Colors.activetextinput}
+              onPress={() => {
+                setExchangebuyChecked(!exchangebuychecked);
+              }}
+            />
+          </View>
+          {exchangebuychecked && (
+            <Text style={{ color: "red", fontSize: 13 }}>
+              Check to see Exchange offers on your listing.
+            </Text>
+          )}
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: wp(8),
-            marginTop: hp(2),
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.text}>Fixed Price</Text>
-          <Checkbox
-            status={fixedpricechecked ? "checked" : "unchecked"}
-            color={Colors.activetextinput}
-            uncheckedColor={Colors.activetextinput}
-            onPress={() => {
-              setFixedpriceChecked(!fixedpricechecked);
+        <View style={{ paddingHorizontal: wp(8) }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+
+              marginTop: hp(2),
+              alignItems: "center",
             }}
-          />
+          >
+            <Text style={styles.text}>Fixed Price</Text>
+            <Checkbox
+              status={fixedpricechecked ? "checked" : "unchecked"}
+              color={Colors.activetextinput}
+              uncheckedColor={Colors.activetextinput}
+              onPress={() => {
+                setFixedpriceChecked(!fixedpricechecked);
+              }}
+            />
+          </View>
+          {fixedpricechecked && (
+            <Text style={{ color: "red", fontSize: 13 }}>
+              Check to see different offers on your listing.
+            </Text>
+          )}
         </View>
         {/* {fixedpricechecked === true || exchangebuychecked === true ? null : ( */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: wp(8),
-            marginTop: hp(2),
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.text}>Giving Away</Text>
-          <Checkbox
-            status={givingawaychecked ? "checked" : "unchecked"}
-            color={Colors.activetextinput}
-            uncheckedColor={Colors.activetextinput}
-            onPress={() => {
-              {
+        <View style={{ paddingHorizontal: wp(8) }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+
+              marginTop: hp(2),
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.text}>Giving Away</Text>
+            <Checkbox
+              status={givingawaychecked ? "checked" : "unchecked"}
+              color={Colors.activetextinput}
+              uncheckedColor={Colors.activetextinput}
+              onPress={() => {
                 setGivingawayChecked(!givingawaychecked),
                   setPrice(0),
                   setShippingPrice(0);
-              }
-            }}
-          />
+              }}
+            />
+          </View>
+          {givingawaychecked && (
+            <Text style={{ color: "red", fontSize: 13 }}>
+              Check If you want to give item for free.
+            </Text>
+          )}
         </View>
+        <Text
+          style={{
+            color: "#000",
+            fontSize: 12,
+            marginTop: 25,
+            textAlign: "center",
+          }}
+        >
+          Don't check any option if you want to receive offers.
+        </Text>
         {/* )} */}
 
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
             title={"UPLOAD"}
             widthset={80}
-            topDistance={10}
+            topDistance={6}
             loading={loading}
             disabled={disable}
             onPress={() => {
@@ -703,13 +733,16 @@ const UploadItem = ({ navigation, route }) => {
         >
           {snackbarValue.value}
         </Snackbar>
-        <CustomModal
-          modalVisible={modalVisible}
+        {/* <CustomModal
+          // modalVisible={modalVisible}
+          modalVisible={true}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
           text={"Success"}
-          subtext={"Item Upload Sucessfully"}
-          buttontext={"OK"}
+          subtext={
+            "Item Upload Sucessfully \n\n Do you want to promote Your Listing"
+          }
+          buttontext={"OK k"}
           onPress={() => {
             setModalVisible(false),
               nav_place === "exchange"
@@ -719,6 +752,34 @@ const UploadItem = ({ navigation, route }) => {
                     listing_id: addedListingId,
                   })
                 : navigation.navigate("Home");
+          }}
+        /> */}
+
+        <CustomModal1
+          // modalVisible={modalVisible}
+          modalVisible={modalVisible}
+          CloseModal={() => setModalVisible(false)}
+          Icon={appImages.sucess}
+          text={"Success"}
+          subtext={
+            "Item Upload Sucessfully \n\n Do you want to promote Your Listing?"
+          }
+          buttontext={"Yes"}
+          cancelText={"Not Now"}
+          cancelPress={() => setModalVisible(false)}
+          cancelable={true}
+          onPress={() => {
+            setModalVisible(false),
+              navigation?.navigate("ListingsDetails", {
+                listing_id: addedListingId,
+              });
+            // nav_place === "exchange"
+            //   ? navigation.navigate("ExchangeOfferList")
+            //   : addedListingId != ""
+            //   ? navigation?.navigate("ListingsDetails", {
+            //       listing_id: addedListingId,
+            //     })
+            //   : navigation.navigate("Home");
           }}
         />
       </ScrollView>

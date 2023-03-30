@@ -79,7 +79,11 @@ import {
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
-import { BASE_URL, IMAGE_URL } from "../../../utills/ApiRootUrl";
+import {
+  BASE_URL,
+  firebase_server_key,
+  IMAGE_URL,
+} from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /////////////////app images///////////////
@@ -90,7 +94,11 @@ import Colors from "../../../utills/Colors";
 import { post_User_Chat_Room } from "../../../api/ChatApis";
 
 /////////////////////get api function////////////
-import { get_Other_UserData } from "../../../api/GetApis";
+import {
+  get_Login_UserData,
+  get_Other_UserData,
+  get_specific_user_detail,
+} from "../../../api/GetApis";
 
 import { useIsFocused } from "@react-navigation/native";
 
@@ -99,7 +107,6 @@ import { get_user_status } from "../../../api/GetApis";
 
 const ChatScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
-
   ////////////////redux/////////////
   const { exchange_other_listing, exchange_my_listing, user_image } =
     useSelector((state) => state.userReducer);
@@ -110,6 +117,7 @@ const ChatScreen = ({ route, navigation }) => {
     notation: "compact",
     compactDisplay: "short",
   });
+
   // const formattedLikes = formatter.format(props.pricetext);
 
   ////////////previos data//////////
@@ -433,6 +441,7 @@ const ChatScreen = ({ route, navigation }) => {
         ...myMsg,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
+
     // .finally(() => {
     //   if (route?.params?.navtype == "counter_offer") {
     //     route.params.navtype = null;
@@ -450,6 +459,62 @@ const ChatScreen = ({ route, navigation }) => {
     AllMessages();
     setImageUrl("");
     setImageData(null);
+
+    // ________________________________hadnle push notification _ __________________________________
+
+    let user_detail = await get_specific_user_detail(myMsg.receiverId);
+    let login_user = await get_Login_UserData();
+    let receiver_fcm = user_detail ? user_detail.fcm : null;
+    if (receiver_fcm) {
+      let description = "";
+      if (myMsg?.type == "counter_offer") {
+        description = "sended an counter offer";
+      } else if (myMsg?.type == "price_offer") {
+        description = "sended a price offer";
+      } else if (myMsg?.type == "exchange_offer") {
+        description = "sended an exchange offer";
+      } else if (myMsg?.text_image == "image") {
+        description = "sended a photo";
+      } else {
+        description = myMsg?.text ? myMsg?.text : "sended a message";
+      }
+
+      let body = {
+        to: receiver_fcm,
+        notification: {
+          title: login_user?.data?.user_name,
+          body: description,
+          mutable_content: true,
+        },
+        // data: data,
+      };
+      console.log("push notification bodyd :   ", body);
+      sendPushNotification(receiver_fcm, body);
+    }
+
+    // ________________________________hadnle push notification _ __________________________________
+  };
+
+  const sendPushNotification = async (recevierFCMToken, body) => {
+    console.log("notification body : m ", body);
+    var requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `key=${firebase_server_key}`,
+      },
+      body: JSON.stringify(body),
+    };
+
+    fetch("https://fcm.googleapis.com/fcm/send", requestOptions)
+      .then((response) => response.text())
+      .then((response) => {
+        let res = JSON.parse(response);
+        console.log("push notification response :  ", res);
+      })
+      .catch((err) => {
+        console.log("error :  ", err);
+      });
   };
   ////////////////////library image//////////////////
   const choosePhotoFromLibrary = () => {

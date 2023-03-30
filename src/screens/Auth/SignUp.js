@@ -100,6 +100,8 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const getUserFCMToken = async () => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -130,6 +132,7 @@ const SignUp = ({ navigation }) => {
         conformPassword: confirmPassword,
         role: signup_role,
         fcm: fcm_token,
+        phone: phoneNumber,
       },
     })
       .then(async function (response) {
@@ -168,6 +171,9 @@ const SignUp = ({ navigation }) => {
     // input validation
     if (email == "") {
       setsnackbarValue({ value: "Please Enter Email", color: "red" });
+      setVisible("true");
+    } else if (phoneNumber?.length == 0) {
+      setsnackbarValue({ value: "Please Enter Phone Number", color: "red" });
       setVisible("true");
     } else if (!handleValidEmail(email)) {
       console.log("a");
@@ -248,6 +254,20 @@ const SignUp = ({ navigation }) => {
               }}
               placeholder="Email Address"
               onTermChange={(newEmail) => setEmail(newEmail)}
+            />
+            <CustomTextInput
+              icon={appImages.email}
+              type={"phone"}
+              texterror={"invalid"}
+              texttype="number-pad"
+              keyboard_type={"number-pad"}
+              term={phoneNumber}
+              returnType={"next"}
+              // onNext={() => {
+              //   ref_input2.current.focus();
+              // }}
+              placeholder="Phone Number"
+              onTermChange={(newEmail) => setPhoneNumber(newEmail)}
             />
             <CustomTextInput
               onRef={ref_input2}
