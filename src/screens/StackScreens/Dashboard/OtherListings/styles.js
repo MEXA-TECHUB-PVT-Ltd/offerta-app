@@ -113,6 +113,26 @@ const styles = StyleSheet.create({
     marginTop: hp(10),
     marginBottom: hp(5),
   },
+  btnView1: {
+    // alignItems: "center",
+    // justifyContent: "center",
+    // paddingHorizontal: wp(2),
+    marginTop: 8,
+    marginBottom: 6,
+    flex: 1,
+
+    // width: wp(100),
+    marginHorizontal: wp(2),
+  },
+  btn1: {
+    height: hp(5.5),
+    // width: wp(70),
+    flex: 1,
+    borderRadius: wp(8),
+    backgroundColor: Colors.Appthemecolor,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   btn: {
     height: hp(5.5),
     width: wp(70),

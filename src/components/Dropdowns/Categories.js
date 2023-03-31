@@ -14,10 +14,15 @@ import {
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryName, setCategoryId,setSubCategoryName,setSubCategoryId } from "../../redux/actions";
+import {
+  setCategoryName,
+  setCategoryId,
+  setSubCategoryName,
+  setSubCategoryId,
+} from "../../redux/actions";
 
 //////////////api helper functions////////
-import { GetCategories,GetSubCategories } from "../../api/GetApis";
+import { GetCategories, GetSubCategories } from "../../api/GetApis";
 
 const Categories = (props) => {
   /////////////redux states///////
@@ -31,28 +36,26 @@ const Categories = (props) => {
   ///////////////HotelTypes function///////////////
   const GetItemCategories = async () => {
     GetCategories()
-    .then((response) => {
-      setdddata(response.data)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-  }
-    ///////////////HotelTypes function///////////////
-    const GetItemSubCategories = async () => {
-      GetSubCategories()
       .then((response) => {
-        setsubdddata(response.data)
+        setdddata(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
-      };
+  };
+  ///////////////HotelTypes function///////////////
+  const GetItemSubCategories = async () => {
+    GetSubCategories()
+      .then((response) => {
+        setsubdddata(response.data);
+        // console.log("sub categorise : ", response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   useEffect(() => {
-    props.type === 'subcategory'?
-    GetItemSubCategories():
-    GetItemCategories()
-
+    props.type === "subcategory" ? GetItemSubCategories() : GetItemCategories();
   }, []);
   return (
     <RBSheet
@@ -88,13 +91,17 @@ const Categories = (props) => {
         <Text style={styles.bottomsheettext}>Select Category</Text>
       </View>
       <FlatList
-        data={props.type === 'subcategory'?subdddata:dddata}
+        data={props.type === "subcategory" ? subdddata : dddata}
         renderItem={({ item, index, separators }) => (
           <TouchableOpacity
-          activeOpacity={0.7}
+            activeOpacity={0.7}
             onPress={() => {
-                props.type === 'subcategory'?dispatch(setSubCategoryName(item.name)):dispatch(setCategoryName(item.name)),
-                props.type === 'subcategory'?dispatch(setSubCategoryId(item.id)):dispatch(setCategoryId(item.id)),
+              props.type === "subcategory"
+                ? dispatch(setSubCategoryName(item.name))
+                : dispatch(setCategoryName(item.name)),
+                props.type === "subcategory"
+                  ? dispatch(setSubCategoryId(item.id))
+                  : dispatch(setCategoryId(item.id)),
                 props.refRBSheet.current.close();
             }}
           >

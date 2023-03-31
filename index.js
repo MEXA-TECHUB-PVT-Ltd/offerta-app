@@ -7,6 +7,11 @@ import App from "./App";
 import { name as appName } from "./app.json";
 import { Text, TextInput } from "react-native";
 import PushNotification from "react-native-push-notification";
+import messaging from "@react-native-firebase/messaging";
+
+messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  console.log("Message handled in the background!", remoteMessage);
+});
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)

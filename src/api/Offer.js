@@ -47,3 +47,19 @@ export const create_order_Listings = async (
     shipping_id: shipping_id,
   });
 };
+
+export const add_User_Stripe_Credentials = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.post(BASE_URL + "stripCredentials.php", {
+    user_id: user_id,
+    private_key:
+      "sk_test_51K7Ok1SImwf7DA0fmyPO4NOhzT8h6MzeD8vDpt8PtXFpBim1ed711h2fpOeytQSZOpVmRgxwkb8ISccAB45BY9IB00ZxorWl3g",
+    public_key:
+      "pk_test_51K7Ok1SImwf7DA0foroMnlRi3yVyjTPI9E5DrhxorvxQuGPF7yB2WU5FnwoFubbeqDQQT40hnsuVbZf6qVhSKauJ00cY5UgqbF",
+  });
+};
+
+export const checkout = async (data) => {
+  console.log("data passed to checkout api : ", data);
+  return axios.post(BASE_URL + "checkOut.php", data);
+};

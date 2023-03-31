@@ -42,6 +42,7 @@ const CustomTextInput = ({
   multiline,
   keyboard_type,
   Lines,
+  maxLength,
 }) => {
   const [isfocused, setisFocused] = useState(false);
   return (
@@ -76,6 +77,7 @@ const CustomTextInput = ({
             },
           ]}
           ref={onRef}
+          maxLength={maxLength}
           autoCorrect={false}
           clearTextOnFocus={true}
           placeholder={placeholder}
@@ -84,6 +86,7 @@ const CustomTextInput = ({
           disabled={disable}
           returnKeyType={returnType}
           keyboardType={keyboard_type}
+          // keyboardType="number-pad"
           placeholderTextColor={Colors.inputplaceholder}
           onFocus={() => setisFocused(true)}
           onChangeText={onTermChange}

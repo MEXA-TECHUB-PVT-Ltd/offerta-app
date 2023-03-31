@@ -598,88 +598,140 @@ const UploadItem = ({ navigation, route }) => {
           />
           {/* )} */}
         </View>
-        <View style={{ paddingHorizontal: wp(8) }}>
-          <View
+        <View
+          style={{
+            width: wp(85),
+            borderRadius: wp(5),
+            marginTop: hp(1),
+            marginBottom: hp(1),
+            borderColor: "#ccc",
+            borderWidth: 1,
+            alignSelf: "center",
+            // alignItems: "center",
+            // justifyContent: "space-between",
+            paddingVertical: 13,
+          }}
+        >
+          <Text
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-
-              marginTop: hp(2),
-              alignItems: "center",
+              color: "grey",
+              fontSize: 12,
+              // marginTop: 25,
+              marginBottom: 15,
+              // textAlign: "center",
+              paddingHorizontal: wp(4),
             }}
           >
-            <Text style={styles.text}>Exchange to Buy</Text>
-            <Checkbox
-              status={exchangebuychecked ? "checked" : "unchecked"}
-              color={Colors.activetextinput}
-              uncheckedColor={Colors.activetextinput}
-              onPress={() => {
-                setExchangebuyChecked(!exchangebuychecked);
+            Don't check any option if you want to receive offers.
+          </Text>
+          <View style={{ paddingHorizontal: wp(4) }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // marginTop: hp(2),
+                alignItems: "center",
               }}
-            />
+            >
+              <Text style={styles.text}>No Exchange to Buy</Text>
+              <Checkbox
+                status={exchangebuychecked ? "checked" : "unchecked"}
+                color={Colors.activetextinput}
+                uncheckedColor={Colors.activetextinput}
+                onPress={() => {
+                  setExchangebuyChecked(!exchangebuychecked);
+                }}
+              />
+            </View>
+            {/* {exchangebuychecked && (
+              <Text style={{ color: "red", fontSize: 11 }}>
+                Check if you don't want to see Exchange offers on your listing.
+              </Text>
+            )} */}
           </View>
-          {exchangebuychecked && (
-            <Text style={{ color: "red", fontSize: 13 }}>
-              Check to see Exchange offers on your listing.
-            </Text>
-          )}
-        </View>
-        <View style={{ paddingHorizontal: wp(8) }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-
-              marginTop: hp(2),
-              alignItems: "center",
-            }}
-          >
-            <Text style={styles.text}>Fixed Price</Text>
-            <Checkbox
-              status={fixedpricechecked ? "checked" : "unchecked"}
-              color={Colors.activetextinput}
-              uncheckedColor={Colors.activetextinput}
-              onPress={() => {
-                setFixedpriceChecked(!fixedpricechecked);
+          <View style={{ paddingHorizontal: wp(4) }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // marginTop: hp(2),
+                alignItems: "center",
               }}
-            />
+            >
+              <Text style={styles.text}>Fixed Price</Text>
+              <Checkbox
+                status={fixedpricechecked ? "checked" : "unchecked"}
+                color={Colors.activetextinput}
+                uncheckedColor={Colors.activetextinput}
+                onPress={() => {
+                  setFixedpriceChecked(!fixedpricechecked);
+                }}
+              />
+            </View>
+            {/* {fixedpricechecked && (
+              <Text style={{ color: "red", fontSize: 11 }}>
+                Check if you don't want to see different offers on your listing.
+              </Text>
+            )} */}
           </View>
-          {fixedpricechecked && (
-            <Text style={{ color: "red", fontSize: 13 }}>
-              Check to see different offers on your listing.
-            </Text>
-          )}
         </View>
         {/* {fixedpricechecked === true || exchangebuychecked === true ? null : ( */}
-        <View style={{ paddingHorizontal: wp(8) }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
 
-              marginTop: hp(2),
-              alignItems: "center",
+        <View
+          style={{
+            width: wp(85),
+            borderRadius: wp(5),
+            marginTop: hp(1),
+            marginBottom: hp(1),
+            borderColor: "#ccc",
+            borderWidth: 1,
+            alignSelf: "center",
+            // alignItems: "center",
+            // justifyContent: "space-between",
+            paddingVertical: 13,
+          }}
+        >
+          <Text
+            style={{
+              color: "grey",
+              fontSize: 12,
+              // marginTop: 25,
+              marginBottom: 15,
+              // textAlign: "center",
+              paddingHorizontal: wp(4),
             }}
           >
-            <Text style={styles.text}>Giving Away</Text>
-            <Checkbox
-              status={givingawaychecked ? "checked" : "unchecked"}
-              color={Colors.activetextinput}
-              uncheckedColor={Colors.activetextinput}
-              onPress={() => {
-                setGivingawayChecked(!givingawaychecked),
-                  setPrice(0),
-                  setShippingPrice(0);
+            Check If you want to give item for free.
+          </Text>
+          <View style={{ paddingHorizontal: wp(4) }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // marginTop: hp(2),
+                alignItems: "center",
               }}
-            />
+            >
+              <Text style={styles.text}>Giving Away</Text>
+              <Checkbox
+                status={givingawaychecked ? "checked" : "unchecked"}
+                color={Colors.activetextinput}
+                uncheckedColor={Colors.activetextinput}
+                onPress={() => {
+                  setGivingawayChecked(!givingawaychecked),
+                    setPrice(0),
+                    setShippingPrice(0);
+                }}
+              />
+            </View>
+            {/* {givingawaychecked && (
+              <Text style={{ color: "red", fontSize: 11 }}>
+                Check If you want to give item for free.
+              </Text>
+            )} */}
           </View>
-          {givingawaychecked && (
-            <Text style={{ color: "red", fontSize: 13 }}>
-              Check If you want to give item for free.
-            </Text>
-          )}
         </View>
-        <Text
+        {/* <Text
           style={{
             color: "#000",
             fontSize: 12,
@@ -688,7 +740,7 @@ const UploadItem = ({ navigation, route }) => {
           }}
         >
           Don't check any option if you want to receive offers.
-        </Text>
+        </Text> */}
         {/* )} */}
 
         <View style={{ marginBottom: hp(15) }}>

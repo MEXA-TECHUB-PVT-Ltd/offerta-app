@@ -142,7 +142,7 @@ const CustomMenu1 = (props) => {
     if (user_status == "block") {
       console.log("her......");
       props.setShowBlockModal(true);
-      console.log("props ::::    ", props);
+
       return;
     }
     setModalVisible(true);
