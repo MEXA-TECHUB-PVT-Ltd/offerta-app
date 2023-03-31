@@ -52,7 +52,9 @@ const DashboardCard = (props) => {
             ]}
             resizeMode="cover"
           ></Image>
-          {props?.sold == "sold" && (
+          {(props?.sold == "sold" ||
+            props?.sold == true ||
+            props?.sold == "true") && (
             <View
               style={{
                 backgroundColor: "red",

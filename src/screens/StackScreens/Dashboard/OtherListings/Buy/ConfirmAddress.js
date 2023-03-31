@@ -45,6 +45,8 @@ import {
 } from "../../../../../redux/LoginUserActions";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Snackbar } from "react-native-paper";
+
 const ConfirmAddress = ({ navigation, route }) => {
   ///////////////data states////////////////////
   const [cardno, setCardNo] = React.useState();
@@ -65,11 +67,18 @@ const ConfirmAddress = ({ navigation, route }) => {
     (state) => state.loginuserReducer
   );
   const dispatch = useDispatch();
+  const { login_user_shipping_address } = useSelector(
+    (state) => state.loginuserReducer
+  );
 
   ////////////list state////////////
-  const [shippinglist, setshippinglist] = useState(null);
+  const [shippinglist, setshippinglist] = useState([]);
 
   const [selectedAddress, setSelectedAddress] = useState("");
+
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
     console.log("useEffect  : ", isFocused);
@@ -78,7 +87,7 @@ const ConfirmAddress = ({ navigation, route }) => {
         .then((response) => {
           console.log("get shipping adress repnse  :  ", response?.data);
           if (response.data.msg === "No Result") {
-            setshippinglist("");
+            setshippinglist([]);
           } else {
             setshippinglist(response.data);
           }
@@ -88,6 +97,24 @@ const ConfirmAddress = ({ navigation, route }) => {
         );
     }
   }, [isFocused]);
+
+  const handleNext = async () => {
+    if (shippinglist?.length == 0) {
+      setsnackbarValue({
+        value: "Please Add Shipping Address to continue",
+        color: "red",
+      });
+      setVisible(true);
+    } else {
+      // console.log("shipping list :  ", shippinglist[0]);
+      if (!login_user_shipping_address) {
+        dispatch(setLoginUserShippingAddress(shippinglist[0]));
+      } else {
+        console.log("address mil gya..");
+      }
+      navigation.navigate("Checkout");
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -172,7 +199,7 @@ const ConfirmAddress = ({ navigation, route }) => {
         >
           <Text style={styles.timelinetext}>Confirm Address</Text>
         </View>
-        {shippinglist === "" ? (
+        {shippinglist?.length == 0 ? (
           <View style={{ marginBottom: hp(14) }}>
             <NoDataFound
               icon={"exclamation-thick"}
@@ -231,6 +258,19 @@ const ConfirmAddress = ({ navigation, route }) => {
             />
           </View>
         )}
+
+        <Snackbar
+          duration={2000}
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          style={{
+            backgroundColor: snackbarValue.color,
+            marginBottom: hp(20),
+            zIndex: 999,
+          }}
+        >
+          {snackbarValue.value}
+        </Snackbar>
 
         {/* <View>
             <CustomTextInput
@@ -309,7 +349,7 @@ const ConfirmAddress = ({ navigation, route }) => {
             widthset={80}
             topDistance={10}
             onPress={() => {
-              navigation.navigate("Checkout");
+              handleNext();
             }}
           />
         </View>

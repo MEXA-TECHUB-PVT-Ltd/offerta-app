@@ -163,6 +163,7 @@ const SignUp = ({ navigation }) => {
         console.log("error", error);
       });
   };
+
   //Api form validation
   const formValidation = async () => {
     // navigation.navigate("AccountVerification");

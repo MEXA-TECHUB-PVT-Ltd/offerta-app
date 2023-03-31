@@ -85,22 +85,24 @@ const EditProfile = ({ navigation, route }) => {
   const [fname, setfname] = React.useState();
   const [lname, setlname] = React.useState();
   const [email, setEmail] = React.useState();
+  const [phoneNo, setPhoneNo] = useState("");
 
   const [showBlockModal, setShowBlockModal] = useState(false);
   //////////////////////Api Calling/////////////////
   const Edit_User_Profile = async () => {
     let user_status = await get_user_status();
-    console.log("user_status :    ", user_status);
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
     }
-
+    setloading(true);
     var user_id = await AsyncStorage.getItem("Userid");
     var data = JSON.stringify({
       user_id: user_id,
       full_name: fname,
       username: username,
+      phone_no: phoneNo,
     });
 
     var config = {
@@ -120,7 +122,8 @@ const EditProfile = ({ navigation, route }) => {
       })
       .catch(function (error) {
         console.log(error);
-      });
+      })
+      .finally(() => setloading(false));
   };
   const get_user_data = () => {
     get_Login_UserData().then((response) => {
@@ -131,6 +134,7 @@ const EditProfile = ({ navigation, route }) => {
       setusername(response.data.user_name);
       setfname(response.data.full_name);
       setlname(response.data.full_name);
+      setPhoneNo(response?.data?.phone_no);
       setEmail(response.data.email);
     });
   };
@@ -185,7 +189,6 @@ const EditProfile = ({ navigation, route }) => {
                 position: "absolute",
                 bottom: hp(0),
                 right: wp(0),
-
                 width: wp(12),
                 height: hp(6),
                 borderRadius: hp(6) / 2,
@@ -236,6 +239,17 @@ const EditProfile = ({ navigation, route }) => {
               placeholder="Enter Last Name"
               onTermChange={(newLname) => setlname(newLname)}
             />
+
+            <CustomTextInput
+              onRef={ref_input4}
+              icon={appImages.lock}
+              type={"withouticoninput"}
+              term={phoneNo}
+              placeholder="Enter Phone No"
+              keyboard_type={"number-pad"}
+              onTermChange={(text) => setPhoneNo(text)}
+            />
+
             <TouchableOpacity onPress={() => onpressemail()}>
               <CustomTextInput
                 onRef={ref_input3}
@@ -325,6 +339,7 @@ const EditProfile = ({ navigation, route }) => {
           buttontext={"GO BACK"}
           onPress={() => {
             setModalVisible(false);
+            navigation?.goBack();
           }}
         />
       </ScrollView>

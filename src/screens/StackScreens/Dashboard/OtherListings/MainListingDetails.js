@@ -293,6 +293,7 @@ const MainListingsDetails = ({ navigation, route }) => {
             listing_user_id={listing_user_id}
             type={"listing_detail"}
             hideMenu={true}
+            hideChat={true}
             menuoptions={
               exchange_status === "true"
                 ? exchange_options
@@ -476,7 +477,12 @@ const MainListingsDetails = ({ navigation, route }) => {
             Seller Details :{" "}
           </Text>
           {listing_user_detail && (
-            <View style={{ padding: 20, alignItems: "center" }}>
+            <View
+              style={{
+                padding: 20,
+                alignItems: "center",
+              }}
+            >
               {/* <Text style={styles.maintext}>Owner Info : </Text>
               <View
                 style={{
@@ -511,24 +517,98 @@ const MainListingsDetails = ({ navigation, route }) => {
             </View>
           )}
 
-          <View style={styles.btnView}>
-            {/* {fixed_price_status === "false" ? null : ( */}
-            <TouchableOpacity
-              style={{ ...styles.btn, marginTop: 0 }}
-              onPress={() => handleBuyNow()}
-            >
-              <Text style={styles.btnText}>Buy Now</Text>
-            </TouchableOpacity>
-            {/* )} */}
+          {/* <Text>exchange_status : {exchange_status}</Text>
+          <Text>fixed price : {fixed_price_status}</Text>
+          <Text>give away : {giveaway_status}</Text> */}
+          <View
+            style={{
+              flexDirection: "row",
+              width: wp(90),
+              alignSelf: "center",
+            }}
+          >
+            <View style={styles.btnView1}>
+              <TouchableOpacity
+                style={{
+                  ...styles.btn1,
+                  marginTop: 0,
+                  backgroundColor: "#01fe91",
+                }}
+                onPress={() => handleBuyNow()}
+              >
+                <Text style={styles.btnText}>Buy Now</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.btnView1}>
+              <TouchableOpacity
+                style={{
+                  ...styles.btn1,
+                  backgroundColor: "#01a3ff",
+                  marginTop: 0,
+                }}
+                // onPress={() => handleBuyNow()}
+                onPress={() => {
+                  // console.log("listing user id :  ", listing_user_id);
+                  navigation.navigate("ChatScreen", {
+                    navtype: "chatlist",
+                    // userid: item?.item?.user?.id,
+                    userid: listing_user_id,
+                  });
+                }}
+              >
+                <Text style={styles.btnText}>Chat</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              width: wp(90),
+              alignSelf: "center",
+            }}
+          >
+            {fixed_price_status != "true" && fixed_price_status != true && (
+              <View style={styles.btnView1}>
+                <TouchableOpacity
+                  style={{
+                    ...styles.btn1,
+                    marginTop: 0,
+                    // backgroundColor: "#01a3ff",
+                  }}
+                  // onPress={() => handleBuyNow()}
+                  onPress={() => navigation.navigate("PriceOffer")}
+                >
+                  <Text style={styles.btnText}>Make an Offer</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {exchange_status != "true" && exchange_status != true && (
+              <View style={styles.btnView1}>
+                <TouchableOpacity
+                  style={{
+                    ...styles.btn1,
+                    marginTop: 0,
+                    // backgroundColor: "#01fe91",
+                  }}
+                  // onPress={() => handleBuyNow()}
+                  onPress={() => navigation.navigate("ExchangeOfferList")}
+                >
+                  <Text style={styles.btnText}>Request Exchange</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
 
           <CustomMenu1
             menudata={
-              exchange_status === "true"
-                ? exchange_options
-                : fixed_price_status === "false"
-                ? offer_options
-                : generic_options
+              // exchange_status === "true"
+              //   ? exchange_options
+              //   : fixed_price_status === "false"
+              //   ? offer_options
+              //   : generic_options
+
+              generic_options
             }
             setShowBlockModal={true}
           />

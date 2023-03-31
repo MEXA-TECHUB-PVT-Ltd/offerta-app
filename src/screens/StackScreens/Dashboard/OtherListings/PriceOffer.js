@@ -52,6 +52,8 @@ const PriceOffer = ({ navigation, route }) => {
   const { exchange_other_listing, exchange_my_listing } = useSelector(
     (state) => state.userReducer
   );
+
+  console.log("exchange_other_listing  : ", exchange_other_listing);
   const dispatch = useDispatch();
 
   //////////////////Textinput state////////////

@@ -36,11 +36,19 @@ import { setLoginUserShippingAddress } from "../../../../../redux/LoginUserActio
 import { useDispatch, useSelector } from "react-redux";
 
 ////////////////////api function/////////////
-import { create_order_Listings } from "../../../../../api/Offer";
+import {
+  add_User_Stripe_Credentials,
+  checkout,
+  create_order_Listings,
+} from "../../../../../api/Offer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { Snackbar } from "react-native-paper";
 
 const CardDetails = ({ navigation, route }) => {
   ////////////////redux/////////////
   const { exchange_other_listing } = useSelector((state) => state.userReducer);
+
   ////////////////redux/////////////
   const { login_user_shipping_address } = useSelector(
     (state) => state.loginuserReducer
@@ -52,23 +60,97 @@ const CardDetails = ({ navigation, route }) => {
   const [checked, setChecked] = React.useState(false);
 
   ///////////////data states////////////////////
-  const [cardno, setCardNo] = React.useState();
-  const [expirydate, setExpiryDate] = React.useState();
-  const [cvv, setCvv] = React.useState();
+  const [cardno, setCardNo] = React.useState("");
+  const [expirydate, setExpiryDate] = React.useState("");
+  const [cvv, setCvv] = React.useState("");
   ////////////country picker states/////////////
   const [CountryPickerView, setCountryPickerView] = useState(false);
   const [countryCode, setCountryCode] = useState("92");
   const [countryname, setCountryName] = useState("Pak");
 
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
+
+  const validate = async () => {
+    if (cardno?.length == 0) {
+      // please enter card no
+      setsnackbarValue({ value: "Please Enter Card No", color: "red" });
+      setVisible(true);
+      return false;
+    } else if (expirydate?.length == 0 || expirydate.length < 5) {
+      //please enter valid expiry date
+      setsnackbarValue({
+        value: "Please Enter Valid card Expiry date",
+        color: "red",
+      });
+      setVisible(true);
+      return false;
+    } else if (cvv.length == 0) {
+      //please enter cvc number
+      setsnackbarValue({ value: "Please Enter CVC", color: "red" });
+      setVisible(true);
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   ////////////Create Order//////////
-  const Listing_Create_Order = () => {
-    create_order_Listings(
-      exchange_other_listing.user_id,
-      exchange_other_listing.id,
-      login_user_shipping_address.id
-    ).then((response) => {
-      setModalVisible(true);
-    });
+  const Listing_Create_Order = async () => {
+    let user_id = await AsyncStorage.getItem("Userid");
+
+    if (await validate()) {
+      let expiryDate = expirydate?.split("/");
+      let month = expiryDate[0];
+      let year = expiryDate[1];
+      let obj = {
+        user_id: user_id,
+        listing_id: exchange_other_listing.id,
+        card_number: cardno,
+        card_exp_month: month,
+        card_exp_year: year,
+        card_cvc: cvv,
+        description: "nill",
+        currency: "inr",
+      };
+
+      create_order_Listings(
+        exchange_other_listing.user_id,
+        exchange_other_listing.id,
+        login_user_shipping_address.id
+      ).then((response) => {
+        if (response?.data?.status == true) {
+          add_User_Stripe_Credentials().then(() => {
+            checkout(obj)
+              .then((res) => {
+                console.log("checkout api response", res?.data);
+                if (res?.data?.status == false) {
+                  setsnackbarValue({ value: res?.data?.message, color: "red" });
+                  setVisible(true);
+                } else {
+                  setModalVisible(true);
+                }
+              })
+              .catch((err) => {
+                console.log("error raised : ", err);
+                setsnackbarValue({
+                  value: "Something went wrong",
+                  color: "red",
+                });
+                setVisible(true);
+              });
+          });
+        } else {
+          console.log("create order response :  ", response?.data);
+          setsnackbarValue({
+            value: "Something went wrong",
+            color: "red",
+          });
+          setVisible(true);
+        }
+      });
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -165,18 +247,37 @@ const CardDetails = ({ navigation, route }) => {
             texterror={"invalid"}
             term={cardno}
             placeholder="Enter Card Number"
-            onTermChange={(newCardno) => setCardNo(newCardno)}
+            keyboard_type={"number-pad"}
+            onTermChange={(text) => {
+              text = text
+                .replace(/\s?/g, "")
+                .replace(/(\d{4})/g, "$1 ")
+                .trim();
+              setCardNo(text);
+            }}
           />
           <CustomTextInput
             type={"withouticoninput"}
             term={expirydate}
             placeholder="expiry date ( MM/YY )"
-            onTermChange={(newexpirydate) => setExpiryDate(newexpirydate)}
+            maxLength={5}
+            keyboard_type={"number-pad"}
+            onTermChange={(text) => {
+              // text = text
+              //   .replace(/\s?/g, "")
+              //   .replace(/(\d{2})/g, "$1/")
+              //   .trim();
+              if (text?.length == 2) {
+                text = text + "/";
+              }
+              setExpiryDate(text);
+            }}
           />
           <CustomTextInput
             type={"withouticoninput"}
             term={cvv}
             placeholder="Enter CVC"
+            keyboard_type={"number-pad"}
             onTermChange={(newcvv) => setCvv(newcvv)}
           />
 
@@ -212,6 +313,7 @@ const CardDetails = ({ navigation, route }) => {
             }}
           />
         </View>
+
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
             title={"PAY"}
@@ -223,6 +325,18 @@ const CardDetails = ({ navigation, route }) => {
           />
         </View>
       </ScrollView>
+      <Snackbar
+        duration={2000}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(20),
+          zIndex: 999,
+        }}
+      >
+        {snackbarValue.value}
+      </Snackbar>
       <CustomModal
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}

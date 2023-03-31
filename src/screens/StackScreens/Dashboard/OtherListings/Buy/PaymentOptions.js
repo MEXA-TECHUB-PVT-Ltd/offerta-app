@@ -134,5 +134,5 @@ const styles1 = StyleSheet.create({
     color: "#000",
     fontSize: 18,
   },
-  checkedView: { position: "absolute", top: 0, right: 0 },
+  checkedView: { position: "absolute", top: hp(15) / 3, left: 0 },
 });

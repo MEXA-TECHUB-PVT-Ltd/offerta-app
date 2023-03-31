@@ -161,28 +161,30 @@ const Slider = (props) => {
             }}
           />
 
-          {props?.listing_owner_id != current_user_id &&
-            (userdata === exchange_other_listing.user_id &&
-            props.type === "listing_details" ? null : userdata ===
-                exchange_other_listing.user_id ||
-              props.type === "comments" ? null : (
-              <TouchableOpacity
-                onPress={() => {
-                  handleChatPress();
-                }}
-                style={{ width: wp(15), height: wp(8), left: wp(30) }}
-              >
-                <Image
-                  source={appImages.sliderchat}
-                  style={{
-                    width: wp(15),
-                    height: wp(8),
-                    // left: wp(35),
+          {props?.hideChat == true
+            ? null
+            : props?.listing_owner_id != current_user_id &&
+              (userdata === exchange_other_listing.user_id &&
+              props.type === "listing_details" ? null : userdata ===
+                  exchange_other_listing.user_id ||
+                props.type === "comments" ? null : (
+                <TouchableOpacity
+                  onPress={() => {
+                    handleChatPress();
                   }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            ))}
+                  style={{ width: wp(15), height: wp(8), left: wp(30) }}
+                >
+                  <Image
+                    source={appImages.sliderchat}
+                    style={{
+                      width: wp(15),
+                      height: wp(8),
+                      // left: wp(35),
+                    }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              ))}
 
           {userdata === exchange_other_listing.user_id &&
           props.type === "listing_details" ? null : userdata ===
