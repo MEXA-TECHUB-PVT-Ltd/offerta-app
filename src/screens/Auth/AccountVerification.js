@@ -56,6 +56,7 @@ import PendingAccountApproval from "../../components/Modal/PendingAccountApprova
 import { get_user_status } from "../../api/GetApis";
 import { Block_user_message } from "../../utills/AppStrings";
 import BlockUserView from "../../components/BlockUserView";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -193,7 +194,7 @@ const AccountVerification = ({ navigation, route }) => {
             textAlign: "center",
           }}
         >
-          Verify Account
+          {TranslationStrings.VERIFY_ACCOUNT}
         </Text>
         <View>
           <Text
@@ -205,7 +206,7 @@ const AccountVerification = ({ navigation, route }) => {
               fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            Profile Picture :
+            {TranslationStrings.PROFILE_PICTURE} :
           </Text>
 
           <TouchableOpacity
@@ -241,7 +242,7 @@ const AccountVerification = ({ navigation, route }) => {
                         fontFamily: fontFamily.Poppins_Regular,
                       }}
                     >
-                      Upload your Picture
+                      {TranslationStrings.UPLOAD_YOUR_PICTURE}
                     </Text>
                   </TouchableOpacity>
                 ) : (
@@ -273,7 +274,7 @@ const AccountVerification = ({ navigation, route }) => {
               fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            Upload Documents :
+            {TranslationStrings.UPLOAD_DOCUMENTS} :
           </Text>
 
           <TouchableOpacity
@@ -310,7 +311,7 @@ const AccountVerification = ({ navigation, route }) => {
                         fontFamily: fontFamily.Poppins_Regular,
                       }}
                     >
-                      Upload Documents
+                      {TranslationStrings.UPLOAD_DOCUMENTS}
                     </Text>
                   </TouchableOpacity>
                 ) : (
@@ -334,7 +335,7 @@ const AccountVerification = ({ navigation, route }) => {
         </View>
         <View style={{ height: 120 }}>
           <CustomButtonhere
-            title={"VERIFY"}
+            title={TranslationStrings.VERIFY}
             widthset={80}
             topDistance={5}
             loading={loading}

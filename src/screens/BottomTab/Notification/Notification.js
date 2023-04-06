@@ -40,6 +40,7 @@ import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 
 import moment from "moment";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -69,7 +70,6 @@ const Notification = ({ navigation }) => {
         if (response.data.msg === "No Result") {
           setNotification("");
         } else {
-          console.log("response.data  : ", response.data?.length);
           if (response.data?.length > 0) {
             setNotification(response.data?.reverse());
           }
@@ -197,14 +197,16 @@ const Notification = ({ navigation }) => {
           </View>
           <View style={{ marginLeft: wp(3) }}>
             <Text style={styles.username}>{item.item.requester.full_name}</Text>
-            <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
+            <Text
+              style={[styles.recomend, { color: "#7A8FA6", width: wp(57) }]}
+            >
               {item.item.notification}
             </Text>
           </View>
         </View>
 
         <View style={{ marginLeft: 0 }}>
-          <Text style={[styles.recomend, { color: "#7A8FA6" }]}>
+          <Text style={[styles.recomend, { color: "#7A8FA6", width: wp(30) }]}>
             {item?.item?.created_at && moment(item?.item?.created_at).fromNow()}
           </Text>
         </View>
@@ -217,7 +219,7 @@ const Notification = ({ navigation }) => {
         backgroundColor={Colors.Appthemecolor}
         barStyle="light-content"
       />
-      <CustomHeader headerlabel={"Notifications"} />
+      <CustomHeader headerlabel={TranslationStrings.NOTIFICATIONS} />
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
       <View style={{ ...styles.postcard, marginTop: 0 }}>
         <Loader isLoading={loading} />
@@ -238,7 +240,9 @@ const Notification = ({ navigation }) => {
           ListEmptyComponent={() => {
             return (
               <View style={{ height: 200 }}>
-                <Text style={{ color: "#000" }}>No Record Found</Text>
+                <Text style={{ color: "#000" }}>
+                  {TranslationStrings.NO_RECORD_FOUND}
+                </Text>
               </View>
             );
           }}

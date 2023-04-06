@@ -35,6 +35,7 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 ///////////////////async//////////////
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Loader from "../../../components/Loader/Loader";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const ChatList = ({ navigation }) => {
   ///////////////////data state///////////
@@ -196,7 +197,7 @@ const ChatList = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <CustomHeader headerlabel={"Chats"} />
+      <CustomHeader headerlabel={TranslationStrings.CHATS} />
       <Loader isLoading={loading} />
 
       <FlatList
@@ -215,7 +216,10 @@ const ChatList = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => {
           return (
-            <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+            <NoDataFound
+              icon={"exclamation-thick"}
+              text={TranslationStrings.NO_DATA_FOUND}
+            />
           );
         }}
       />

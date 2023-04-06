@@ -45,6 +45,7 @@ import { post_Comments_Listings } from "../../../../api/PostApis";
 
 /////////////////image url/////////////
 import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const CommentsDetails = ({ navigation, route }) => {
   //////////////redux///////////////
@@ -75,10 +76,15 @@ const CommentsDetails = ({ navigation, route }) => {
 
   const doSomethingCallback = useCallback(() => {
     GetListingsDetails(listing_id).then((response) => {
-      setListing_Images(response.data.images);
+      let imagesList = response?.data?.images ? response.data.images : [];
+      setListing_Images(imagesList);
+
       GetComments(listing_id)
         .then((response) => {
-          if (response.data.msg === "No Result") {
+          if (
+            response.data.msg === "No Result" ||
+            response?.data?.message == "id is null"
+          ) {
             setComments([]);
             setloading(false);
           } else {
@@ -167,10 +173,10 @@ const CommentsDetails = ({ navigation, route }) => {
             marginBottom: hp(2),
           }}
         >
-          <Text style={styles.maintext}>Comments</Text>
+          <Text style={styles.maintext}>{TranslationStrings.COMMENTS}</Text>
         </View>
 
-        {Comments.map((item, key) => renderItem(item))}
+        {Comments?.map((item, key) => renderItem(item))}
 
         {/* <FlatList
         data={Comments}
@@ -183,16 +189,16 @@ const CommentsDetails = ({ navigation, route }) => {
             style={styles.btn}
             onPress={() => refRBSheet.current.open()}
           >
-            <Text style={styles.btnText}>ADD COMMENT</Text>
+            <Text style={styles.btnText}>{TranslationStrings.ADD_COMMENT}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
       <DescriptionBottomSheet
         refRBSheet={refRBSheet}
         onClose={() => refRBSheet.current.close()}
-        title={"Add Comment"}
-        subtitle={"Enter Comment"}
-        btntext={"ADD"}
+        title={TranslationStrings.ADD_COMMENT}
+        subtitle={TranslationStrings.ENTER_COMMENT}
+        btntext={TranslationStrings.ADD}
         listingID={listing_id}
         onpress={() => {
           {

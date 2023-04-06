@@ -52,6 +52,7 @@ import { appImages } from "../../../constant/images";
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const AddBanner = ({ navigation, route }) => {
   //camera and imagepicker
@@ -379,14 +380,16 @@ const AddBanner = ({ navigation, route }) => {
           />
         )}
         <CustomHeader
-          headerlabel={"Add Banner "}
+          headerlabel={TranslationStrings.ADD_BANNER}
           iconPress={() => {
             navigation.goBack();
           }}
           icon={"arrow-back"}
         />
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.toptext}>{bannerPrice + "$/Day"}</Text>
+          <Text style={styles.toptext}>
+            {bannerPrice + "$/" + TranslationStrings.DAY}
+          </Text>
         </View>
         <View
           style={{
@@ -411,7 +414,9 @@ const AddBanner = ({ navigation, route }) => {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
-              <Text style={Uploadstyles.uploadtext}>Upload Image</Text>
+              <Text style={Uploadstyles.uploadtext}>
+                {TranslationStrings.UPLOAD_IMAGE}
+              </Text>
             </View>
           </TouchableOpacity>
         ) : (
@@ -429,7 +434,7 @@ const AddBanner = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={bannerlink}
-            placeholder="Add banner link"
+            placeholder={TranslationStrings.ADD_BANNER_LINK}
             onTermChange={(newUsername) => setBannerLink(newUsername)}
           />
           <TouchableOpacity onPress={showStartDatepicker}>
@@ -440,7 +445,7 @@ const AddBanner = ({ navigation, route }) => {
               term={startDate_String}
               editable={false}
               disable={false}
-              placeholder="Start Date"
+              placeholder={TranslationStrings.START_DATE}
               onTermChange={(newFname) => setStartDate(newFname)}
             />
           </TouchableOpacity>
@@ -451,7 +456,7 @@ const AddBanner = ({ navigation, route }) => {
               // term={endDate}
               term={endDate_String}
               editable={false}
-              placeholder="End Date"
+              placeholder={TranslationStrings.END_DATE}
               onTermChange={(newLname) => setEndDate(newLname)}
             />
           </TouchableOpacity>
@@ -463,14 +468,14 @@ const AddBanner = ({ navigation, route }) => {
             }}
           >
             <Text style={styles.toptext}>
-              Total Amount : {bannerPrice * daysDifference}
+              {TranslationStrings.TOTAL_AMOUNT} : {bannerPrice * daysDifference}
               {"$"}
             </Text>
           </View>
         </View>
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"PAY NOW"}
+            title={TranslationStrings.PAY_NOW}
             widthset={80}
             topDistance={3}
             onPress={() => {

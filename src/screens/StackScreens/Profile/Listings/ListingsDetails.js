@@ -62,6 +62,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import BlockUserView from "../../../../components/BlockUserView";
 import { get_user_status } from "../../../../api/GetApis";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const ListingsDetails = ({ navigation, route }) => {
   ///////////previous data///////////
@@ -315,7 +316,9 @@ const ListingsDetails = ({ navigation, route }) => {
               navigation.navigate("CommentsDetails", route.params);
             }}
           />
-          <Text style={styles.icontext}>{listing_comments_count} comments</Text>
+          <Text style={styles.icontext}>
+            {listing_comments_count} {TranslationStrings.COMMENTS}
+          </Text>
           <Icon
             name={"chevron-forward-sharp"}
             size={15}
@@ -345,7 +348,9 @@ const ListingsDetails = ({ navigation, route }) => {
                 }
               }}
             />
-            <Text style={styles.icontext}>{listing_likes_count} Likes</Text>
+            <Text style={styles.icontext}>
+              {listing_likes_count} {TranslationStrings.LIKES}
+            </Text>
           </View>
         ) : (
           // </TouchableOpacity>
@@ -362,7 +367,9 @@ const ListingsDetails = ({ navigation, route }) => {
                 }
               }}
             />
-            <Text style={styles.icontext}>{listing_likes_count} Likes</Text>
+            <Text style={styles.icontext}>
+              {listing_likes_count} {TranslationStrings.LIKES}
+            </Text>
           </View>
         )}
         <View style={styles.iconview}>
@@ -378,7 +385,9 @@ const ListingsDetails = ({ navigation, route }) => {
               }
             }}
           />
-          <Text style={styles.icontext}>{listing_views_count} Views</Text>
+          <Text style={styles.icontext}>
+            {listing_views_count} {TranslationStrings.VIEWS}
+          </Text>
         </View>
         <View style={{ paddingHorizontal: wp(7) }}>
           <Text style={styles.subtext}>{listing_details}</Text>
@@ -386,33 +395,45 @@ const ListingsDetails = ({ navigation, route }) => {
 
         <View style={{ paddingHorizontal: wp(7), marginTop: hp(2) }}>
           <View style={styles.rowtextview}>
-            <Text style={styles.rowlefttext}>Category</Text>
+            <Text style={styles.rowlefttext}>
+              {TranslationStrings.CATEGORY}
+            </Text>
             <Text style={styles.rowrighttext}>{listing_category}</Text>
           </View>
           <View style={styles.rowtextview}>
-            <Text style={styles.rowlefttext}>Product Condition</Text>
+            <Text style={styles.rowlefttext}>
+              {TranslationStrings.PRODUCT_CONDITION}
+            </Text>
             <Text style={styles.rowrighttext}>{listing_condition}</Text>
           </View>
           {listing_date === "" ? null : (
             <View style={styles.rowtextview}>
-              <Text style={styles.rowlefttext}>Date of Listing</Text>
+              <Text style={styles.rowlefttext}>
+                {TranslationStrings.DATE_OF_LISTING}
+              </Text>
               <Text style={styles.rowrighttext}>{listing_date}</Text>
             </View>
           )}
 
           <View style={styles.rowtextview}>
-            <Text style={styles.rowlefttext}>Location</Text>
+            <Text style={styles.rowlefttext}>
+              {TranslationStrings.LOCATION}
+            </Text>
             <Text style={styles.rowrighttext}>{listing_location}</Text>
           </View>
           {listing_shippingcost === "" ? null : (
             <View style={styles.rowtextview}>
-              <Text style={styles.rowlefttext}>Shipping Cost</Text>
+              <Text style={styles.rowlefttext}>
+                {TranslationStrings.SHIPPING_COST}
+              </Text>
               <Text style={styles.rowrighttext}>{listing_shippingcost}$</Text>
             </View>
           )}
           {listing_youtubelink === "" ? null : (
             <View style={styles.rowtextview}>
-              <Text style={styles.rowlefttext}>YouTube Link</Text>
+              <Text style={styles.rowlefttext}>
+                {TranslationStrings.YOUTUBE_LINK}
+              </Text>
               <Text style={styles.rowrighttext} onPress={() => handlePress()}>
                 {listing_youtubelink}
               </Text>
@@ -472,7 +493,9 @@ const ListingsDetails = ({ navigation, route }) => {
               navigation.navigate("Insights", { list_id: listing_id });
             }}
           >
-            <Text style={styles.btnText}>VIEW INSIGHTS</Text>
+            <Text style={styles.btnText}>
+              {TranslationStrings.VIEW_INSIGHTS}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btn}
@@ -486,20 +509,17 @@ const ListingsDetails = ({ navigation, route }) => {
               navigation.navigate("Promote", { list_id: listing_id });
             }}
           >
-            <Text style={styles.btnText}>PROMOTE</Text>
+            <Text style={styles.btnText}>{TranslationStrings.PROMOTE}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
       <DescriptionBottomSheet
         refRBSheet={refRBSheet}
         onClose={() => refRBSheet.current.close()}
-        title={"Report Item"}
-        subtitle={"Enter Description"}
-        btntext={"REPORT"}
-        onpress={() => {
-          {
-          }
-        }}
+        title={TranslationStrings.REPORT_ITEM}
+        subtitle={TranslationStrings.ENTER_DESCRIPTION}
+        btntext={TranslationStrings.REPORT}
+        onpress={() => {}}
       />
     </SafeAreaView>
   );

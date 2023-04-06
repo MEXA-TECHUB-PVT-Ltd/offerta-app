@@ -104,6 +104,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const ChatScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
@@ -815,14 +816,14 @@ const ChatScreen = ({ route, navigation }) => {
             <View style={{}}>
               <Text style={styles.p_text}>
                 {/* {"Item Price " + props.currentMessage.textprice} */}
-                Item Price : $
+                {TranslationStrings.ITEM_PRICE} : $
                 {props.currentMessage.textprice
                   ? formatter.format(props.currentMessage.textprice)
                   : props.currentMessage.textprice}
               </Text>
               <Text style={styles.p_text}>
                 {/* {"Offer Price " + props.currentMessage.offerprice} */}
-                Offer Price : $
+                {TranslationStrings.OFFER_PRICE} : $
                 {props.currentMessage.offerprice
                   ? formatter.format(props.currentMessage.offerprice)
                   : props.currentMessage.offerprice}
@@ -848,14 +849,14 @@ const ChatScreen = ({ route, navigation }) => {
             <View style={{}}>
               <Text style={styles.p_text}>
                 {/* {"Item Price " + props.currentMessage.textprice} */}
-                Item Price : $
+                {TranslationStrings.ITEM_PRICE} : $
                 {props.currentMessage.textprice
                   ? formatter.format(props.currentMessage.textprice)
                   : props.currentMessage.textprice}
               </Text>
               <Text style={styles.p_text}>
                 {/* {"Offer Price " + props.currentMessage.offerprice} */}
-                Offer Price : $
+                {TranslationStrings.OFFER_PRICE} : $
                 {props.currentMessage.offerprice
                   ? formatter.format(props.currentMessage.offerprice)
                   : props.currentMessage.offerprice}
@@ -995,11 +996,12 @@ const ChatScreen = ({ route, navigation }) => {
         onPress={() => {}}
         username={username}
         picture={{ uri: IMAGE_URL + userimage }}
-        onlineStatus={"Online"}
+        onlineStatus={TranslationStrings.ONLINE}
         viewstate={true}
       />
 
       <GiftedChat
+        placeholder={TranslationStrings.TYPE_A_MESSAGE}
         alwaysShowSend
         renderInputToolbar={(props) => {
           return <CustomInputToolbar {...props} />;

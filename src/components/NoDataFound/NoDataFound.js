@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-
 ///////////////app icons///////////////
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -34,12 +33,12 @@ const NoDataFound = (props) => {
 
   return (
     <View
-    style={{
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: hp(20),
-    }}
-  >
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: hp(20),
+      }}
+    >
       <MaterialCommunityIcons
         name={props.icon}
         size={hp(5)}
@@ -47,19 +46,17 @@ const NoDataFound = (props) => {
         onPress={props.iconPress}
         //style={{ marginLeft: wp(3) }}
       />
-    <Text style={style.labeltext}>
-{props.text}
-    </Text>
-  </View>
+      <Text style={style.labeltext}>{props.text}</Text>
+    </View>
   );
 };
 const style = StyleSheet.create({
-labeltext: {
+  labeltext: {
     color: "grey",
     fontSize: hp(2.3),
     fontFamily: fontFamily.Poppins_Medium,
-    marginTop:hp(2),textAlign:'center'
+    marginTop: hp(2),
+    textAlign: "center",
   },
-
 });
 export default NoDataFound;

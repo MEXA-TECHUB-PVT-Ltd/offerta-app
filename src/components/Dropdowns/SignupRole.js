@@ -14,7 +14,8 @@ import {
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setsignupRole} from "../../redux/actions";
+import { setsignupRole } from "../../redux/actions";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const SignupRole = (props) => {
   /////////////redux states///////
@@ -23,9 +24,9 @@ const SignupRole = (props) => {
 
   //////////dropdownlink data/////////////
   const [dddata] = useState([
-    {id:'1',role:'user'},
-    {id:'2',role:'company'},
-]);
+    { id: "1", role: "user" },
+    { id: "2", role: "company" },
+  ]);
   return (
     <RBSheet
       //sstyle={{flex:1}}
@@ -55,16 +56,17 @@ const SignupRole = (props) => {
           flexDirection: "row",
           justifyContent: "space-between",
           marginHorizontal: 0,
-
         }}
       >
-        <Text style={styles.bottomsheettext}>{"Select Product Condition"}</Text>
+        <Text style={styles.bottomsheettext}>
+          {TranslationStrings.SELECT_ROLE}
+        </Text>
       </View>
       <FlatList
         data={dddata}
         renderItem={({ item, index, separators }) => (
           <TouchableOpacity
-          activeOpacity={0.7}
+            activeOpacity={0.7}
             onPress={() => {
               dispatch(setsignupRole(item.role)),
                 props.refRBSheet.current.close();

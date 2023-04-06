@@ -26,6 +26,7 @@ import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
 ////////////////api function of user data/////////////
 import { get_Login_UserData } from "../../api/GetApis";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 export const DrawerContent = (props) => {
   const paperTheme = useTheme();
@@ -119,7 +120,7 @@ export const DrawerContent = (props) => {
               icon={({ color, size }) => (
                 <Image source={appImages.drawercard} style={styles.icon} />
               )}
-              label="Manage shipping address"
+              label={TranslationStrings.MANAGE_SHIPPING_ADDRESS}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("ShippingAddressList");
@@ -133,7 +134,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Language"
+              label={TranslationStrings.Language}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("Language");
@@ -148,7 +149,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Invite Friends"
+              label={TranslationStrings.INVITE_FRIENDS}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("InviteFriends");
@@ -162,7 +163,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Banner Advertisement"
+              label={TranslationStrings.BANNER_ADVERTISEMENT}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("BannerAdvertisment");
@@ -176,7 +177,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Blogs"
+              label={TranslationStrings.BLOGS}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("Blogs");
@@ -190,7 +191,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Privacy Policy"
+              label={TranslationStrings.PRIVACY_POLICY}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("PrivacyTerms");
@@ -204,7 +205,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Terms & Conditions"
+              label={TranslationStrings.TERMS_AND_CONDITIONS}
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("TermsCondition");
@@ -229,7 +230,7 @@ export const DrawerContent = (props) => {
             <Text
               style={{ color: "white", fontSize: hp(1.6), fontWeight: "bold" }}
             >
-              LOGOUT
+              {TranslationStrings.LOGOUT}
             </Text>
           </TouchableOpacity>
         </Drawer.Section>
@@ -238,11 +239,11 @@ export const DrawerContent = (props) => {
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}
         Icon={appImages.confirm}
-        text={"Confirmation"}
+        text={TranslationStrings.CONFIRMATION}
         type={"confirmation"}
-        subtext={"Do you really want to Logout?"}
-        buttontext={"Yes"}
-        buttontext1={"Cancel"}
+        subtext={TranslationStrings.DO_YOU_REALLY_WANT_TO_LOGOUT}
+        buttontext={TranslationStrings.YES}
+        buttontext1={TranslationStrings.CANCEL}
         onPress={() => {
           setModalVisible(false);
         }}

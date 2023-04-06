@@ -33,6 +33,7 @@ import { setCityName } from "../../../redux/Location/actions";
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const CityDropDown = (props) => {
   ////////////isfocused//////////
@@ -130,13 +131,16 @@ const CityDropDown = (props) => {
           marginHorizontal: 0,
         }}
       >
-        <Text style={styles.bottomsheettext}>Select City{country_name}</Text>
+        <Text style={styles.bottomsheettext}>
+          {TranslationStrings.SELECT_CITY}
+          {/* {country_name} */}
+        </Text>
       </View>
       <View style={styles.textView}>
         <Ionicons name="search" size={20} color="#999" />
         <TextInput
           style={styles.textInput}
-          placeholder="Search"
+          placeholder={TranslationStrings.SEARCH}
           placeholderTextColor="#999"
           onChangeText={(text) => searchFilterFunction(text)}
           value={search}
@@ -145,7 +149,7 @@ const CityDropDown = (props) => {
       {data === "" && country_name === "" ? (
         <NoDataFound
           icon={"exclamation-thick"}
-          text={"Please Select Country First"}
+          text={TranslationStrings.PLEASE_SELECT_COUNTRY_FIRST}
         />
       ) : (
         <FlatList

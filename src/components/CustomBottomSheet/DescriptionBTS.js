@@ -35,6 +35,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 ///////////////api functions/////////////
 import { post_Comments_Listings } from "../../api/PostApis";
 import { GetComments } from "../../api/GetApis";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const DescriptionBottomSheet = (props) => {
   const navigation = useNavigation();
@@ -140,13 +141,13 @@ const DescriptionBottomSheet = (props) => {
           texterror={"invalid"}
           term={description}
           multiline={true}
-          placeholder="Description"
+          placeholder={TranslationStrings.DESCRIPTION}
           onTermChange={(desc) => setDescription(desc)}
         />
       </View>
       <View style={{ marginTop: hp(0) }}>
         <CustomButtonhere
-          title={"ADD"}
+          title={TranslationStrings.ADD}
           widthset={80}
           topDistance={7}
           loading={loading}
@@ -169,13 +170,13 @@ const DescriptionBottomSheet = (props) => {
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}
         Icon={appImages.sucess}
-        text={"Sucess"}
+        text={TranslationStrings.SUCCESS}
         subtext={
           props.btntext === "REPORT"
-            ? "Report Sucessfully"
-            : "Review Added Successfully"
+            ? TranslationStrings.REPORT_SUCCESSFULLY
+            : TranslationStrings.REVIEW_ADDED_SUCCESSFULLY
         }
-        buttontext={"OK"}
+        buttontext={TranslationStrings.OK}
         onPress={() => {
           props.onClose();
           setModalVisible(false);

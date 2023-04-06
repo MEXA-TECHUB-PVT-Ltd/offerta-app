@@ -27,6 +27,7 @@ import { setCountryName } from "../../../redux/Location/actions";
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const CountryDropDown = (props) => {
   /////////////redux states///////
@@ -114,13 +115,15 @@ const CountryDropDown = (props) => {
           marginHorizontal: 0,
         }}
       >
-        <Text style={styles.bottomsheettext}>Select Country</Text>
+        <Text style={styles.bottomsheettext}>
+          {TranslationStrings.SELECT_COUNTRY}
+        </Text>
       </View>
       <View style={styles.textView}>
         <Ionicons name="search" size={20} color="#999" />
         <TextInput
           style={styles.textInput}
-          placeholder="Search"
+          placeholder={TranslationStrings.SEARCH}
           placeholderTextColor="#999"
           onChangeText={(text) => searchFilterFunction(text)}
           value={search}

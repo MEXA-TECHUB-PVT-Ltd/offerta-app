@@ -59,6 +59,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { colors } from "react-native-swiper-flatlist/src/themes";
 import CustomImageSlider from "../../../components/ImageSlider/CustomImageSlider";
 
+import TranslationStrings from "../../../utills/TranslationStrings";
+
 const Home = ({ navigation }) => {
   const { name, age } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
@@ -202,6 +204,10 @@ const Home = ({ navigation }) => {
     />
   );
 
+  // useEffect(() => {
+  //   ChangeAppLanguage("es");
+  // }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -258,7 +264,7 @@ const Home = ({ navigation }) => {
           </View>
         </View>
         <View style={{ justifyContent: "center", paddingHorizontal: wp(5) }}>
-          <Text style={styles.welcometext}>{"Welcome"}</Text>
+          <Text style={styles.welcometext}>{TranslationStrings.WELCOME}</Text>
           <Text style={styles.usertext}>{username}</Text>
         </View>
         {/* <Slider

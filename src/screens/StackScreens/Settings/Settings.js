@@ -35,6 +35,7 @@ import RNFetchBlob from "rn-fetch-blob";
 import { appImages } from "../../../constant/images";
 import { get_Login_UserData } from "../../../api/GetApis";
 import { useFocusEffect } from "@react-navigation/native";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Settings = ({ navigation }) => {
   const [verificationStatus, setVerificationStatus] = useState(null);
@@ -67,7 +68,7 @@ const Settings = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Settings"}
+        headerlabel={TranslationStrings.SETTINGS}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -76,19 +77,19 @@ const Settings = ({ navigation }) => {
 
       <View style={{ marginTop: hp(6) }}></View>
       <SettingsMenu
-        label={"Edit Profile"}
+        label={TranslationStrings.EDIT_PROFILE}
         icon={"file-edit-outline"}
         labelPress={() => navigation.navigate("EditProfile")}
       />
       <SettingsMenu
-        label={"Change Password"}
+        label={TranslationStrings.CHANGE_PASSWORD}
         icon={"lock"}
         labelPress={() =>
           navigation.navigate("ChangePassword", { navplace: "ChangePassword" })
         }
       />
       <SettingsMenu
-        label={"Location"}
+        label={TranslationStrings.LOCATION}
         icon={"map-marker"}
         labelPress={() =>
           navigation.navigate("Location", { navplace: "Location" })
@@ -102,7 +103,7 @@ const Settings = ({ navigation }) => {
       {verificationStatus == "subscribed" ? (
         <SettingsMenu
           // label={"View Verification Docs"}
-          label={"Verify Account"}
+          label={TranslationStrings.VERIFY_ACCOUNT}
           icon={"shield-check"}
           color={"blue"}
           labelPress={() => navigation.navigate("VerificationDocuments")}
@@ -110,7 +111,7 @@ const Settings = ({ navigation }) => {
       ) : (
         <SettingsMenu
           // label={"Upload Verification Docs"}
-          label={"Verify Account"}
+          label={TranslationStrings.VERIFY_ACCOUNT}
           icon={"shield-alert-outline"}
           color={"red"}
           labelPress={() => {
@@ -127,7 +128,7 @@ const Settings = ({ navigation }) => {
        //labelPress={()=>navigation.navigate('How to Use')}
        /> */}
       <CustomButtonhere
-        title={"LOGOUT"}
+        title={TranslationStrings.LOGOUT}
         widthset={78}
         topDistance={30}
         icon={"power"}

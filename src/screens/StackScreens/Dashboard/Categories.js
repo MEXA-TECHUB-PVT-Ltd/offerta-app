@@ -31,6 +31,7 @@ import { appImages } from "../../../constant/images";
 
 ///////////////////app fonts/////////////
 import { fontFamily } from "../../../constant/fonts";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Categories = ({ navigation, route }) => {
   /////////////category state and function/////////////
@@ -45,7 +46,6 @@ const Categories = ({ navigation, route }) => {
         //console.log("response get here dispatcher", JSON.stringify(response.data))
         setCategory(response.data);
         setRefreshing(false);
-        console.log("response.data  :   ", response.data);
       })
       .catch(function (error) {
         console.log("error", error);
@@ -73,7 +73,7 @@ const Categories = ({ navigation, route }) => {
         }
       >
         <CustomHeader
-          headerlabel={"Categories"}
+          headerlabel={TranslationStrings.Categories}
           iconPress={() => {
             navigation.goBack();
           }}

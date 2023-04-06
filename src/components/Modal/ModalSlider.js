@@ -16,6 +16,7 @@ import Slider from "@react-native-community/slider";
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
 import { setSliderDistance } from "../../redux/actions";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const SliderModal = (props) => {
   ////////////////redux/////////////
@@ -40,7 +41,7 @@ const SliderModal = (props) => {
           ]}
         >
           <Text style={[styles.modaltext, { marginBottom: hp(5) }]}>
-            Select the Distance
+            {TranslationStrings.SELECT_THE_DISTANCE}
           </Text>
           <Text style={styles.modalsubtext}>{maxdistance}</Text>
           <Slider
@@ -59,7 +60,7 @@ const SliderModal = (props) => {
           />
           <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
             <TouchableOpacity onPress={props.onPress}>
-              <Text style={styles.Pendingtext}>Done</Text>
+              <Text style={styles.Pendingtext}>{TranslationStrings.DONE}</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -44,6 +44,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Snackbar } from "react-native-paper";
+import TranslationStrings from "../../../../../utills/TranslationStrings";
 
 const CardDetails = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -191,7 +192,7 @@ const CardDetails = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Buy"}
+          headerlabel={TranslationStrings.BUY}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -239,14 +240,16 @@ const CardDetails = ({ navigation, route }) => {
             marginVertical: hp(2),
           }}
         >
-          <Text style={styles.timelinetext}>Card Info</Text>
+          <Text style={styles.timelinetext}>
+            {TranslationStrings.CARD_INFO}
+          </Text>
         </View>
         <View>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={cardno}
-            placeholder="Enter Card Number"
+            placeholder={TranslationStrings.ENTER_CARD_NUMBER}
             keyboard_type={"number-pad"}
             onTermChange={(text) => {
               text = text
@@ -259,7 +262,7 @@ const CardDetails = ({ navigation, route }) => {
           <CustomTextInput
             type={"withouticoninput"}
             term={expirydate}
-            placeholder="expiry date ( MM/YY )"
+            placeholder={TranslationStrings.EXPIRY_DATE + " ( MM/YY )"}
             maxLength={5}
             keyboard_type={"number-pad"}
             onTermChange={(text) => {
@@ -276,7 +279,7 @@ const CardDetails = ({ navigation, route }) => {
           <CustomTextInput
             type={"withouticoninput"}
             term={cvv}
-            placeholder="Enter CVC"
+            placeholder={TranslationStrings.ENTER_CVC}
             keyboard_type={"number-pad"}
             onTermChange={(newcvv) => setCvv(newcvv)}
           />
@@ -292,7 +295,7 @@ const CardDetails = ({ navigation, route }) => {
               term={countryname}
               editable={false}
               disable={false}
-              placeholder="Select Country"
+              placeholder={TranslationStrings.SELECT_COUNTRY}
               onTermChange={(newcountry) => setCountryName(newcountry)}
             />
           </TouchableOpacity>
@@ -304,7 +307,9 @@ const CardDetails = ({ navigation, route }) => {
             paddingHorizontal: wp(5),
           }}
         >
-          <Text style={styles.timelinetext}>Save Card</Text>
+          <Text style={styles.timelinetext}>
+            {TranslationStrings.SAVE_CARD}
+          </Text>
           <Checkbox
             status={checked ? "checked" : "unchecked"}
             color={Colors.activetextinput}
@@ -316,7 +321,7 @@ const CardDetails = ({ navigation, route }) => {
 
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"PAY"}
+            title={TranslationStrings.PAY}
             widthset={80}
             topDistance={10}
             onPress={() => {
@@ -341,7 +346,7 @@ const CardDetails = ({ navigation, route }) => {
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}
         Icon={appImages.sucess}
-        text={"Sucess"}
+        text={TranslationStrings.SUCCESS}
         subtext={"Payed Successfully"}
         buttontext={"OK"}
         onPress={() => {

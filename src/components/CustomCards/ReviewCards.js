@@ -14,7 +14,6 @@ import {
 import { appImages } from "../../constant/images";
 
 const ReviewCards = (props) => {
-  console.log("props here:", props);
   return (
     <View style={styles.card}>
       <View style={{ paddingHorizontal: wp(5) }}>

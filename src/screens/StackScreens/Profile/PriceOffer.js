@@ -11,6 +11,7 @@ import styles from "./styles";
 
 /////////////////////api function//////////////
 import { get_Incoming_Exchnages } from "../../../api/GetExchanges";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const PriceOfferList = ({ navigation }) => {
   ////////////////LIST DATA/////////
@@ -37,7 +38,10 @@ const PriceOfferList = ({ navigation }) => {
       />
       <View style={{ flex: 1 }}>
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

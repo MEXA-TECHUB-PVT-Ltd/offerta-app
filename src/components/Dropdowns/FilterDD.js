@@ -14,7 +14,13 @@ import {
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setSortByDD,setSortByDDValue,setPostWithinDD,setPostWithinDDValue} from "../../redux/actions";
+import {
+  setSortByDD,
+  setSortByDDValue,
+  setPostWithinDD,
+  setPostWithinDDValue,
+} from "../../redux/actions";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const FilterDD = (props) => {
   /////////////redux states///////
@@ -22,14 +28,14 @@ const FilterDD = (props) => {
   const dispatch = useDispatch();
 
   const [rangedata] = useState([
-    {id:'1',post_within:'One Day',value:"1_day"},
-    {id:'2',post_within:'One Week',value:"7_day"},
-    {id:'3',post_within:'One Month',value:"month"},
+    { id: "1", post_within: TranslationStrings.ONE_DAY, value: "1_day" },
+    { id: "2", post_within: TranslationStrings.ONE_WEEK, value: "7_day" },
+    { id: "3", post_within: TranslationStrings.ONE_MONTH, value: "month" },
   ]);
-const [sortdata] = useState([
-  {id:'1',sortBy:'Name',value:'a'},
-  {id:'2',sortBy:"Time",value:'t'},
-]);
+  const [sortdata] = useState([
+    { id: "1", sortBy: TranslationStrings.NAME, value: "a" },
+    { id: "2", sortBy: TranslationStrings.TIME, value: "t" },
+  ]);
   return (
     <RBSheet
       //sstyle={{flex:1}}
@@ -59,28 +65,33 @@ const [sortdata] = useState([
           flexDirection: "row",
           justifyContent: "space-between",
           marginHorizontal: 0,
-
         }}
       >
-        <Text style={styles.bottomsheettext}>{props.type === "PostedRange"?"Select Posted Range":"Select Sort By"}</Text>
+        <Text style={styles.bottomsheettext}>
+          {props.type === "PostedRange"
+            ? TranslationStrings.SELECT_POSTED_RANGE
+            : TranslationStrings.SELECT_SORT_BY}
+        </Text>
       </View>
       <FlatList
-        data={props.type === "PostedRange"?rangedata: sortdata}
+        data={props.type === "PostedRange" ? rangedata : sortdata}
         renderItem={({ item, index, separators }) => (
           <TouchableOpacity
-          activeOpacity={0.7}
+            activeOpacity={0.7}
             onPress={() => {
-                props.type === "PostedRange"?
-              dispatch(setPostWithinDD(item.post_within)):
-              dispatch(setSortByDD(item.sortBy))
-              props.type === "PostedRange"?
-              dispatch(setPostWithinDDValue(item.value)):
-              dispatch(setSortByDDValue(item.value))
-                props.refRBSheet.current.close();
+              props.type === "PostedRange"
+                ? dispatch(setPostWithinDD(item.post_within))
+                : dispatch(setSortByDD(item.sortBy));
+              props.type === "PostedRange"
+                ? dispatch(setPostWithinDDValue(item.value))
+                : dispatch(setSortByDDValue(item.value));
+              props.refRBSheet.current.close();
             }}
           >
             <View style={styles.card}>
-              <Text style={styles.cardtext}>{props.type === "PostedRange"?item.post_within :item.sortBy}</Text>
+              <Text style={styles.cardtext}>
+                {props.type === "PostedRange" ? item.post_within : item.sortBy}
+              </Text>
             </View>
           </TouchableOpacity>
         )}

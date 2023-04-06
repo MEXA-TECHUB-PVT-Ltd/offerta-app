@@ -42,13 +42,24 @@ const CustomHeader = ({
         onPress={iconPress}
         style={{ marginLeft: wp(3) }}
       />
-        <Text style={styles.label}>{headerlabel}</Text>
+      <Text
+        // numberOfLines={1}
+        style={{
+          ...styles.label,
+          textAlign: "left",
+          flex: 1,
+          textTransform: "capitalize",
+        }}
+      >
+        {headerlabel}
+      </Text>
+
       {type === "left_icon" ? (
         <MaterialCommunityIcons
           name={searchicon}
           size={25}
           color={"white"}
-          style={{ marginLeft: wp(25) }}
+          // style={{ marginLeft: wp(25) }}
           onPress={onpresseacrh}
         />
       ) : null}

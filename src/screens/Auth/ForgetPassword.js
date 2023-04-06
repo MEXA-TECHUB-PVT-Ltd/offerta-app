@@ -40,6 +40,7 @@ import axios from "axios";
 import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const ForgetPassword = ({ navigation }) => {
   //Modal States
@@ -100,12 +101,20 @@ const ForgetPassword = ({ navigation }) => {
   };
   //Api form validation
   const formValidation = async () => {
+    // navigation.navigate("Verification");
+    // return;
     // input validation
     if (email == "") {
-      setsnackbarValue({ value: "Please Enter Email", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_EMAIL,
+        color: "red",
+      });
       setVisible("true");
     } else if (!handleValidEmail(email)) {
-      setsnackbarValue({ value: "Incorrect Email", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.INCORRECT_EMAIL,
+        color: "red",
+      });
       setVisible("true");
     } else {
       setloading(1);
@@ -135,9 +144,11 @@ const ForgetPassword = ({ navigation }) => {
         </View>
         <View>
           <View style={Authstyles.textview}>
-            <Text style={Authstyles.maintext}>Forget Password</Text>
-            <Text style={Authstyles.subtext}>
-              Enter email to get a verification code
+            <Text style={Authstyles.maintext}>
+              {TranslationStrings.FORGET_PASSWORD}
+            </Text>
+            <Text style={{ ...Authstyles.subtext, width: "auto" }}>
+              {TranslationStrings.ENTER_EMAIL_TO_GET_A_VERIFICATION_CODE}
             </Text>
           </View>
           <View>
@@ -146,7 +157,7 @@ const ForgetPassword = ({ navigation }) => {
               type={"iconinput"}
               texterror={"invalid"}
               term={email}
-              placeholder="Email Address"
+              placeholder={TranslationStrings.EMAIL_ADDRESS}
               onTermChange={(newEmail) => setEmail(newEmail)}
             />
           </View>
@@ -154,7 +165,7 @@ const ForgetPassword = ({ navigation }) => {
 
         <View style={{ marginTop: hp(0), marginBottom: hp(35) }}>
           <CustomButtonhere
-            title={"GET CODE"}
+            title={TranslationStrings.GET_CODE}
             widthset={80}
             topDistance={35}
             loading={loading}
@@ -180,9 +191,9 @@ const ForgetPassword = ({ navigation }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.failed}
-          text={"Error"}
-          subtext={"Something went wrong"}
-          buttontext={"GO BACK"}
+          text={TranslationStrings.ERROR}
+          subtext={TranslationStrings.SOMETHING_WENT_WRONG}
+          buttontext={TranslationStrings.GO_BACK}
           onPress={() => {
             setModalVisible(false);
           }}

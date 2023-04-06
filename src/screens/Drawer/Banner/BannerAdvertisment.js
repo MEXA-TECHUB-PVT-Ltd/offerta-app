@@ -32,6 +32,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /////////////////////app images/////////////////////
 import { appImages } from "../../../constant/images";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const BannerAdvertisment = ({ navigation, route }) => {
   //////////render html width///////////
@@ -83,7 +84,7 @@ const BannerAdvertisment = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Banner Advertisment"}
+          headerlabel={TranslationStrings.BANNER_ADVERTISEMENT}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -99,7 +100,7 @@ const BannerAdvertisment = ({ navigation, route }) => {
         </View>
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"CONTINUE"}
+            title={TranslationStrings.CONTINUE}
             widthset={80}
             topDistance={10}
             onPress={() => {

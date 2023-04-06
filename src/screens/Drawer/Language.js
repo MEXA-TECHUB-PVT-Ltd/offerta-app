@@ -20,12 +20,54 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import TranslationStrings, {
+  ChangeAppLanguage,
+} from "../../utills/TranslationStrings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Language = ({ navigation, route }) => {
-  const [Englishisfocused, setEnglishisFocused] = useState(true);
+  const [Englishisfocused, setEnglishisFocused] = useState(false);
   const [Frenchisfocused, setFrenchisFocused] = useState(false);
   const [Arabicisfocused, setArabicisFocused] = useState(false);
-  useEffect(() => {}, []);
+  const [SpanishISFocused, setSpanishISFocused] = useState(false);
+
+  useEffect(() => {
+    getSelectedLanguage();
+  }, []);
+
+  const getSelectedLanguage = async () => {
+    let language = await AsyncStorage.getItem("Language");
+    if (language == "en") {
+      setEnglishisFocused(true),
+        setFrenchisFocused(false),
+        setArabicisFocused(false);
+      setSpanishISFocused(false);
+    } else if (language == "es") {
+      setEnglishisFocused(false),
+        setFrenchisFocused(false),
+        setArabicisFocused(false);
+      setSpanishISFocused(true);
+    }
+  };
+
+  const handleEnglishPress = async () => {
+    setEnglishisFocused(true),
+      setFrenchisFocused(false),
+      setArabicisFocused(false);
+    setSpanishISFocused(false);
+    ChangeAppLanguage("en");
+    await AsyncStorage.setItem("Language", "en");
+    navigation.replace("Drawerroute");
+  };
+  const handleSpanishPress = async () => {
+    setEnglishisFocused(false),
+      setFrenchisFocused(false),
+      setArabicisFocused(false);
+    setSpanishISFocused(true);
+    ChangeAppLanguage("es");
+    await AsyncStorage.setItem("Language", "es");
+    navigation.replace("Drawerroute");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -33,7 +75,7 @@ const Language = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Language"}
+          headerlabel={TranslationStrings.Language}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -50,17 +92,22 @@ const Language = ({ navigation, route }) => {
             },
           ]}
           onPress={() => {
-            setEnglishisFocused(true),
-              setFrenchisFocused(false),
-              setArabicisFocused(false);
+            handleEnglishPress();
           }}
         >
-          <Text style={[styles.languagetext,    {
+          <Text
+            style={[
+              styles.languagetext,
+              {
                 color:
-                Englishisfocused === false
+                  Englishisfocused === false
                     ? Colors.inactivetextinput
                     : Colors.activetextinput,
-              },]}>English</Text>
+              },
+            ]}
+          >
+            English
+          </Text>
           {Englishisfocused === true ? (
             <Icon
               name={"checkmark"}
@@ -70,7 +117,45 @@ const Language = ({ navigation, route }) => {
             />
           ) : null}
         </TouchableOpacity>
+
         <TouchableOpacity
+          style={[
+            styles.Languagepickerview,
+            {
+              borderColor:
+                SpanishISFocused === false
+                  ? Colors.inactivetextinput
+                  : Colors.activetextinput,
+            },
+          ]}
+          onPress={() => {
+            handleSpanishPress();
+          }}
+        >
+          <Text
+            style={[
+              styles.languagetext,
+              {
+                color:
+                  SpanishISFocused === false
+                    ? Colors.inactivetextinput
+                    : Colors.activetextinput,
+              },
+            ]}
+          >
+            Spanish
+          </Text>
+          {SpanishISFocused === true ? (
+            <Icon
+              name={"checkmark"}
+              size={25}
+              color={Colors.activetextinput}
+              style={{ marginLeft: wp(30) }}
+            />
+          ) : null}
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity
           style={[
             styles.Languagepickerview,
             {
@@ -86,12 +171,19 @@ const Language = ({ navigation, route }) => {
               setArabicisFocused(false);
           }}
         >
-          <Text style={[styles.languagetext,    {
+          <Text
+            style={[
+              styles.languagetext,
+              {
                 color:
-                Frenchisfocused === false
+                  Frenchisfocused === false
                     ? Colors.inactivetextinput
                     : Colors.activetextinput,
-              },]}>French</Text>
+              },
+            ]}
+          >
+            French
+          </Text>
           {Frenchisfocused === true ? (
             <Icon
               name={"checkmark"}
@@ -138,7 +230,7 @@ const Language = ({ navigation, route }) => {
               style={{ marginLeft: wp(30) }}
             />
           ) : null}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
     </SafeAreaView>
   );

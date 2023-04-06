@@ -47,6 +47,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 ///////////////api functions///////////
 import { get_Login_UserData, get_user_status } from "../../../api/GetApis";
 import BlockUserView from "../../../components/BlockUserView";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const EditProfile = ({ navigation, route }) => {
   /////////////previous data////////////
@@ -145,7 +146,8 @@ const EditProfile = ({ navigation, route }) => {
   /////////error stateand function/////////
   const [email_error, setEmailError] = useState("");
   const onpressemail = () => {
-    setEmailError("you can't edit your email");
+    // setEmailError("you can't edit your email");
+    setEmailError(TranslationStrings.YOU_CANNOT_EDIT_YOUR_EMAIL);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -156,7 +158,7 @@ const EditProfile = ({ navigation, route }) => {
         <StatusBar backgroundColor={"#26295E"} barStyle="light-content" />
 
         <CustomHeader
-          headerlabel={"Edit Profile"}
+          headerlabel={TranslationStrings.EDIT_PROFILE}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -216,7 +218,7 @@ const EditProfile = ({ navigation, route }) => {
               onNext={() => {
                 ref_input2.current.focus();
               }}
-              placeholder="Enter Username"
+              placeholder={TranslationStrings.ENTER_USERNAME}
               onTermChange={(newUsername) => setusername(newUsername)}
             />
             <CustomTextInput
@@ -228,7 +230,7 @@ const EditProfile = ({ navigation, route }) => {
               onNext={() => {
                 ref_input3.current.focus();
               }}
-              placeholder="Enter First Name"
+              placeholder={TranslationStrings.ENTER_FIRST_NAME}
               onTermChange={(newFname) => setfname(newFname)}
             />
             <CustomTextInput
@@ -236,7 +238,7 @@ const EditProfile = ({ navigation, route }) => {
               icon={appImages.lock}
               type={"withouticoninput"}
               term={lname}
-              placeholder="Enter Last Name"
+              placeholder={TranslationStrings.ENTER_LAST_NAME}
               onTermChange={(newLname) => setlname(newLname)}
             />
 
@@ -245,7 +247,7 @@ const EditProfile = ({ navigation, route }) => {
               icon={appImages.lock}
               type={"withouticoninput"}
               term={phoneNo}
-              placeholder="Enter Phone No"
+              placeholder={TranslationStrings.ENTER_PHONE_NUMBER}
               keyboard_type={"number-pad"}
               onTermChange={(text) => setPhoneNo(text)}
             />
@@ -297,7 +299,7 @@ const EditProfile = ({ navigation, route }) => {
         </View>
         <View style={{ flex: 0.7, marginTop: hp(0), marginBottom: hp(20) }}>
           <CustomButtonhere
-            title={"UPDATE"}
+            title={TranslationStrings.UPDATE}
             widthset={80}
             topDistance={18}
             loading={loading}
@@ -334,9 +336,9 @@ const EditProfile = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Sucess"}
-          subtext={"User Profile Updated"}
-          buttontext={"GO BACK"}
+          text={TranslationStrings.SUCCESS}
+          subtext={TranslationStrings.USER_PROFILE_UPDATED}
+          buttontext={TranslationStrings.GO_BACK}
           onPress={() => {
             setModalVisible(false);
             navigation?.goBack();

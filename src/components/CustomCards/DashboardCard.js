@@ -17,9 +17,9 @@ import {
 //////////////////app icons////////////////
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { fontFamily } from "../../constant/fonts";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const DashboardCard = (props) => {
-  console.log("props  :  ", props);
   const [checked, setChecked] = React.useState(true);
 
   /////////price formatter
@@ -72,7 +72,7 @@ const DashboardCard = (props) => {
                   color: "#fff",
                 }}
               >
-                Sold
+                {TranslationStrings.SOLD}
               </Text>
             </View>
           )}

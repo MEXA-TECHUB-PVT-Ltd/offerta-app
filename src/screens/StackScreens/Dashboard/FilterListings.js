@@ -38,6 +38,7 @@ import { appImages } from "../../../constant/images";
 import axios from "axios";
 import { BASE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const FilterListings = ({ navigation, route }) => {
   const isFocused = useIsFocused();
@@ -139,7 +140,7 @@ const FilterListings = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       > */}
       <CustomHeader
-        headerlabel={"Filter Results"}
+        headerlabel={TranslationStrings.FILTER_RESULTS}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -147,7 +148,10 @@ const FilterListings = ({ navigation, route }) => {
       />
       <Loader isLoading={loading} />
       {Categorylist === "no" ? (
-        <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+        <NoDataFound
+          icon={"exclamation-thick"}
+          text={TranslationStrings.NO_DATA_FOUND}
+        />
       ) : (
         <FlatList
           data={Categorylist}

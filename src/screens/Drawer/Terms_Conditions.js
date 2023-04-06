@@ -23,6 +23,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const TermsCondition = ({ navigation }) => {
   //////////render html width///////////
@@ -62,7 +63,7 @@ const TermsCondition = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Terms & Conditions"}
+          headerlabel={TranslationStrings.TERMS_AND_CONDITIONS}
           iconPress={() => {
             navigation.goBack();
           }}

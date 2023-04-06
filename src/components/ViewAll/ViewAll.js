@@ -22,6 +22,7 @@ import { fontFamily } from "../../constant/fonts";
 
 ////////////////app redux///////////
 import { useSelector } from "react-redux";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const ViewAll = ({ navigation, headerlabel, onpress }) => {
   ////////////////////redux/////////////////////
@@ -31,7 +32,7 @@ const ViewAll = ({ navigation, headerlabel, onpress }) => {
     <View style={[style.headerView]} onPress={onpress}>
       <Text style={style.leftlabeltext}>{headerlabel}</Text>
       <TouchableOpacity onPress={onpress}>
-        <Text style={style.rightlabeltext}>View All</Text>
+        <Text style={style.rightlabeltext}>{TranslationStrings.VIEW_ALL}</Text>
       </TouchableOpacity>
     </View>
   );

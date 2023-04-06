@@ -25,22 +25,21 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
+
     elevation: 5,
   },
   balancetext: {
     color: Colors.appgreycolor,
     fontSize: hp(1.7),
     fontFamily: fontFamily.Poppins_Regular,
-
   },
   btnview: {
     backgroundColor: Colors.Appthemecolor,
     width: wp(25),
     height: hp(4.5),
     borderRadius: wp(5),
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   btntext: {
     color: "white",
@@ -65,14 +64,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
+
     elevation: 5,
   },
   blogimage: {
     height: hp(14),
     width: wp(41),
-    borderTopRightRadius:wp(3),
-    borderTopLeftRadius:wp(3)
+    borderTopRightRadius: wp(3),
+    borderTopLeftRadius: wp(3),
   },
   blogmaintext: {
     color: Colors.Appthemecolor,
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     marginTop: hp(0),
     fontSize: hp(1),
     fontFamily: fontFamily.Poppins_Regular,
-    marginLeft:wp(1.5)
+    marginLeft: wp(1.5),
   },
 
   ////////////////////Dashboard///////////
@@ -107,14 +106,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    
+
     elevation: 3,
   },
   dasboardimage: {
     height: hp(15),
     width: wp(15),
-    borderTopRightRadius:wp(3),
-    borderTopLeftRadius:wp(3)
+    borderTopRightRadius: wp(3),
+    borderTopLeftRadius: wp(3),
   },
   dashboardmaintext: {
     color: Colors.Appthemecolor,
@@ -147,14 +146,13 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    
+
     elevation: 3,
-    
   },
   Categoriesimage: {
     height: hp(5),
     width: wp(20),
-    resizeMode:'contain'
+    resizeMode: "contain",
   },
   Categoriestext: {
     color: Colors.activetextinput,
@@ -180,7 +178,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    
+
     elevation: 3,
   },
   itemmaintext: {
@@ -189,7 +187,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Medium,
     //width: wp(0),
     textAlign: "center",
-   // marginTop:hp(2)
+    // marginTop:hp(2)
   },
   itemsubtext: {
     color: "#303030",
@@ -232,14 +230,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
+
     elevation: 5,
   },
   Exchangeimage: {
     height: hp(8),
     width: wp(18),
-    resizeMode:'contain',
-    borderRadius:wp(3)
+    resizeMode: "contain",
+    borderRadius: wp(3),
   },
   Exchangetext: {
     color: Colors.Appthemecolor,
@@ -247,14 +245,14 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Medium,
   },
   Exchangesubtext: {
-    color: '#404040',
+    color: "#404040",
     fontSize: hp(1.3),
     fontFamily: fontFamily.Poppins_Medium,
     width: wp(55),
-    marginTop:hp(1)
+    marginTop: hp(1),
   },
   Exchangepricetext: {
-    color: '#363636',
+    color: "#363636",
     fontSize: hp(1.5),
     fontFamily: fontFamily.Poppins_Medium,
     width: wp(10),
@@ -277,7 +275,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
+
     elevation: 5,
   },
   Promotionsimage: {
@@ -308,7 +306,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Regular,
   },
 
-
   /////////////////////////Reviews////////////////////
   usertext: {
     fontFamily: fontFamily.Poppins_Medium,
@@ -318,7 +315,7 @@ const styles = StyleSheet.create({
   userfullnametext: {
     fontFamily: fontFamily.Poppins_Regular,
     fontSize: hp(1.6),
-    color: '#404040',
+    color: "#404040",
   },
   subtext: {
     fontFamily: fontFamily.Poppins_Regular,
@@ -327,19 +324,18 @@ const styles = StyleSheet.create({
   },
 
   ////////////////////shipping address//////////////
-  shippingview:{
-     flexDirection: "row",
-      justifyContent: "space-between",
-      marginBottom:hp(0.5)
-    },
-    shippinglefttext:
-    {
-      color: Colors.Appthemecolor,
-      fontSize: hp(1.8),
-      fontFamily:fontFamily.Poppins_SemiBold
-    },
+  shippingview: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: hp(0.5),
+  },
+  shippinglefttext: {
+    color: Colors.Appthemecolor,
+    fontSize: hp(1.8),
+    fontFamily: fontFamily.Poppins_SemiBold,
+  },
 
-      ////////////////////////Exchange Offers/////////////////
+  ////////////////////////Exchange Offers/////////////////
   Exchangeofferscard: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -360,20 +356,20 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
+
     elevation: 5,
   },
   Exchangeoffericon: {
     height: hp(8),
     width: wp(8),
-    resizeMode:'contain',
-    borderRadius:wp(3)
+    resizeMode: "contain",
+    borderRadius: wp(3),
   },
   Exchangeofferimage: {
     height: hp(12),
     width: wp(32),
-    resizeMode:'contain',
-    borderRadius:wp(3)
+    resizeMode: "contain",
+    borderRadius: wp(3),
   },
   Exchangetext: {
     color: Colors.Appthemecolor,
@@ -381,14 +377,14 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Medium,
   },
   Exchangesubtext: {
-    color: '#404040',
+    color: "#404040",
     fontSize: hp(1.3),
     fontFamily: fontFamily.Poppins_Medium,
     width: wp(55),
-    marginTop:hp(1)
+    marginTop: hp(1),
   },
   Exchangepricetext: {
-    color: '#363636',
+    color: "#363636",
     fontSize: hp(1.5),
     fontFamily: fontFamily.Poppins_Medium,
     width: wp(10),

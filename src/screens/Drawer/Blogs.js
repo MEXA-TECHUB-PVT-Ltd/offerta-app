@@ -10,6 +10,7 @@ import styles from "./styles";
 
 /////////////api function/////////////////
 import { get_All_Blogs } from "../../api/Blogs";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const Blogs = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
@@ -41,7 +42,7 @@ const Blogs = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Blogs"}
+        headerlabel={TranslationStrings.BLOGS}
         iconPress={() => {
           navigation.goBack();
         }}

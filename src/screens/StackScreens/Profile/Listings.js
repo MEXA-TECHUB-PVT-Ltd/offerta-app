@@ -21,6 +21,7 @@ import { get_User_Listings } from "../../../api/GetApis";
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../../../utills/Colors";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Listings = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
@@ -94,14 +95,17 @@ const Listings = ({ navigation, route }) => {
         }
       >
         <CustomHeader
-          headerlabel={"Listings"}
+          headerlabel={TranslationStrings.LISTINGS}
           iconPress={() => {
             navigation.goBack();
           }}
           icon={"arrow-back"}
         />
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

@@ -36,6 +36,7 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 
 ////////////////app Images///////////////
 import { appImages } from "../../../constant/images";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Search = ({ navigation, route }) => {
   ///////////////post search state////////////
@@ -111,7 +112,7 @@ const Search = ({ navigation, route }) => {
               style={{}}
             />
 
-            <Text style={styles.text}>{item.item}</Text>
+            <Text style={styles.text}>{item.item?.title}</Text>
           </View>
           {/* <Image
         source={appImages.AddIcon}
@@ -150,7 +151,7 @@ const Search = ({ navigation, route }) => {
           <View style={{ marginLeft: wp(3) }}></View>
           <SearchTextInput
             term={search}
-            placeholder="Search Here"
+            placeholder={TranslationStrings.SEARCH_HERE}
             onTermChange={(searchhere) => setSearch(searchhere)}
             searchiconpress={() => listing_Search(search)}
           />
@@ -158,7 +159,9 @@ const Search = ({ navigation, route }) => {
 
         {searchdata === "" ? (
           <View>
-            <Text style={styles.searchmaintext}>Trending Searches</Text>
+            <Text style={styles.searchmaintext}>
+              {TranslationStrings.TRENDING_SEARCHES}
+            </Text>
             <FlatList
               data={most_searchdata}
               renderItem={renderItem_most_search}
@@ -168,7 +171,10 @@ const Search = ({ navigation, route }) => {
             />
           </View>
         ) : searchdata === "No data Found" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
         ) : (
           <FlatList
             data={searchdata}

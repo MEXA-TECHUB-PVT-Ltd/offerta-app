@@ -28,6 +28,7 @@ import { get_User_Liked_Listings } from "../../../api/GetApis";
 
 /////////////image url//////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
+import TranslationStrings from "../../../utills/TranslationStrings";
 const LikedItems = ({ navigation }) => {
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
@@ -45,7 +46,7 @@ const LikedItems = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Liked Items"}
+        headerlabel={TranslationStrings.LIKED_ITEMS}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -53,7 +54,10 @@ const LikedItems = ({ navigation }) => {
       />
       <View style={{ flex: 1 }}>
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

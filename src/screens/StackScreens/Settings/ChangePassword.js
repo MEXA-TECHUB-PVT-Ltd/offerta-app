@@ -33,6 +33,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../../constant/fonts";
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const ChangePassword = ({ navigation, route }) => {
   /////////////////////previous data//////////////
@@ -151,7 +152,7 @@ const ChangePassword = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Settings"}
+          headerlabel={TranslationStrings.CHANGE_PASSWORD}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -163,21 +164,21 @@ const ChangePassword = ({ navigation, route }) => {
               icon={appImages.lock}
               type={"iconinput"}
               term={old_password}
-              placeholder="Old Password"
+              placeholder={TranslationStrings.OLD_PASSWORD}
               onTermChange={(newPassword) => setOldPassword(newPassword)}
             />
             <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={password}
-              placeholder="New Password"
+              placeholder={TranslationStrings.NEW_PASSWORD}
               onTermChange={(newPassword) => setPassword(newPassword)}
             />
             <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={confirmPassword}
-              placeholder="Confirm Password"
+              placeholder={TranslationStrings.CONFIRM_PASSWORD}
               onTermChange={(newPassword) => setConfirmPassword(newPassword)}
             />
           </View>
@@ -185,7 +186,7 @@ const ChangePassword = ({ navigation, route }) => {
 
         <View style={{ marginTop: hp(25) }}>
           <CustomButtonhere
-            title={"CHANGE"}
+            title={TranslationStrings.CHANGE}
             widthset={80}
             topDistance={0}
             loading={loading}
