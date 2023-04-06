@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const ShippingAddressList = ({ navigation }) => {
   ////////////////navigation/////////////////
@@ -58,7 +59,7 @@ const ShippingAddressList = ({ navigation }) => {
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
 
       <CustomHeader
-        headerlabel={"Shipping Address"}
+        headerlabel={TranslationStrings.SHIPPING_ADDRESS}
         iconPress={() => {
           navigation.goBack();
         }}

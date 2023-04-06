@@ -23,6 +23,7 @@ import {
 
 //////////////api helper functions////////
 import { GetCategories, GetSubCategories } from "../../api/GetApis";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const Categories = (props) => {
   /////////////redux states///////
@@ -88,7 +89,9 @@ const Categories = (props) => {
           marginHorizontal: 0,
         }}
       >
-        <Text style={styles.bottomsheettext}>Select Category</Text>
+        <Text style={styles.bottomsheettext}>
+          {TranslationStrings.SELECT_CATEGORY}
+        </Text>
       </View>
       <FlatList
         data={props.type === "subcategory" ? subdddata : dddata}

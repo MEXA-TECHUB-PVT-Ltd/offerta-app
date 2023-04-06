@@ -43,6 +43,7 @@ import {
   get_Login_User_Followers,
   get_Login_User_Followings,
 } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Profile = ({ navigation }) => {
   ////////////isfocused//////////
@@ -133,24 +134,24 @@ const Profile = ({ navigation }) => {
         >
           <View style={{ marginTop: hp(23), marginBottom: hp(2) }}>
             <SettingsMenu
-              label={"Listings"}
+              label={TranslationStrings.LISTINGS}
               labelPress={() => navigation.navigate("Listings")}
             />
             <SettingsMenu
-              label={"Liked Items"}
+              label={TranslationStrings.LIKED_ITEMS}
               labelPress={() => navigation.navigate("LikedItems")}
             />
             <SettingsMenu
-              label={"Exchanges"}
+              label={TranslationStrings.EXCHANGES}
               labelPress={() => navigation.navigate("Exchanges")}
             />
 
             <SettingsMenu
-              label={"Promotions"}
+              label={TranslationStrings.PROMOTIONS}
               labelPress={() => navigation.navigate("Promotions")}
             />
             <SettingsMenu
-              label={"Sale & Orders"}
+              label={TranslationStrings.SALE_AND_ORDERS}
               labelPress={() => navigation.navigate("SalesOrders")}
             />
           </View>
@@ -173,9 +174,9 @@ const Profile = ({ navigation }) => {
           followers={followers}
           following={following}
           ratting={ratting}
-          ratting_text={"Rate"}
-          following_text={"Followers"}
-          followers_text={"Followings"}
+          ratting_text={TranslationStrings.RATE}
+          following_text={TranslationStrings.FOLLOWERS}
+          followers_text={TranslationStrings.FOLLOWINGS}
           // followStatus={
           //   follow_user_id === login_user_id ? "Unfollow" : "follow"
           // }

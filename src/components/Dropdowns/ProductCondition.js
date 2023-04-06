@@ -14,7 +14,8 @@ import {
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setProductCondition} from "../../redux/actions";
+import { setProductCondition } from "../../redux/actions";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const ProductCondition = (props) => {
   /////////////redux states///////
@@ -23,11 +24,10 @@ const ProductCondition = (props) => {
 
   //////////dropdownlink data/////////////
   const [dddata] = useState([
-    {id:'1',condition:'like new'},
-    {id:'2',condition:'lightly used'},
-    {id:'3',condition:'heavely used'},
-
-]);
+    { id: "1", condition: "like new" },
+    { id: "2", condition: "lightly used" },
+    { id: "3", condition: "heavely used" },
+  ]);
   return (
     <RBSheet
       //sstyle={{flex:1}}
@@ -57,16 +57,17 @@ const ProductCondition = (props) => {
           flexDirection: "row",
           justifyContent: "space-between",
           marginHorizontal: 0,
-
         }}
       >
-        <Text style={styles.bottomsheettext}>{"Select Product Condition"}</Text>
+        <Text style={styles.bottomsheettext}>
+          {TranslationStrings.PRODUCT_CONDITION}
+        </Text>
       </View>
       <FlatList
         data={dddata}
         renderItem={({ item, index, separators }) => (
           <TouchableOpacity
-          activeOpacity={0.7}
+            activeOpacity={0.7}
             onPress={() => {
               dispatch(setProductCondition(item.condition)),
                 props.refRBSheet.current.close();

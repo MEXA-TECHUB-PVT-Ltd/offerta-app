@@ -45,6 +45,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Snackbar } from "react-native-paper";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const ShippingAddresss = ({ navigation, route }) => {
   /////////////////////////redux///////////////////
@@ -137,7 +138,7 @@ const ShippingAddresss = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Add Shipping Address"}
+          headerlabel={TranslationStrings.ADD_SHIPPING_ADDRESS}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -173,13 +174,13 @@ const ShippingAddresss = ({ navigation, route }) => {
           <CustomTextInput
             type={"withouticoninput"}
             term={shipping_state.address_1}
-            placeholder="Enter address 1"
+            placeholder={TranslationStrings.ENTER_ADDRESS_1}
             onTermChange={(value) => handleChange(value, "address_1")}
           />
           <CustomTextInput
             type={"withouticoninput"}
             term={shipping_state.address_2}
-            placeholder="Enter address 2"
+            placeholder={TranslationStrings.ENTER_ADDRESS_2}
             onTermChange={(value) => handleChange(value, "address_2")}
           />
           <TouchableOpacity onPress={() => refCountryddRBSheet.current.open()}>
@@ -189,7 +190,7 @@ const ShippingAddresss = ({ navigation, route }) => {
               term={country_name}
               editable={false}
               disable={false}
-              placeholder="Select Country"
+              placeholder={TranslationStrings.SELECT_COUNTRY}
               onTermChange={(value) => handleChange(value, "country")}
             />
           </TouchableOpacity>
@@ -200,7 +201,7 @@ const ShippingAddresss = ({ navigation, route }) => {
               term={city_name}
               editable={false}
               disable={false}
-              placeholder="Select City"
+              placeholder={TranslationStrings.SELECT_CITY}
               onTermChange={(value) => handleChange(value, "city")}
             />
           </TouchableOpacity>
@@ -233,14 +234,14 @@ const ShippingAddresss = ({ navigation, route }) => {
           <CustomTextInput
             type={"iconinput"}
             term={shipping_state.zip_code}
-            placeholder="Enter ZIP code"
+            placeholder={TranslationStrings.ENTER_ZIP_CODE}
             keyboard_type={"numeric"}
             onTermChange={(value) => handleChange(value, "zip_code")}
           />
           <CustomTextInput
             type={"withouticoninput"}
             term={shipping_state.phone_number}
-            placeholder="Enter Phone Number"
+            placeholder={TranslationStrings.ENTER_PHONE_NUMBER}
             keyboard_type={"numeric"}
             onTermChange={(value) => handleChange(value, "phone_number")}
           />
@@ -248,7 +249,7 @@ const ShippingAddresss = ({ navigation, route }) => {
 
         <View style={{ marginBottom: hp(12) }}>
           <CustomButtonhere
-            title={"SAVE"}
+            title={TranslationStrings.SAVE}
             widthset={80}
             topDistance={10}
             loading={loading}

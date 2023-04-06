@@ -37,6 +37,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 
 //////////////IMAGE URL/////////////////
 import { ADMIN_IMAGE_URL } from "../../../utills/ApiRootUrl";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const BlogsDetails = ({ navigation, route }) => {
   //////////////////previous data/////////
@@ -195,7 +196,7 @@ const BlogsDetails = ({ navigation, route }) => {
             paddingHorizontal: wp(5),
           }}
         >
-          <Text style={styles.lefttext}>Referrences</Text>
+          <Text style={styles.lefttext}>{TranslationStrings.REFERENCES}</Text>
           <Text style={styles.righttext} onPress={() => handlePress()}>
             {blog_reference}
           </Text>
@@ -207,7 +208,7 @@ const BlogsDetails = ({ navigation, route }) => {
             marginBottom: hp(2),
           }}
         >
-          <Text style={styles.lefttext}>Description</Text>
+          <Text style={styles.lefttext}>{TranslationStrings.DESCRIPTION}</Text>
         </View>
         <View style={{ marginHorizontal: wp(5), marginBottom: hp(2) }}>
           <View style={{ alignItems: "center" }}>

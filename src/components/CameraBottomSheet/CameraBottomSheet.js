@@ -34,6 +34,7 @@ import { appImages } from "../../constant/images";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Image } from "react-native-compressor";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const CamerBottomSheet = (props) => {
   const navigation = useNavigation();
@@ -272,7 +273,7 @@ const CamerBottomSheet = (props) => {
           alignItems: "center",
         }}
       >
-        <Text style={styles.maintext}>Upload Image</Text>
+        <Text style={styles.maintext}>{TranslationStrings.UPLOAD_IMAGE}</Text>
         <TouchableOpacity onPress={() => props.refRBSheet.current.close()}>
           <Ionicons
             name="close"
@@ -303,7 +304,9 @@ const CamerBottomSheet = (props) => {
         >
           <Ionicons name="camera" size={25} color={"#707070"} />
 
-          <Text style={styles.optiontext}>Upload from Camera</Text>
+          <Text style={styles.optiontext}>
+            {TranslationStrings.UPLOAD_FROM_CAMERA}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -332,7 +335,9 @@ const CamerBottomSheet = (props) => {
                  style={styles.uploadicon}
                   resizeMode='contain'
               /> */}
-          <Text style={styles.optiontext}>Upload from Gallery</Text>
+          <Text style={styles.optiontext}>
+            {TranslationStrings.UPLOAD_FROM_GALLERY}
+          </Text>
         </TouchableOpacity>
       </View>
     </RBSheet>

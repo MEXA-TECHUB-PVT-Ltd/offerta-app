@@ -46,6 +46,7 @@ const CustomButtonhere = ({
           styles.label,
           {
             color: iscolor === "login" ? Colors.Appthemecolor : "white",
+            textTransform: "uppercase",
             backgroundColor:
               iscolor === "login" ? "white" : Colors.Appthemecolor,
             width: wp(widthset / 2),

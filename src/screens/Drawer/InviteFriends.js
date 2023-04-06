@@ -23,6 +23,7 @@ import {
 
 ////////////////////app images////////
 import { appImages } from "../../constant/images";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const InviteFriends = ({ navigation }) => {
   return (
@@ -45,38 +46,49 @@ const InviteFriends = ({ navigation }) => {
             resizeMode="contain"
           />
         </View>
-        <View style={{ alignItems: "center",marginBottom:hp(5) }}>
-          <Text style={styles.friendsmaintext}>Invite friends via</Text>
+        <View style={{ alignItems: "center", marginBottom: hp(5) }}>
+          <Text style={styles.friendsmaintext}>
+            {TranslationStrings.INVITE_FRIENDS_VIA}
+          </Text>
         </View>
         <TouchableOpacity
-          style={[styles.friendsview,{backgroundColor:'#576AF4'}]} >
+          style={[styles.friendsview, { backgroundColor: "#576AF4" }]}
+        >
           <MaterialCommunityIcons
             name={"facebook-messenger"}
             size={25}
-            color={'white'}
+            color={"white"}
             onPress={() => navigation.goBack()}
           />
-          <Text style={styles.friendstext}>Invite friends via Messenger</Text>
+          <Text style={styles.friendstext}>
+            {TranslationStrings.INVITE_FRIENDS_VIA_MESSENGER}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.friendsview,{backgroundColor:'#00AC28'}]} >
+          style={[styles.friendsview, { backgroundColor: "#00AC28" }]}
+        >
           <MaterialCommunityIcons
             name={"whatsapp"}
             size={25}
-            color={'white'}
+            color={"white"}
             onPress={() => navigation.goBack()}
           />
-          <Text style={[styles.friendstext]}>Invite friends via Whatsapp</Text>
+          <Text style={[styles.friendstext]}>
+            {TranslationStrings.INVITE_FRIENDS_VIA_WHATSAPP}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.friendsview,,{backgroundColor:'#EA4335'}]} >
+          style={[styles.friendsview, , { backgroundColor: "#EA4335" }]}
+        >
           <MaterialCommunityIcons
             name={"email"}
             size={25}
-            color={'white'}
+            color={"white"}
             onPress={() => navigation.goBack()}
           />
-          <Text style={styles.friendstext}>Invite friends via Mail</Text>
+          <Text style={styles.friendstext}>
+            {TranslationStrings.INVITE_FRIENDS_VIA_MAIL}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

@@ -53,6 +53,7 @@ import {
   post_Follow_Users,
   post_UnFollow_Users,
 } from "../../../../api/PostApis";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const OtherProfile = ({ navigation }) => {
   ////////////isfocused//////////
@@ -182,7 +183,10 @@ const OtherProfile = ({ navigation }) => {
         >
           <View style={{ marginTop: hp(23), marginBottom: hp(2) }}>
             {data === "" ? (
-              <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+              <NoDataFound
+                icon={"exclamation-thick"}
+                text={TranslationStrings.NO_DATA_FOUND}
+              />
             ) : (
               <FlatList
                 data={data}

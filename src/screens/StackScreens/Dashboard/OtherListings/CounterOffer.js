@@ -50,6 +50,7 @@ import CustomModal from "../../../../components/Modal/CustomModal";
 import { counter_offer_Accept_OR_Reject } from "../../../../api/Offer";
 
 import { GetListingsDetails } from "../../../../api/GetApis";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 //////////////////appImages.//////////////////
 
@@ -232,7 +233,7 @@ const CounterOffer = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Counter Offer "}
+          headerlabel={TranslationStrings.COUNTER_OFFER}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -249,18 +250,22 @@ const CounterOffer = ({ navigation, route }) => {
           )}
         </View>
         <View style={{ paddingHorizontal: wp(3), marginTop: hp(3) }}>
-          <Text style={{ color: "black" }}>Item Price</Text>
+          <Text style={{ color: "black" }}>
+            {TranslationStrings.ITEM_PRICE}
+          </Text>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={route?.params.itemprice + "$"}
-            placeholder="Shipping Price"
+            placeholder={TranslationStrings.SHIPPING_PRICE}
             editable={false}
             //onTermChange={(my_price) => setMyPrice(my_price)}
             keyboard_type={"numeric"}
           />
 
-          <Text style={{ color: "black" }}>Offer Price</Text>
+          <Text style={{ color: "black" }}>
+            {TranslationStrings.OFFER_PRICE}
+          </Text>
           {route?.params?.senderId == currentUser ||
           route?.params?.type == "view" ? (
             <CustomTextInput
@@ -268,7 +273,7 @@ const CounterOffer = ({ navigation, route }) => {
               texterror={"invalid"}
               term={route?.params?.offer_price + "$"}
               editable={false}
-              placeholder="Enter Price"
+              placeholder={TranslationStrings.ENTER_PRICE}
               onTermChange={(offer_price) => setOfferPrice(offer_price)}
               keyboard_type={"numeric"}
             />
@@ -277,7 +282,7 @@ const CounterOffer = ({ navigation, route }) => {
               type={"withouticoninput"}
               texterror={"invalid"}
               term={offerprice}
-              placeholder="Enter Price"
+              placeholder={TranslationStrings.ENTER_PRICE}
               onTermChange={(offer_price) => setOfferPrice(offer_price)}
               keyboard_type={"numeric"}
             />
@@ -301,7 +306,7 @@ const CounterOffer = ({ navigation, route }) => {
               style={styles.btn}
               onPress={() => Listings_Exchange_Offer(offerprice)}
             >
-              <Text style={styles.btnText}>SUBMIT</Text>
+              <Text style={styles.btnText}>{TranslationStrings.SUBMIT}</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -310,13 +315,17 @@ const CounterOffer = ({ navigation, route }) => {
               style={styles.smallbtn}
               onPress={() => handleCountOfferAccept_Reject("accept")}
             >
-              <Text style={styles.smallbtnText}>Accept</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.ACCEPT}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.smallbtn}
               onPress={() => handleCountOfferAccept_Reject("reject")}
             >
-              <Text style={styles.smallbtnText}>Reject</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.REJECT}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -338,9 +347,9 @@ const CounterOffer = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Offer Accepted Sucessfully"}
-          buttontext={"OK"}
+          text={TranslationStrings.SUCCESS}
+          subtext={TranslationStrings.OFFER_ACCEPTED_SUCCESSFULLY}
+          buttontext={TranslationStrings.OK}
           onPress={() => {
             setModalVisible(false);
             // navigation.navigate("BottomTab");
@@ -352,9 +361,9 @@ const CounterOffer = ({ navigation, route }) => {
           modalVisible={modalVisible1}
           CloseModal={() => setModalVisible1(false)}
           Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Offer Rejected Sucessfully"}
-          buttontext={"OK"}
+          text={TranslationStrings.SUCCESS}
+          subtext={TranslationStrings.OFFER_REJECTED_SUCCESSFULLY}
+          buttontext={TranslationStrings.OK}
           onPress={() => {
             setModalVisible1(false);
             // navigation.navigate("BottomTab");

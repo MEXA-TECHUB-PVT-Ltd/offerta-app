@@ -50,6 +50,7 @@ import { fontFamily } from "../../constant/fonts";
 import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
 
 import messaging from "@react-native-firebase/messaging";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const Login = ({ navigation }) => {
   //Modal States
@@ -229,18 +230,27 @@ const Login = ({ navigation }) => {
   const formValidation = async () => {
     // input validation
     if (email == "") {
-      setsnackbarValue({ value: "Please Enter Email", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_EMAIL,
+        color: "red",
+      });
       setVisible("true");
     } else if (!handleValidEmail(email)) {
       console.log("a");
-      setsnackbarValue({ value: "Incorrect Email", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.INCORRECT_EMAIL,
+        color: "red",
+      });
       setVisible("true");
     } else if (password == "") {
-      setsnackbarValue({ value: "Please Enter Password", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_PASSWORD,
+        color: "red",
+      });
       setVisible("true");
     } else if (password.length <= 5) {
       setsnackbarValue({
-        value: "Please Enter 6 digit Password",
+        value: TranslationStrings.PLEASE_ENTER_SIX_DIGIT_PASSWORD,
         color: "red",
       });
       setVisible("true");
@@ -495,9 +505,11 @@ const Login = ({ navigation }) => {
         </View>
         <View>
           <View style={Authstyles.textview}>
-            <Text style={Authstyles.maintext}>Sign In</Text>
+            <Text style={Authstyles.maintext}>
+              {TranslationStrings.SIGN_IN}
+            </Text>
             <Text style={Authstyles.subtext}>
-              Please Sign In to your account
+              {TranslationStrings.PLEASE_SIGN_IN_TO_YOUR_ACCOUNT}
             </Text>
           </View>
           <View>
@@ -506,21 +518,26 @@ const Login = ({ navigation }) => {
               type={"iconinput"}
               texterror={"invalid"}
               term={email}
-              placeholder="Email Address"
+              placeholder={TranslationStrings.EMAIL_ADDRESS}
               onTermChange={(newEmail) => setEmail(newEmail)}
             />
             <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={password}
-              placeholder="Password"
+              placeholder={TranslationStrings.PASSWORD}
               onTermChange={(newPassword) => setPassword(newPassword)}
               mode={"password"}
               secureTextEntry={data.secureTextEntry ? true : false}
               onclick={() => updateSecureTextEntry()}
             />
           </View>
-          <View style={styles.forgettextview}>
+          <View
+            style={{
+              ...styles.forgettextview,
+              width: "auto",
+            }}
+          >
             <TouchableOpacity
               activeOpacity={0.4}
               onPress={() => navigation.navigate("ForgetPassword")}
@@ -529,7 +546,7 @@ const Login = ({ navigation }) => {
                 style={styles.forgettext}
                 //onPress={() => navigation.navigate("ForgetPassword")}
               >
-                Forget Password?
+                {TranslationStrings.FORGET_PASSWORD}?
               </Text>
             </TouchableOpacity>
           </View>
@@ -595,7 +612,7 @@ const Login = ({ navigation }) => {
 
         <View style={{ marginTop: hp(0) }}>
           <CustomButtonhere
-            title={"SIGN IN"}
+            title={TranslationStrings.SIGN_IN}
             widthset={80}
             topDistance={10}
             loading={loading}
@@ -608,14 +625,17 @@ const Login = ({ navigation }) => {
         </View>
         <View style={Authlaststyles.lasttextview}>
           <Text style={Authlaststyles.lasttextgrey}>
-            Don't have an account?
+            {TranslationStrings.DO_NOT_HAVE_AN_ACCOUNT}?
           </Text>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => navigation.navigate("SignUp")}
-            style={{ width: wp(16) }}
+            // style={{ width: wp(16) }}
           >
-            <Text style={Authlaststyles.lasttextblue}>{" Sign Up"}</Text>
+            <Text style={Authlaststyles.lasttextblue}>
+              {"  "}
+              {TranslationStrings.SIGN_UP}
+            </Text>
           </TouchableOpacity>
         </View>
         <Snackbar

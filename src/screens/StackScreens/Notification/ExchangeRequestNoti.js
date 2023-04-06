@@ -41,6 +41,7 @@ import {
 
 /////////////////app images//////////
 import { appImages } from "../../../constant/images";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 //////////////////appImages.//////////////////
 
@@ -118,7 +119,7 @@ const ExchangeNoti = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Exchange Offer"}
+          headerlabel={TranslationStrings.EXCHANGE_OFFER}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -179,13 +180,17 @@ const ExchangeNoti = ({ navigation, route }) => {
               style={styles.smallbtn}
               onPress={() => offerAcceptListings("incomming")}
             >
-              <Text style={styles.smallbtnText}>Accept</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.ACCEPT}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.smallbtn}
               onPress={() => offerRejectListings("reject")}
             >
-              <Text style={styles.smallbtnText}>Reject</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.REJECT}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -195,6 +200,8 @@ const ExchangeNoti = ({ navigation, route }) => {
             alignItems: "center",
             justifyContent: "center",
             marginTop: hp(3),
+            width: wp(50),
+            alignSelf: "center",
           }}
           onPress={() => {
             navigation.navigate("ChatScreen", {
@@ -204,7 +211,7 @@ const ExchangeNoti = ({ navigation, route }) => {
             });
           }}
         >
-          <Text style={styles.LastText}>Talk on chat</Text>
+          <Text style={styles.LastText}>{TranslationStrings.TALK_ON_CHAT}</Text>
         </TouchableOpacity>
       </ScrollView>
       <CustomModal

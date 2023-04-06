@@ -11,6 +11,7 @@ import styles from "./styles";
 
 ////////////////api function////////////////
 import { get_failed_Exchnages } from "../../../../api/GetExchanges";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const FailedExchange = ({ navigation }) => {
   ////////////////LIST DATA/////////
@@ -29,7 +30,7 @@ const FailedExchange = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Failed Exchanges"}
+        headerlabel={TranslationStrings.FAILED_EXCHANGE}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -37,7 +38,10 @@ const FailedExchange = ({ navigation }) => {
       />
       <View style={{ flex: 1 }}>
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_RECORD_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

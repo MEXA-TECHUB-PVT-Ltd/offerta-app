@@ -44,6 +44,7 @@ import { appImages } from "../../constant/images";
 //////////////////////////app api/////////////////////////
 import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const CreateProfile = ({ navigation, route }) => {
   /////////////previous data////////////
@@ -79,11 +80,11 @@ const CreateProfile = ({ navigation, route }) => {
   const refRBSheet = useRef();
 
   ///////////////data states////////////////////
-  const [username, setusername] = React.useState();
-  const [fname, setfname] = React.useState();
-  const [lname, setlname] = React.useState();
-  const [city, setCity] = React.useState();
-  const [country, setCountry] = React.useState();
+  const [username, setusername] = React.useState("");
+  const [fname, setfname] = React.useState("");
+  const [lname, setlname] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [country, setCountry] = React.useState("");
 
   //////////////////////Api Calling/////////////////
   const CreateProfile = async () => {
@@ -128,15 +129,21 @@ const CreateProfile = ({ navigation, route }) => {
   //Api form validation
   const formValidation = async () => {
     // input validation
-    if (username == "") {
-      setsnackbarValue({ value: "Please Enter Email", color: "red" });
-      setVisible("true");
-    } else if (fname == "") {
-      setsnackbarValue({ value: "Please Enter Password", color: "red" });
-      setVisible("true");
-    } else if (lname == "") {
+    if (username?.length == 0) {
       setsnackbarValue({
-        value: "Please Enter Confirm Password",
+        value: TranslationStrings.PLEASE_ENTER_USERNAME,
+        color: "red",
+      });
+      setVisible("true");
+    } else if (fname?.length == 0) {
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_FIRST_NAME,
+        color: "red",
+      });
+      setVisible("true");
+    } else if (lname?.length == 0) {
+      setsnackbarValue({
+        value: TranslationStrings.ENTER_LAST_NAME,
         color: "red",
       });
       setVisible("true");
@@ -205,7 +212,7 @@ const CreateProfile = ({ navigation, route }) => {
               onNext={() => {
                 ref_input2.current.focus();
               }}
-              placeholder="Enter Username"
+              placeholder={TranslationStrings.ENTER_USERNAME}
               onTermChange={(newUsername) => setusername(newUsername)}
             />
             <CustomTextInput
@@ -217,7 +224,7 @@ const CreateProfile = ({ navigation, route }) => {
               onNext={() => {
                 ref_input3.current.focus();
               }}
-              placeholder="Enter First Name"
+              placeholder={TranslationStrings.ENTER_FIRST_NAME}
               onTermChange={(newFname) => setfname(newFname)}
             />
             <CustomTextInput
@@ -225,7 +232,7 @@ const CreateProfile = ({ navigation, route }) => {
               icon={appImages.lock}
               type={"withouticoninput"}
               term={lname}
-              placeholder="Enter Last Name"
+              placeholder={TranslationStrings.ENTER_LAST_NAME}
               onTermChange={(newLname) => setlname(newLname)}
             />
             <TouchableOpacity
@@ -238,7 +245,7 @@ const CreateProfile = ({ navigation, route }) => {
                 term={country_name}
                 editable={false}
                 disable={false}
-                placeholder="Enter Country Name"
+                placeholder={TranslationStrings.ENTER_COUNTRY_NAME}
                 onTermChange={(newLname) => setCountry(newLname)}
               />
             </TouchableOpacity>
@@ -254,7 +261,7 @@ const CreateProfile = ({ navigation, route }) => {
                 onNext={() => {
                   ref_input3.current.focus();
                 }}
-                placeholder="Enter City Name"
+                placeholder={TranslationStrings.ENTER_CITY_NAME}
                 onTermChange={(newFname) => setCity(newFname)}
               />
             </TouchableOpacity>
@@ -262,7 +269,7 @@ const CreateProfile = ({ navigation, route }) => {
         </View>
         <View style={{ flex: 0.7, marginTop: hp(0), marginBottom: hp(20) }}>
           <CustomButtonhere
-            title={"CREATE"}
+            title={TranslationStrings.CREATE}
             widthset={80}
             topDistance={18}
             loading={loading}
@@ -294,9 +301,9 @@ const CreateProfile = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.failed}
-          text={"Error"}
-          subtext={"User Already Registered"}
-          buttontext={"GO BACK"}
+          text={TranslationStrings.ERROR}
+          subtext={TranslationStrings.USER_ALREADY_REGISTERED}
+          buttontext={TranslationStrings.GO_BACK}
           onPress={() => {
             setModalVisible(false);
           }}

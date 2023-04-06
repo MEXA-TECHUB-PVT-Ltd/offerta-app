@@ -19,12 +19,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const Exchanges = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Exchanges"}
+        headerlabel={TranslationStrings.EXCHANGES}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -33,19 +34,19 @@ const Exchanges = ({ navigation }) => {
 
       <View style={{ marginTop: hp(0) }}></View>
       <SettingsMenu
-        label={"In coming Exchanges"}
+        label={TranslationStrings.IN_COMING_EXCHANGE}
         labelPress={() => navigation.navigate("IncomingExchange")}
       />
       <SettingsMenu
-        label={"Out going Exchanges"}
+        label={TranslationStrings.OUT_GOING_EXCHANGE}
         labelPress={() => navigation.navigate("OutGoingExchange")}
       />
       <SettingsMenu
-        label={"Success Exchanges"}
+        label={TranslationStrings.SUCCESS_EXCHANGE}
         labelPress={() => navigation.navigate("SucessExchange")}
       />
       <SettingsMenu
-        label={"Failed Exchanges"}
+        label={TranslationStrings.FAILED_EXCHANGE}
         labelPress={() => navigation.navigate("FailedExchange")}
       />
     </SafeAreaView>

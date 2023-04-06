@@ -31,6 +31,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 function CameraViewScreen({ route, navigation }) {
   /////////////redux states///////
@@ -46,22 +47,19 @@ function CameraViewScreen({ route, navigation }) {
   const hideModal = () => setVisible(false);
 
   ///////////////camera mode///////////
-  const[camera_mode,setCamera_Mode]=useState(true)
+  const [camera_mode, setCamera_Mode] = useState(true);
 
   ///////////toggle camera mode////////////
-  const togglecamera=()=>{
-    if(camera_mode === true)
-    {
-      setCamera_Mode(false)
+  const togglecamera = () => {
+    if (camera_mode === true) {
+      setCamera_Mode(false);
+    } else {
+      setCamera_Mode(true);
     }
-    else
-    {
-      setCamera_Mode(true)
-    }
-  }
+  };
 
   const takePhotoFromCamera = async () => {
- await ImagePicker.openCamera({
+    await ImagePicker.openCamera({
       // width: 500,
       // height: 500,
       //cropping: true,
@@ -94,8 +92,8 @@ function CameraViewScreen({ route, navigation }) {
       width: 500,
       height: 500,
       //cropping: true,
-     // compressImageQuality: 0.7,
-    }).then(image => {
+      // compressImageQuality: 0.7,
+    }).then((image) => {
       setImage(image.path);
       setImages([...images, image]);
       dispatch(
@@ -111,9 +109,9 @@ function CameraViewScreen({ route, navigation }) {
         {
           path: image.path,
         },
-      ])
+      ]);
       scrollRef.current.scrollToEnd();
-    })
+    });
   };
   return (
     <View style={{ flex: 1 }}>
@@ -128,9 +126,13 @@ function CameraViewScreen({ route, navigation }) {
           }}
         />
         <Appbar.Content title={""} />
-        <Appbar.Action icon="send" color={Colors.Appthemecolor} onPress={() => {
-         navigation.goBack();
-    }} />
+        <Appbar.Action
+          icon="send"
+          color={Colors.Appthemecolor}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
       </Appbar.Header>
       <View
         style={{
@@ -153,13 +155,13 @@ function CameraViewScreen({ route, navigation }) {
               borderStyle: "dashed",
             }}
           >
-            <Text>No Image Selected</Text>
+            <Text>{TranslationStrings.NO_IMAGE_SELECTED}</Text>
           </View>
         ) : (
           <Image
             source={{ uri: image }}
             style={{
-              resizeMode:"cover",
+              resizeMode: "cover",
               padding: 10,
               borderRadius: wp(1),
               width: wp(98),
@@ -192,7 +194,7 @@ function CameraViewScreen({ route, navigation }) {
                 width: wp(17.3),
                 height: hp(8.5),
                 backgroundColor: "white",
-                
+
                 marginRight: 10,
               }}
               imageStyle={{
@@ -234,13 +236,13 @@ function CameraViewScreen({ route, navigation }) {
           paddingHorizontal: wp(5),
         }}
       >
-            <TouchableOpacity
+        <TouchableOpacity
           onPress={() => {
             choosePhotoFromLibrary();
           }}
           activeOpacity={0.8}
         >
-        <Ionicons name="image" size={wp(8)} color={"#404040"} />
+          <Ionicons name="image" size={wp(8)} color={"#404040"} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -249,7 +251,7 @@ function CameraViewScreen({ route, navigation }) {
           }}
           activeOpacity={0.8}
           style={{
-            width:wp(17),
+            width: wp(17),
             height: hp(8.3),
             backgroundColor: Colors.Appthemecolor,
             alignItems: "center",
@@ -259,7 +261,7 @@ function CameraViewScreen({ route, navigation }) {
         >
           <View
             style={{
-              width:wp(14.8),
+              width: wp(14.8),
               height: hp(7.5),
               backgroundColor: "white",
               alignItems: "center",
@@ -285,7 +287,7 @@ function CameraViewScreen({ route, navigation }) {
           }}
           activeOpacity={0.8}
         >
-        <Ionicons name="camera-reverse" size={wp(8)} color={"#404040"} />
+          <Ionicons name="camera-reverse" size={wp(8)} color={"#404040"} />
         </TouchableOpacity>
       </View>
     </View>

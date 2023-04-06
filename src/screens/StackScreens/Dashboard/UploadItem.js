@@ -59,6 +59,7 @@ import { appImages } from "../../../constant/images";
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 import CustomModal1 from "../../../components/Modal/CustomModal1";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const UploadItem = ({ navigation, route }) => {
   /////////////redux states///////
@@ -352,7 +353,10 @@ const UploadItem = ({ navigation, route }) => {
 
     // input validation
     if (title == "") {
-      setsnackbarValue({ value: "Please Enter Item Title", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_ITEM_TITLE,
+        color: "red",
+      });
       setVisible("true");
     }
     //  else if (price == "") {
@@ -361,31 +365,31 @@ const UploadItem = ({ navigation, route }) => {
     // }
     else if (description == "") {
       setsnackbarValue({
-        value: "Please Enter Item Description",
+        value: TranslationStrings.PLEASE_ENTER_ITEM_DESCRIPTION,
         color: "red",
       });
       setVisible("true");
     } else if (location_address == "") {
       setsnackbarValue({
-        value: "Location is required",
+        value: TranslationStrings.LOCATION_IS_REQUIRED,
         color: "red",
       });
       setVisible("true");
     } else if (category_id == "") {
       setsnackbarValue({
-        value: "Please select a category",
+        value: TranslationStrings.PLEASE_SELECT_A_CATEGORY,
         color: "red",
       });
       setVisible("true");
     } else if (sub_category_id == "") {
       setsnackbarValue({
-        value: "Please select a sub category",
+        value: TranslationStrings.PLEASE_SELECT_A_SUB_CATEGORY,
         color: "red",
       });
       setVisible("true");
     } else if (product_condition == "") {
       setsnackbarValue({
-        value: "Please select Product Condition",
+        value: TranslationStrings.PLEASE_SELECT_PRODUCT_CONDITION,
         color: "red",
       });
       setVisible("true");
@@ -454,7 +458,7 @@ const UploadItem = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <CustomHeader headerlabel={"Upload Items"} />
+        <CustomHeader headerlabel={TranslationStrings.UPLOAD_ITEMS} />
         {item_images_array.length === 0 ? (
           <TouchableOpacity
             onPress={() => navigation.navigate("CameraViewScreen")}
@@ -470,7 +474,9 @@ const UploadItem = ({ navigation, route }) => {
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
-                <Text style={Uploadstyles.uploadtext}>Upload Images</Text>
+                <Text style={Uploadstyles.uploadtext}>
+                  {TranslationStrings.UPLOAD_IMAGES}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -501,7 +507,7 @@ const UploadItem = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={title}
-            placeholder="Item Title"
+            placeholder={TranslationStrings.ITEM_TITLE}
             onTermChange={(itemtitle) => setTitle(itemtitle)}
           />
           {/* {givingawaychecked === true ? null : ( */}
@@ -510,7 +516,7 @@ const UploadItem = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={price}
-            placeholder="Item Price"
+            placeholder={TranslationStrings.ITEM_PRICE}
             onTermChange={(itemprice) => setPrice(itemprice)}
             keyboard_type={"numeric"}
           />
@@ -523,7 +529,7 @@ const UploadItem = ({ navigation, route }) => {
               term={category_name}
               editable={false}
               disable={false}
-              placeholder="Select Category"
+              placeholder={TranslationStrings.SELECT_CATEGORY}
               onTermChange={(category) => setCategoryName(category)}
             />
           </TouchableOpacity>
@@ -534,7 +540,7 @@ const UploadItem = ({ navigation, route }) => {
               term={sub_category_name}
               editable={false}
               disable={false}
-              placeholder="Select Sub Category"
+              placeholder={TranslationStrings.SELECT_SUB_CATEGORY}
               onTermChange={(subcategory) => setSubCategoryName(subcategory)}
             />
           </TouchableOpacity>
@@ -547,7 +553,7 @@ const UploadItem = ({ navigation, route }) => {
               term={product_condition}
               editable={false}
               disable={false}
-              placeholder="Select Product Condition"
+              placeholder={TranslationStrings.SELECT_PRODUCT_CONDITION}
               onTermChange={(newcountry) => setCondition(newcountry)}
             />
           </TouchableOpacity>
@@ -556,7 +562,10 @@ const UploadItem = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={youtubelink}
-            placeholder="YouTube link (optional)"
+            placeholder={
+              TranslationStrings.YOUTUBE_LINK +
+              `(${TranslationStrings.OPTIONAL})`
+            }
             onTermChange={(itemyoutubelink) => setYoutubeLink(itemyoutubelink)}
           />
           <CustomTextInput
@@ -566,7 +575,7 @@ const UploadItem = ({ navigation, route }) => {
             term={description}
             multiline={true}
             Lines={4}
-            placeholder="Description"
+            placeholder={TranslationStrings.DESCRIPTION}
             onTermChange={(desc) => setDescription(desc)}
           />
 
@@ -578,7 +587,7 @@ const UploadItem = ({ navigation, route }) => {
               term={location_address}
               editable={false}
               disable={false}
-              placeholder="Enter Location"
+              placeholder={TranslationStrings.ENTER_LOCATION}
               onTermChange={(itemlocation) => setLocationAddress(itemlocation)}
             />
           </TouchableOpacity>
@@ -590,7 +599,7 @@ const UploadItem = ({ navigation, route }) => {
             texterror={"invalid"}
             term={shippingprice}
             // placeholder="Shipping Price"
-            placeholder=" PICKUP or Delivery shipping price"
+            placeholder={TranslationStrings.PICKUP_OR_DELIVERY_SHIPPING_PRICE}
             onTermChange={(itemshippingprice) =>
               setShippingPrice(itemshippingprice)
             }
@@ -622,7 +631,10 @@ const UploadItem = ({ navigation, route }) => {
               paddingHorizontal: wp(4),
             }}
           >
-            Don't check any option if you want to receive offers.
+            {/* Don't check any option if you want to receive offers. */}
+            {
+              TranslationStrings.DONT_CHECK_ANY_OPTION_IF_YOU_WANT_TO_RECEIVE_OFFERS
+            }
           </Text>
           <View style={{ paddingHorizontal: wp(4) }}>
             <View
@@ -633,7 +645,9 @@ const UploadItem = ({ navigation, route }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={styles.text}>No Exchange to Buy</Text>
+              <Text style={styles.text}>
+                {TranslationStrings.NO_EXCHANGE_TO_BUY}
+              </Text>
               <Checkbox
                 status={exchangebuychecked ? "checked" : "unchecked"}
                 color={Colors.activetextinput}
@@ -658,7 +672,7 @@ const UploadItem = ({ navigation, route }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={styles.text}>Fixed Price</Text>
+              <Text style={styles.text}>{TranslationStrings.FIXED_PRICE}</Text>
               <Checkbox
                 status={fixedpricechecked ? "checked" : "unchecked"}
                 color={Colors.activetextinput}
@@ -701,7 +715,8 @@ const UploadItem = ({ navigation, route }) => {
               paddingHorizontal: wp(4),
             }}
           >
-            Check If you want to give item for free.
+            {/* Check If you want to give item for free. */}
+            {TranslationStrings.CHECK_IF_YOU_WANT_TO_GIVE_ITEM_FOR_FREE}
           </Text>
           <View style={{ paddingHorizontal: wp(4) }}>
             <View
@@ -712,7 +727,7 @@ const UploadItem = ({ navigation, route }) => {
                 alignItems: "center",
               }}
             >
-              <Text style={styles.text}>Giving Away</Text>
+              <Text style={styles.text}>{TranslationStrings.GIVING_AWAY}</Text>
               <Checkbox
                 status={givingawaychecked ? "checked" : "unchecked"}
                 color={Colors.activetextinput}
@@ -745,7 +760,7 @@ const UploadItem = ({ navigation, route }) => {
 
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"UPLOAD"}
+            title={TranslationStrings.UPLOAD}
             widthset={80}
             topDistance={6}
             loading={loading}
@@ -812,12 +827,10 @@ const UploadItem = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Success"}
-          subtext={
-            "Item Upload Sucessfully \n\n Do you want to promote Your Listing?"
-          }
-          buttontext={"Yes"}
-          cancelText={"Not Now"}
+          text={TranslationStrings.SUCCESS}
+          subtext={`${TranslationStrings.ITEM_UPLOADED_SUCCESSFULLY} \n\n ${TranslationStrings.DO_YOU_WANT_TO_PROMOTE_YOUR_LISTING}`}
+          buttontext={TranslationStrings.YES}
+          cancelText={TranslationStrings.NOT_NOW}
           cancelPress={() => setModalVisible(false)}
           cancelable={true}
           onPress={() => {

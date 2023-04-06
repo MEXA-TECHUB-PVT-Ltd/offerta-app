@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 6,
     flex: 1,
-
     // width: wp(100),
     marginHorizontal: wp(2),
   },

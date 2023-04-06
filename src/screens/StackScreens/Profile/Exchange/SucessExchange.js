@@ -11,6 +11,7 @@ import styles from "./styles";
 
 /////////////import ap function//////////
 import { get_sucess_Exchnages } from "../../../../api/GetExchanges";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const SucessExchange = ({ navigation }) => {
   ////////////////LIST DATA/////////
@@ -29,7 +30,7 @@ const SucessExchange = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Success Exchanges"}
+        headerlabel={TranslationStrings.SUCCESS_EXCHANGE}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -37,7 +38,10 @@ const SucessExchange = ({ navigation }) => {
       />
       <View style={{ flex: 1 }}>
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_RECORD_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

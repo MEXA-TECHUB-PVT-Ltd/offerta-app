@@ -18,7 +18,11 @@ import styles from "./Banner/styles";
 
 ///////////////////api function//////////////
 import { get_Privacy_Policy } from "../../api/Blogs";
-import { widthPercentageToDP as wp,heightPercentageToDP as hp} from "react-native-responsive-screen";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const PrivacyTerms = ({ navigation }) => {
   //////////render html width///////////
@@ -39,19 +43,17 @@ const PrivacyTerms = ({ navigation }) => {
   const tagsStyles = {
     p: {
       fontSize: hp(2),
-      color: 'black',
-      width:wp(90),
-      marginHorizontal:wp(5)
+      color: "black",
+      width: wp(90),
+      marginHorizontal: wp(5),
     },
-    ul:{
-      marginHorizontal:wp(3)
+    ul: {
+      marginHorizontal: wp(3),
     },
-    li:
-    {
+    li: {
       fontSize: hp(1.7),
-      color: 'black',
-
-    }
+      color: "black",
+    },
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -60,7 +62,7 @@ const PrivacyTerms = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Privacy Policy"}
+          headerlabel={TranslationStrings.PRIVACY_POLICY}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -74,13 +76,13 @@ const PrivacyTerms = ({ navigation }) => {
                 alignItems: "center",
                 //backgroundColor: "orange",
                 alignSelf: "center",
-                marginHorizontal:wp(5)
+                marginHorizontal: wp(5),
               }}
             >
               <RenderHtml
                 contentWidth={width}
                 source={{ html: privacyPolicy }}
-                tagsStyles={tagsStyles} 
+                tagsStyles={tagsStyles}
               />
             </View>
           </Text>

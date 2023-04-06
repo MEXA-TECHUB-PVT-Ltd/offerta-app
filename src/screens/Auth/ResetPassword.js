@@ -30,6 +30,7 @@ import axios from "axios";
 import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const ResetPassword = ({ navigation, route }) => {
   console.log(" previous data:", route.params);
@@ -98,28 +99,34 @@ const ResetPassword = ({ navigation, route }) => {
   const formValidation = async () => {
     // input validation
     if (password == "") {
-      setsnackbarValue({ value: "Please Enter Password", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_PASSWORD,
+        color: "red",
+      });
       setVisible("true");
     } else if (password.length <= 5) {
       setsnackbarValue({
-        value: "Please Enter 6 digit Password",
+        value: TranslationStrings.PLEASE_ENTER_SIX_DIGIT_PASSWORD,
         color: "red",
       });
       setVisible("true");
     } else if (confirmPassword == "") {
       setsnackbarValue({
-        value: "Please Enter Confirm Password",
+        value: TranslationStrings.PLEASE_ENTER_CONFIRM_PASSWORD,
         color: "red",
       });
       setVisible("true");
     } else if (confirmPassword.length <= 5) {
       setsnackbarValue({
-        value: "Please Enter 6 digit Password",
+        value: TranslationStrings.PLEASE_ENTER_SIX_DIGIT_PASSWORD,
         color: "red",
       });
       setVisible("true");
     } else if (password != confirmPassword) {
-      setsnackbarValue({ value: "Please Enter Same Password", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_SAME_PASSWORD,
+        color: "red",
+      });
       setVisible("true");
     } else {
       setloading(1);
@@ -149,22 +156,26 @@ const ResetPassword = ({ navigation, route }) => {
         </View>
         <View>
           <View style={Authstyles.textview}>
-            <Text style={Authstyles.maintext}>Reset Password</Text>
-            <Text style={Authstyles.subtext}>Create a strong password</Text>
+            <Text style={Authstyles.maintext}>
+              {TranslationStrings.RESET_PASSWORD}
+            </Text>
+            <Text style={Authstyles.subtext}>
+              {TranslationStrings.CREATE_A_STRONG_PASSWORD}
+            </Text>
           </View>
           <View>
             <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={password}
-              placeholder="Password"
+              placeholder={TranslationStrings.PASSWORD}
               onTermChange={(newPassword) => setPassword(newPassword)}
             />
             <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={confirmPassword}
-              placeholder="Confirm Password"
+              placeholder={TranslationStrings.CONFIRM_PASSWORD}
               onTermChange={(newPassword) => setConfirmPassword(newPassword)}
             />
           </View>
@@ -172,7 +183,7 @@ const ResetPassword = ({ navigation, route }) => {
 
         <View style={{ marginTop: hp(25) }}>
           <CustomButtonhere
-            title={"RESET"}
+            title={TranslationStrings.RESET}
             widthset={80}
             topDistance={0}
             loading={loading}
@@ -198,9 +209,9 @@ const ResetPassword = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Sucess"}
-          subtext={"Passord Updated Sucessfully"}
-          buttontext={"GO BACK"}
+          text={TranslationStrings.SUCCESS}
+          subtext={TranslationStrings.PASSWORD_UPDATED_SUCCESSFULLY}
+          buttontext={TranslationStrings.GO_BACK}
           onPress={() => {
             setModalVisible(false), navigation.navigate("Login");
           }}

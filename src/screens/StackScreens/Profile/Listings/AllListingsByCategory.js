@@ -24,6 +24,7 @@ import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
 import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../../../../utills/Colors";
 import Loader from "../../../../components/Loader/Loader";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const AllListingsByCategory = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
@@ -109,7 +110,10 @@ const AllListingsByCategory = ({ navigation, route }) => {
           icon={"arrow-back"}
         />
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

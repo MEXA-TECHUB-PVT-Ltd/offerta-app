@@ -49,6 +49,7 @@ import {
   locationPermission,
   getCurrentLocation,
 } from "../../api/CurrentLocation";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const Location = ({ navigation, route }) => {
   ////////////////previous data//////////
@@ -184,7 +185,7 @@ const Location = ({ navigation, route }) => {
         </TouchableOpacity>
         <GooglePlacesAutocomplete
           //ref={ref}
-          placeholder="Search"
+          placeholder={TranslationStrings.SEARCH}
           textInputProps={{
             placeholderTextColor: Colors.appgreycolor,
           }}
@@ -253,7 +254,7 @@ const Location = ({ navigation, route }) => {
       </View>
       <View style={styles.lastView}>
         <CustomButtonhere
-          title={"ADD"}
+          title={TranslationStrings.ADD}
           widthset={78}
           topDistance={0}
           onPress={() => navigation.goBack()}

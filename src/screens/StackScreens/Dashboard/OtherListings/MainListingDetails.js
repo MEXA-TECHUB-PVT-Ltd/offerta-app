@@ -28,7 +28,10 @@ import Slider from "../../../../components/ImageSlider/Slider";
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setExchangeOffer_OtherListing } from "../../../../redux/actions";
+import {
+  setExchangeOffer_OtherListing,
+  setListingId,
+} from "../../../../redux/actions";
 
 ////////////////App Heigth Width////////////////
 import {
@@ -72,6 +75,7 @@ import { get_user_status } from "../../../../api/GetApis";
 import ProfileCard from "../../../../components/CustomCards/Profile";
 import CustomMenu from "../../../../components/CustomMenu/CustomMenu";
 import CustomMenu1 from "../../../../components/CustomMenu/CustomMenu1";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const MainListingsDetails = ({ navigation, route }) => {
   ///////////////PREVIOUS DATA////////////
@@ -254,6 +258,8 @@ const MainListingsDetails = ({ navigation, route }) => {
       setShowBlockModal(true);
       return;
     }
+
+    dispatch(setListingId(predata.listing_id));
     navigation.navigate("CommentsDetails", route.params);
   };
   const handleBuyNow = async () => {
@@ -271,6 +277,10 @@ const MainListingsDetails = ({ navigation, route }) => {
     GetListData();
     listing_views();
   };
+
+  // const handleCommentPress = async () => {
+  //   navigation.navigate("CommentsDetails");
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
@@ -326,19 +336,24 @@ const MainListingsDetails = ({ navigation, route }) => {
                 }
               }}
             />
-            <Text style={styles.icontext}>
-              {listing_comments_count} comments
+            <Text
+              style={{
+                ...styles.icontext,
+                width: "auto",
+              }}
+            >
+              {listing_comments_count} {TranslationStrings.COMMENTS}
             </Text>
             <Icon
               name={"chevron-forward-sharp"}
               size={15}
               color={Colors.Appthemecolor}
               style={{ marginLeft: wp(3) }}
-              onPress={() => {
-                {
-                  navigation.navigate("CommentsDetails");
-                }
-              }}
+              // onPress={() => {
+              //   {
+              //     handleCommentPress();
+              //   }
+              // }}
             />
           </TouchableOpacity>
           {listing_like_user_id === login_user_id ? (
@@ -356,7 +371,9 @@ const MainListingsDetails = ({ navigation, route }) => {
                     }
                   }}
                 />
-                <Text style={styles.icontext}>{listing_likes_count} Likes</Text>
+                <Text style={styles.icontext}>
+                  {listing_likes_count} {TranslationStrings.LIKES}
+                </Text>
               </View>
             </TouchableOpacity>
           ) : (
@@ -375,7 +392,9 @@ const MainListingsDetails = ({ navigation, route }) => {
                   }
                 }}
               />
-              <Text style={styles.icontext}>{listing_likes_count} Likes</Text>
+              <Text style={styles.icontext}>
+                {listing_likes_count} {TranslationStrings.LIKES}
+              </Text>
             </TouchableOpacity>
           )}
           <View style={styles.iconview}>
@@ -391,7 +410,9 @@ const MainListingsDetails = ({ navigation, route }) => {
                 }
               }}
             />
-            <Text style={styles.icontext}>{listing_views_count} Views</Text>
+            <Text style={{ ...styles.icontext, width: "auto" }}>
+              {listing_views_count} {TranslationStrings.VIEWS}
+            </Text>
           </View>
           <View style={{ paddingHorizontal: wp(7) }}>
             <Text style={styles.subtext}>{listing_details}</Text>
@@ -399,33 +420,45 @@ const MainListingsDetails = ({ navigation, route }) => {
 
           <View style={{ paddingHorizontal: wp(7), marginTop: hp(2) }}>
             <View style={styles.rowtextview}>
-              <Text style={styles.rowlefttext}>Category</Text>
+              <Text style={styles.rowlefttext}>
+                {TranslationStrings.CATEGORY}
+              </Text>
               <Text style={styles.rowrighttext}>{listing_category}</Text>
             </View>
             <View style={styles.rowtextview}>
-              <Text style={styles.rowlefttext}>Product Condition</Text>
+              <Text style={styles.rowlefttext}>
+                {TranslationStrings.PRODUCT_CONDITION}
+              </Text>
               <Text style={styles.rowrighttext}>{listing_condition}</Text>
             </View>
             {listing_date === "" ? null : (
               <View style={styles.rowtextview}>
-                <Text style={styles.rowlefttext}>Date of Listing</Text>
+                <Text style={styles.rowlefttext}>
+                  {TranslationStrings.DATE_OF_LISTING}
+                </Text>
                 <Text style={styles.rowrighttext}>{listing_date}</Text>
               </View>
             )}
 
             <View style={styles.rowtextview}>
-              <Text style={styles.rowlefttext}>Location</Text>
+              <Text style={styles.rowlefttext}>
+                {TranslationStrings.LOCATION}
+              </Text>
               <Text style={styles.rowrighttext}>{listing_location}</Text>
             </View>
             {listing_shippingcost === "" ? null : (
               <View style={styles.rowtextview}>
-                <Text style={styles.rowlefttext}>Shipping Cost</Text>
+                <Text style={styles.rowlefttext}>
+                  {TranslationStrings.SHIPPING_COST}
+                </Text>
                 <Text style={styles.rowrighttext}>{listing_shippingcost}$</Text>
               </View>
             )}
             {listing_youtubelink === "" ? null : (
               <View style={styles.rowtextview}>
-                <Text style={styles.rowlefttext}>YouTube Link</Text>
+                <Text style={styles.rowlefttext}>
+                  {TranslationStrings.YOUTUBE_LINK}
+                </Text>
                 <Text style={styles.rowrighttext} onPress={() => handlePress()}>
                   {listing_youtubelink}
                 </Text>
@@ -474,7 +507,7 @@ const MainListingsDetails = ({ navigation, route }) => {
             ) : null}
           </View>
           <Text style={{ ...styles.maintext, marginTop: 20, marginLeft: 20 }}>
-            Seller Details :{" "}
+            {TranslationStrings.SELLER_DETAILS}:{" "}
           </Text>
           {listing_user_detail && (
             <View
@@ -507,9 +540,9 @@ const MainListingsDetails = ({ navigation, route }) => {
                 followers={listing_user_detail?.followers}
                 following={listing_user_detail?.following}
                 ratting={listing_user_detail?.review}
-                ratting_text={"Rate"}
-                following_text={"Followers"}
-                followers_text={"Followings"}
+                ratting_text={TranslationStrings.RATE}
+                following_text={TranslationStrings.FOLLOWERS}
+                followers_text={TranslationStrings.FOLLOWINGS}
                 // followStatus={
                 //   follow_user_id === login_user_id ? "Unfollow" : "follow"
                 // }
@@ -536,7 +569,7 @@ const MainListingsDetails = ({ navigation, route }) => {
                 }}
                 onPress={() => handleBuyNow()}
               >
-                <Text style={styles.btnText}>Buy Now</Text>
+                <Text style={styles.btnText}>{TranslationStrings.BUY_NOW}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.btnView1}>
@@ -556,7 +589,7 @@ const MainListingsDetails = ({ navigation, route }) => {
                   });
                 }}
               >
-                <Text style={styles.btnText}>Chat</Text>
+                <Text style={styles.btnText}>{TranslationStrings.CHAT}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -579,7 +612,9 @@ const MainListingsDetails = ({ navigation, route }) => {
                   // onPress={() => handleBuyNow()}
                   onPress={() => navigation.navigate("PriceOffer")}
                 >
-                  <Text style={styles.btnText}>Make an Offer</Text>
+                  <Text style={styles.btnText}>
+                    {TranslationStrings.MAKE_AN_OFFER}
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -594,7 +629,9 @@ const MainListingsDetails = ({ navigation, route }) => {
                   // onPress={() => handleBuyNow()}
                   onPress={() => navigation.navigate("ExchangeOfferList")}
                 >
-                  <Text style={styles.btnText}>Request Exchange</Text>
+                  <Text style={styles.btnText}>
+                    {TranslationStrings.REQUEST_EXCHANGE}
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -617,9 +654,9 @@ const MainListingsDetails = ({ navigation, route }) => {
       <DescriptionBottomSheet
         refRBSheet={refRBSheet}
         onClose={() => refRBSheet.current.close()}
-        title={"Report Item"}
-        subtitle={"Enter Description"}
-        btntext={"REPORT"}
+        title={TranslationStrings.REPORT_ITEM}
+        subtitle={TranslationStrings.ENTER_DESCRIPTION}
+        btntext={TranslationStrings.REPORT}
         onpress={() => {
           {
           }

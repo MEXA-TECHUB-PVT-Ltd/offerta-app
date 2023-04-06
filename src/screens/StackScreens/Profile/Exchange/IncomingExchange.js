@@ -12,6 +12,7 @@ import styles from "./styles";
 /////////////////////api function//////////////
 import { get_Incoming_Exchnages } from "../../../../api/GetExchanges";
 import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const IncomingExchange = ({ navigation }) => {
   ////////////////LIST DATA/////////
@@ -30,7 +31,7 @@ const IncomingExchange = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"In coming Exchanges"}
+        headerlabel={TranslationStrings.IN_COMING_EXCHANGE}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -38,7 +39,10 @@ const IncomingExchange = ({ navigation }) => {
       />
       <View style={{ flex: 1 }}>
         {data === "" ? (
-          <NoDataFound icon={"exclamation-thick"} text={"No Data Found"} />
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
         ) : (
           <FlatList
             data={data}

@@ -42,6 +42,7 @@ import {
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Filter = ({ navigation, route }) => {
   /////////////redux states///////
@@ -86,7 +87,7 @@ const Filter = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Apply Filters" + slider_distance}
+          headerlabel={TranslationStrings.APPLY_FILTERS}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -97,8 +98,8 @@ const Filter = ({ navigation, route }) => {
           <TouchableOpacity onPress={() => setModalVisible(true)}>
             <CustomTextInput
               type={"withouticoninput"}
-              term={slider_distance}
-              placeholder="Enter distance"
+              term={slider_distance?.toString()}
+              placeholder={TranslationStrings.ENTER_DISTANCE}
               editable={false}
               disable={false}
               onTermChange={(distance) => setSliderDistance(distance)}
@@ -107,7 +108,7 @@ const Filter = ({ navigation, route }) => {
           <CustomTextInput
             type={"withouticoninput"}
             term={listing_price}
-            placeholder="Enter Price"
+            placeholder={TranslationStrings.ENTER_PRICE}
             onTermChange={(price) => setListing_Price(price)}
           />
           <TouchableOpacity onPress={() => refddRBSheet.current.open()}>
@@ -117,7 +118,7 @@ const Filter = ({ navigation, route }) => {
               term={category_name}
               editable={false}
               disable={false}
-              placeholder="Select Category"
+              placeholder={TranslationStrings.SELECT_CATEGORY}
               onTermChange={(category) => setCategoryName(category)}
             />
           </TouchableOpacity>
@@ -130,7 +131,7 @@ const Filter = ({ navigation, route }) => {
               term={post_within}
               editable={false}
               disable={false}
-              placeholder="Posted within"
+              placeholder={TranslationStrings.POSTED_WITHIN}
               onTermChange={(category) => setCategoryName(category)}
             />
           </TouchableOpacity>
@@ -141,13 +142,13 @@ const Filter = ({ navigation, route }) => {
               term={sort_by}
               editable={false}
               disable={false}
-              placeholder="Sort by"
+              placeholder={TranslationStrings.SORT_BY}
               onTermChange={(sortby) => setSortByDD(sortby)}
             />
           </TouchableOpacity>
           <View style={{ marginBottom: hp(15) }}>
             <CustomButtonhere
-              title={"UPLOAD"}
+              title={TranslationStrings.UPLOAD}
               widthset={80}
               topDistance={10}
               // loading={loading}

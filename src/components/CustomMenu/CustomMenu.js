@@ -41,6 +41,7 @@ import { appImages } from "../../constant/images";
 
 import BlockUserView from "../BlockUserView";
 import { get_user_status } from "../../api/GetApis";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const CustomMenu = (props) => {
   /////////////navigation state////////////
@@ -184,21 +185,28 @@ const CustomMenu = (props) => {
                     <View>
                       <TouchableOpacity
                         onPress={() => {
-                          item.label === "View Profile"
+                          item.label === "View Profile" ||
+                          TranslationStrings.VIEW_PROFILE
                             ? navigation.navigate("OtherProfile")
-                            : item.label === "Make an Offer"
+                            : item.label === "Make an Offer" ||
+                              TranslationStrings.MAKE_AN_OFFER
                             ? navigation.navigate("PriceOffer")
-                            : item.label === "Request Exchange"
+                            : item.label === "Request Exchange" ||
+                              TranslationStrings.REQUEST_EXCHANGE
                             ? navigation.navigate("ExchangeOfferList")
-                            : item.label === "Edit Item"
+                            : item.label === "Edit Item" ||
+                              TranslationStrings.EDIT_ITEM
                             ? navigation.navigate("EditList", {
                                 navtype: "edit_list",
                               })
-                            : item.label === "Mark as Sold"
+                            : item.label === "Mark as Sold" ||
+                              TranslationStrings.MARK_AS_SOLD
                             ? mark_Status_Listing()
-                            : item.label === "Delete"
+                            : item.label === "Delete" ||
+                              TranslationStrings.DELETE
                             ? setMsgModalVisible(true)
-                            : item.label === "Report Item"
+                            : item.label === "Report Item" ||
+                              TranslationStrings.REPORT_ITEM
                             ? setMsgModalVisible1(true)
                             : null;
                           setModalVisible(false);
@@ -258,11 +266,11 @@ const CustomMenu = (props) => {
         modalVisible={msgmodalVisible}
         CloseModal={() => setMsgModalVisible(false)}
         Icon={appImages.confirm}
-        text={"Confirmation"}
+        text={TranslationStrings.CONFIRMATION}
         type={"confirmation"}
-        subtext={"Do you really want to Delete the listings?"}
-        buttontext={"Yes"}
-        buttontext1={"Cancel"}
+        subtext={TranslationStrings.DO_YOU_REALLY_WANT_TO_DELETE_THE_LISTINGS}
+        buttontext={TranslationStrings.YES}
+        buttontext1={TranslationStrings.CANCEL}
         onPress={() => {
           setMsgModalVisible(false);
         }}
@@ -275,11 +283,11 @@ const CustomMenu = (props) => {
         modalVisible={msgmodalVisible1}
         CloseModal={() => setMsgModalVisible1(false)}
         Icon={appImages.confirm}
-        text={"Confirmation"}
+        text={TranslationStrings.CONFIRMATION}
         type={"confirmation"}
-        subtext={"Do you really want to Report?"}
-        buttontext={"Yes"}
-        buttontext1={"Cancel"}
+        subtext={TranslationStrings.DO_YOU_REALLY_WANT_TO_REPORT + "?"}
+        buttontext={TranslationStrings.YES}
+        buttontext1={TranslationStrings.CANCEL}
         onPress={() => {
           setMsgModalVisible1(false);
         }}

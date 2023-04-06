@@ -55,6 +55,7 @@ import { fontFamily } from "../../../constant/fonts";
 import CamerBottomSheet from "../../../components/CameraBottomSheet/CameraBottomSheet";
 import { Snackbar } from "react-native-paper";
 import CustomHeader from "../../../components/Header/CustomHeader";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const VerificationDocuments = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -174,7 +175,7 @@ const VerificationDocuments = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <CustomHeader
-          headerlabel={"Verification Documents"}
+          headerlabel={TranslationStrings.VERIFICATION_DOCUMENTS}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -192,7 +193,7 @@ const VerificationDocuments = ({ navigation, route }) => {
               fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            Profile Picture :
+            {TranslationStrings.PROFILE_PICTURE} :
           </Text>
           <View style={style.card}>
             <View style={{ alignItems: "center" }}>
@@ -219,7 +220,7 @@ const VerificationDocuments = ({ navigation, route }) => {
               fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            Documents :
+            {TranslationStrings.DOCUMENTS} :
           </Text>
           <View style={style.card}>
             <View style={{ alignItems: "center" }}>

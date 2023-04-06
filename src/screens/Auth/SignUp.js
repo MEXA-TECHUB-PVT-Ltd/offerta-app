@@ -46,6 +46,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setsignupRole } from "../../redux/actions";
 
 import messaging from "@react-native-firebase/messaging";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const SignUp = ({ navigation }) => {
   //////////////redux////////////////////
@@ -169,43 +170,67 @@ const SignUp = ({ navigation }) => {
     // navigation.navigate("AccountVerification");
     // return;
 
+    // navigation.navigate("CreateProfile", {
+    //   useremail: "test@gmail.com",
+    //   signup_role: "user",
+    // });
+    // return;
+
     // input validation
     if (email == "") {
-      setsnackbarValue({ value: "Please Enter Email", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_EMAIL,
+        color: "red",
+      });
       setVisible("true");
     } else if (phoneNumber?.length == 0) {
-      setsnackbarValue({ value: "Please Enter Phone Number", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_PHONE_NUMBER,
+        color: "red",
+      });
       setVisible("true");
     } else if (!handleValidEmail(email)) {
       console.log("a");
-      setsnackbarValue({ value: "Incorrect Email", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.INCORRECT_EMAIL,
+        color: "red",
+      });
       setVisible("true");
     } else if (password == "") {
-      setsnackbarValue({ value: "Please Enter Password", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_PASSWORD,
+        color: "red",
+      });
       setVisible("true");
     } else if (password.length <= 5) {
       setsnackbarValue({
-        value: "Please Enter 6 digit Password",
+        value: TranslationStrings.PLEASE_ENTER_SIX_DIGIT_PASSWORD,
         color: "red",
       });
       setVisible("true");
     } else if (confirmPassword == "") {
       setsnackbarValue({
-        value: "Please Enter Confirm Password",
+        value: TranslationStrings.PLEASE_ENTER_CONFIRM_PASSWORD,
         color: "red",
       });
       setVisible("true");
     } else if (confirmPassword.length <= 5) {
       setsnackbarValue({
-        value: "Please Enter 6 digit Password",
+        value: TranslationStrings.PLEASE_ENTER_SIX_DIGIT_PASSWORD,
         color: "red",
       });
       setVisible("true");
     } else if (password != confirmPassword) {
-      setsnackbarValue({ value: "Please Enter Same Password", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_ENTER_SAME_PASSWORD,
+        color: "red",
+      });
       setVisible("true");
     } else if (signup_role == "" || signup_role?.length == 0) {
-      setsnackbarValue({ value: "Please Select Role", color: "red" });
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_SELECT_ROLE,
+        color: "red",
+      });
       setVisible("true");
     } else {
       setloading(1);
@@ -237,9 +262,11 @@ const SignUp = ({ navigation }) => {
         </View>
         <View>
           <View style={Authstyles.textview}>
-            <Text style={Authstyles.maintext}>Sign Up</Text>
+            <Text style={Authstyles.maintext}>
+              {TranslationStrings.SIGN_UP}
+            </Text>
             <Text style={Authstyles.subtext}>
-              Sign Up to create your account
+              {TranslationStrings.SIGN_UP_TO_CREATE_YOUR_ACCOUNT}
             </Text>
           </View>
           <View>
@@ -253,7 +280,7 @@ const SignUp = ({ navigation }) => {
               onNext={() => {
                 ref_input2.current.focus();
               }}
-              placeholder="Email Address"
+              placeholder={TranslationStrings.EMAIL_ADDRESS}
               onTermChange={(newEmail) => setEmail(newEmail)}
             />
             <CustomTextInput
@@ -267,7 +294,7 @@ const SignUp = ({ navigation }) => {
               // onNext={() => {
               //   ref_input2.current.focus();
               // }}
-              placeholder="Phone Number"
+              placeholder={TranslationStrings.ENTER_PHONE_NO}
               onTermChange={(newEmail) => setPhoneNumber(newEmail)}
             />
             <CustomTextInput
@@ -279,7 +306,7 @@ const SignUp = ({ navigation }) => {
               onNext={() => {
                 ref_input3.current.focus();
               }}
-              placeholder="Password"
+              placeholder={TranslationStrings.PASSWORD}
               onTermChange={(newPassword) => setPassword(newPassword)}
               mode={"password"}
               secureTextEntry={data.secureTextEntry ? true : false}
@@ -290,7 +317,7 @@ const SignUp = ({ navigation }) => {
               icon={appImages.lock}
               type={"iconinput"}
               term={confirmPassword}
-              placeholder="Confirm Password"
+              placeholder={TranslationStrings.CONFIRM_PASSWORD}
               onTermChange={(newPassword) => setConfirmPassword(newPassword)}
               mode={"password"}
               secureTextEntry={data.secureTextEntry ? true : false}
@@ -303,7 +330,7 @@ const SignUp = ({ navigation }) => {
                 term={signup_role}
                 editable={false}
                 disable={false}
-                placeholder="Select Role"
+                placeholder={TranslationStrings.SELECT_ROLE}
                 onTermChange={(newcountry) => setsignupRole(newcountry)}
               />
             </TouchableOpacity>
@@ -317,7 +344,7 @@ const SignUp = ({ navigation }) => {
         >
           <View style={{ marginTop: hp(0) }}>
             <CustomButtonhere
-              title={"SIGN UP"}
+              title={TranslationStrings.SIGN_UP}
               widthset={80}
               topDistance={0}
               loading={loading}
@@ -330,14 +357,17 @@ const SignUp = ({ navigation }) => {
 
           <View style={[Authlaststyles.lasttextview, { marginTop: hp(1) }]}>
             <Text style={Authlaststyles.lasttextgrey}>
-              Already have an account?
+              {TranslationStrings.ALREADY_HAVE_AN_ACCOUNT}?
             </Text>
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => navigation.navigate("Login")}
-              style={{ width: wp(16) }}
+              // style={{ width: wp(16) }}
             >
-              <Text style={Authlaststyles.lasttextblue}>{" Sign In"}</Text>
+              <Text style={Authlaststyles.lasttextblue}>
+                {" "}
+                {TranslationStrings.SIGN_IN}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
