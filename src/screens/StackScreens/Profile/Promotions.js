@@ -24,6 +24,7 @@ import {
   get_Expired_Promotion_List,
 } from "../../../api/GetApis";
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Top_Tab = [
   {
@@ -130,7 +131,7 @@ const Promotions = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Promotions"}
+        headerlabel={TranslationStrings.PROMOTIONS}
         iconPress={() => {
           navigation.goBack();
         }}

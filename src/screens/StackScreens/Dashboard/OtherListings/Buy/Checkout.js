@@ -32,6 +32,7 @@ import { appImages } from "../../../../../constant/images";
 ////////////////redux//////////////
 import { setLoginUserShippingAddress } from "../../../../../redux/LoginUserActions";
 import { useDispatch, useSelector } from "react-redux";
+import TranslationStrings from "../../../../../utills/TranslationStrings";
 
 const Checkout = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -45,7 +46,7 @@ const Checkout = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Buy"}
+          headerlabel={TranslationStrings.BUY}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -91,7 +92,7 @@ const Checkout = ({ navigation, route }) => {
             marginVertical: hp(2),
           }}
         >
-          <Text style={styles.timelinetext}>Checkout</Text>
+          <Text style={styles.timelinetext}>{TranslationStrings.CHECKOUT}</Text>
         </View>
         <View>
           <ExcahangeCard
@@ -109,7 +110,9 @@ const Checkout = ({ navigation, route }) => {
             paddingHorizontal: wp(5),
           }}
         >
-          <Text style={styles.timelinetext}>Total Items</Text>
+          <Text style={styles.timelinetext}>
+            {TranslationStrings.TOTAL_ITEMS}
+          </Text>
           <Text style={styles.timelinetext}>01</Text>
         </View>
         <View
@@ -119,14 +122,16 @@ const Checkout = ({ navigation, route }) => {
             paddingHorizontal: wp(5),
           }}
         >
-          <Text style={styles.timelinetext}>Total Price</Text>
+          <Text style={styles.timelinetext}>
+            {TranslationStrings.TOTAL_PRICE}
+          </Text>
           <Text style={styles.timelinetext}>
             {exchange_other_listing.price}
           </Text>
         </View>
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"NEXT"}
+            title={TranslationStrings.NEXT}
             widthset={80}
             topDistance={10}
             onPress={() => {

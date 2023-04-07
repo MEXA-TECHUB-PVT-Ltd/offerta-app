@@ -46,6 +46,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { Snackbar } from "react-native-paper";
+import TranslationStrings from "../../../../../utills/TranslationStrings";
 
 const ConfirmAddress = ({ navigation, route }) => {
   ///////////////data states////////////////////
@@ -154,7 +155,7 @@ const ConfirmAddress = ({ navigation, route }) => {
           <View></View>
         )}
         <CustomHeader
-          headerlabel={"Buy"}
+          headerlabel={TranslationStrings.BUY}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -197,13 +198,17 @@ const ConfirmAddress = ({ navigation, route }) => {
             marginVertical: hp(0),
           }}
         >
-          <Text style={styles.timelinetext}>Confirm Address</Text>
+          <Text style={styles.timelinetext}>
+            {TranslationStrings.CONFIRM_ADDRESS}
+          </Text>
         </View>
         {shippinglist?.length == 0 ? (
           <View style={{ marginBottom: hp(14) }}>
             <NoDataFound
               icon={"exclamation-thick"}
-              text={"No Address Added, First Add Shipping Address"}
+              text={
+                TranslationStrings.NO_ADDRESS_ADDED_FIRST_ADD_SHIPPING_ADDRESS
+              }
             />
             <TouchableOpacity
               style={{
@@ -220,7 +225,7 @@ const ConfirmAddress = ({ navigation, route }) => {
               }
             >
               <Text style={[styles.timelinetext, { color: "white" }]}>
-                Add Address
+                {TranslationStrings.ADD_ADDRESS}
               </Text>
             </TouchableOpacity>
           </View>
@@ -345,7 +350,7 @@ const ConfirmAddress = ({ navigation, route }) => {
           </View> */}
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"NEXT"}
+            title={TranslationStrings.NEXT}
             widthset={80}
             topDistance={10}
             onPress={() => {

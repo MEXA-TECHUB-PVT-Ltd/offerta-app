@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  FlatList,
-  View,
-} from "react-native";
+import { SafeAreaView, FlatList, View } from "react-native";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../components/Header/CustomHeader";
@@ -22,9 +18,10 @@ import {
 import { appImages } from "../../../constant/images";
 
 ////////////////api functions///////////
-import { get_Sales,get_Orders } from "../../../api/Sales&Promotions";
+import { get_Sales, get_Orders } from "../../../api/Sales&Promotions";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
-const Top_Tab= [
+const Top_Tab = [
   {
     id: "1",
     title: "Sales",
@@ -36,7 +33,6 @@ const Top_Tab= [
 ];
 
 const SalesOrders = ({ navigation }) => {
-
   ////////////select state////////////
   const [selectedId, setSelectedId] = useState("1");
   ///////////////select function/////////////
@@ -46,60 +42,62 @@ const SalesOrders = ({ navigation }) => {
   };
   const GetSalesList = async (props) => {
     get_Sales()().then((response) => {
-      console.log("response get_Sales list", JSON.stringify(response.data))
+      console.log("response get_Sales list", JSON.stringify(response.data));
       if (response.data[0].order_by === []) {
         setdata("");
       } else {
         setdata(response.data);
       }
     });
-   };
-   const GetOrderList = async (props) => {
+  };
+  const GetOrderList = async (props) => {
     get_Orders().then((response) => {
-      console.log("response get_Orders list", JSON.stringify(response.data))
+      console.log("response get_Orders list", JSON.stringify(response.data));
       if (response.data[0].order_by === []) {
         setdata("");
       } else {
         setdata(response.data);
       }
     });
-   };
+  };
 
-    useEffect(() => {
-      GetSalesList()
-    }, []);
-    ////////////////LIST DATA/////////
-    const [data, setdata] = useState();
+  useEffect(() => {
+    GetSalesList();
+  }, []);
+  ////////////////LIST DATA/////////
+  const [data, setdata] = useState();
 
   const renderItem = ({ item, index }) => (
     <PromotionTopTabs
-     title={item.title} 
-     width={"30%"} 
-     selected={selectedId}
-     id={item.id}
-     onpress={() => {onselect(item.id),item.title === "Sales"?GetSalesList():
-     GetOrderList()}}
-     type={"sales&orders"}
-     />
+      title={item.title}
+      width={"30%"}
+      selected={selectedId}
+      id={item.id}
+      onpress={() => {
+        onselect(item.id),
+          item.title === "Sales" ? GetSalesList() : GetOrderList();
+      }}
+      type={"sales&orders"}
+    />
   );
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"Sale & Orders"}
+        headerlabel={TranslationStrings.SALE_AND_ORDERS}
         iconPress={() => {
           navigation.goBack();
         }}
         icon={"chevron-back"}
       />
-           <View style={TopTabstyles.TopTabView}>
-      <FlatList
-            data={Top_Tab}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-          />
+      <View style={TopTabstyles.TopTabView}>
+        <FlatList
+          data={Top_Tab}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+        />
       </View>
       {/* <View style={TopTabstyles.TopTabView}>
         <TouchableOpacity
@@ -127,7 +125,11 @@ const SalesOrders = ({ navigation }) => {
           data={data}
           renderItem={({ item }) => (
             <ExcahangeCard
-            image={item.listing.images === []?null:IMAGE_URL + item.listing.images[0]}
+              image={
+                item.listing.images === []
+                  ? null
+                  : IMAGE_URL + item.listing.images[0]
+              }
               maintext={item.listing.title}
               subtext={item.listing.description}
               pricetext={item.listing.price}

@@ -279,6 +279,39 @@ let TranslationStrings = new LocalizedStrings({
     PAY: "Pay",
     ENTER_CARD_NUMBER: "Enter Card Number",
     SAVE_CARD: "Save Card",
+    PAYED_SUCCESSFULLY: "Payed Successfully",
+    CHECKOUT: "Checkout",
+    TOTAL_ITEMS: "Total Items",
+    TOTAL_PRICE: "Total Price",
+    NEXT: "Next",
+
+    CONFIRM_ADDRESS: "Confirm Address",
+    NO_ADDRESS_ADDED_FIRST_ADD_SHIPPING_ADDRESS:
+      "No Address Added, First Add Shipping Address",
+    ADD_ADDRESS: "Add Address",
+    CHOOSE_PAYMENT_METHOD: "Choose Payment Method",
+    CREDIT_CARD: "Credit Card",
+    BIT_COIN: "Bit Coin",
+    PAY_ON_DELIVERY: "Pay on Delivery",
+    PAY_ON_PICKUP: "Pay on Pickup",
+
+    PRICE_OFFER: "Price Offer",
+    SELECT_ITEM: "Select Item",
+    MAKE_COUNTER_OFFER: "Make Counter Offer",
+    ITEM_UPDATED_SUCCESSFULLY: "Item Updated Successfully",
+
+    INSIGHTS: "Insights",
+    POPULARITY: "Popularity",
+    TOTAL_VISITED_CITIES: "Total Visited Cities",
+    MOST_VISITED_CITIES: "Most Visited Cities",
+
+    PAYMENT_METHOD: "Payment Method",
+    FEATURES: "Features",
+    BUY_AT: "Buy at",
+    REVIEWS: "Reviews",
+    ENTER_YOUR_EMAIL_FOR_ACCOUNT_VERIFICATION:
+      "Enter your email for account verification",
+    SEND: "Send",
   },
   //spanish
   es: {
@@ -554,6 +587,39 @@ let TranslationStrings = new LocalizedStrings({
     PAY: "Pagar",
     ENTER_CARD_NUMBER: "Ingrese el número de tarjeta",
     SAVE_CARD: "Guardar tarjeta",
+    PAYED_SUCCESSFULLY: "Pagado con éxito",
+    CHECKOUT: "Verificar",
+    TOTAL_ITEMS: "Articulos totales",
+    TOTAL_PRICE: "Precio total",
+    NEXT: "Próxima",
+
+    CONFIRM_ADDRESS: "Confirmar dirección",
+    NO_ADDRESS_ADDED_FIRST_ADD_SHIPPING_ADDRESS:
+      "Sin dirección agregada, primero agregue la dirección de envío",
+    ADD_ADDRESS: "Añadir dirección",
+
+    CHOOSE_PAYMENT_METHOD: "Elige el método de pago",
+    CREDIT_CARD: "Tarjeta de crédito",
+    BIT_COIN: "Bitcoin",
+    PAY_ON_DELIVERY: "Pagar cuando reciba",
+    PAY_ON_PICKUP: "Paga al recogerlo",
+    PRICE_OFFER: "Precio de oferta",
+    SELECT_ITEM: "Seleccione un artículo",
+    MAKE_COUNTER_OFFER: "Hacer contraoferta",
+    ITEM_UPDATED_SUCCESSFULLY: "Artículo actualizado con éxito",
+
+    INSIGHTS: "Perspectivas",
+    POPULARITY: "Popularidad",
+    TOTAL_VISITED_CITIES: "Total de ciudades visitadas",
+    MOST_VISITED_CITIES: "Ciudades más visitadas",
+
+    PAYMENT_METHOD: "Método de pago",
+    FEATURES: "Características",
+    BUY_AT: "Compra en",
+    REVIEWS: "Reseñas",
+    ENTER_YOUR_EMAIL_FOR_ACCOUNT_VERIFICATION:
+      "Ingrese su correo electrónico para la verificación de la cuenta",
+    SEND: "Enviar",
   },
 });
 

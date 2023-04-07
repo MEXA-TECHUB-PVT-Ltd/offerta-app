@@ -31,6 +31,7 @@ import { appImages } from "../../../constant/images";
 
 ////////////app api function///////////
 import { get_Login_User_Followers_List } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Followers = ({ navigation, route }) => {
   ////////////Folllowr list data///////////
@@ -66,7 +67,7 @@ const Followers = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       > */}
       <CustomHeader
-        headerlabel={"Followers"}
+        headerlabel={TranslationStrings.FOLLOWERS}
         iconPress={() => {
           navigation.goBack();
         }}

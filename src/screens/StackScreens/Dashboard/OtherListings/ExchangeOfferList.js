@@ -33,6 +33,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const ExchangeOfferList = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -80,7 +81,7 @@ const ExchangeOfferList = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       > */}
       <CustomHeader
-        headerlabel={"Exchange Offer"}
+        headerlabel={TranslationStrings.EXCHANGE_OFFER}
         iconPress={() => {
           navigation.goBack();
         }}
@@ -105,7 +106,7 @@ const ExchangeOfferList = ({ navigation, route }) => {
           style={styles.btn}
           onPress={() => navigation.navigate("ExchangeOffer")}
         >
-          <Text style={styles.btnText}>NEXT</Text>
+          <Text style={styles.btnText}>{TranslationStrings.NEXT}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

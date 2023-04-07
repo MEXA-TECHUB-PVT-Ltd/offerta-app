@@ -347,8 +347,8 @@ const CardDetails = ({ navigation, route }) => {
         CloseModal={() => setModalVisible(false)}
         Icon={appImages.sucess}
         text={TranslationStrings.SUCCESS}
-        subtext={"Payed Successfully"}
-        buttontext={"OK"}
+        subtext={TranslationStrings.PAYED_SUCCESSFULLY}
+        buttontext={TranslationStrings.OK}
         onPress={() => {
           navigation.navigate("BottomTab"), setModalVisible(false);
         }}

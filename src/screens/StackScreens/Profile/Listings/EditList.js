@@ -59,6 +59,7 @@ import { appImages } from "../../../../constant/images";
 
 ///////////////////////api funtion///////////////
 import { GetListingsDetails } from "../../../../api/GetApis";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const EditList = ({ navigation, route }) => {
   /////////////redux states///////
@@ -292,7 +293,7 @@ const EditList = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <CustomHeader headerlabel={"Upload Item"} />
+        <CustomHeader headerlabel={TranslationStrings.UPLOAD_ITEMS} />
         {item_images_array.length === 0 ? (
           <TouchableOpacity
             onPress={() => navigation.navigate("CameraViewScreen")}
@@ -308,7 +309,9 @@ const EditList = ({ navigation, route }) => {
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
-                <Text style={Uploadstyles.uploadtext}>Upload Images</Text>
+                <Text style={Uploadstyles.uploadtext}>
+                  {TranslationStrings.UPLOAD_IMAGES}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -343,7 +346,7 @@ const EditList = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={title}
-            placeholder="Item Title"
+            placeholder={TranslationStrings.ITEM_TITLE}
             onTermChange={(itemtitle) => setTitle(itemtitle)}
           />
           {/* {givingawaychecked === true ? null : ( */}
@@ -352,7 +355,7 @@ const EditList = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={price}
-            placeholder="Item Price"
+            placeholder={TranslationStrings.ITEM_PRICE}
             onTermChange={(itemprice) => setPrice(itemprice)}
             keyboard_type={"numeric"}
           />
@@ -365,7 +368,7 @@ const EditList = ({ navigation, route }) => {
               term={category_name}
               editable={false}
               disable={false}
-              placeholder="Select Category"
+              placeholder={TranslationStrings.SELECT_CATEGORY}
               onTermChange={(category) => setCategoryName(category)}
             />
           </TouchableOpacity>
@@ -376,7 +379,7 @@ const EditList = ({ navigation, route }) => {
               term={sub_category_name}
               editable={false}
               disable={false}
-              placeholder="Select Sub Category"
+              placeholder={TranslationStrings.SELECT_SUB_CATEGORY}
               onTermChange={(subcategory) => setSubCategoryName(subcategory)}
             />
           </TouchableOpacity>
@@ -389,7 +392,7 @@ const EditList = ({ navigation, route }) => {
               term={product_condition}
               editable={false}
               disable={false}
-              placeholder="Select Product Condition"
+              placeholder={TranslationStrings.SELECT_PRODUCT_CONDITION}
               onTermChange={(newcountry) => setCondition(newcountry)}
             />
           </TouchableOpacity>
@@ -406,7 +409,7 @@ const EditList = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={youtubelink}
-            placeholder="YouTube link (optional)"
+            placeholder={`${TranslationStrings.YOUTUBE_LINK} (optional)`}
             onTermChange={(itemyoutubelink) => setYoutubeLink(itemyoutubelink)}
           />
           <CustomTextInput
@@ -415,7 +418,7 @@ const EditList = ({ navigation, route }) => {
             texterror={"invalid"}
             term={description}
             multiline={true}
-            placeholder="Description"
+            placeholder={TranslationStrings.DESCRIPTION}
             onTermChange={(desc) => setDescription(desc)}
           />
           <TouchableOpacity onPress={() => navigation.navigate("Location")}>
@@ -426,7 +429,7 @@ const EditList = ({ navigation, route }) => {
               term={location_address}
               editable={false}
               disable={false}
-              placeholder="Enter Location"
+              placeholder={TranslationStrings.ENTER_LOCATION}
               onTermChange={(itemlocation) => setLocationAddress(itemlocation)}
             />
           </TouchableOpacity>
@@ -437,7 +440,7 @@ const EditList = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={shippingprice}
-            placeholder="Shipping Price"
+            placeholder={TranslationStrings.PICKUP_OR_DELIVERY_SHIPPING_PRICE}
             onTermChange={(itemshippingprice) =>
               setShippingPrice(itemshippingprice)
             }
@@ -447,6 +450,137 @@ const EditList = ({ navigation, route }) => {
         </View>
 
         <View
+          style={{
+            width: wp(85),
+            borderRadius: wp(5),
+            marginTop: hp(1),
+            marginBottom: hp(1),
+            borderColor: "#ccc",
+            borderWidth: 1,
+            alignSelf: "center",
+            // alignItems: "center",
+            // justifyContent: "space-between",
+            paddingVertical: 13,
+          }}
+        >
+          <Text
+            style={{
+              color: "grey",
+              fontSize: 12,
+              // marginTop: 25,
+              marginBottom: 15,
+              // textAlign: "center",
+              paddingHorizontal: wp(4),
+            }}
+          >
+            {/* Don't check any option if you want to receive offers. */}
+            {
+              TranslationStrings.DONT_CHECK_ANY_OPTION_IF_YOU_WANT_TO_RECEIVE_OFFERS
+            }
+          </Text>
+          <View style={{ paddingHorizontal: wp(4) }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // marginTop: hp(2),
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.text}>
+                {TranslationStrings.NO_EXCHANGE_TO_BUY}
+              </Text>
+              <Checkbox
+                status={exchangebuychecked ? "checked" : "unchecked"}
+                color={Colors.activetextinput}
+                uncheckedColor={Colors.activetextinput}
+                onPress={() => {
+                  setExchangebuyChecked(!exchangebuychecked);
+                }}
+              />
+            </View>
+          </View>
+          <View style={{ paddingHorizontal: wp(4) }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // marginTop: hp(2),
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.text}>{TranslationStrings.FIXED_PRICE}</Text>
+              <Checkbox
+                status={fixedpricechecked ? "checked" : "unchecked"}
+                color={Colors.activetextinput}
+                uncheckedColor={Colors.activetextinput}
+                onPress={() => {
+                  setFixedpriceChecked(!fixedpricechecked);
+                }}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View
+          style={{
+            width: wp(85),
+            borderRadius: wp(5),
+            marginTop: hp(1),
+            marginBottom: hp(1),
+            borderColor: "#ccc",
+            borderWidth: 1,
+            alignSelf: "center",
+            // alignItems: "center",
+            // justifyContent: "space-between",
+            paddingVertical: 13,
+          }}
+        >
+          <Text
+            style={{
+              color: "grey",
+              fontSize: 12,
+              // marginTop: 25,
+              marginBottom: 15,
+              // textAlign: "center",
+              paddingHorizontal: wp(4),
+            }}
+          >
+            {/* Check If you want to give item for free. */}
+            {TranslationStrings.CHECK_IF_YOU_WANT_TO_GIVE_ITEM_FOR_FREE}
+          </Text>
+          <View style={{ paddingHorizontal: wp(4) }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                // marginTop: hp(2),
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.text}>{TranslationStrings.GIVING_AWAY}</Text>
+              <Checkbox
+                status={givingawaychecked ? "checked" : "unchecked"}
+                color={Colors.activetextinput}
+                uncheckedColor={Colors.activetextinput}
+                onPress={() => {
+                  {
+                    setGivingawayChecked(!givingawaychecked),
+                      setPrice(0),
+                      setShippingPrice(0);
+                  }
+                }}
+              />
+            </View>
+            {/* {givingawaychecked && (
+              <Text style={{ color: "red", fontSize: 11 }}>
+                Check If you want to give item for free.
+              </Text>
+            )} */}
+          </View>
+        </View>
+
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -464,8 +598,8 @@ const EditList = ({ navigation, route }) => {
               setExchangebuyChecked(!exchangebuychecked);
             }}
           />
-        </View>
-        <View
+        </View> */}
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -483,9 +617,9 @@ const EditList = ({ navigation, route }) => {
               setFixedpriceChecked(!fixedpricechecked);
             }}
           />
-        </View>
+        </View> */}
         {/* {fixedpricechecked === true || exchangebuychecked === true ? null : ( */}
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -507,12 +641,12 @@ const EditList = ({ navigation, route }) => {
               }
             }}
           />
-        </View>
+        </View> */}
         {/* )} */}
 
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"UPDATE"}
+            title={TranslationStrings.UPDATE}
             widthset={80}
             topDistance={10}
             loading={loading}
@@ -556,9 +690,9 @@ const EditList = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Item Updated Sucessfully"}
-          buttontext={"OK"}
+          text={TranslationStrings.SUCCESS}
+          subtext={TranslationStrings.ITEM_UPDATED_SUCCESSFULLY}
+          buttontext={TranslationStrings.OK}
           onPress={() => {
             setModalVisible(false), navigation.navigate("Listings");
           }}

@@ -46,6 +46,7 @@ import {
 } from "../../../../../redux/LoginUserActions";
 import { useDispatch, useSelector } from "react-redux";
 import { fontFamily } from "../../../../../constant/fonts";
+import TranslationStrings from "../../../../../utills/TranslationStrings";
 
 const PaymentOptions = ({ navigation, route }) => {
   const [selected_index, setSelected_index] = useState(-1);
@@ -63,7 +64,7 @@ const PaymentOptions = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Buy"}
+          headerlabel={TranslationStrings.BUY}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -78,10 +79,12 @@ const PaymentOptions = ({ navigation, route }) => {
               marginBottom: 30,
             }}
           >
-            Choose Payment Method
+            {TranslationStrings.CHOOSE_PAYMENT_METHOD}
           </Text>
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(0)}>
-            <Text style={styles1.btnText}>Credit Card</Text>
+            <Text style={styles1.btnText}>
+              {TranslationStrings.CREDIT_CARD}
+            </Text>
             {selected_index == 0 && (
               <View style={styles1.checkedView}>
                 <Checkbox status={"checked"} />
@@ -89,7 +92,7 @@ const PaymentOptions = ({ navigation, route }) => {
             )}
           </TouchableOpacity>
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(1)}>
-            <Text style={styles1.btnText}>Bit Coin</Text>
+            <Text style={styles1.btnText}>{TranslationStrings.BIT_COIN}</Text>
             {selected_index == 1 && (
               <View style={styles1.checkedView}>
                 <Checkbox status={"checked"} />
@@ -97,7 +100,9 @@ const PaymentOptions = ({ navigation, route }) => {
             )}
           </TouchableOpacity>
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(2)}>
-            <Text style={styles1.btnText}>Pay on Delivery</Text>
+            <Text style={styles1.btnText}>
+              {TranslationStrings.PAY_ON_DELIVERY}
+            </Text>
             {selected_index == 2 && (
               <View style={styles1.checkedView}>
                 <Checkbox status={"checked"} />
@@ -105,7 +110,9 @@ const PaymentOptions = ({ navigation, route }) => {
             )}
           </TouchableOpacity>
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(3)}>
-            <Text style={styles1.btnText}>Pay on Pickup</Text>
+            <Text style={styles1.btnText}>
+              {TranslationStrings.PAY_ON_PICKUP}
+            </Text>
             {selected_index == 3 && (
               <View style={styles1.checkedView}>
                 <Checkbox status={"checked"} />

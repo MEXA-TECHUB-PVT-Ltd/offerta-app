@@ -35,6 +35,7 @@ import {
 /////////////////app images///////////////
 import { appImages } from "../../../constant/images";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const PriceOfferNoti = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -89,7 +90,7 @@ const PriceOfferNoti = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Price Offer "}
+          headerlabel={TranslationStrings.PRICE_OFFER}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -104,22 +105,26 @@ const PriceOfferNoti = ({ navigation, route }) => {
           />
         </View>
         <View style={{ paddingHorizontal: wp(3), marginTop: hp(3) }}>
-          <Text style={{ color: "black" }}>Item Price</Text>
+          <Text style={{ color: "black" }}>
+            {TranslationStrings.ITEM_PRICE}
+          </Text>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={route.params.itemprice + "$"}
-            placeholder="Shipping Price"
+            placeholder={TranslationStrings.SHIPPING_PRICE}
             editable={false}
             //onTermChange={(my_price) => setMyPrice(my_price)}
             keyboard_type={"numeric"}
           />
-          <Text style={{ color: "black" }}>Offer Price</Text>
+          <Text style={{ color: "black" }}>
+            {TranslationStrings.OFFER_PRICE}
+          </Text>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={route.params.offer_price + "$"}
-            placeholder="Enter Price"
+            placeholder={TranslationStrings.ENTER_PRICE}
             editable={false}
             // onTermChange={(offer_price) => setOfferPrice(offer_price)}
             keyboard_type={"numeric"}
@@ -164,7 +169,9 @@ const PriceOfferNoti = ({ navigation, route }) => {
               }}
               // onPress={() => offerAcceptListings("accept")}
             >
-              <Text style={styles.smallbtnText}>Make Counter Offer</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.MAKE_COUNTER_OFFER}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -175,13 +182,17 @@ const PriceOfferNoti = ({ navigation, route }) => {
               style={styles.smallbtn}
               onPress={() => offerAcceptListings("accept")}
             >
-              <Text style={styles.smallbtnText}>Accept</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.ACCEPT}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.smallbtn}
               onPress={() => offerRejectListings("reject")}
             >
-              <Text style={styles.smallbtnText}>Reject</Text>
+              <Text style={styles.smallbtnText}>
+                {TranslationStrings.REJECT}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -202,16 +213,16 @@ const PriceOfferNoti = ({ navigation, route }) => {
             });
           }}
         >
-          <Text style={styles.LastText}>Talk on chat</Text>
+          <Text style={styles.LastText}>{TranslationStrings.TALK_ON_CHAT}</Text>
         </TouchableOpacity>
       </ScrollView>
       <CustomModal
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}
         Icon={appImages.sucess}
-        text={"Success"}
-        subtext={"Offer Accepted Sucessfully"}
-        buttontext={"OK"}
+        text={TranslationStrings.SUCCESS}
+        subtext={TranslationStrings.OFFER_ACCEPTED_SUCCESSFULLY}
+        buttontext={TranslationStrings.OK}
         onPress={() => {
           setModalVisible(false);
           // navigation.navigate("BottomTab");
@@ -225,9 +236,9 @@ const PriceOfferNoti = ({ navigation, route }) => {
         modalVisible={modalVisible1}
         CloseModal={() => setModalVisible1(false)}
         Icon={appImages.sucess}
-        text={"Success"}
-        subtext={"Offer Rejected Sucessfully"}
-        buttontext={"OK"}
+        text={TranslationStrings.SUCCESS}
+        subtext={TranslationStrings.OFFER_REJECTED_SUCCESSFULLY}
+        buttontext={TranslationStrings.OK}
         onPress={() => {
           setModalVisible1(false);
           navigation.navigate("BottomTab");

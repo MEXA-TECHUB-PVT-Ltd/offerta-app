@@ -44,6 +44,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import BlockUserView from "../../../../components/BlockUserView";
 import { get_user_status } from "../../../../api/GetApis";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 //////////////////appImages.//////////////////
 
@@ -121,7 +122,7 @@ const PriceOffer = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Price Offer "}
+          headerlabel={TranslationStrings.PRICE_OFFER}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -136,22 +137,26 @@ const PriceOffer = ({ navigation, route }) => {
           />
         </View>
         <View style={{ paddingHorizontal: wp(3), marginTop: hp(3) }}>
-          <Text style={{ color: "black" }}>Item Price</Text>
+          <Text style={{ color: "black" }}>
+            {TranslationStrings.ITEM_PRICE}
+          </Text>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={exchange_other_listing.price + "$"}
-            placeholder="Shipping Price"
+            placeholder={TranslationStrings.SHIPPING_PRICE}
             editable={false}
             //onTermChange={(my_price) => setMyPrice(my_price)}
             keyboard_type={"numeric"}
           />
-          <Text style={{ color: "black" }}>Offer Price</Text>
+          <Text style={{ color: "black" }}>
+            {TranslationStrings.OFFER_PRICE}
+          </Text>
           <CustomTextInput
             type={"withouticoninput"}
             texterror={"invalid"}
             term={offerprice}
-            placeholder="Enter Price"
+            placeholder={TranslationStrings.ENTER_PRICE}
             onTermChange={(offer_price) => setOfferPrice(offer_price)}
             keyboard_type={"numeric"}
           />
@@ -162,7 +167,7 @@ const PriceOffer = ({ navigation, route }) => {
             style={styles.btn}
             onPress={() => Listings_Exchange_Offer(offerprice)}
           >
-            <Text style={styles.btnText}>SUBMIT</Text>
+            <Text style={styles.btnText}>{TranslationStrings.SUBMIT}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
