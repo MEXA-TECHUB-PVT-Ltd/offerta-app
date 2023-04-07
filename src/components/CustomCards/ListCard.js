@@ -29,10 +29,22 @@ const ListCard = (props) => {
             <Text style={styles.balancetext}>{props.fullname}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => {}} style={[styles.btnview,{backgroundColor:props.type===true?Colors.activetextinput:Colors.Appthemecolor}]}
-    disabled={props.btnstatus}
+        <TouchableOpacity
+          onPress={() => {}}
+          style={[
+            styles.btnview,
+            {
+              backgroundColor:
+                props.type === true
+                  ? Colors.activetextinput
+                  : Colors.Appthemecolor,
+            },
+          ]}
+          disabled={props.btnstatus}
         >
-          <Text style={styles.btntext}>{props.type===true?'Following':"Follow"}</Text>
+          <Text style={styles.btntext}>
+            {props.type === true ? "Following" : "Follow"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

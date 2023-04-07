@@ -36,7 +36,8 @@ const Language = ({ navigation, route }) => {
   }, []);
 
   const getSelectedLanguage = async () => {
-    let language = await AsyncStorage.getItem("Language");
+    // let language = await AsyncStorage.getItem("Language");
+    let language = TranslationStrings.getLanguage();
     if (language == "en") {
       setEnglishisFocused(true),
         setFrenchisFocused(false),

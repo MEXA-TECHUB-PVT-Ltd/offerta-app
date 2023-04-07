@@ -6,7 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
 } from "react-native";
 
 //////////////////app components///////////////
@@ -31,35 +31,32 @@ import { appImages } from "../../../constant/images";
 
 /////////////app api functions//////////
 import { get_Login_User_Followings_List } from "../../../api/GetApis";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const Followings = ({ navigation, route }) => {
-      /////////////main menu status states/////////////
-      const [followings_list, setFollowings_List] = useState("");
-      const GetFollowings = async () => {
-        get_Login_User_Followings_List().then((response) => {
-          if(response.data.msg === "No follower yet")
-          {
-            setFollowings_List("")
-          }
-          else
-          {
-            setFollowings_List(response.data);
-          }
-      
-        });
-      };
-      useEffect(() => {
-        GetFollowings()
-      }, []);
+  /////////////main menu status states/////////////
+  const [followings_list, setFollowings_List] = useState("");
+  const GetFollowings = async () => {
+    get_Login_User_Followings_List().then((response) => {
+      if (response.data.msg === "No follower yet") {
+        setFollowings_List("");
+      } else {
+        setFollowings_List(response.data);
+      }
+    });
+  };
+  useEffect(() => {
+    GetFollowings();
+  }, []);
   const renderItem = ({ item }) => (
     <ListCard
-    image={{uri: IMAGE_URL+item.user.image}}
-    usename={item.user.user_name}
-    fullname={item.user.full_name}
-    type={item.status}
-    btnstatus={true}
-    onpress={()=> navigation.navigate('ListingsDetails')}
-  />
+      image={{ uri: IMAGE_URL + item.user.image }}
+      usename={item.user.user_name}
+      fullname={item.user.full_name}
+      type={item.status}
+      btnstatus={true}
+      onpress={() => navigation.navigate("ListingsDetails")}
+    />
   );
   return (
     <SafeAreaView style={styles.container}>
@@ -67,20 +64,20 @@ const Followings = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       > */}
-        <CustomHeader
-          headerlabel={"Followings"}
-          iconPress={() => {
-            navigation.goBack();
-          }}
-          icon={"arrow-back"}
-        />
-        <FlatList
-          data={followings_list}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+      <CustomHeader
+        headerlabel={TranslationStrings.FOLLOWINGS}
+        iconPress={() => {
+          navigation.goBack();
+        }}
+        icon={"arrow-back"}
+      />
+      <FlatList
+        data={followings_list}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
       {/* </ScrollView> */}
     </SafeAreaView>
   );

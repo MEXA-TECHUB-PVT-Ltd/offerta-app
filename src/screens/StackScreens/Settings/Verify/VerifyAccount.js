@@ -40,6 +40,7 @@ import { BASE_URL } from "../../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BlockUserView from "../../../../components/BlockUserView";
 import { get_user_status } from "../../../../api/GetApis";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const VerifyAccount = ({ navigation }) => {
   //Modal States
@@ -125,7 +126,7 @@ const VerifyAccount = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Settings"}
+          headerlabel={TranslationStrings.SETTINGS}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -146,7 +147,7 @@ const VerifyAccount = ({ navigation }) => {
           }}
         >
           <Text style={styles.toptext}>
-            Enter your email for account verification
+            {TranslationStrings.ENTER_YOUR_EMAIL_FOR_ACCOUNT_VERIFICATION}
           </Text>
         </View>
 
@@ -156,14 +157,14 @@ const VerifyAccount = ({ navigation }) => {
             type={"iconinput"}
             texterror={"invalid"}
             term={email}
-            placeholder="Email Address"
+            placeholder={TranslationStrings.EMAIL_ADDRESS}
             onTermChange={(newEmail) => setEmail(newEmail)}
           />
         </View>
 
         <View style={{ marginTop: hp(0), marginBottom: hp(35) }}>
           <CustomButtonhere
-            title={"SEND"}
+            title={TranslationStrings.SEND}
             widthset={80}
             topDistance={28}
             loading={loading}
@@ -194,9 +195,9 @@ const VerifyAccount = ({ navigation }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.failed}
-          text={"Error"}
-          subtext={"Something went wrong"}
-          buttontext={"GO BACK"}
+          text={TranslationStrings.ERROR}
+          subtext={TranslationStrings.SOMETHING_WENT_WRONG}
+          buttontext={TranslationStrings.GO_BACK}
           onPress={() => {
             setModalVisible(false);
           }}

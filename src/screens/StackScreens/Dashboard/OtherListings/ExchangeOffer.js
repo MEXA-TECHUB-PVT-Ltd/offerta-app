@@ -41,6 +41,7 @@ import {
 /////////////////app images//////////
 import { appImages } from "../../../../constant/images";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 //////////////////appImages.//////////////////
 
@@ -95,7 +96,7 @@ const ExchangeOffer = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Exchange Offer"}
+          headerlabel={TranslationStrings.EXCHANGE_OFFER}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -135,7 +136,7 @@ const ExchangeOffer = ({ navigation, route }) => {
             style={styles.btn}
             onPress={() => Listings_Exchange_Offer(list_data)}
           >
-            <Text style={styles.btnText}>SUBMIT</Text>
+            <Text style={styles.btnText}>{TranslationStrings.SUBMIT}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -103,7 +103,11 @@ const AllListingsByCategory = ({ navigation, route }) => {
         }
       >
         <CustomHeader
-          headerlabel={route?.params?.name ? route?.params?.name : "Listings"}
+          headerlabel={
+            route?.params?.name
+              ? route?.params?.name
+              : TranslationStrings.LISTINGS
+          }
           iconPress={() => {
             navigation.goBack();
           }}

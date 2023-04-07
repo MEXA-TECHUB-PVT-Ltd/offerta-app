@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 ///////////////////paper///////////////
-import { Checkbox } from 'react-native-paper';
+import { Checkbox } from "react-native-paper";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../../components/Header/CustomHeader";
@@ -35,10 +35,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /////////////////////app images/////////////////////
 import { appImages } from "../../../../constant/images";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const Payment = ({ navigation, route }) => {
-
-      //////////////Modal States////////////////////////
+  //////////////Modal States////////////////////////
   const [modalVisible, setModalVisible] = useState(false);
   /////////////////checkbox////////
   const [checked, setChecked] = React.useState(false);
@@ -92,7 +92,7 @@ const Payment = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Payment Method"}
+          headerlabel={TranslationStrings.PAYMENT_METHOD}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -139,19 +139,19 @@ const Payment = ({ navigation, route }) => {
             type={"withouticoninput"}
             texterror={"invalid"}
             term={cardno}
-            placeholder="Enter Card Number"
+            placeholder={TranslationStrings.ENTER_CARD_NUMBER}
             onTermChange={(newCardno) => setCardNo(newCardno)}
           />
           <CustomTextInput
             type={"withouticoninput"}
             term={expirydate}
-            placeholder="expiry date ( MM/YY )"
+            placeholder={`${TranslationStrings.EXPIRY_DATE} ( MM/YY )`}
             onTermChange={(newexpirydate) => setExpiryDate(newexpirydate)}
           />
           <CustomTextInput
             type={"withouticoninput"}
             term={cvv}
-            placeholder="Enter CVC"
+            placeholder={TranslationStrings.ENTER_CVC}
             onTermChange={(newcvv) => setCvv(newcvv)}
           />
 
@@ -166,7 +166,7 @@ const Payment = ({ navigation, route }) => {
               term={countryname}
               editable={false}
               disable={false}
-              placeholder="Select Country"
+              placeholder={TranslationStrings.SELECT_COUNTRY}
               onTermChange={(newcountry) => setCountryName(newcountry)}
             />
           </TouchableOpacity>
@@ -176,38 +176,42 @@ const Payment = ({ navigation, route }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             paddingHorizontal: wp(5),
-            marginTop:hp(3)
+            marginTop: hp(3),
           }}
         >
-          <Text style={styles.timelinetext}>Save Card</Text>
+          <Text style={styles.timelinetext}>
+            {TranslationStrings.SAVE_CARD}
+          </Text>
           <Checkbox
-      status={checked ? 'checked' : 'unchecked'}
-      color={Colors.activetextinput}
-      onPress={() => {
-        setChecked(!checked);
-      }}
-    />
+            status={checked ? "checked" : "unchecked"}
+            color={Colors.activetextinput}
+            onPress={() => {
+              setChecked(!checked);
+            }}
+          />
         </View>
         <View style={{ marginBottom: hp(25) }}>
           <CustomButtonhere
-            title={"PAY"}
+            title={TranslationStrings.PAY}
             widthset={80}
             topDistance={25}
             onPress={() => {
-                setModalVisible(true);
+              setModalVisible(true);
             }}
           />
         </View>
       </ScrollView>
-      <CustomModal 
-                modalVisible={modalVisible}
-                CloseModal={() => setModalVisible(false)}
-                Icon={appImages.sucess}
-              text={'Sucess'}
-              subtext={'Payed Successfully'}
-          buttontext={'OK'}
- onPress={()=> { setModalVisible(false)}}
-                /> 
+      <CustomModal
+        modalVisible={modalVisible}
+        CloseModal={() => setModalVisible(false)}
+        Icon={appImages.sucess}
+        text={TranslationStrings.SUCCESS}
+        subtext={TranslationStrings.PAYED_SUCCESSFULLY}
+        buttontext={TranslationStrings.OK}
+        onPress={() => {
+          setModalVisible(false);
+        }}
+      />
     </SafeAreaView>
   );
 };

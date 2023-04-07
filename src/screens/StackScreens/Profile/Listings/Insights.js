@@ -18,6 +18,7 @@ import Colors from "../../../../utills/Colors";
 
 ////////////////api functions//////////////
 import { get_Listings_Insights } from "../../../../api/Sales&Promotions";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const Insights = ({ navigation, route }) => {
   ////////////////////previous state///////////////
@@ -63,7 +64,7 @@ const Insights = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Insights"}
+          headerlabel={TranslationStrings.INSIGHTS}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -71,37 +72,43 @@ const Insights = ({ navigation, route }) => {
         />
 
         <View style={styles.rowview}>
-          <Text style={styles.lefttext}>Popularity</Text>
+          <Text style={styles.lefttext}>{TranslationStrings.POPULARITY}</Text>
           <Text style={styles.righttext}>{popularity}</Text>
         </View>
         <View style={styles.borderview}></View>
         <View style={styles.rowview}>
-          <Text style={styles.lefttext}>Comments</Text>
+          <Text style={styles.lefttext}>{TranslationStrings.COMMENTS}</Text>
           <Text style={styles.righttext}>{comments}</Text>
         </View>
         <View style={styles.borderview}></View>
         <View style={styles.rowview}>
-          <Text style={styles.lefttext}>Likes</Text>
+          <Text style={styles.lefttext}>{TranslationStrings.LIKES}</Text>
           <Text style={styles.righttext}>{likes}</Text>
         </View>
         <View style={styles.borderview}></View>
         <View style={styles.rowview}>
-          <Text style={styles.lefttext}>Views</Text>
+          <Text style={styles.lefttext}>{TranslationStrings.VIEWS}</Text>
           <Text style={styles.righttext}>{views}</Text>
         </View>
         <View style={styles.borderview}></View>
         <View style={styles.rowview}>
-          <Text style={styles.lefttext}>Exchange Requests</Text>
+          <Text style={styles.lefttext}>
+            {TranslationStrings.REQUEST_EXCHANGE}
+          </Text>
           <Text style={styles.righttext}>{exchange_requests}</Text>
         </View>
         <View style={styles.borderview}></View>
         <View style={styles.rowview}>
-          <Text style={styles.lefttext}>Total Visited Cities</Text>
+          <Text style={styles.lefttext}>
+            {TranslationStrings.TOTAL_VISITED_CITIES}
+          </Text>
           <Text style={styles.righttext}>{visited_cities}</Text>
         </View>
         <View style={styles.borderview}></View>
         <View style={{ marginHorizontal: wp(7) }}>
-          <Text style={styles.lefttext}>Most Visited Cities</Text>
+          <Text style={styles.lefttext}>
+            {TranslationStrings.MOST_VISITED_CITIES}
+          </Text>
         </View>
 
         <FlatList

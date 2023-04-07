@@ -216,9 +216,9 @@ const OtherProfile = ({ navigation }) => {
           userlogo={userimage}
           username={username}
           useremail={useremail}
-          ratting_text={"Rate"}
-          following_text={"Follower"}
-          followers_text={"Followings"}
+          ratting_text={TranslationStrings.RATE}
+          following_text={TranslationStrings.FOLLOWERS}
+          followers_text={TranslationStrings.FOLLOWINGS}
           ratting={ratting}
           followers={other_user_followers_count}
           following={following}

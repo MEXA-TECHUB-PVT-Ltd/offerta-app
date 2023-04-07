@@ -20,6 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /////////////////////app images/////////////////////
 import { appImages } from "../../../../constant/images";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const DATA = [
   {
@@ -98,7 +99,7 @@ const SelectedList = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       > */}
       <CustomHeader
-        headerlabel={"Select Item"}
+        headerlabel={TranslationStrings.SELECT_ITEM}
         iconPress={() => {
           navigation.goBack();
         }}

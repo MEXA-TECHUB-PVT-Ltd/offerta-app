@@ -187,26 +187,26 @@ const CustomMenu1 = (props) => {
                   <TouchableOpacity
                     onPress={() => {
                       item.label === "View Profile" ||
-                      TranslationStrings.VIEW_PROFILE
+                      item.label == TranslationStrings.VIEW_PROFILE
                         ? navigation.navigate("OtherProfile")
                         : item.label === "Make an Offer" ||
-                          TranslationStrings.MAKE_AN_OFFER
+                          item.label == TranslationStrings.MAKE_AN_OFFER
                         ? navigation.navigate("PriceOffer")
                         : item.label === "Request Exchange" ||
-                          TranslationStrings.REQUEST_EXCHANGE
+                          item.label == TranslationStrings.REQUEST_EXCHANGE
                         ? navigation.navigate("ExchangeOfferList")
                         : item.label === "Edit Item" ||
-                          TranslationStrings.EDIT_ITEM
+                          item.label == TranslationStrings.EDIT_ITEM
                         ? navigation.navigate("EditList", {
                             navtype: "edit_list",
                           })
                         : item.label === "Mark as Sold" ||
-                          TranslationStrings.MARK_AS_SOLD
+                          item.label == TranslationStrings.MARK_AS_SOLD
                         ? mark_Status_Listing()
                         : item.label === "Delete" || TranslationStrings.DELETE
                         ? setMsgModalVisible(true)
                         : item.label === "Report Item" ||
-                          TranslationStrings.REPORT_ITEM
+                          item.label == TranslationStrings.REPORT_ITEM
                         ? setMsgModalVisible1(true)
                         : null;
                       setModalVisible(false);

@@ -30,7 +30,7 @@ const PriceOfferList = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
-        headerlabel={"In coming Exchanges"}
+        headerlabel={TranslationStrings.IN_COMING_EXCHANGE}
         iconPress={() => {
           navigation.goBack();
         }}

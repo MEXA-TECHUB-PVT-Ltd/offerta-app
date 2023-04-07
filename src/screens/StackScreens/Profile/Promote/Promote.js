@@ -36,6 +36,7 @@ import {
   get_Urgent_Promotions,
   post_Promotions,
 } from "../../../../api/Sales&Promotions";
+import TranslationStrings from "../../../../utills/TranslationStrings";
 
 //////////top tab/////////////
 const Top_Tab = [
@@ -174,7 +175,7 @@ const Promote = ({ navigation, route }) => {
         }}
       >
         <Text style={[styles.promotepricetext, { fontSize: hp(2.5) }]}>
-          Features
+          {TranslationStrings.FEATURES}
         </Text>
       </View>
       <View
@@ -214,7 +215,7 @@ const Promote = ({ navigation, route }) => {
         showsHorizontalScrollIndicator={false}
       >
         <CustomHeader
-          headerlabel={"Promote"}
+          headerlabel={TranslationStrings.PROMOTE}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -260,7 +261,7 @@ const Promote = ({ navigation, route }) => {
                 <Text style={styles.promotepricetext}>1-day</Text>
               </View>
               <Text style={styles.promotepricetext}>
-                Buy at {urgent_promotion_price}$
+                {TranslationStrings.BUY_AT} {urgent_promotion_price}$
               </Text>
             </View>
             <View
@@ -280,7 +281,7 @@ const Promote = ({ navigation, route }) => {
               }}
             >
               <Text style={[styles.promotepricetext, { fontSize: hp(2.5) }]}>
-                Features
+                {TranslationStrings.FEATURES}
               </Text>
             </View>
             <View
@@ -313,7 +314,7 @@ const Promote = ({ navigation, route }) => {
 
         <View style={{ marginBottom: hp(15) }}>
           <CustomButtonhere
-            title={"PAY"}
+            title={TranslationStrings.PAY}
             widthset={80}
             topDistance={15}
             onPress={() => {
