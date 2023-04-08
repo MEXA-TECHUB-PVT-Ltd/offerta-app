@@ -8,10 +8,23 @@ import { name as appName } from "./app.json";
 import { Text, TextInput } from "react-native";
 import PushNotification from "react-native-push-notification";
 import messaging from "@react-native-firebase/messaging";
+import { navigationRef } from "./RootNavigation";
 
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   console.log("Message handled in the background!", remoteMessage);
 });
+
+PushNotification.createChannel(
+  {
+    channelId: "fcm_fallback_notification_channel", // (required)
+    channelName: "fcm_fallback_notification_channel", // (required)
+    channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+    playSound: false, // (optional) default: true
+    soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+    vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+  },
+  (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+);
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -21,10 +34,34 @@ PushNotification.configure({
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
     let data = notification;
-    console.log("data ::::: ", data);
+    console.log("new notification received ::::: ", data);
+    console.log(
+      "data.userInteraction_______________ ::::: ",
+      data.userInteraction
+    );
+
+    console.log("user_id in notification  :  ", data?.data?.user_id);
+
     //   navigationRef?.current?.navigate('NotificationStackScreens', {
     //     data,
     //   });
+    if (data.userInteraction) {
+      console.log("navigationRef : ", navigationRef);
+      if (data?.data?.type == "chat") {
+        navigationRef?.current?.navigate("ChatScreen", {
+          navtype: "chatlist",
+          userid: data?.data?.user_id,
+        });
+      } else {
+        // navigationRef?.current?.navigate("NotificationStackScreens", {
+        //   data,
+        // });
+
+        navigationRef?.current?.navigate("BottomTab", {
+          screen: "Notification",
+        });
+      }
+    }
   },
   requestPermissions: Platform.OS === "ios",
 });

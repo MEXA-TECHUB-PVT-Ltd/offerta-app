@@ -8,13 +8,16 @@ export const post_Item_Images = async (props) => {
   const formData = new FormData();
   formData.append("product_id", props.item_id);
   props.item_images.forEach((image, index) => {
+    var filename = image.path.split("/").pop();
+    console.log("filename : ", filename);
     formData.append(`images[]`, {
       uri: image.path,
       type: "image/jpeg",
-      name: "image.jpg",
+      // name: "image.jpg",
+      name: filename,
     });
   });
-
+  console.log("formData  : ", formData);
   return fetch(BASE_URL + "productImages.php", {
     method: "POST",
     headers: {

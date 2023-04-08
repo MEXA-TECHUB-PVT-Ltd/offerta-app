@@ -60,6 +60,7 @@ import { appImages } from "../../../../constant/images";
 ///////////////////////api funtion///////////////
 import { GetListingsDetails } from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
+import Loader from "../../../../components/Loader/Loader";
 
 const EditList = ({ navigation, route }) => {
   /////////////redux states///////
@@ -76,6 +77,7 @@ const EditList = ({ navigation, route }) => {
     listing_id,
   } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+  // console.log("item_images_array in edit item screen : ", item_images_array);
 
   ///////////checkbox/////////////
   const [exchangebuychecked, setExchangebuyChecked] = React.useState(false);
@@ -200,6 +202,7 @@ const EditList = ({ navigation, route }) => {
     }
   };
   const GetListData = async () => {
+    setloading(true);
     GetListingsDetails(listing_id)
       .then((response) => {
         dispatch(setItemImagesArray(response.data.images));
@@ -229,70 +232,77 @@ const EditList = ({ navigation, route }) => {
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setloading(false);
       });
   };
+
   useEffect(() => {
     GetListData();
   }, []);
 
   ////////////////////images view////////////
-  const renderItem = ({ item, index }) => (
-    <View
-      style={{
-        alignItems: "center",
-        justifyContent: "center",
-        marginHorizontal: wp(0),
-        marginRight: index === item_images_array.length - 1 ? wp(0) : wp(2),
-      }}
-    >
-      <Image
-        source={
-          route.params.navtype === "edit_list"
-            ? { uri: IMAGE_URL + item }
-            : { uri: item.path }
-        }
+  const renderItem = ({ item, index }) => {
+    return (
+      <View
         style={{
-          height: hp(20),
-          width: wp(84),
-          borderRadius: wp(3),
-          alignSelf: "center",
-        }}
-        resizeMode="cover"
-      />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("CameraViewScreen")}
-        style={{
-          position: "absolute",
-          top: hp(1.3),
-          right: wp(2),
-          backgroundColor: "green",
-          borderRadius: wp(5),
           alignItems: "center",
           justifyContent: "center",
+          marginHorizontal: wp(0),
+          marginRight: index === item_images_array.length - 1 ? wp(0) : wp(2),
         }}
       >
-        <Text
+        <Image
+          source={
+            route.params.navtype === "edit_list"
+              ? { uri: item?.path ? item?.path : IMAGE_URL + item }
+              : { uri: item.path }
+          }
           style={{
-            color: "white",
-            paddingVertical: hp(0.8),
-            paddingHorizontal: wp(3),
-            fontWeight: "bold",
+            height: hp(20),
+            width: wp(84),
+            borderRadius: wp(3),
+            alignSelf: "center",
+          }}
+          resizeMode="cover"
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CameraViewScreen")}
+          style={{
+            position: "absolute",
+            top: hp(1.3),
+            right: wp(2),
+            backgroundColor: "green",
+            borderRadius: wp(5),
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          Change
-        </Text>
-      </TouchableOpacity>
-      {/* <Text style={Uploadstyles.uploadtext}>
-{item.path}
-</Text> */}
-    </View>
-  );
+          <Text
+            style={{
+              color: "white",
+              paddingVertical: hp(0.8),
+              paddingHorizontal: wp(3),
+              fontWeight: "bold",
+            }}
+          >
+            Change
+          </Text>
+        </TouchableOpacity>
+        {/* <Text style={Uploadstyles.uploadtext}>
+    {item.path}
+    </Text> */}
+      </View>
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+        <Loader isLoading={loading} />
         <CustomHeader headerlabel={TranslationStrings.UPLOAD_ITEMS} />
         {item_images_array.length === 0 ? (
           <TouchableOpacity

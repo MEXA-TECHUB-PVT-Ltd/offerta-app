@@ -182,7 +182,7 @@ let TranslationStrings = new LocalizedStrings({
 
     NO_DATA_FOUND: "No Data Found",
     SELLER_DETAILS: "Seller Details",
-    BUY_NOW: "But Now",
+    BUY_NOW: "Buy Now",
     CHAT: "Chat",
 
     ADD_COMMENT: "Add Comment",

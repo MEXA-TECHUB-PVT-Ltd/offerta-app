@@ -47,6 +47,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Snackbar } from "react-native-paper";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
+import { checkout } from "../../../../../api/Offer";
 
 const ConfirmAddress = ({ navigation, route }) => {
   ///////////////data states////////////////////
@@ -64,9 +65,11 @@ const ConfirmAddress = ({ navigation, route }) => {
   const isFocused = useIsFocused();
 
   ////////////////redux/////////////
-  const { exchange_other_listing } = useSelector(
-    (state) => state.loginuserReducer
-  );
+  // const { exchange_other_listing } = useSelector(
+  //   (state) => state.loginuserReducer
+  // );
+  const { exchange_other_listing } = useSelector((state) => state.userReducer);
+
   const dispatch = useDispatch();
   const { login_user_shipping_address } = useSelector(
     (state) => state.loginuserReducer
@@ -91,6 +94,9 @@ const ConfirmAddress = ({ navigation, route }) => {
             setshippinglist([]);
           } else {
             setshippinglist(response.data);
+            if (response?.data?.length > 0) {
+              dispatch(setLoginUserShippingAddress(response?.data[0]));
+            }
           }
         })
         .catch((err) =>
@@ -115,6 +121,74 @@ const ConfirmAddress = ({ navigation, route }) => {
       }
       navigation.navigate("Checkout");
     }
+  };
+
+  const handleSubmit = async () => {
+    let type = "";
+    if (route?.params?.index == 2) {
+      type = "pay_on_delivery";
+    } else if (route?.params?.index == 3) {
+      type = "pay_on_pickup";
+    }
+    if (shippinglist?.length == 0) {
+      setsnackbarValue({
+        value: "Please Add Shipping Address to continue",
+        color: "red",
+      });
+      setVisible(true);
+    } else if (type) {
+      let user_id = await AsyncStorage.getItem("Userid");
+      let obj = {
+        user_id: user_id,
+        listing_id: exchange_other_listing?.id,
+        currency: "inr",
+        type: type,
+      };
+      console.log("adress  :  ", login_user_shipping_address?.id);
+      // console.log("exchange_other_listing  :  ", exchange_other_listing);
+      console.log("selected type :  ", obj);
+      checkout(obj).then((response) => {
+        console.log("checkout response :  ", response?.data);
+        if (response?.data?.status == true) {
+          setsnackbarValue({
+            value: "Order Confirmed",
+            color: "green",
+          });
+          setVisible(true);
+          setTimeout(() => {
+            navigation.navigate("BottomTab");
+          }, 1000);
+        } else {
+          setsnackbarValue({
+            value: "Something went wrong",
+            color: "red",
+          });
+          setVisible(true);
+        }
+      });
+    } else {
+      //do nothing type is not valid
+      console.log("do nothing type is not valid");
+    }
+
+    // checkout(obj)
+    // .then((res) => {
+    //   console.log("checkout api response", res?.data);
+    //   if (res?.data?.status == false) {
+    //     setsnackbarValue({ value: res?.data?.message, color: "red" });
+    //     setVisible(true);
+    //   } else {
+    //     setModalVisible(true);
+    //   }
+    // })
+    // .catch((err) => {
+    //   console.log("error raised : ", err);
+    //   setsnackbarValue({
+    //     value: "Something went wrong",
+    //     color: "red",
+    //   });
+    //   setVisible(true);
+    // });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -170,17 +244,35 @@ const ConfirmAddress = ({ navigation, route }) => {
             },
           ]}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingHorizontal: wp(8),
-            }}
-          >
-            <View style={styles.timelineinnerview}></View>
-            <View style={[styles.timeline, { width: wp(79) }]}></View>
-          </View>
+          {route?.params?.index == 0 ? (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingHorizontal: wp(8),
+              }}
+            >
+              <View style={styles.timelineinnerview}></View>
+              <View style={[styles.timeline, { width: wp(79) }]}></View>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingHorizontal: wp(8),
+              }}
+            >
+              <View style={styles.timelineinnerview}></View>
+              <View style={[styles.filedtimeline, { width: wp(34.5) }]}></View>
+              <View style={styles.timelineinnerview}></View>
+              <View style={[styles.filedtimeline, { width: wp(34.5) }]}></View>
+              <View style={styles.timelineinnerview}></View>
+            </View>
+          )}
+
           <View
             style={{
               flexDirection: "row",
@@ -237,6 +329,9 @@ const ConfirmAddress = ({ navigation, route }) => {
                 <ShippingAddressCard
                   style={{
                     elevation: item?.id == selectedAddress ? 10 : 1,
+                    borderWidth:
+                      item?.id == login_user_shipping_address?.id ? 1 : 0,
+                    borderColor: Colors.Appthemecolor,
                   }}
                   username={item.country}
                   address_1={item.address_1}
@@ -252,9 +347,9 @@ const ConfirmAddress = ({ navigation, route }) => {
                     dispatch(setLoginUserShippingAddress(item));
                     navigation.navigate("UpdateShippingAddress");
                   }}
-                  onLongPress={() => {
-                    setSelectedAddress(item?.id);
-                  }}
+                  // onLongPress={() => {
+                  //   setSelectedAddress(item?.id);
+                  // }}
                 />
               )}
               keyExtractor={(item, index) => index}
@@ -349,14 +444,25 @@ const ConfirmAddress = ({ navigation, route }) => {
             />
           </View> */}
         <View style={{ marginBottom: hp(15) }}>
-          <CustomButtonhere
-            title={TranslationStrings.NEXT}
-            widthset={80}
-            topDistance={10}
-            onPress={() => {
-              handleNext();
-            }}
-          />
+          {route?.params?.index == 0 ? (
+            <CustomButtonhere
+              title={TranslationStrings.NEXT}
+              widthset={80}
+              topDistance={10}
+              onPress={() => {
+                handleNext();
+              }}
+            />
+          ) : (
+            <CustomButtonhere
+              title={TranslationStrings.SUBMIT}
+              widthset={80}
+              topDistance={10}
+              onPress={() => {
+                handleSubmit();
+              }}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
