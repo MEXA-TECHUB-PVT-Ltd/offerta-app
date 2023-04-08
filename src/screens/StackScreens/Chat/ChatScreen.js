@@ -100,11 +100,12 @@ import {
   get_specific_user_detail,
 } from "../../../api/GetApis";
 
-import { useIsFocused } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import PushNotification from "react-native-push-notification";
 
 const ChatScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
@@ -141,11 +142,35 @@ const ChatScreen = ({ route, navigation }) => {
 
   /////////////login user//////////
   const [login_user, setLoginUser] = useState("");
+  const [login_user_details, setLogin_user_details] = useState("");
+  const [receiverDetails, setReceiverDetails] = useState("");
+  const [receiver_FCM_TOKEN, setReceiver_FCM_TOKEN] = useState("");
 
   /////////get login user//////////
   const getUserMessages = async () => {
     var user = await AsyncStorage.getItem("Userid");
     setLoginUser(user);
+  };
+  const getUserDetails = async () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let login_user = await get_Login_UserData();
+        // console.log("login user details : ", login_user?.data);
+        setLogin_user_details(login_user);
+        // setLogin_user_details(login_user);
+        // let receiver_id =
+        //   route?.params?.navtype == "counter_offer"
+        //     ? route?.params?.buyer_id
+        //     : route.params.userid;
+        // console.log("receiver id to find receiver details  :  ", receiver_id);
+        // let user_details = await get_specific_user_detail(receiver_id);
+        // console.log("receiver details find  :  ", user_details);
+        // setReceiverDetails(user_details);
+        resolve(true);
+      } catch (error) {
+        resolve(false);
+      }
+    });
   };
   const requestCameraPermission = async () => {
     try {
@@ -205,11 +230,12 @@ const ChatScreen = ({ route, navigation }) => {
   const [username, setUsername] = useState("");
   const [userimage, setImage] = useState("");
   const GetUserData = async () => {
-    console.log("route.params.userid  :  ", route.params.userid);
     get_Other_UserData(route.params.userid).then((response) => {
       setUsername(response.data.full_name);
       setImage(response.data.image);
       //AllMessages();
+
+      setReceiver_FCM_TOKEN(response?.data?.fcm);
     });
   };
 
@@ -227,6 +253,15 @@ const ChatScreen = ({ route, navigation }) => {
   //   console.log("reotue____________________________________________");
   // }, [route?.params]);
 
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const getData = async () => {
+  //       await getUserDetails();
+  //     };
+  //     getData();
+  //   }, [])
+  // );
+
   useEffect(() => {
     // setNavType(route?.params?.navtype);
     // GetUserData();
@@ -236,6 +271,7 @@ const ChatScreen = ({ route, navigation }) => {
     // console.log("count_______________________________", count);
     // return;
 
+    // getUserDetails();
     if (
       route?.params?.navtype == "chatlist" ||
       typeof route?.params?.navtype == "undefined"
@@ -269,7 +305,16 @@ const ChatScreen = ({ route, navigation }) => {
     // console.log("useEffect called.........");
     requestCameraPermission();
   }, [isFocused]);
+  useEffect(() => {
+    // fcm_fallback_notification_channel
+    getget();
+  }, []);
 
+  const getget = () => {
+    PushNotification.getChannels(function (channel_ids) {
+      console.log("channel_ids : ", channel_ids); // ['channel_id_1']
+    });
+  };
   const onSend = useCallback((messages = []) => {
     setCount(count + 1);
     handleSend(messages);
@@ -283,7 +328,6 @@ const ChatScreen = ({ route, navigation }) => {
     }
 
     var user = await AsyncStorage.getItem("Userid");
-
     let docid = "";
     if (route?.params?.navtype == "counter_offer") {
       // console.log("route?.params ::::::::: : :: : : : :: :  ", route?.params);
@@ -464,33 +508,48 @@ const ChatScreen = ({ route, navigation }) => {
     // ________________________________hadnle push notification _ __________________________________
 
     let user_detail = await get_specific_user_detail(myMsg.receiverId);
+    // let user_detail = receiverDetails;
     let login_user = await get_Login_UserData();
+    // let login_user = login_user_details;
     let receiver_fcm = user_detail ? user_detail.fcm : null;
+    //not
+    //price_offer
+    //exchange_offer
     if (receiver_fcm) {
       let description = "";
       if (myMsg?.type == "counter_offer") {
         description = "sended an counter offer";
       } else if (myMsg?.type == "price_offer") {
         description = "sended a price offer";
+        return;
       } else if (myMsg?.type == "exchange_offer") {
         description = "sended an exchange offer";
+        return;
       } else if (myMsg?.text_image == "image") {
         description = "sended a photo";
       } else {
         description = myMsg?.text ? myMsg?.text : "sended a message";
       }
-
+      console.log("description : ", description);
       let body = {
         to: receiver_fcm,
         notification: {
           title: login_user?.data?.user_name,
           body: description,
-          mutable_content: true,
+          // mutable_content: true,
+          sound: "default",
         },
-        // data: data,
+        data: {
+          user_id: user,
+          type: "chat",
+        },
       };
       console.log("push notification bodyd :   ", body);
-      sendPushNotification(receiver_fcm, body);
+      if (description) {
+        sendPushNotification(receiver_fcm, body);
+      }
+    } else {
+      console.log("receiver_fcm not found : ", user_detail);
     }
 
     // ________________________________hadnle push notification _ __________________________________
@@ -566,6 +625,32 @@ const ChatScreen = ({ route, navigation }) => {
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
     console.log("msgobj : ", msgObj);
+
+    let user_detail = await get_specific_user_detail(msgObj.receiverId);
+    // let user_detail = receiverDetails;
+    let login_user = await get_Login_UserData();
+    // let login_user = login_user_details;
+    let receiver_fcm = user_detail ? user_detail.fcm : null;
+    if (receiver_fcm) {
+      let description = "sended a photo";
+      let body = {
+        to: receiver_fcm,
+        notification: {
+          title: login_user?.data?.user_name,
+          body: description,
+          // mutable_content: true,
+          sound: "default",
+        },
+        data: {
+          user_id: user,
+          type: "chat",
+        },
+      };
+      console.log("push notification bodyd :   ", body);
+      sendPushNotification(receiver_fcm, body);
+    } else {
+      console.log("receiver_fcm not found : ", user_detail);
+    }
   };
 
   const handleImageUpload = useCallback(async (fileName, filePath) => {

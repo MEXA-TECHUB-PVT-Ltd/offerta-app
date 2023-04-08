@@ -40,7 +40,10 @@ import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 
 import moment from "moment";
+import "moment-timezone";
+
 import TranslationStrings from "../../../utills/TranslationStrings";
+import { Avatar } from "react-native-paper";
 
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -58,8 +61,67 @@ const Notification = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       get_user_notifications();
+      // getTimeZone();
     }, [])
   );
+
+  function changeDatetimeByTimezone(datetime, timezone) {
+    console.log("datetime, timezone  :   ", datetime, timezone);
+    const parsedDateAsUtc = moment
+      .utc()
+      .startOf("day")
+      .add(datetime.substring(0, 2), "hours")
+      .add(datetime.substring(3, 5), "minutes");
+    return parsedDateAsUtc?.clone()?.tz(timezone)?.format("hh:mm");
+  }
+
+  const convertUTCToLocalTime = (dateString) => {
+    try {
+      let date = new Date(dateString);
+      const milliseconds = Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+      );
+      const localTime = new Date(milliseconds);
+      // localTime.getDate(); // local date
+      // let hours = localTime.getHours(); // local hour
+      return moment(localTime).fromNow();
+    } catch (error) {
+      return "";
+    }
+  };
+
+  const getTimeZone = () => {
+    setLoading(false);
+    let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    convertUTCToLocalTime("2023-04-08 04:12:57");
+    var localTime = moment
+      .utc(new Date("2023-04-08 04:12:57"), "HH:mm")
+      .tz(timeZone)
+      .format("HH:mm");
+    console.log(localTime);
+
+    // const dateTimeBE = changeDatetimeByTimezone(
+    //   new Date("2023-04-08 04:12:57"),
+    //   timeZone
+    // ); // 17:35
+    // console.log("dateTimeBE  :  ", dateTimeBE);
+    // let date1 = new Date(element.timestamp);
+    // let date1 = new Date("2023-04-08 04:12:57");
+    // const t = new Date(date1);
+    // const date = ("0" + t.getDate()).slice(-2);
+    // const month = ("0" + (t.getMonth() + 1)).slice(-2);
+    // const year = t.getFullYear() % 100;
+    // const hours = ("0" + t.getHours()).slice(-2);
+    // const minutes = ("0" + t.getMinutes()).slice(-2);
+    // const seconds = ("0" + t.getSeconds()).slice(-2);
+    // const time = `${hours}:${minutes} ${date}/${month}/${year}`;
+    // console.log(time);
+  };
 
   const get_user_notifications = async () => {
     get_Notifications()
@@ -90,6 +152,9 @@ const Notification = ({ navigation }) => {
       setShowBlockModal(true);
       return;
     }
+    // console.log("item?.type : ", item?.type);
+
+    // return;
 
     if (item?.type == "Price Offer") {
       console.log("notification is price offer");
@@ -114,8 +179,35 @@ const Notification = ({ navigation }) => {
         };
 
         navigation.navigate("PriceOfferNoti", obj);
-      } else {
+      } else if (item?.offer_status == "accept") {
         navigation.navigate("ConfirmAddress");
+      } else if (item?.offer_status == "pending") {
+        // navigation.navigate("MainListingsDetails", {
+        //   listing_id: item?.list?.id,
+        // });
+
+        let obj = {
+          // sale_by: item?.offer?.sale_by,
+          sale_by: item?.list?.user_id,
+          // buyer_id: item?.offer?.user_id,
+          buyer_id: item?.requester?.id,
+          offer_type: "price_offer",
+          // receiverId: item?.offer?.sale_by,
+          receiverId: item?.list?.user_id,
+          // senderId: item?.offer?.user_id,
+          senderId: item?.requester?.id,
+          listing_id: item?.list?.id,
+
+          item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+          offer_price: item?.offer?.price,
+          offerid: item?.offer?.id,
+          itemprice: item?.list?.price,
+          navtype: "notification",
+          // userid: item?.offer?.sale_by,
+          userid: item?.list?.user_id,
+        };
+
+        console.log("obj : ", obj);
       }
     } else if (item?.type == "Counter Offer") {
       console.log("counter offer_________________");
@@ -174,29 +266,34 @@ const Notification = ({ navigation }) => {
         style={styles.card}
         onPress={() => {
           handleNotificationPress(item?.item);
-          // navigation.navigate("ExchangeNoti", {
-          //   data: item.item,
-          //   navtype: "Notification",
-          // });
         }}
       >
         <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center",
-            marginBottom: 20,
-          }}
+          style={{ flexDirection: "row", alignItems: "center", width: wp(100) }}
         >
-          <View style={{}}>
-            <Image
-              source={{ uri: IMAGE_URL + item.item.requester.image }}
-              style={styles.userimage}
-              resizeMode="contain"
-            />
-          </View>
-          <View style={{ marginLeft: wp(3) }}>
-            <Text style={styles.username}>{item.item.requester.full_name}</Text>
+          <Avatar.Image
+            size={wp(12)}
+            source={{ uri: IMAGE_URL + item.item.requester.image }}
+          />
+          <View style={{ marginLeft: wp(3), flex: 0.9, paddingRight: 10 }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={{ ...styles.username }}>
+                {item.item.requester.full_name}
+              </Text>
+              <Text
+                style={[styles.recomend, { color: "#7A8FA6", width: "auto" }]}
+              >
+                {item?.item?.created_at &&
+                  convertUTCToLocalTime(item?.item?.created_at)}
+              </Text>
+            </View>
             <Text
               style={[styles.recomend, { color: "#7A8FA6", width: wp(57) }]}
             >
@@ -204,15 +301,57 @@ const Notification = ({ navigation }) => {
             </Text>
           </View>
         </View>
-
-        <View style={{ marginLeft: 0 }}>
-          <Text style={[styles.recomend, { color: "#7A8FA6", width: wp(30) }]}>
-            {item?.item?.created_at && moment(item?.item?.created_at).fromNow()}
-          </Text>
-        </View>
       </TouchableOpacity>
     );
   };
+
+  // const renderItem = (item) => {
+  //   return (
+  //     <TouchableOpacity
+  //       style={styles.card}
+  //       onPress={() => {
+  //         handleNotificationPress(item?.item);
+  //         // navigation.navigate("ExchangeNoti", {
+  //         //   data: item.item,
+  //         //   navtype: "Notification",
+  //         // });
+  //       }}
+  //     >
+  //       <View
+  //         style={{
+  //           flexDirection: "row",
+  //           justifyContent: "space-around",
+  //           alignItems: "center",
+  //           marginBottom: 20,
+  //         }}
+  //       >
+  //         <View style={{}}>
+  //           <Image
+  //             source={{ uri: IMAGE_URL + item.item.requester.image }}
+  //             style={styles.userimage}
+  //             resizeMode="contain"
+  //           />
+  //         </View>
+  //         <View style={{ marginLeft: wp(3) }}>
+  //           <Text style={styles.username}>{item.item.requester.full_name}</Text>
+  //           <Text
+  //             style={[styles.recomend, { color: "#7A8FA6", width: wp(57) }]}
+  //           >
+  //             {item.item.notification}
+  //           </Text>
+  //         </View>
+  //       </View>
+
+  //       <View style={{ marginLeft: 0 }}>
+  //         <Text style={[styles.recomend, { color: "#7A8FA6", width: wp(30) }]}>
+  //           {/* {item?.item?.created_at && moment(item?.item?.created_at).fromNow()} */}
+  //           {item?.item?.created_at &&
+  //             convertUTCToLocalTime(item?.item?.created_at)}
+  //         </Text>
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar

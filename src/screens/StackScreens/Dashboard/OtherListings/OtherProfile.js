@@ -48,7 +48,11 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 ////////////////get api data//////////
-import { get_User_Listings, get_Other_UserData } from "../../../../api/GetApis";
+import {
+  get_User_Listings,
+  get_Other_UserData,
+  get_Other_User_Listing,
+} from "../../../../api/GetApis";
 import {
   post_Follow_Users,
   post_UnFollow_Users,
@@ -130,7 +134,14 @@ const OtherProfile = ({ navigation }) => {
   const [data, setdata] = useState();
 
   useEffect(() => {
-    get_User_Listings().then((response) => {
+    // get_User_Listings().then((response) => {
+    //   if (response.data.message === "No data available") {
+    //     setdata("");
+    //   } else {
+    //     setdata(response.data);
+    //   }
+    // });
+    get_Other_User_Listing(exchange_other_listing.user_id).then((response) => {
       if (response.data.message === "No data available") {
         setdata("");
       } else {
@@ -156,8 +167,13 @@ const OtherProfile = ({ navigation }) => {
       image={item.images === [] ? null : IMAGE_URL + item.images[0]}
       maintext={item.title}
       subtext={item.location}
+      sold={item?.sold}
       price={formatter.format(item.price) + "$"}
-      onpress={() => navigation.navigate("MainListingsDetails")}
+      onpress={() => {
+        navigation.replace("MainListingsDetails", {
+          listing_id: item.id,
+        });
+      }}
     />
   );
 

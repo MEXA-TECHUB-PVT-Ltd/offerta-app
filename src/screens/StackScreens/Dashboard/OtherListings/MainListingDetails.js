@@ -187,7 +187,7 @@ const MainListingsDetails = ({ navigation, route }) => {
     GetListingsDetails(predata.listing_id)
       .then((response) => {
         setListing_user_detail(response?.data?.user);
-
+        console.log("losting ldetail  :  ", response.data);
         setListing_User_Id(response.data.user_id);
         dispatch(setExchangeOffer_OtherListing(response.data));
         setListing_Images(response.data.images);

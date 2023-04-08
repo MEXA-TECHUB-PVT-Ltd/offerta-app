@@ -277,9 +277,10 @@ const UploadItem = ({ navigation, route }) => {
           setloading(0);
         } else {
           console.log(
-            "item_images_array  ___________________ : ",
+            "listing images  ___________________ : ",
             item_images_array
           );
+          console.log("response.data.id: ", response.data.id);
           if (item_images_array?.length > 0) {
             post_Item_Images({
               item_id: response.data.id,
@@ -287,7 +288,10 @@ const UploadItem = ({ navigation, route }) => {
             })
               .then((response) => response.json())
               .then((responseData) => {
-                console.log("heer data:", responseData);
+                console.log(
+                  "upload listing images response data:",
+                  responseData
+                );
                 dispatch(setItemImagesArray([]));
                 dispatch(setLocationAddress());
                 dispatch(setLocationLat());
@@ -311,7 +315,10 @@ const UploadItem = ({ navigation, route }) => {
                 setModalVisible(true);
               })
               .catch((err) => {
-                console.log("error raised : ", err);
+                console.log(
+                  "error raised while uploading listing images : ",
+                  err
+                );
                 setloading(0);
               });
           } else {
@@ -345,6 +352,15 @@ const UploadItem = ({ navigation, route }) => {
   //Api form validation
 
   const formValidation = async () => {
+    // post_Item_Images({
+    //   item_id: "147",
+    //   item_images: item_images_array,
+    // })
+    //   .then((response) => response.json())
+    //   .then((response) => {
+    //     console.log("response: ", response);
+    //   });
+    // return;
     let user_status = await get_user_status();
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -599,7 +615,10 @@ const UploadItem = ({ navigation, route }) => {
             texterror={"invalid"}
             term={shippingprice}
             // placeholder="Shipping Price"
-            placeholder={TranslationStrings.PICKUP_OR_DELIVERY_SHIPPING_PRICE}
+            placeholder={
+              TranslationStrings.PICKUP_OR_DELIVERY_SHIPPING_PRICE +
+              `(${TranslationStrings.OPTIONAL})`
+            }
             onTermChange={(itemshippingprice) =>
               setShippingPrice(itemshippingprice)
             }
@@ -831,13 +850,21 @@ const UploadItem = ({ navigation, route }) => {
           subtext={`${TranslationStrings.ITEM_UPLOADED_SUCCESSFULLY} \n\n ${TranslationStrings.DO_YOU_WANT_TO_PROMOTE_YOUR_LISTING}`}
           buttontext={TranslationStrings.YES}
           cancelText={TranslationStrings.NOT_NOW}
-          cancelPress={() => setModalVisible(false)}
+          cancelPress={() => {
+            setModalVisible(false);
+            navigation?.navigate("ListingsDetails", {
+              listing_id: addedListingId,
+            });
+          }}
           cancelable={true}
           onPress={() => {
             setModalVisible(false),
-              navigation?.navigate("ListingsDetails", {
-                listing_id: addedListingId,
-              });
+              // navigation?.navigate("ListingsDetails", {
+              //   listing_id: addedListingId,
+              // });
+
+              navigation.navigate("Promote", { list_id: addedListingId });
+
             // nav_place === "exchange"
             //   ? navigation.navigate("ExchangeOfferList")
             //   : addedListingId != ""

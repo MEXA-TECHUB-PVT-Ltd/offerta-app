@@ -33,10 +33,14 @@ import {
 } from "react-native-responsive-screen";
 import TranslationStrings from "../../utills/TranslationStrings";
 
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+
 function CameraViewScreen({ route, navigation }) {
   /////////////redux states///////
   const { item_images_array } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
+
+  // console.log("item_images_array : ", item_images_array);
 
   const [images, setImages] = useState([]);
   const [data, setData] = useState([]);
@@ -59,32 +63,77 @@ function CameraViewScreen({ route, navigation }) {
   };
 
   const takePhotoFromCamera = async () => {
-    await ImagePicker.openCamera({
-      // width: 500,
-      // height: 500,
-      //cropping: true,
-      useFrontCamera: camera_mode,
-      //compressImageQuality: 0.7,
-    }).then((image) => {
-      setImage(image.path);
-      setImages([...images, image]);
-      dispatch(
-        setItemImagesArray([
+    var options = {
+      storageOptions: {
+        skipBackup: true,
+        path: "images",
+      },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.5,
+    };
+
+    await launchCamera(options).then(async (res) => {
+      if (res.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (res.error) {
+        console.log("ImagePicker Error: ", res.error);
+      } else if (res.customButton) {
+        console.log("User tapped custom button: ", res.customButton);
+      } else {
+        let image = {
+          path: res.assets[0].uri,
+          mime: res.assets[0].type,
+          name: res.assets[0].fileName,
+        };
+
+        setImage(image.path);
+        setImages([...images, image]);
+        dispatch(
+          setItemImagesArray([
+            ...data,
+            {
+              path: image.path,
+            },
+          ])
+        );
+        setData([
           ...data,
           {
             path: image.path,
           },
-        ])
-      );
-      setData([
-        ...data,
-        {
-          path: image.path,
-        },
-      ]);
+        ]);
 
-      scrollRef.current.scrollToEnd();
+        scrollRef.current.scrollToEnd();
+      }
     });
+
+    // await ImagePicker.openCamera({
+    //   // width: 500,
+    //   // height: 500,
+    //   //cropping: true,
+    //   useFrontCamera: camera_mode,
+    //   //compressImageQuality: 0.7,
+    // }).then((image) => {
+    //   setImage(image.path);
+    //   setImages([...images, image]);
+    //   dispatch(
+    //     setItemImagesArray([
+    //       ...data,
+    //       {
+    //         path: image.path,
+    //       },
+    //     ])
+    //   );
+    //   setData([
+    //     ...data,
+    //     {
+    //       path: image.path,
+    //     },
+    //   ]);
+
+    //   scrollRef.current.scrollToEnd();
+    // });
   };
   ////////////////////library image//////////////////
   const choosePhotoFromLibrary = () => {

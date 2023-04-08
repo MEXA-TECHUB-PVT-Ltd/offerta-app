@@ -129,6 +129,10 @@ export const get_User_Listing = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "allProduct.php?user_id=" + user_id);
 };
+export const get_Other_User_Listing = async (user_id) => {
+  // var user_id = await AsyncStorage.getItem("Userid");
+  return axios.get(BASE_URL + "allProduct.php?user_id=" + user_id);
+};
 
 ////////////LISTING VIEWS//////////
 export const GetListingViews = async (props) => {

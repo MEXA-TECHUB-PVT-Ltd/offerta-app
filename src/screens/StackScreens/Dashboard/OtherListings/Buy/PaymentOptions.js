@@ -53,8 +53,10 @@ const PaymentOptions = ({ navigation, route }) => {
 
   const handlePress = async (index) => {
     setSelected_index(index);
-    if (index == 0) {
-      navigation.navigate("ConfirmAddress");
+    if (index !== 1) {
+      navigation.navigate("ConfirmAddress", {
+        index: index,
+      });
     }
   };
   return (
