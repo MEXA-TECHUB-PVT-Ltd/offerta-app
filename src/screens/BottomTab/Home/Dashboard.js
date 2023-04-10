@@ -27,6 +27,7 @@ import {
   setExchangeOffer_OtherListing,
   setLoginUserId,
   get_Categories_Listings_By_Location,
+  setChatCount,
 } from "../../../redux/actions";
 
 ////////////////Image URL////////////////
@@ -48,6 +49,7 @@ import {
   get_Categories_Listings,
   get_Login_UserData,
   get_Banners,
+  get_all_listings,
 } from "../../../api/GetApis";
 
 //////////////////location////////////////
@@ -113,6 +115,15 @@ const Home = ({ navigation }) => {
       }
     });
   };
+
+  const getAllListings = async (props) => {
+    get_all_listings().then((response) => {
+      // console.log("response  :   ", response?.data);
+      let list = response?.data ? response?.data : [];
+      // console.log("list  :  ", list);
+      setCategoryList(list);
+    });
+  };
   const [categorydata, setCategoryData] = useState("");
   useEffect(() => {
     try {
@@ -120,9 +131,22 @@ const Home = ({ navigation }) => {
       GetCategories()
         .then((response) => {
           dispatch(setExchangeOffer_OtherListing(response.data[0]));
-          setCategoryData(response.data);
+          console.log("response.data  :  ", response.data);
+          let obj = {
+            created_at: "2023-03-21 10:49:00",
+            id: "All",
+            image: "",
+            image_url: "",
+            name: "All",
+          };
+          let list1 = response?.data;
+          list1.unshift(obj);
+          // setCategoryData(response.data);
+          setCategoryData(list1);
+
           setSelectedId(response.data[0].id);
           GetCategoriesList(response.data[0].id);
+          getAllListings();
           setloading(false);
         })
         .catch((err) => {
@@ -159,7 +183,12 @@ const Home = ({ navigation }) => {
   ///////////////select function/////////////
   const onselect = (item) => {
     setSelectedId(item);
-    GetCategoriesList(item);
+    if (item == "All") {
+      //get all listings
+      getAllListings();
+    } else {
+      GetCategoriesList(item);
+    }
   };
   const handleRefresh = () => {
     setRefreshing(true);
@@ -168,9 +197,20 @@ const Home = ({ navigation }) => {
       GetCategories()
         .then((response) => {
           dispatch(setExchangeOffer_OtherListing(response.data[0]));
-          setCategoryData(response.data);
+          let obj = {
+            created_at: "2023-03-21 10:49:00",
+            id: "All",
+            image: "",
+            image_url: "",
+            name: "All",
+          };
+          let list1 = response?.data;
+          list1.unshift(obj);
+
+          // setCategoryData(response.data);
           setSelectedId(response.data[0].id);
           GetCategoriesList(response.data[0].id);
+          getAllListings();
           setloading(false);
           setRefreshing(false);
         })
@@ -277,6 +317,9 @@ const Home = ({ navigation }) => {
         <ViewAll
           headerlabel={"Categories"}
           onpress={() => navigation.navigate("Categories")}
+          // onpress={() => {
+          //   dispatch(setChatCount(100));
+          // }}
         />
         <View style={{ paddingHorizontal: wp(3) }}>
           <FlatList
@@ -302,26 +345,33 @@ const Home = ({ navigation }) => {
           <FlatList
             data={Categorylist}
             numColumns={2}
-            renderItem={({ item }) =>
-              item.user_id === login_user_id ? null : (
-                <DashboardCard
-                  image={
-                    item.images?.length == 0 ? null : IMAGE_URL + item.images[0]
-                  }
-                  sold={item?.sold}
-                  // image={item}
-                  maintext={item.title}
-                  subtext={item.location}
-                  price={item.price}
-                  onpress={() => {
-                    dispatch(setListingId(item.id));
+            // item.user_id === login_user_id ? null :
+
+            renderItem={({ item }) => (
+              <DashboardCard
+                image={
+                  item?.images?.length == 0 ? null : IMAGE_URL + item?.images[0]
+                }
+                // image={null}
+                sold={item?.sold}
+                // image={item}
+                maintext={item.title}
+                subtext={item.location}
+                price={item.price}
+                onpress={() => {
+                  dispatch(setListingId(item.id));
+                  if (item.user_id === login_user_id) {
+                    navigation.navigate("ListingsDetails", {
+                      listing_id: item.id,
+                    });
+                  } else {
                     navigation.navigate("MainListingsDetails", {
                       listing_id: item.id,
                     });
-                  }}
-                />
-              )
-            }
+                  }
+                }}
+              />
+            )}
             keyExtractor={(item, index) => index}
             scrollEnabled={false}
           />

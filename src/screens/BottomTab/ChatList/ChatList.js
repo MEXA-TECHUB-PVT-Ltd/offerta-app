@@ -36,27 +36,86 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Loader from "../../../components/Loader/Loader";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import firestore from "@react-native-firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { setChatCount } from "../../../redux/actions";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ChatList = ({ navigation }) => {
+  const { chatCount } = useSelector((state) => state.userReducer);
   ///////////////////data state///////////
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useDispatch();
 
   //textfields
   useEffect(() => {
     setLoading(true);
-    getDetails();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getDetails();
+    }, [])
+  );
+
+  const countUnreadMessages = async (response) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var user = await AsyncStorage.getItem("Userid");
+        let unread_count = 0;
+        for (const element of response.data) {
+          let user_id =
+            element?.user?.id == user
+              ? element?.chat_user?.id
+              : element?.user?.id;
+          let docid =
+            user_id > user ? user + "-" + user_id : user_id + "-" + user;
+          const user_list = firestore()
+            .collection("chats")
+            .doc(docid)
+            .collection("messages");
+
+          user_list
+            .where("read", "==", false)
+            .get()
+            .then((snapshots) => {
+              let myArr = [];
+              snapshots.forEach((item) => {
+                console.log(
+                  "item?._data?.user?._id  :  ",
+                  item?._data?.user?._id,
+                  user
+                );
+                if (item?._data?.user?._id != user) {
+                  myArr.push(item);
+                }
+              });
+              // console.log("myArr  : ", );
+              // console.log("filter :  ", filter);
+              resolve(myArr?.length);
+            });
+        }
+        // resolve(0);
+        // dispatch(setChatCount(unread_count));
+      } catch (error) {
+        resolve(0);
+      }
+    });
+  };
+
   const getDetails = async () => {
     getuser();
-    get_Chat_Users().then((response) => {
+    get_Chat_Users().then(async (response) => {
       setLoading(false);
       setRefreshing(false);
       if (response.data.msg === "No Result") {
         setData();
       } else {
         setData(response.data);
+        let count = await countUnreadMessages(response);
+        dispatch(setChatCount(count));
       }
     });
   };

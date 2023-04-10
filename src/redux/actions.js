@@ -42,7 +42,6 @@ export const setsignupRole = (signup_role) => (dispatch) => {
   });
 };
 
-
 /////////////////Set Item Images array/////////////
 export const SET_ITEM_IMAGES_ARRAY = "SET_ITEM_IMAGES_ARRAY";
 export const setItemImagesArray = (item_images_array) => ({
@@ -207,7 +206,6 @@ export const setLocationAddress = (location_address) => (dispatch) => {
   });
 };
 
-
 ////////////////Listing slider distance///////////
 export const SET_SLIDER_DISTANCE = "SET_SLIDER_DISTANCE";
 
@@ -224,6 +222,21 @@ export const SET_NAV_PLACE = "SET_NAV_PLACE";
 export const setNavPlace = (nav_plcae) => (dispatch) => {
   dispatch({
     type: SET_NAV_PLACE,
+    payload: nav_plcae,
+  });
+};
+
+export const SET_CHAT_COUNT = "SET_CHAT_COUNT";
+export const setChatCount = (nav_plcae) => (dispatch) => {
+  dispatch({
+    type: SET_CHAT_COUNT,
+    payload: nav_plcae,
+  });
+};
+export const SET_NOTIFICATION_COUNT = "SET_NOTIFICATION_COUNT";
+export const setNotificationCount = (nav_plcae) => (dispatch) => {
+  dispatch({
+    type: SET_NOTIFICATION_COUNT,
     payload: nav_plcae,
   });
 };

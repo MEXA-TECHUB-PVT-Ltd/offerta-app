@@ -50,8 +50,10 @@ import {
   ////////SLIDER DISTANCE//////////
   SET_SLIDER_DISTANCE,
 
-    ////////NAV PLACE//////////
-    SET_NAV_PLACE,
+  ////////NAV PLACE//////////
+  SET_NAV_PLACE,
+  SET_CHAT_COUNT,
+  SET_NOTIFICATION_COUNT,
 } from "./actions";
 
 const initialState = {
@@ -65,7 +67,7 @@ const initialState = {
   item_images_array: [],
 
   //////////////signup role/////////////
-  signup_role:'',
+  signup_role: "",
 
   //////////DROPDOWNS///////////
   //-------->Category
@@ -102,8 +104,11 @@ const initialState = {
   ////////SLIDER DISTANCE//////////
   slider_distance: "",
 
-    ////////SLIDER DISTANCE//////////
-    nav_place: "",
+  ////////SLIDER DISTANCE//////////
+  nav_place: "",
+
+  chatCount: 0,
+  notificationCount: 0,
 };
 
 function userReducer(state = initialState, action) {
@@ -122,7 +127,7 @@ function userReducer(state = initialState, action) {
     case SET_ITEM_IMAGES_ARRAY:
       return { ...state, item_images_array: action.payload };
 
-          /////////////////Signup role/////////////
+    /////////////////Signup role/////////////
     case SET_SIGNUP_ROLE:
       return { ...state, signup_role: action.payload };
 
@@ -177,10 +182,13 @@ function userReducer(state = initialState, action) {
     case SET_SLIDER_DISTANCE:
       return { ...state, slider_distance: action.payload };
 
-
-          ////////NAV PLACE//////////
+    ////////NAV PLACE//////////
     case SET_NAV_PLACE:
       return { ...state, nav_place: action.payload };
+    case SET_CHAT_COUNT:
+      return { ...state, chatCount: action.payload };
+    case SET_NOTIFICATION_COUNT:
+      return { ...state, notificationCount: action.payload };
 
     default:
       return state;

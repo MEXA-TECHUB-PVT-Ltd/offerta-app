@@ -29,15 +29,18 @@ import TranslationStrings from "../../../utills/TranslationStrings";
 const Top_Tab = [
   {
     id: "1",
-    title: "Urgent",
+    // title: "Urgent",
+    title: TranslationStrings.URGENT,
   },
   {
     id: "2",
-    title: "Advertisement",
+    // title: "Advertisement",
+    title: TranslationStrings.ADVERTISEMENT,
   },
   {
     id: "3",
-    title: "Expired",
+    // title: "Expired",
+    title: TranslationStrings.EXPIRED,
   },
 ];
 const Promotions = ({ navigation }) => {

@@ -87,6 +87,9 @@ export const GetSubCategories = async () => {
 export const get_Categories_Listings = async (props) => {
   return axios.get(BASE_URL + "getListByCategoryId.php?id=" + props);
 };
+export const get_all_listings = async (props) => {
+  return axios.get(BASE_URL + "getAllList.php");
+};
 //----------->GET CATEGORIES LISTINGS BY LOCATION
 export const get_Categories_Listings_By_Location = async (
   props,

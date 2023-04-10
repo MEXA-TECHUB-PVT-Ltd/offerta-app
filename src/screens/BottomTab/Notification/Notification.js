@@ -32,7 +32,11 @@ import { appImages } from "../../../constant/images";
 ////////////////////api function/////////////
 import { get_Notifications } from "../../../api/GetApis";
 import { useDispatch } from "react-redux";
-import { setExchangeOffer_OtherListing } from "../../../redux/actions";
+import {
+  setChatCount,
+  setExchangeOffer_OtherListing,
+  setNotificationCount,
+} from "../../../redux/actions";
 import Loader from "../../../components/Loader/Loader";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -125,7 +129,7 @@ const Notification = ({ navigation }) => {
 
   const get_user_notifications = async () => {
     get_Notifications()
-      .then((response) => {
+      .then(async (response) => {
         //setData(response.data)
         setRefreshing(false);
         setLoading(false);
@@ -133,7 +137,23 @@ const Notification = ({ navigation }) => {
           setNotification("");
         } else {
           if (response.data?.length > 0) {
-            setNotification(response.data?.reverse());
+            let notificationList = response.data;
+
+            let lastNotification = await AsyncStorage.getItem(
+              "LastNotification"
+            );
+            console.log("lastNotification  :   ", lastNotification);
+            const filter = notificationList.filter(
+              (item) => parseInt(item?.id) > parseInt(lastNotification)
+            );
+            console.log("filter  : ", filter);
+            dispatch(setNotificationCount(filter?.length));
+            let lastItem = response.data?.pop();
+            await AsyncStorage.setItem(
+              "LastNotification",
+              lastItem?.id?.toString()
+            );
+            setNotification(notificationList.reverse());
           }
         }
       })
@@ -162,72 +182,121 @@ const Notification = ({ navigation }) => {
       console.log("item :::", item?.offer_status);
       if (item?.offer_status == "reject") {
         //handle offer reject
-        let obj = {
-          sale_by: item?.offer?.sale_by,
-          buyer_id: item?.offer?.user_id,
-          offer_type: "price_offer",
-          receiverId: item?.offer?.sale_by,
-          senderId: item?.offer?.user_id,
-          listing_id: item?.list?.id,
-
-          item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
-          offer_price: item?.offer?.price,
-          offerid: item?.offer?.id,
-          itemprice: item?.list?.price,
-          navtype: "notification",
-          userid: item?.offer?.sale_by,
-        };
-
-        navigation.navigate("PriceOfferNoti", obj);
-      } else if (item?.offer_status == "accept") {
-        navigation.navigate("ConfirmAddress");
-      } else if (item?.offer_status == "pending") {
-        // navigation.navigate("MainListingsDetails", {
+        // let obj = {
+        //   sale_by: item?.offer?.sale_by,
+        //   buyer_id: item?.offer?.user_id,
+        //   offer_type: "price_offer",
+        //   receiverId: item?.offer?.sale_by,
+        //   senderId: item?.offer?.user_id,
         //   listing_id: item?.list?.id,
-        // });
+
+        //   item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+        //   offer_price: item?.offer?.price,
+        //   offerid: item?.offer?.id,
+        //   itemprice: item?.list?.price,
+        //   navtype: "notification",
+        //   userid: item?.offer?.sale_by,
+        // };
 
         let obj = {
           // sale_by: item?.offer?.sale_by,
           sale_by: item?.list?.user_id,
-          // buyer_id: item?.offer?.user_id,
-          buyer_id: item?.requester?.id,
+          buyer_id: item?.offer?.user_id,
           offer_type: "price_offer",
-          // receiverId: item?.offer?.sale_by,
-          receiverId: item?.list?.user_id,
-          // senderId: item?.offer?.user_id,
-          senderId: item?.requester?.id,
+          receiverId: item?.offer?.user_id,
+          // receiverId: item?.list?.user_id,
+          senderId: item?.offer?.user_id,
+          // senderId: item?.requester?.id,
           listing_id: item?.list?.id,
-
           item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
           offer_price: item?.offer?.price,
           offerid: item?.offer?.id,
           itemprice: item?.list?.price,
           navtype: "notification",
           // userid: item?.offer?.sale_by,
-          userid: item?.list?.user_id,
+          // userid: item?.list?.user_id,
+          userid: item?.offer?.requester_id,
+          offer_status: item?.offer_status,
+        };
+        console.log("reject offer response  :;  ", obj);
+        navigation.navigate("PriceOfferNoti", obj);
+      } else if (item?.offer_status == "accept") {
+        navigation.navigate("ConfirmAddress", {
+          index: 0,
+        });
+      } else if (
+        item?.offer_status == "pending" ||
+        item?.offer_status == "created"
+      ) {
+        // navigation.navigate("MainListingsDetails", {
+        //   listing_id: item?.list?.id,
+        // });
+        let obj = {
+          // sale_by: item?.offer?.sale_by,
+          sale_by: item?.list?.user_id,
+          buyer_id: item?.offer?.requester_id,
+          // buyer_id: item?.requester?.id,
+          offer_type: "price_offer",
+          receiverId: item?.offer?.user_id,
+          // receiverId: item?.list?.user_id,
+          senderId: item?.offer?.requester_id,
+          // senderId: item?.requester?.id,
+          listing_id: item?.list?.id,
+          item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+          offer_price: item?.offer?.price,
+          offerid: item?.offer?.id,
+          itemprice: item?.list?.price,
+          navtype: "notification",
+          // userid: item?.offer?.sale_by,
+          // userid: item?.list?.user_id,
+          userid: item?.offer?.user_id,
         };
 
         console.log("obj : ", obj);
+        navigation.navigate("PriceOfferNoti", obj);
       }
     } else if (item?.type == "Counter Offer") {
-      console.log("counter offer_________________");
-      let obj = {
-        buyer_id: item?.offer?.user_id,
-        item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
-        itemprice: item?.list?.price,
-        listing_id: item?.list?.id,
-        navtype: "notification",
-        offer_price: item?.offer?.price,
-        offer_type: "counter_offer",
-        price_offer: item?.offer?.price,
-        offerid: item?.offer?.id,
-        receiverId: item?.offer?.user_id,
-        sale_by: item?.offer?.sale_by,
-        senderId: item?.offer?.sale_by,
-        userId: item?.offer?.sale_by,
-      };
-      console.log("obj   ::  ", obj);
-      navigation.navigate("CounterOffer", obj);
+      if (item?.offer_status == "created") {
+        let obj = {
+          buyer_id: item?.offer?.requester_id,
+          item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+          itemprice: item?.list?.price,
+          listing_id: item?.list?.id,
+          navtype: "notification",
+          offer_price: item?.offer?.price,
+          offer_type: "counter_offer",
+          price_offer: item?.offer?.price,
+          offerid: item?.offer?.id,
+          receiverId: item?.offer?.user_id,
+          // sale_by: item?.offer?.sale_by,
+          sale_by: item?.list?.user_id,
+          senderId: item?.offer?.requester_id,
+          userId: item?.offer?.requester_id,
+          offer_status: item?.offer_status,
+          type: "view",
+        };
+        navigation.navigate("CounterOffer", obj);
+      } else {
+        let obj = {
+          buyer_id: item?.offer?.requester_id,
+          item_img: item?.list?.images?.length > 0 ? item?.list?.images[0] : "",
+          itemprice: item?.list?.price,
+          listing_id: item?.list?.id,
+          navtype: "notification",
+          offer_price: item?.offer?.price,
+          offer_type: "counter_offer",
+          price_offer: item?.offer?.price,
+          offerid: item?.offer?.id,
+          receiverId: item?.offer?.user_id,
+          // sale_by: item?.offer?.sale_by,
+          sale_by: item?.list?.user_id,
+          senderId: item?.offer?.requester_id,
+          userId: item?.offer?.requester_id,
+          offer_status: item?.offer_status,
+          type: "view",
+        };
+        navigation.navigate("CounterOffer", obj);
+      }
     } else if (item?.type == "exchange") {
       //item1  : requester_list
       //item2 : list
@@ -241,7 +310,14 @@ const Notification = ({ navigation }) => {
         itemprice2: item?.list?.price,
         navtype: "notification",
 
-        userid: item?.list?.user_id,
+        // userid:
+        //   item?.status == "incomming" || item?.status == "reject"
+        //     ? item?.offer?.user_id
+        //     : item?.list?.user_id,
+        userid:
+          item?.status == "incomming" || item?.status == "reject"
+            ? item?.offer?.user_id
+            : item?.requester_list?.user_id,
         receiverId: item?.list?.user_id,
         senderId: item?.requester_list?.user_id,
         offerId: item?.offer?.id,

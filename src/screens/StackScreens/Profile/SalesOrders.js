@@ -24,11 +24,13 @@ import TranslationStrings from "../../../utills/TranslationStrings";
 const Top_Tab = [
   {
     id: "1",
-    title: "Sales",
+    // title: "Sales",
+    title: TranslationStrings.SALES,
   },
   {
     id: "2",
-    title: "Orders",
+    // title: "Orders",
+    title: TranslationStrings.ORDERS,
   },
 ];
 

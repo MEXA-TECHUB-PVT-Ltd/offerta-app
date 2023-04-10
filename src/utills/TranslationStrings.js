@@ -8,6 +8,7 @@ let TranslationStrings = new LocalizedStrings({
     WELCOME: "Welcome",
     VIEW_ALL: "View All",
     Categories: "Categories",
+    Categories1: "Categories",
     //drawer
     MANAGE_SHIPPING_ADDRESS: "Manage shipping address",
     Language: "Language",
@@ -126,6 +127,8 @@ let TranslationStrings = new LocalizedStrings({
     EXCHANGES: "Exchanges",
     PROMOTIONS: "Promotions",
     SALE_AND_ORDERS: "Sale & Orders",
+    SALES: "Sales",
+    ORDERS: "Orders",
 
     SETTINGS: "Settings",
     EDIT_PROFILE: "Edit Profile",
@@ -312,16 +315,21 @@ let TranslationStrings = new LocalizedStrings({
     ENTER_YOUR_EMAIL_FOR_ACCOUNT_VERIFICATION:
       "Enter your email for account verification",
     SEND: "Send",
+
+    URGENT: "Urget",
+    ADVERTISEMENT: "Advertisement",
+    EXPIRED: "Expired",
   },
   //spanish
   es: {
-    WELCOME: "Bienvenida",
+    WELCOME: "Bienvenido",
     VIEW_ALL: "Ver todo",
-    Categories: "Categorías",
+    Categories: "Categoria",
+    Categories1: "Categorias",
     MANAGE_SHIPPING_ADDRESS: "Administrar dirección de envío",
     Language: "Idioma",
 
-    INVITE_FRIENDS: "Invitar a amigas",
+    INVITE_FRIENDS: "Invitar amigos",
     BANNER_ADVERTISEMENT: "Anuncio publicitario",
     BLOGS: "Blogs",
     PRIVACY_POLICY: "política de privacidad",
@@ -352,10 +360,10 @@ let TranslationStrings = new LocalizedStrings({
     SEARCH: "Buscar",
     CONTINUE: "Continuar",
 
-    INVITE_FRIENDS_VIA: "Invitar a amigas a través de",
-    INVITE_FRIENDS_VIA_MESSENGER: "Invitar a amigas a través de Messenger",
-    INVITE_FRIENDS_VIA_WHATSAPP: "Invitar a amigas a través de Whatsapp",
-    INVITE_FRIENDS_VIA_MAIL: "Invitar a amigas por correo",
+    INVITE_FRIENDS_VIA: "Invitar amigos a través de",
+    INVITE_FRIENDS_VIA_MESSENGER: "Invitar amigos a través de Messenger",
+    INVITE_FRIENDS_VIA_WHATSAPP: "Invitar amigos a través de Whatsapp",
+    INVITE_FRIENDS_VIA_MAIL: "Invitar amigos por correo electronico",
 
     ADD_BANNER: "Agregar pancarta",
 
@@ -367,7 +375,8 @@ let TranslationStrings = new LocalizedStrings({
     TOTAL_AMOUNT: "Cantidad total",
     PAY_NOW: "PAGAR AHORA",
 
-    CATEGORY: "Category",
+    // CATEGORY: "Category",
+    CATEGORY: "Categoría",
     SUB_CATEGORY: "Subcategoría",
 
     REFERENCES: "Referencias",
@@ -380,7 +389,8 @@ let TranslationStrings = new LocalizedStrings({
 
     SOLD: "Vendida",
 
-    CHATS: "charlas",
+    // CHATS: "charlas",
+    CHATS: "Conversaciones",
     ONLINE: "En línea",
     TYPE_A_MESSAGE: "Escriba un mensaje",
     UPLOAD_FROM_CAMERA: "Subir desde la cámara",
@@ -428,14 +438,20 @@ let TranslationStrings = new LocalizedStrings({
     OFFER_REJECTED_SUCCESSFULLY: "Oferta rechazada con éxito",
     OK: "DE ACUERDO",
 
-    FOLLOWERS: "Seguidoras",
-    FOLLOWINGS: "Seguidoras",
-    RATE: "Tasa",
-    LISTINGS: "Listados",
+    // FOLLOWERS: "Seguidoras",
+    FOLLOWERS: "Seguidores",
+    // FOLLOWINGS: "Seguidoras",
+    FOLLOWINGS: "Siguiendo",
+    // RATE: "Tasa",
+    RATE: "Calificación",
+    // LISTINGS: "Listados",
+    LISTINGS: "Publicaciones",
     LIKED_ITEMS: "Artículos que te gustan",
     EXCHANGES: "Intercambios",
     PROMOTIONS: "Promociones",
     SALE_AND_ORDERS: "Venta y pedidos",
+    SALES: "Ventas",
+    ORDERS: "Ordenes",
 
     SETTINGS: "Ajustes",
     EDIT_PROFILE: "Editar perfil",
@@ -466,10 +482,13 @@ let TranslationStrings = new LocalizedStrings({
     DOCUMENTS: "Documentos",
 
     COMMENTS: "Comentarios",
-    LIKES: "Gustos",
-    VIEWS: "Puntos de vista",
+    // LIKES: "Gustos",
+    LIKES: "Me Gusta",
+    // VIEWS: "Puntos de vista",
+    VIEWS: "Vistas",
     PRODUCT_CONDITION: "Condición del producto",
-    DATE_OF_LISTING: "Fecha de cotización",
+    // DATE_OF_LISTING: "Fecha de cotización",
+    DATE_OF_LISTING: "Fecha de publicación",
     SHIPPING_COST: "Costo de envío",
     VIEW_INSIGHTS: "VER PERSPECTIVAS",
     PROMOTE: "PROMOVER",
@@ -481,7 +500,8 @@ let TranslationStrings = new LocalizedStrings({
     MARK_AS_SOLD: "Marcar como vendido",
     DELETE: "Borrar",
     SHARE: "Compartir",
-    MAKE_AN_OFFER: "Haz una oferta",
+    // MAKE_AN_OFFER: "Haz una oferta",
+    MAKE_AN_OFFER: "Hacer oferta",
     VIEW_PROFILE: "Ver perfil",
     REQUEST_EXCHANGE: "Intercambio petición",
 
@@ -491,9 +511,13 @@ let TranslationStrings = new LocalizedStrings({
     FAILED_EXCHANGE: "Intercambios fallidos",
     NO_DATA_FOUND: "Datos no encontrados",
 
-    SELLER_DETAILS: "Detalles de la vendedora",
-    BUY_NOW: "Comprar ahora",
-    CHAT: "Charlar",
+    // SELLER_DETAILS: "Detalles de la vendedora",
+    SELLER_DETAILS: "Detalles del vendedor",
+    // BUY_NOW: "Comprar ahora",
+    BUY_NOW: "Comprar",
+    // CHAT: "Charlar",
+    CHAT: "Preguntar",
+    // CHAT_List: "Conversaciones",
 
     ADD_COMMENT: "Agregar comentario",
     ENTER_COMMENT: "Introducir comentario",
@@ -620,6 +644,10 @@ let TranslationStrings = new LocalizedStrings({
     ENTER_YOUR_EMAIL_FOR_ACCOUNT_VERIFICATION:
       "Ingrese su correo electrónico para la verificación de la cuenta",
     SEND: "Enviar",
+
+    URGENT: "Urgente",
+    ADVERTISEMENT: "Publicidad",
+    EXPIRED: "Expirado",
   },
 });
 
