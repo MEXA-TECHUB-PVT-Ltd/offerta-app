@@ -31,8 +31,13 @@ import ChatList from "../../screens/BottomTab/ChatList/ChatList";
 import UploadItem from "../../screens/StackScreens/Dashboard/UploadItem";
 import Notification from "../../screens/BottomTab/Notification/Notification";
 import Profile from "../../screens/BottomTab/Profile/Profile";
+import { useSelector } from "react-redux";
 
 function BottomTab() {
+  const { chatCount, notificationCount } = useSelector(
+    (state) => state.userReducer
+  );
+
   return (
     <Tab.Navigator
       labeled={false}
@@ -96,7 +101,7 @@ function BottomTab() {
         component={ChatList}
         options={{
           headerShown: false,
-
+          tabBarBadge: chatCount == 0 ? null : chatCount,
           tabBarIcon: ({ color, focused }) => (
             <View style={style.maintabview}>
               <View style={[style.tab, focused ? style.selectedTab : null]}>
@@ -142,7 +147,7 @@ function BottomTab() {
         component={Notification}
         options={{
           headerShown: false,
-
+          tabBarBadge: notificationCount == 0 ? null : notificationCount,
           tabBarIcon: ({ color, focused }) => (
             <View style={style.maintabview}>
               <View style={[style.tab, focused ? style.selectedTab : null]}>

@@ -299,8 +299,10 @@ const CounterOffer = ({ navigation, route }) => {
           /> */}
         </View>
 
-        {route?.params?.senderId == currentUser ? null : route?.params
-            ?.sale_by == currentUser ? (
+        {route?.params?.offer_status == "accept" ||
+        route?.params?.offer_status == "reject" ? null : route?.params
+            ?.senderId == currentUser ? null : route?.params?.sale_by ==
+          currentUser ? (
           <View style={styles.btnView}>
             <TouchableOpacity
               style={styles.btn}

@@ -176,7 +176,8 @@ const PriceOfferNoti = ({ navigation, route }) => {
           </View>
         )}
 
-        {route.params?.senderId == currentUser ? null : (
+        {route?.params?.offer_status == "reject" ? null : route.params
+            ?.senderId == currentUser ? null : (
           <View style={{ ...styles.smallbtnView, marginTop: 35 }}>
             <TouchableOpacity
               style={styles.smallbtn}

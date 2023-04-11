@@ -73,6 +73,7 @@ import uuid from "react-native-uuid";
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
 import {
+  setChatCount,
   setExchangeOffer_MyListing,
   setExchangeOffer_OtherListing,
 } from "../../../redux/actions";
@@ -109,6 +110,7 @@ import PushNotification from "react-native-push-notification";
 
 const ChatScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
   ////////////////redux/////////////
   const { exchange_other_listing, exchange_my_listing, user_image } =
     useSelector((state) => state.userReducer);
@@ -320,6 +322,54 @@ const ChatScreen = ({ route, navigation }) => {
     handleSend(messages);
     Chat_Room(route.params.userid);
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      updateUnreadMessages();
+    }, [])
+  );
+
+  const updateUnreadMessages = async () => {
+    try {
+      var user = await AsyncStorage.getItem("Userid");
+      let docid = "";
+      if (route?.params?.navtype == "counter_offer") {
+        // console.log("route?.params ::::::::: : :: : : : :: :  ", route?.params);
+        docid =
+          route.params.buyer_id > user
+            ? user + "-" + route.params.buyer_id
+            : route.params.buyer_id + "-" + user;
+      } else {
+        docid =
+          route.params.userid > user
+            ? user + "-" + route.params.userid
+            : route.params.userid + "-" + user;
+      }
+      const ORDER_ITEMS = firestore()
+        .collection("chats")
+        .doc(docid)
+        .collection("messages");
+      // console.log("ORDER_ITEMS  :  ", ORDER_ITEMS);
+      ORDER_ITEMS.where("read", "==", false)
+        .get()
+        .then((snapshots) => {
+          if (snapshots.size > 0) {
+            snapshots.forEach((orderItem) => {
+              if (orderItem?._data?.user?._id != user) {
+                ORDER_ITEMS.doc(orderItem?.id).update({
+                  read: true,
+                });
+                console.log("record updated...");
+                dispatch(setChatCount(0));
+              } else {
+                console.log("else called......");
+              }
+            });
+          }
+        });
+    } catch (error) {}
+  };
+
   const handleSend = async (messageArray) => {
     let user_status = await get_user_status();
     if (user_status == "block") {
@@ -380,6 +430,7 @@ const ChatScreen = ({ route, navigation }) => {
           buyer_id: route?.params?.buyer_id,
           sale_by: route?.params?.sale_by,
           listing_id: route?.params?.listing_id,
+          read: false,
           user: {
             _id: user,
             name: "ali",
@@ -400,6 +451,7 @@ const ChatScreen = ({ route, navigation }) => {
           buyer_id: route?.params?.buyer_id,
           sale_by: route?.params?.sale_by,
           listing_id: route?.params?.listing_id,
+          read: false,
           user: {
             _id: user,
             name: "ali",
@@ -421,6 +473,7 @@ const ChatScreen = ({ route, navigation }) => {
           type: "exchange_offer",
           senderId: user,
           receiverId: route.params.userid,
+          read: false,
           user: {
             _id: user,
             name: "ali",
@@ -434,6 +487,7 @@ const ChatScreen = ({ route, navigation }) => {
           type: "simple_text",
           senderId: user,
           receiverId: route.params.userid,
+          read: false,
           user: {
             _id: user,
             name: "ali",
@@ -447,6 +501,7 @@ const ChatScreen = ({ route, navigation }) => {
           type: "image_text",
           senderId: user,
           receiverId: route.params.userid,
+          read: false,
           user: {
             _id: user,
             name: "ali",
@@ -459,6 +514,7 @@ const ChatScreen = ({ route, navigation }) => {
           //type: "image_text",
           senderId: user,
           receiverId: route.params.userid,
+          read: false,
           user: {
             _id: user,
             name: "ali",
@@ -608,6 +664,7 @@ const ChatScreen = ({ route, navigation }) => {
       url: image,
       senderId: user,
       receiverId: route.params.userid,
+      read: false,
       user: {
         _id: user,
         name: "ali",

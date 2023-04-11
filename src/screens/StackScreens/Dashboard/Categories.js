@@ -73,7 +73,7 @@ const Categories = ({ navigation, route }) => {
         }
       >
         <CustomHeader
-          headerlabel={TranslationStrings.Categories}
+          headerlabel={TranslationStrings.Categories1}
           iconPress={() => {
             navigation.goBack();
           }}

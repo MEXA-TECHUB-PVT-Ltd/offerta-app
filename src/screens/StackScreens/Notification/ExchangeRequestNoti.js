@@ -207,7 +207,8 @@ const ExchangeNoti = ({ navigation, route }) => {
             navigation.navigate("ChatScreen", {
               navtype: "chatlist",
               // userid: predata.userid,
-              userid: predata.senderId,
+              // userid: predata.senderId,
+              userid: predata.userid,
             });
           }}
         >
