@@ -92,9 +92,6 @@ import AccountVerification from "./src/screens/Auth/AccountVerification";
 
 import { navigationRef } from "./RootNavigation";
 
-import messaging from "@react-native-firebase/messaging";
-import { setChatCount } from "./src/redux/actions";
-
 const Stack = createNativeStackNavigator();
 function App() {
   // const dispatch = useDispatch();
