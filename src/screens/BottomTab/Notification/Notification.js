@@ -146,7 +146,7 @@ const Notification = ({ navigation }) => {
             const filter = notificationList.filter(
               (item) => parseInt(item?.id) > parseInt(lastNotification)
             );
-            console.log("filter  : ", filter);
+
             dispatch(setNotificationCount(filter?.length));
             let lastItem = response.data?.pop();
             await AsyncStorage.setItem(

@@ -21,20 +21,32 @@ import { appImages } from "../../../constant/images";
 import { get_Sales, get_Orders } from "../../../api/Sales&Promotions";
 import TranslationStrings from "../../../utills/TranslationStrings";
 
-const Top_Tab = [
-  {
-    id: "1",
-    // title: "Sales",
-    title: TranslationStrings.SALES,
-  },
-  {
-    id: "2",
-    // title: "Orders",
-    title: TranslationStrings.ORDERS,
-  },
-];
+// const Top_Tab = [
+//   {
+//     id: "1",
+//     // title: "Sales",
+//     title: TranslationStrings.SALES,
+//   },
+//   {
+//     id: "2",
+//     // title: "Orders",
+//     title: TranslationStrings.ORDERS,
+//   },
+// ];
 
 const SalesOrders = ({ navigation }) => {
+  const [Top_Tab, setTop_Tab] = useState([
+    {
+      id: "1",
+      // title: "Sales",
+      title: TranslationStrings.SALES,
+    },
+    {
+      id: "2",
+      // title: "Orders",
+      title: TranslationStrings.ORDERS,
+    },
+  ]);
   ////////////select state////////////
   const [selectedId, setSelectedId] = useState("1");
   ///////////////select function/////////////
@@ -43,9 +55,9 @@ const SalesOrders = ({ navigation }) => {
     //GetPromotionsFeaturesList(item);
   };
   const GetSalesList = async (props) => {
-    get_Sales()().then((response) => {
+    get_Sales().then((response) => {
       console.log("response get_Sales list", JSON.stringify(response.data));
-      if (response.data[0].order_by === []) {
+      if (response.data[0]?.order_by === [] || response.data?.status == false) {
         setdata("");
       } else {
         setdata(response.data);
@@ -55,7 +67,8 @@ const SalesOrders = ({ navigation }) => {
   const GetOrderList = async (props) => {
     get_Orders().then((response) => {
       console.log("response get_Orders list", JSON.stringify(response.data));
-      if (response.data[0].order_by === []) {
+
+      if (response.data[0]?.order_by === [] || response.data?.status == false) {
         setdata("");
       } else {
         setdata(response.data);

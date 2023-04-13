@@ -39,18 +39,20 @@ import {
 import TranslationStrings from "../../../../utills/TranslationStrings";
 
 //////////top tab/////////////
-const Top_Tab = [
-  {
-    id: "1",
-    title: "Urgent",
-  },
-  {
-    id: "2",
-    title: "Advertisement",
-  },
-];
 
 const Promote = ({ navigation, route }) => {
+  const Top_Tab = [
+    {
+      id: "1",
+      // title: "Urgent",
+      title: TranslationStrings.URGENT,
+    },
+    {
+      id: "2",
+      // title: "Advertisement",
+      title: TranslationStrings.ADVERTISEMENT,
+    },
+  ];
   ////////////////////previous state///////////////
   const [predata] = useState(route.params);
 
@@ -67,13 +69,16 @@ const Promote = ({ navigation, route }) => {
   const [urgent_promotion_feature, setUrgent_Promotion_Feature] = useState("");
 
   ///////////////advertisement tab states////////////////
-  const [advertisement_promotion, setAdvertisement_Promotion] = useState("");
+  const [advertisement_promotion, setAdvertisement_Promotion] = useState([]);
+
+  const [urgent_promotion_id, setUrgent_promotion_id] = useState("");
 
   const GetUrgentPromotions = async (props) => {
     get_Urgent_Promotions().then((response) => {
       if (response.data.message === "No data available") {
         setUrgent_Promotion_Price("");
       } else {
+        setUrgent_promotion_id(response.data?.id);
         setUrgent_Promotion_Price(response.data.price);
         setUrgent_Promotion_Feature(response.data.title);
       }
@@ -83,8 +88,9 @@ const Promote = ({ navigation, route }) => {
     get_Advertisement_Promotions().then((response) => {
       console.log("response advertisement list", JSON.stringify(response.data));
       if (response.data.message === "No data available") {
-        setAdvertisement_Promotion("");
+        setAdvertisement_Promotion([]);
       } else {
+        console.log("response.data  :   ", response.data?.length);
         setAdvertisement_Promotion(response.data);
       }
     });
@@ -101,13 +107,38 @@ const Promote = ({ navigation, route }) => {
   }, []);
   ////////////Create Order//////////
   const Create_Promotions = () => {
-    console.log(
-      "here we go in:",
-      predata.list_id,
-      checked,
-      promotion_id,
-      promotion_type
-    );
+    console.log("here we go in:", predata.list_id);
+    // console.log({ checked, promotion_id, promotion_type });
+    // navigation.navigate("CardDetails");
+    let listingID = predata.list_id;
+    let promotionID = "";
+    let promotionType = "";
+    if (selectedId == 1) {
+      //urgent
+      promotionID = urgent_promotion_id;
+      promotionType = "urgent";
+    } else {
+      const selected_ad = advertisement_promotion?.filter(
+        (item) => item?.checked
+      );
+      if (selected_ad?.length == 0) {
+        alert("Please Select Plan");
+        return;
+      } else {
+        promotionID = selected_ad[0]?.id;
+        promotionType = "advertisment";
+      }
+    }
+
+    console.log({ listingID, promotionID, promotionType });
+    navigation.navigate("CardDetails", {
+      type: "promote",
+      listingID: listingID,
+      promotionID: promotionID,
+      promotionType: promotionType,
+    });
+    return;
+
     post_Promotions(predata.list_id, promotion_id, promotion_type).then(
       (response) => {
         console.log("hessdsre we go in:", response.data);
@@ -135,6 +166,23 @@ const Promote = ({ navigation, route }) => {
     />
   );
 
+  const handleCheckbox = (id) => {
+    const newData = advertisement_promotion?.map((item) => {
+      if (item.id == id) {
+        return {
+          ...item,
+          checked: true,
+        };
+      } else {
+        return {
+          ...item,
+          checked: false,
+        };
+      }
+    });
+    setAdvertisement_Promotion(newData);
+  };
+
   ///////////////Promotions//////////////
   const renderItemPromotions = ({ item, index }) => (
     <View style={{ marginHorizontal: wp(7), alignSelf: "center" }}>
@@ -147,11 +195,20 @@ const Promote = ({ navigation, route }) => {
         }}
       >
         <View style={{ alignItems: "center", flexDirection: "row" }}>
-          <Checkbox
+          {/* <Checkbox
             status={checked ? "checked" : "unchecked"}
             onPress={() => {
               setChecked(!checked), setPromotion_id(item.id);
               setPromotion_Type("advertisment");
+              handleCheckbox(item.id)
+            }}
+          /> */}
+          <Checkbox
+            status={item?.checked ? "checked" : "unchecked"}
+            onPress={() => {
+              setChecked(!checked), setPromotion_id(item.id);
+              setPromotion_Type("advertisment");
+              handleCheckbox(item.id);
             }}
           />
           <Text style={styles.promotepricetext}>{item.offer_time}</Text>
@@ -181,8 +238,9 @@ const Promote = ({ navigation, route }) => {
       <View
         style={{
           alignItems: "center",
-          paddingHorizontal: wp(5),
-          backgroundColor: "orange",
+          // paddingHorizontal: wp(5),
+          // backgroundColor: "orange",
+          width: wp(90),
         }}
       >
         <RenderHtml
@@ -251,13 +309,13 @@ const Promote = ({ navigation, route }) => {
           <View>
             <View style={styles.mainView}>
               <View style={{ alignItems: "center", flexDirection: "row" }}>
-                <Checkbox
+                {/* <Checkbox
                   status={checked ? "checked" : "unchecked"}
                   onPress={() => {
                     setChecked(!checked), setPromotion_id("1");
                     setPromotion_Type("urgent");
                   }}
-                />
+                /> */}
                 <Text style={styles.promotepricetext}>1-day</Text>
               </View>
               <Text style={styles.promotepricetext}>

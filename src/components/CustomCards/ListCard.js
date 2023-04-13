@@ -13,6 +13,7 @@ import {
 ////////////app images///////////
 import { appImages } from "../../constant/images";
 import Colors from "../../utills/Colors";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const ListCard = (props) => {
   return (
@@ -43,7 +44,9 @@ const ListCard = (props) => {
           disabled={props.btnstatus}
         >
           <Text style={styles.btntext}>
-            {props.type === true ? "Following" : "Follow"}
+            {props.type === true
+              ? TranslationStrings.FOLLOWING
+              : TranslationStrings.FOLLOW}
           </Text>
         </TouchableOpacity>
       </View>

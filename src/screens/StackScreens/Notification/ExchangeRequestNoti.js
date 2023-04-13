@@ -204,7 +204,8 @@ const ExchangeNoti = ({ navigation, route }) => {
             alignSelf: "center",
           }}
           onPress={() => {
-            navigation.navigate("ChatScreen", {
+            // navigation.navigate("ChatScreen", {
+            navigation.replace("ChatScreen", {
               navtype: "chatlist",
               // userid: predata.userid,
               // userid: predata.senderId,

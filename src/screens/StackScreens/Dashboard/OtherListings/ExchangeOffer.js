@@ -69,7 +69,7 @@ const ExchangeOffer = ({ navigation, route }) => {
         response.data
       );
       console.log("response :  ", response?.data);
-      navigation.navigate("ChatScreen", {
+      navigation.replace("ChatScreen", {
         navtype: "exchange_offer",
         userid: exchange_other_listing.user_id,
         item1: exchange_my_listing.title,

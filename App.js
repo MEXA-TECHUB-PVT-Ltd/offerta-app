@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import messaging from '@react-native-firebase/messaging';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Provider } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { Store } from "./src/redux/store";
 
 //Screens
@@ -92,8 +92,15 @@ import AccountVerification from "./src/screens/Auth/AccountVerification";
 
 import { navigationRef } from "./RootNavigation";
 
+import messaging from "@react-native-firebase/messaging";
+import { setChatCount } from "./src/redux/actions";
+
 const Stack = createNativeStackNavigator();
 function App() {
+  // const dispatch = useDispatch();
+  // const { chatCount, notificationCount } = useSelector(
+  //   (state) => state.userReducer
+  // );
   //const navigation = useNavigation();
   const [loading, setLoading] = React.useState(true);
   const [initialRoute, setInitialRoute] = React.useState("Home");
@@ -134,6 +141,7 @@ function App() {
   //     return null;
   //   }
   // }, []);
+
   return (
     <Provider store={Store}>
       <NavigationContainer ref={navigationRef}>

@@ -121,6 +121,10 @@ let TranslationStrings = new LocalizedStrings({
 
     FOLLOWERS: "Followers",
     FOLLOWINGS: "Followings",
+
+    FOLLOW: "Follow",
+    FOLLOWING: "Following",
+
     RATE: "Rate",
     LISTINGS: "Listings",
     LIKED_ITEMS: "Liked Items",
@@ -439,9 +443,13 @@ let TranslationStrings = new LocalizedStrings({
     OK: "DE ACUERDO",
 
     // FOLLOWERS: "Seguidoras",
-    FOLLOWERS: "Seguidores",
+    FOLLOWERS: "Siguidores",
     // FOLLOWINGS: "Seguidoras",
     FOLLOWINGS: "Siguiendo",
+
+    FOLLOW: "Seguir",
+    FOLLOWING: "Seguidores",
+
     // RATE: "Tasa",
     RATE: "Calificación",
     // LISTINGS: "Listados",

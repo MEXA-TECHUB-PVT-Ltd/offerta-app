@@ -45,6 +45,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Snackbar } from "react-native-paper";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
+import { post_Promotions } from "../../../../../api/Sales&Promotions";
 
 const CardDetails = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -97,11 +98,25 @@ const CardDetails = ({ navigation, route }) => {
     }
   };
 
-  ////////////Create Order//////////
-  const Listing_Create_Order = async () => {
-    let user_id = await AsyncStorage.getItem("Userid");
+  const CreatePromotion = async () => {
+    let listingID = route?.params?.listingID;
+    let promotionID = route?.params?.promotionID;
+    let promotionType = route?.params?.promotionType;
 
+    console.log({ listingID, promotionID, promotionType });
+
+    post_Promotions(listingID, promotionID, promotionType).then((response) => {
+      console.log("hessdsre we go in:", response.data);
+      //setModalVisible(true)
+      setModalVisible(true);
+    });
+  };
+
+  const payFORPromotion = async () => {
+    // CreatePromotion();
+    // return;
     if (await validate()) {
+      let user_id = await AsyncStorage.getItem("Userid");
       let expiryDate = expirydate?.split("/");
       let month = expiryDate[0];
       let year = expiryDate[1];
@@ -114,43 +129,97 @@ const CardDetails = ({ navigation, route }) => {
         card_cvc: cvv,
         description: "nill",
         currency: "inr",
+        type: "credit_card",
       };
 
-      create_order_Listings(
-        exchange_other_listing.user_id,
-        exchange_other_listing.id,
-        login_user_shipping_address.id
-      ).then((response) => {
-        if (response?.data?.status == true) {
-          add_User_Stripe_Credentials().then(() => {
-            checkout(obj)
-              .then((res) => {
-                console.log("checkout api response", res?.data);
-                if (res?.data?.status == false) {
-                  setsnackbarValue({ value: res?.data?.message, color: "red" });
-                  setVisible(true);
-                } else {
-                  setModalVisible(true);
-                }
-              })
-              .catch((err) => {
-                console.log("error raised : ", err);
-                setsnackbarValue({
-                  value: "Something went wrong",
-                  color: "red",
-                });
-                setVisible(true);
-              });
-          });
-        } else {
-          console.log("create order response :  ", response?.data);
+      checkout(obj)
+        .then((res) => {
+          console.log("checkout api response", res?.data);
+          if (res?.data?.status == false) {
+            setsnackbarValue({ value: res?.data?.message, color: "red" });
+            setVisible(true);
+          } else {
+            CreatePromotion();
+          }
+        })
+        .catch((err) => {
+          console.log("error raised : ", err);
           setsnackbarValue({
             value: "Something went wrong",
             color: "red",
           });
           setVisible(true);
-        }
-      });
+        });
+    }
+  };
+
+  ////////////Create Order//////////
+  const Listing_Create_Order = async () => {
+    let user_id = await AsyncStorage.getItem("Userid");
+    if (route?.params?.type == "promote") {
+      payFORPromotion();
+    } else {
+      if (await validate()) {
+        let expiryDate = expirydate?.split("/");
+        let month = expiryDate[0];
+        let year = expiryDate[1];
+        let obj = {
+          user_id: user_id,
+          listing_id: exchange_other_listing.id,
+          card_number: cardno,
+          card_exp_month: month,
+          card_exp_year: year,
+          card_cvc: cvv,
+          description: "nill",
+          currency: "inr",
+          type: "credit_card",
+        };
+
+        console.log("obj pass to checkout  :  ", obj);
+
+        create_order_Listings(
+          exchange_other_listing.user_id,
+          exchange_other_listing.id,
+          login_user_shipping_address.id
+        ).then((response) => {
+          if (response?.data?.status == true) {
+            add_User_Stripe_Credentials().then(() => {
+              checkout(obj)
+                .then((res) => {
+                  console.log("checkout api response", res?.data);
+                  if (res?.data?.status == false) {
+                    setsnackbarValue({
+                      value: res?.data?.message,
+                      color: "red",
+                    });
+                    setVisible(true);
+                  } else {
+                    if (route?.params?.type == "promote") {
+                      CreatePromotion();
+                    } else {
+                      setModalVisible(true);
+                    }
+                  }
+                })
+                .catch((err) => {
+                  console.log("error raised : ", err);
+                  setsnackbarValue({
+                    value: "Something went wrong",
+                    color: "red",
+                  });
+                  setVisible(true);
+                });
+            });
+          } else {
+            console.log("create order response :  ", response?.data);
+            setsnackbarValue({
+              value: "Something went wrong",
+              color: "red",
+            });
+            setVisible(true);
+          }
+        });
+      }
     }
   };
   return (

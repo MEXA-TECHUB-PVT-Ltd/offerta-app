@@ -50,6 +50,7 @@
     "react-native-maps": "^1.4.0",
     "react-native-pager-view": "^6.1.2",
     "react-native-paper": "^5.1.0",
+    "react-native-permissions": "^3.8.0",
     "react-native-popup-menu": "^0.16.1",
     "react-native-push-notification": "^8.1.1",
     "react-native-ratings": "^8.1.0",

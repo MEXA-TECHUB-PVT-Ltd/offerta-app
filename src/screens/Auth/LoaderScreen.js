@@ -24,14 +24,17 @@ const LoaderScreen = ({ navigation }) => {
       getSelectedLanguage();
       await AsyncStorage.getItem("Userid")
         .then((db) => {
-          setloading(false);
+          // setloading(false);
           console.log("usertype", { db });
           if (db === null) {
             setloading(false);
             navigation.replace("Login");
           } else {
-            setloading(false);
-            navigation.replace("Drawerroute");
+            setTimeout(() => {
+              console.log("here..");
+              setloading(false);
+              navigation.replace("Drawerroute");
+            }, 2000);
           }
         })
         .done();
@@ -39,9 +42,9 @@ const LoaderScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getData();
     getDetails();
     get_user_notifications();
+    getData();
   }, []);
 
   const getSelectedLanguage = async () => {

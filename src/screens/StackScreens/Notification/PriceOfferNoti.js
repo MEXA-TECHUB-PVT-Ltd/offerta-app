@@ -207,7 +207,8 @@ const PriceOfferNoti = ({ navigation, route }) => {
           onPress={() => {
             console.log("route?.params?.userid :  ", route?.params?.userid);
 
-            navigation.navigate("ChatScreen", {
+            // navigation.navigate("ChatScreen", {
+            navigation.replace("ChatScreen", {
               navtype: "chatlist",
               // userid: predata.userid,
               userid: route?.params?.userid,

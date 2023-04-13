@@ -7,7 +7,11 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  PermissionsAndroid,
+  Alert,
+  Linking,
 } from "react-native";
+import Permissions from "react-native-permissions";
 import { Text, TouchableRipple, Appbar } from "react-native-paper";
 
 ////////////////////redux////////////
@@ -62,7 +66,42 @@ function CameraViewScreen({ route, navigation }) {
     }
   };
 
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "App Camera Permission",
+          message: "App needs access to your camera ",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        // console.log("Camera permission given");
+      } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+        Alert.alert(
+          "Camera Permission denied",
+          "Please open Settings to allow Camera permissions.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            { text: "Open Setting", onPress: () => Permissions.openSettings() },
+          ]
+        );
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   const takePhotoFromCamera = async () => {
+    requestCameraPermission();
     var options = {
       storageOptions: {
         skipBackup: true,
@@ -73,40 +112,44 @@ function CameraViewScreen({ route, navigation }) {
       quality: 0.5,
     };
 
-    await launchCamera(options).then(async (res) => {
-      if (res.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (res.error) {
-        console.log("ImagePicker Error: ", res.error);
-      } else if (res.customButton) {
-        console.log("User tapped custom button: ", res.customButton);
-      } else {
-        let image = {
-          path: res.assets[0].uri,
-          mime: res.assets[0].type,
-          name: res.assets[0].fileName,
-        };
+    await launchCamera(options)
+      .then(async (res) => {
+        if (res.didCancel) {
+          console.log("User cancelled image picker");
+        } else if (res.error) {
+          console.log("ImagePicker Error: ", res.error);
+        } else if (res.customButton) {
+          console.log("User tapped custom button: ", res.customButton);
+        } else {
+          let image = {
+            path: res.assets[0].uri,
+            mime: res.assets[0].type,
+            name: res.assets[0].fileName,
+          };
 
-        setImage(image.path);
-        setImages([...images, image]);
-        dispatch(
-          setItemImagesArray([
+          setImage(image.path);
+          setImages([...images, image]);
+          dispatch(
+            setItemImagesArray([
+              ...data,
+              {
+                path: image.path,
+              },
+            ])
+          );
+          setData([
             ...data,
             {
               path: image.path,
             },
-          ])
-        );
-        setData([
-          ...data,
-          {
-            path: image.path,
-          },
-        ]);
+          ]);
 
-        scrollRef.current.scrollToEnd();
-      }
-    });
+          scrollRef.current.scrollToEnd();
+        }
+      })
+      .catch((err) => {
+        console.log("Error Occured: " + err);
+      });
 
     // await ImagePicker.openCamera({
     //   // width: 500,

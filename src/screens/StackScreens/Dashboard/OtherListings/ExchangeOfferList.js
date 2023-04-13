@@ -104,7 +104,7 @@ const ExchangeOfferList = ({ navigation, route }) => {
       <View style={{ position: "absolute", bottom: hp(2), left: wp(15) }}>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.navigate("ExchangeOffer")}
+          onPress={() => navigation.replace("ExchangeOffer")}
         >
           <Text style={styles.btnText}>{TranslationStrings.NEXT}</Text>
         </TouchableOpacity>
