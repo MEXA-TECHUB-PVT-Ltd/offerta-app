@@ -91,7 +91,7 @@ const PriceOffer = ({ navigation, route }) => {
       //dispatch(setExchangeOffer_OtherListing(list_data))
       console.log("exchnage response hereL:", response?.data);
 
-      navigation.navigate("ChatScreen", {
+      navigation.replace("ChatScreen", {
         buyer_id: user_id,
         sale_by: exchange_other_listing.user_id,
         userid: exchange_other_listing.user_id,

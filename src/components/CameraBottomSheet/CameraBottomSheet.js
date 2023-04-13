@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  PermissionsAndroid,
+  Alert,
+} from "react-native";
 import { Divider } from "react-native-paper";
 
 import { useNavigation } from "@react-navigation/native";
@@ -35,6 +41,8 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Image } from "react-native-compressor";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import TranslationStrings from "../../utills/TranslationStrings";
+
+import Permissions from "react-native-permissions";
 
 const CamerBottomSheet = (props) => {
   const navigation = useNavigation();
@@ -81,7 +89,47 @@ const CamerBottomSheet = (props) => {
   //   });
   // };
 
+  useEffect(() => {
+    requestCameraPermission();
+  }, []);
+
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "App Camera Permission",
+          message: "App needs access to your camera ",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        // console.log("Camera permission given");
+      } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+        Alert.alert(
+          "Camera Permission denied",
+          "Please open Settings to allow Camera permissions.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            { text: "Open Setting", onPress: () => Permissions.openSettings() },
+          ]
+        );
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const takePhotoFromCamera = async () => {
+    requestCameraPermission();
     var options = {
       storageOptions: {
         skipBackup: true,
@@ -92,31 +140,36 @@ const CamerBottomSheet = (props) => {
       quality: 0.5,
     };
 
-    await launchCamera(options).then(async (res) => {
-      if (res.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (res.error) {
-        console.log("ImagePicker Error: ", res.error);
-      } else if (res.customButton) {
-        console.log("User tapped custom button: ", res.customButton);
-      } else {
-        let image = {
-          path: res.assets[0].uri,
-          mime: res.assets[0].type,
-          name: res.assets[0].fileName,
-        };
-        props.refRBSheet.current.close();
-        if (props?.type == "verify") {
-          props?.onCameraImageSelect(image);
+    await launchCamera(options)
+      .then(async (res) => {
+        console.log("response :  ", res);
+        if (res.didCancel) {
+          console.log("User cancelled image picker");
+        } else if (res.error) {
+          console.log("ImagePicker Error: ", res.error);
+        } else if (res.customButton) {
+          console.log("User tapped custom button: ", res.customButton);
         } else {
-          props?.type1 === "editProfile" && handleUpdateUserProfile(image);
-          props.type === "Chat_image"
-            ? Uploadpic(image)
-            : dispatch(setUserImage(image.path));
-          setImage(image.path);
+          let image = {
+            path: res.assets[0].uri,
+            mime: res.assets[0].type,
+            name: res.assets[0].fileName,
+          };
+          props.refRBSheet.current.close();
+          if (props?.type == "verify") {
+            props?.onCameraImageSelect(image);
+          } else {
+            props?.type1 === "editProfile" && handleUpdateUserProfile(image);
+            props.type === "Chat_image"
+              ? Uploadpic(image)
+              : dispatch(setUserImage(image.path));
+            setImage(image.path);
+          }
         }
-      }
-    });
+      })
+      .catch((err) => {
+        console.log("error  :  ", err);
+      });
   };
 
   ////////////////////library image//////////////////

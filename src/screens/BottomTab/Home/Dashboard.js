@@ -7,6 +7,7 @@ import {
   View,
   Text,
   RefreshControl,
+  LogBox,
 } from "react-native";
 
 //////////////////app icons////////////////
@@ -127,6 +128,7 @@ const Home = ({ navigation }) => {
   const [categorydata, setCategoryData] = useState("");
   useEffect(() => {
     try {
+      LogBox.ignoreAllLogs();
       Get_Banners();
       GetCategories()
         .then((response) => {
@@ -315,7 +317,7 @@ const Home = ({ navigation }) => {
         <CustomImageSlider imagearray={banners} />
 
         <ViewAll
-          headerlabel={"Categories"}
+          headerlabel={TranslationStrings.Categories}
           onpress={() => navigation.navigate("Categories")}
           // onpress={() => {
           //   dispatch(setChatCount(100));

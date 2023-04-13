@@ -307,21 +307,24 @@ const ChatScreen = ({ route, navigation }) => {
     // console.log("useEffect called.........");
     requestCameraPermission();
   }, [isFocused]);
-  useEffect(() => {
-    // fcm_fallback_notification_channel
-    getget();
-  }, []);
 
-  const getget = () => {
-    PushNotification.getChannels(function (channel_ids) {
-      console.log("channel_ids : ", channel_ids); // ['channel_id_1']
-    });
-  };
-  const onSend = useCallback((messages = []) => {
+  // const onSend = useCallback((messages = []) => {
+  //   setCount(count + 1);
+  //   console.log("onSend called....");
+  //   console.log("count :   ", count);
+  //   // return;
+  //   handleSend(messages);
+  //   Chat_Room(route.params.userid);
+  // }, []);
+
+  const onSend = (messages) => {
     setCount(count + 1);
+    console.log("onSend called....");
+    console.log("count :   ", count);
+    // return;
     handleSend(messages);
     Chat_Room(route.params.userid);
-  }, []);
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -345,6 +348,7 @@ const ChatScreen = ({ route, navigation }) => {
             ? user + "-" + route.params.userid
             : route.params.userid + "-" + user;
       }
+      let updated = false;
       const ORDER_ITEMS = firestore()
         .collection("chats")
         .doc(docid)
@@ -359,10 +363,16 @@ const ChatScreen = ({ route, navigation }) => {
                 ORDER_ITEMS.doc(orderItem?.id).update({
                   read: true,
                 });
-                console.log("record updated...");
-                dispatch(setChatCount(0));
+
+                if (!updated) {
+                  console.log("updated....");
+                  dispatch(setChatCount(0));
+                  updated = true;
+                } else {
+                  console.log("else not updated....", updated);
+                }
               } else {
-                console.log("else called......");
+                // console.log("else called......");
               }
             });
           }
@@ -371,6 +381,7 @@ const ChatScreen = ({ route, navigation }) => {
   };
 
   const handleSend = async (messageArray) => {
+    console.log("messageArray  :  ", messageArray);
     let user_status = await get_user_status();
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -409,118 +420,125 @@ const ChatScreen = ({ route, navigation }) => {
     //     },
     //   };
     // } else {
-    const msg = messageArray[0];
-    console.log(
-      "route?.params?.navtype  :::::::::::::::::::::::::::::",
-      route?.params?.navtype
-    );
-    route?.params?.navtype == "counter_offer"
-      ? (myMsg = {
-          ...msg,
-          _id: uuid.v4(),
-          textimg1: route?.params?.listing_image,
-          textprice: route.params.item_price,
-          offerprice: route.params.offerprice,
-          offerid: route.params.offerid,
-          type: "counter_offer",
-          text: "counter_offer", //added....
-          senderId: user,
-          // receiverId: route.params.userid,
-          receiverId: route.params.buyer_id,
-          buyer_id: route?.params?.buyer_id,
-          sale_by: route?.params?.sale_by,
-          listing_id: route?.params?.listing_id,
-          read: false,
-          user: {
-            _id: user,
-            name: "ali",
-          },
-        })
-      : route.params.navtype === "price_offer"
-      ? (myMsg = {
-          ...msg,
-          _id: uuid.v4(),
-          textimg1: exchange_other_listing.images[0],
-          textprice: route.params.item_price,
-          offerprice: route.params.offerprice,
-          offerid: route.params.offerid,
-          type: "price_offer",
-          text: "price_offer", //added....
-          senderId: user,
-          receiverId: route.params.userid,
-          buyer_id: route?.params?.buyer_id,
-          sale_by: route?.params?.sale_by,
-          listing_id: route?.params?.listing_id,
-          read: false,
-          user: {
-            _id: user,
-            name: "ali",
-          },
-        })
-      : route.params.navtype === "exchange_offer" && count === 0
-      ? (myMsg = {
-          ...msg,
-          _id: uuid.v4(),
-          text: "exchange_offer",
-          textimg1: exchange_my_listing.images[0],
-          textimg2: exchange_other_listing.images[0],
-          textprice1: route.params.itemprice1,
-          textprice2: route.params.itemprice2,
-          itemname1: route.params.item1,
-          itemname2: route.params.item2,
-          offerId: route.params.offerId,
-          offer_detail: route.params.offer_detail,
-          type: "exchange_offer",
-          senderId: user,
-          receiverId: route.params.userid,
-          read: false,
-          user: {
-            _id: user,
-            name: "ali",
-          },
-          count: 1,
-        })
-      : route.params.navtype === "chatlist" && user_image === ""
-      ? (myMsg = {
-          ...msg,
-          _id: uuid.v4(),
-          type: "simple_text",
-          senderId: user,
-          receiverId: route.params.userid,
-          read: false,
-          user: {
-            _id: user,
-            name: "ali",
-          },
-        })
-      : route.params.navtype === "chatlist"
-      ? (myMsg = {
-          ...msg,
-          _id: uuid.v4(),
-          text_image: user_image,
-          type: "image_text",
-          senderId: user,
-          receiverId: route.params.userid,
-          read: false,
-          user: {
-            _id: user,
-            name: "ali",
-          },
-        })
-      : (myMsg = {
-          ...msg,
-          _id: uuid.v4(),
-          text_image: "image",
-          //type: "image_text",
-          senderId: user,
-          receiverId: route.params.userid,
-          read: false,
-          user: {
-            _id: user,
-            name: "ali",
-          },
-        });
-    //}
+    const msg = messageArray ? messageArray[0] : null;
+
+    if (route?.params?.navtype == "counter_offer" && count === 0) {
+      console.log("counter_offer....");
+      myMsg = {
+        ...msg,
+        _id: uuid.v4(),
+        textimg1: route?.params?.listing_image,
+        textprice: route.params.item_price,
+        offerprice: route.params.offerprice,
+        offerid: route.params.offerid,
+        type: "counter_offer",
+        text: "counter_offer", //added....
+        senderId: user,
+        // receiverId: route.params.userid,
+        receiverId: route.params.buyer_id,
+        buyer_id: route?.params?.buyer_id,
+        sale_by: route?.params?.sale_by,
+        listing_id: route?.params?.listing_id,
+        read: false,
+        user: {
+          _id: user,
+          name: "ali",
+        },
+      };
+    } else if (route.params.navtype === "price_offer" && count === 0) {
+      console.log("price offer ....");
+      myMsg = {
+        ...msg,
+        _id: uuid.v4(),
+        textimg1: exchange_other_listing.images[0],
+        textprice: route.params.item_price,
+        offerprice: route.params.offerprice,
+        offerid: route.params.offerid,
+        type: "price_offer",
+        text: "price_offer", //added....
+        senderId: user,
+        receiverId: route.params.userid,
+        buyer_id: route?.params?.buyer_id,
+        sale_by: route?.params?.sale_by,
+        listing_id: route?.params?.listing_id,
+        read: false,
+        user: {
+          _id: user,
+          name: "ali",
+        },
+      };
+    } else if (route.params.navtype === "exchange_offer" && count === 0) {
+      console.log("exchange offer ....");
+      myMsg = {
+        ...msg,
+        _id: uuid.v4(),
+        text: "exchange_offer",
+        textimg1: exchange_my_listing.images[0],
+        textimg2: exchange_other_listing.images[0],
+        textprice1: route.params.itemprice1,
+        textprice2: route.params.itemprice2,
+        itemname1: route.params.item1,
+        itemname2: route.params.item2,
+        offerId: route.params.offerId,
+        offer_detail: route.params.offer_detail,
+        type: "exchange_offer",
+        senderId: user,
+        receiverId: route.params.userid,
+        read: false,
+        user: {
+          _id: user,
+          name: "ali",
+        },
+        count: 1,
+      };
+    } else if (route.params.navtype === "chatlist" && user_image === "") {
+      console.log("chatlist offer ....");
+      myMsg = {
+        ...msg,
+        _id: uuid.v4(),
+        type: "simple_text",
+        senderId: user,
+        receiverId: route.params.userid,
+        read: false,
+        user: {
+          _id: user,
+          name: "ali",
+        },
+      };
+    } else if (route.params.navtype === "chatlist") {
+      console.log("chatlist 2....");
+      myMsg = {
+        ...msg,
+        _id: uuid.v4(),
+        text_image: user_image,
+        type: "image_text",
+        senderId: user,
+        receiverId: route.params.userid,
+        read: false,
+        user: {
+          _id: user,
+          name: "ali",
+        },
+      };
+    } else {
+      console.log("last else ....");
+      myMsg = {
+        ...msg,
+        _id: uuid.v4(),
+        text_image: "image",
+        //type: "image_text",
+        senderId: user,
+        receiverId: route.params.userid,
+        read: false,
+        user: {
+          _id: user,
+          name: "ali",
+        },
+      };
+    }
+
+    // console.log("myMsg  :  ", myMsg);
+    // return;
 
     // console.log("myMsg  ___________________________", myMsg);
     // return;
@@ -1057,35 +1075,35 @@ const ChatScreen = ({ route, navigation }) => {
                 />
                 <Text
                   style={styles.e_text}
-                  onPress={() =>
-                    navigation.navigate("ExchangeNoti", {
-                      item_img1: props.currentMessage.textimg1,
-                      item_img2: props.currentMessage.textimg2,
-                      itemname1: props.currentMessage.itemname1,
-                      itemname2: props.currentMessage.itemname2,
-                      itemprice1: props.currentMessage.textprice1,
-                      itemprice2: props.currentMessage.textprice2,
-                      navtype: "chat",
-                      userid: props.currentMessage.receiverId,
-                    })
-                  }
+                  // onPress={() =>
+                  //   navigation.navigate("ExchangeNoti", {
+                  //     item_img1: props.currentMessage.textimg1,
+                  //     item_img2: props.currentMessage.textimg2,
+                  //     itemname1: props.currentMessage.itemname1,
+                  //     itemname2: props.currentMessage.itemname2,
+                  //     itemprice1: props.currentMessage.textprice1,
+                  //     itemprice2: props.currentMessage.textprice2,
+                  //     navtype: "chat",
+                  //     userid: props.currentMessage.receiverId,
+                  //   })
+                  // }
                 >
                   {props.currentMessage.itemname2}
                 </Text>
                 <Text
                   style={styles.e_text}
-                  onPress={() =>
-                    navigation.navigate("ExchangeNoti", {
-                      item_img1: props.currentMessage.textimg1,
-                      item_img2: props.currentMessage.textimg2,
-                      itemname1: props.currentMessage.itemname1,
-                      itemname2: props.currentMessage.itemname2,
-                      itemprice1: props.currentMessage.textprice1,
-                      itemprice2: props.currentMessage.textprice2,
-                      navtype: "chat",
-                      userid: props.currentMessage.receiverId,
-                    })
-                  }
+                  // onPress={() =>
+                  //   navigation.navigate("ExchangeNoti", {
+                  //     item_img1: props.currentMessage.textimg1,
+                  //     item_img2: props.currentMessage.textimg2,
+                  //     itemname1: props.currentMessage.itemname1,
+                  //     itemname2: props.currentMessage.itemname2,
+                  //     itemprice1: props.currentMessage.textprice1,
+                  //     itemprice2: props.currentMessage.textprice2,
+                  //     navtype: "chat",
+                  //     userid: props.currentMessage.receiverId,
+                  //   })
+                  // }
                 >
                   {/* {props.currentMessage.textprice2} */}$
                   {props.currentMessage.textprice2

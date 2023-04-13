@@ -9,6 +9,8 @@ import { Text, TextInput } from "react-native";
 import PushNotification from "react-native-push-notification";
 import messaging from "@react-native-firebase/messaging";
 import { navigationRef } from "./RootNavigation";
+import { Store } from "./src/redux/store";
+import { setChatCount, setNotificationCount } from "./src/redux/actions";
 
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   console.log("Message handled in the background!", remoteMessage);
@@ -45,6 +47,7 @@ PushNotification.configure({
     //   navigationRef?.current?.navigate('NotificationStackScreens', {
     //     data,
     //   });
+
     if (data.userInteraction) {
       console.log("navigationRef : ", navigationRef);
       if (data?.data?.type == "chat") {
@@ -60,6 +63,15 @@ PushNotification.configure({
         navigationRef?.current?.navigate("BottomTab", {
           screen: "Notification",
         });
+      }
+    } else {
+      if (data?.data?.type == "chat") {
+        let prev_chatCount = Store.getState().userReducer.chatCount;
+        Store.dispatch(setChatCount(prev_chatCount + 1));
+      } else {
+        let prev_notificationCount =
+          Store.getState().userReducer.notificationCount;
+        Store.dispatch(setNotificationCount(prev_notificationCount + 1));
       }
     }
   },

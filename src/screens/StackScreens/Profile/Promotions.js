@@ -26,24 +26,25 @@ import {
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../utills/TranslationStrings";
 
-const Top_Tab = [
-  {
-    id: "1",
-    // title: "Urgent",
-    title: TranslationStrings.URGENT,
-  },
-  {
-    id: "2",
-    // title: "Advertisement",
-    title: TranslationStrings.ADVERTISEMENT,
-  },
-  {
-    id: "3",
-    // title: "Expired",
-    title: TranslationStrings.EXPIRED,
-  },
-];
 const Promotions = ({ navigation }) => {
+  const Top_Tab = [
+    {
+      id: "1",
+      // title: "Urgent",
+      title: TranslationStrings.URGENT,
+    },
+    {
+      id: "2",
+      // title: "Advertisement",
+      title: TranslationStrings.ADVERTISEMENT,
+    },
+    {
+      id: "3",
+      // title: "Expired",
+      title: TranslationStrings.EXPIRED,
+    },
+  ];
+
   /////////////main menu status states/////////////
   const [urgent_promotion_list, setUrgent_Promotion__List] = useState("");
   const [advertisement_promotion_list, setAdvertisement_Promotion__List] =
