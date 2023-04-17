@@ -82,11 +82,17 @@ const ListingsDetails = ({ navigation, route }) => {
   const [loading, setloading] = useState(true);
 
   ////////////Listing Checks//////////////
-  const [listing_like_user_id, setListing_Like_User_id] = useState("");
+  const [listing_like_user_id, setListing_Like_User_id] = useState(
+    route?.params?.like ? route?.params?.login_user_id : ""
+  );
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
   //-----------like list
   const listing_like = (props) => {
     post_Like_Listings(props).then((response) => {
+      console.log(
+        "response.data.data.user_id  :  ",
+        response.data.data.user_id
+      );
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
@@ -94,18 +100,23 @@ const ListingsDetails = ({ navigation, route }) => {
   //-----------unlike list
   const listing_unlike = (props) => {
     post_UnLike_Listings(props).then((response) => {
-      setListing_Like_User_id(" ");
+      console.log(
+        "response.data.data.user_id  :  ",
+        response.data.data.user_id
+      );
+      setListing_Like_User_id("");
       likes_count();
     });
   };
   //----------likes count
   const likes_count = () => {
     GetLikes(predata.listing_id).then((response) => {
+      console.log("response like count  :  ", response?.data);
       if (response.data.msg === "No one liked yet") {
         setListing_Likes_count(0);
       } else {
         setListing_Likes_count(response.data.Total);
-        listing_like(predata.listing_id);
+        // listing_like(predata.listing_id);
       }
     });
   };
@@ -266,6 +277,7 @@ const ListingsDetails = ({ navigation, route }) => {
           }}
           type={"promote"}
           listing_user_id={listing_user_id}
+          otherParams={route?.params}
           menuoptions={my_listing_options}
         />
         {/* )} */}
@@ -334,43 +346,40 @@ const ListingsDetails = ({ navigation, route }) => {
 
         {/* </TouchableOpacity> */}
         {listing_like_user_id === login_user_id ? (
-          // <TouchableOpacity
-          //   onPress={() => listing_unlike(predata.listing_id)}
-          // >
-          <View style={styles.iconview}>
-            <Icon
-              name={"heart"}
-              size={20}
-              color={Colors.activetextinput}
-              style={{ marginRight: wp(3) }}
-              onPress={() => {
-                {
-                }
-              }}
-            />
-            <Text style={styles.icontext}>
-              {listing_likes_count} {TranslationStrings.LIKES}
-            </Text>
-          </View>
+          <TouchableOpacity
+            disabled
+            onPress={() => listing_unlike(predata.listing_id)}
+          >
+            <View style={styles.iconview}>
+              <Icon
+                name={"heart"}
+                size={20}
+                color={Colors.activetextinput}
+                style={{ marginRight: wp(3) }}
+              />
+              <Text style={styles.icontext}>
+                {listing_likes_count} {TranslationStrings.LIKES}
+              </Text>
+            </View>
+          </TouchableOpacity>
         ) : (
           // </TouchableOpacity>
-          // <TouchableOpacity onPress={() => listing_like(predata.listing_id)}>
-
-          <View style={styles.iconview}>
-            <Icon
-              name={"heart-outline"}
-              size={20}
-              color={Colors.activetextinput}
-              style={{ marginRight: wp(3) }}
-              onPress={() => {
-                {
-                }
-              }}
-            />
-            <Text style={styles.icontext}>
-              {listing_likes_count} {TranslationStrings.LIKES}
-            </Text>
-          </View>
+          <TouchableOpacity
+            disabled
+            onPress={() => listing_like(predata.listing_id)}
+          >
+            <View style={styles.iconview}>
+              <Icon
+                name={"heart-outline"}
+                size={20}
+                color={Colors.activetextinput}
+                style={{ marginRight: wp(3) }}
+              />
+              <Text style={styles.icontext}>
+                {listing_likes_count} {TranslationStrings.LIKES}
+              </Text>
+            </View>
+          </TouchableOpacity>
         )}
         <View style={styles.iconview}>
           <Icon

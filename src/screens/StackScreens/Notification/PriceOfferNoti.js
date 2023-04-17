@@ -205,8 +205,6 @@ const PriceOfferNoti = ({ navigation, route }) => {
             marginTop: hp(3),
           }}
           onPress={() => {
-            console.log("route?.params?.userid :  ", route?.params?.userid);
-
             // navigation.navigate("ChatScreen", {
             navigation.replace("ChatScreen", {
               navtype: "chatlist",
@@ -228,7 +226,6 @@ const PriceOfferNoti = ({ navigation, route }) => {
         onPress={() => {
           setModalVisible(false);
           // navigation.navigate("BottomTab");
-          console.log(".......", route?.params?.listing_id);
           navigation.navigate("ListingsDetails", {
             listing_id: route?.params?.listing_id,
           });

@@ -48,6 +48,7 @@ import "moment-timezone";
 
 import TranslationStrings from "../../../utills/TranslationStrings";
 import { Avatar } from "react-native-paper";
+import { update_notification } from "../../../api/PostApis";
 
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -167,11 +168,14 @@ const Notification = ({ navigation }) => {
   };
 
   const handleNotificationPress = async (item) => {
+    updateNotificationStatus(item?.id, true);
+    setLoading(true);
     let user_status = await get_user_status();
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
     }
+    setLoading(false);
     // console.log("item?.type : ", item?.type);
 
     // return;
@@ -336,10 +340,42 @@ const Notification = ({ navigation }) => {
     }
   };
 
+  const updateNotificationStatus = async (id, status) => {
+    update_notification(id, status)
+      .then((response) => {
+        const newData = notification?.map((item) => {
+          if (item?.id == id) {
+            return {
+              ...item,
+              read: true,
+            };
+          } else {
+            return {
+              ...item,
+            };
+          }
+        });
+        setNotification(newData);
+      })
+      .catch((err) => {
+        console.log("err : ", err);
+      });
+  };
   const renderItem = (item) => {
     return (
       <TouchableOpacity
-        style={styles.card}
+        style={{
+          ...styles.card,
+          width: wp(100),
+          paddingVertical: 5,
+          paddingHorizontal: 15,
+          marginBottom: 2,
+          backgroundColor:
+            item?.item?.read == "false" || item?.item?.read == false
+              ? "#EFF6FF"
+              : "transparent",
+          minHeight: 65,
+        }}
         onPress={() => {
           handleNotificationPress(item?.item);
         }}
@@ -436,9 +472,12 @@ const Notification = ({ navigation }) => {
       />
       <CustomHeader headerlabel={TranslationStrings.NOTIFICATIONS} />
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
-      <View style={{ ...styles.postcard, marginTop: 0 }}>
+      <View style={{ ...styles.postcard, marginTop: 0, marginBottom: hp(13) }}>
         <Loader isLoading={loading} />
         <FlatList
+          style={{
+            width: wp(100),
+          }}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -454,8 +493,8 @@ const Notification = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => {
             return (
-              <View style={{ height: 200 }}>
-                <Text style={{ color: "#000" }}>
+              <View style={{ height: 200, width: wp(100) }}>
+                <Text style={{ color: "#000", textAlign: "center" }}>
                   {TranslationStrings.NO_RECORD_FOUND}
                 </Text>
               </View>

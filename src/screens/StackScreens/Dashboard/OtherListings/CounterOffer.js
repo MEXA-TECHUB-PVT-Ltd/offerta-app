@@ -219,7 +219,8 @@ const CounterOffer = ({ navigation, route }) => {
         // setListing_Images(response.data.images);
         // navigation?.goBack();
         dispatch(setExchangeOffer_OtherListing(response?.data));
-        navigation.navigate("ConfirmAddress");
+        // navigation.navigate("ConfirmAddress");
+        navigation.navigate("PaymentOptions");
       })
       .catch(() => {
         navigation?.goBack();

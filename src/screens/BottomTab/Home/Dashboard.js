@@ -237,7 +237,7 @@ const Home = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => (
     <IconsTopTabs
-      title={item.name}
+      title={item.name == "All" ? TranslationStrings.All : item.name}
       icon={item.image_url.replace("{{baseurl}}", "")}
       width={wp(5)}
       selected={selectedId}
@@ -317,7 +317,7 @@ const Home = ({ navigation }) => {
         <CustomImageSlider imagearray={banners} />
 
         <ViewAll
-          headerlabel={TranslationStrings.Categories}
+          headerlabel={TranslationStrings.Categories1}
           onpress={() => navigation.navigate("Categories")}
           // onpress={() => {
           //   dispatch(setChatCount(100));

@@ -141,10 +141,10 @@ const Profile = ({ navigation }) => {
               label={TranslationStrings.LIKED_ITEMS}
               labelPress={() => navigation.navigate("LikedItems")}
             />
-            <SettingsMenu
+            {/* <SettingsMenu
               label={TranslationStrings.EXCHANGES}
               labelPress={() => navigation.navigate("Exchanges")}
-            />
+            /> */}
 
             <SettingsMenu
               label={TranslationStrings.PROMOTIONS}

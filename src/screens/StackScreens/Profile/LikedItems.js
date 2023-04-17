@@ -29,11 +29,18 @@ import { get_User_Liked_Listings } from "../../../api/GetApis";
 /////////////image url//////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const LikedItems = ({ navigation }) => {
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
+  const [login_user_id, setlogin_user_id] = useState();
+  const getuser = async () => {
+    var user_id = await AsyncStorage.getItem("Userid");
+    setlogin_user_id(user_id);
+  };
 
   useEffect(() => {
+    getuser();
     get_User_Liked_Listings().then((response) => {
       if (response.data.msg === "No Result") {
         setdata("");
@@ -68,6 +75,21 @@ const LikedItems = ({ navigation }) => {
                 subtext={item.description}
                 pricetext={item.total_likes}
                 cardtype={"like"}
+                onPress={() => {
+                  if (item.user_id === login_user_id) {
+                    navigation.navigate("ListingsDetails", {
+                      listing_id: item.id,
+                      like: true,
+                      login_user_id: login_user_id,
+                    });
+                  } else {
+                    navigation.navigate("MainListingsDetails", {
+                      listing_id: item.id,
+                      like: true,
+                      login_user_id: login_user_id,
+                    });
+                  }
+                }}
               />
             )}
             keyExtractor={(item, index) => index}

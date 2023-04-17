@@ -323,6 +323,13 @@ let TranslationStrings = new LocalizedStrings({
     URGENT: "Urget",
     ADVERTISEMENT: "Advertisement",
     EXPIRED: "Expired",
+
+    LIKE_NEW: "Like new",
+    LIGHTLY_USED: "Lightly used",
+    HEAVELY_USED: "Heavely used",
+    NEW: "New",
+
+    All: "All",
   },
   //spanish
   es: {
@@ -391,7 +398,7 @@ let TranslationStrings = new LocalizedStrings({
     YES: "Sí",
     CANCEL: "Cancelar",
 
-    SOLD: "Vendida",
+    SOLD: "Vendido",
 
     // CHATS: "charlas",
     CHATS: "Conversaciones",
@@ -434,7 +441,8 @@ let TranslationStrings = new LocalizedStrings({
     NOTIFICATIONS: "Notificaciones",
     NO_RECORD_FOUND: "ningún record fue encontrado",
 
-    SUBMIT: "ENTREGAR",
+    // SUBMIT: "ENTREGAR",
+    SUBMIT: "Confirmar",
     COUNTER_OFFER: "Contraoferta",
     ENTER_PRICE: "Introducir precio",
     SHIPPING_PRICE: "Precio de envío",
@@ -499,7 +507,7 @@ let TranslationStrings = new LocalizedStrings({
     DATE_OF_LISTING: "Fecha de publicación",
     SHIPPING_COST: "Costo de envío",
     VIEW_INSIGHTS: "VER PERSPECTIVAS",
-    PROMOTE: "PROMOVER",
+    PROMOTE: "Destacar",
 
     REPORT_ITEM: "Reportar articulo",
     ENTER_DESCRIPTION: "Ingrese la descripción",
@@ -623,7 +631,8 @@ let TranslationStrings = new LocalizedStrings({
     CHECKOUT: "Verificar",
     TOTAL_ITEMS: "Articulos totales",
     TOTAL_PRICE: "Precio total",
-    NEXT: "Próxima",
+    // NEXT: "Próxima",
+    NEXT: "Siguiente",
 
     CONFIRM_ADDRESS: "Confirmar dirección",
     NO_ADDRESS_ADDED_FIRST_ADD_SHIPPING_ADDRESS:
@@ -656,6 +665,13 @@ let TranslationStrings = new LocalizedStrings({
     URGENT: "Urgente",
     ADVERTISEMENT: "Publicidad",
     EXPIRED: "Expirado",
+
+    LIKE_NEW: "Como nuevo",
+    LIGHTLY_USED: "Poco usado",
+    HEAVELY_USED: "Muy usado",
+    NEW: "Nuevo",
+
+    All: "Todo",
   },
 });
 

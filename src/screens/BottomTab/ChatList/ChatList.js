@@ -83,11 +83,6 @@ const ChatList = ({ navigation }) => {
             .then((snapshots) => {
               let myArr = [];
               snapshots.forEach((item) => {
-                console.log(
-                  "item?._data?.user?._id  :  ",
-                  item?._data?.user?._id,
-                  user
-                );
                 if (item?._data?.user?._id != user) {
                   myArr.push(item);
                 }
@@ -105,18 +100,62 @@ const ChatList = ({ navigation }) => {
     });
   };
 
+  const countUnreadMessages_OF_Specific_User = async (user_id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var user = await AsyncStorage.getItem("Userid");
+        let unread_count = 0;
+        let docid =
+          user_id > user ? user + "-" + user_id : user_id + "-" + user;
+        const user_list = firestore()
+          .collection("chats")
+          .doc(docid)
+          .collection("messages");
+        user_list
+          .where("read", "==", false)
+          .get()
+          .then((snapshots) => {
+            let myArr = [];
+            snapshots.forEach((item) => {
+              if (item?._data?.user?._id != user) {
+                myArr.push(item);
+              }
+            });
+            resolve(myArr?.length);
+          });
+      } catch (error) {
+        resolve(0);
+      }
+    });
+  };
+
   const getDetails = async () => {
     getuser();
     get_Chat_Users().then(async (response) => {
-      setLoading(false);
-      setRefreshing(false);
       if (response.data.msg === "No Result") {
         setData();
       } else {
-        setData(response.data);
-        let count = await countUnreadMessages(response);
-        dispatch(setChatCount(count));
+        //setData(response.data);
+        // let count = await countUnreadMessages(response);
+        let list = [];
+        let totalCount = 0;
+        for (const element of response?.data) {
+          let count1 = await countUnreadMessages_OF_Specific_User(
+            element?.user?.id
+          );
+          let obj = {
+            ...element,
+            count: count1,
+          };
+          totalCount += count1;
+          list.push(obj);
+        }
+        setData(list);
+        // dispatch(setChatCount(count));
+        dispatch(setChatCount(totalCount));
       }
+      setLoading(false);
+      setRefreshing(false);
     });
   };
   const [login_user_id, setlogin_user_id] = useState();
@@ -135,6 +174,12 @@ const ChatList = ({ navigation }) => {
       item?.item?.user == null ? null : item?.item?.chat_user?.id ===
         login_user_id && item?.item?.user?.id != login_user_id ? (
       <TouchableOpacity
+        style={{
+          paddingVertical: 5,
+          marginBottom: 4,
+          paddingHorizontal: 10,
+          backgroundColor: item?.item?.count > 0 ? "#EFF6FF" : "transparent",
+        }}
         onPress={() =>
           navigation.navigate("ChatScreen", {
             navtype: "chatlist",
@@ -142,7 +187,7 @@ const ChatList = ({ navigation }) => {
           })
         }
       >
-        <View style={styles.card}>
+        <View style={{ ...styles.card, marginBottom: 0 }}>
           <View
             style={{
               flexDirection: "row",
@@ -189,12 +234,18 @@ const ChatList = ({ navigation }) => {
 
           {/* <View style={{}}>
             <Text style={[styles.recomend, { color: "#7A8FA6" }]}>1m ago</Text>
-            <Badge style={{ marginTop: hp(2) }}>5</Badge>
+            <Badge style={{ marginTop: hp(2) }}>{item?.item?.count}</Badge>
           </View> */}
         </View>
       </TouchableOpacity>
     ) : (
       <TouchableOpacity
+        style={{
+          backgroundColor: item?.item?.count > 0 ? "#EFF6FF" : "transparent",
+          marginBottom: 4,
+          paddingVertical: 5,
+          paddingHorizontal: 10,
+        }}
         onPress={() =>
           navigation.navigate("ChatScreen", {
             navtype: "chatlist",
@@ -202,7 +253,7 @@ const ChatList = ({ navigation }) => {
           })
         }
       >
-        <View style={styles.card}>
+        <View style={{ ...styles.card, marginBottom: 0 }}>
           <View
             style={{
               flexDirection: "row",
@@ -248,7 +299,7 @@ const ChatList = ({ navigation }) => {
 
           {/* <View style={{}}>
             <Text style={[styles.recomend, { color: "#7A8FA6" }]}>1m ago</Text>
-            <Badge style={{ marginTop: hp(2) }}>5</Badge>
+            <Badge style={{ marginTop: hp(2) }}>{item?.item?.count}</Badge>
           </View> */}
         </View>
       </TouchableOpacity>

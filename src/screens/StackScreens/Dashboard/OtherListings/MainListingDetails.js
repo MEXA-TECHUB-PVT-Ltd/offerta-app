@@ -93,7 +93,9 @@ const MainListingsDetails = ({ navigation, route }) => {
 
   const [refreshing, setRefreshing] = useState(false);
   ////////////Listing Checks//////////////
-  const [listing_like_user_id, setListing_Like_User_id] = useState("");
+  const [listing_like_user_id, setListing_Like_User_id] = useState(
+    route?.params?.like ? route?.params?.login_user_id : ""
+  );
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
   //-----------like list
   const listing_like = async (props) => {
@@ -366,10 +368,6 @@ const MainListingsDetails = ({ navigation, route }) => {
                   size={20}
                   color={Colors.activetextinput}
                   style={{ marginRight: wp(3) }}
-                  onPress={() => {
-                    {
-                    }
-                  }}
                 />
                 <Text style={styles.icontext}>
                   {listing_likes_count} {TranslationStrings.LIKES}
@@ -387,10 +385,6 @@ const MainListingsDetails = ({ navigation, route }) => {
                 size={20}
                 color={Colors.activetextinput}
                 style={{ marginRight: wp(3) }}
-                onPress={() => {
-                  {
-                  }
-                }}
               />
               <Text style={styles.icontext}>
                 {listing_likes_count} {TranslationStrings.LIKES}
@@ -618,7 +612,7 @@ const MainListingsDetails = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
             )}
-            {exchange_status != "true" && exchange_status != true && (
+            {/* {exchange_status != "true" && exchange_status != true && (
               <View style={styles.btnView1}>
                 <TouchableOpacity
                   style={{
@@ -634,7 +628,7 @@ const MainListingsDetails = ({ navigation, route }) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-            )}
+            )} */}
           </View>
 
           <CustomMenu1

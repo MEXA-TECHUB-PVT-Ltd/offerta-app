@@ -28,6 +28,8 @@ const RattingModal = (props) => {
   const AddRattings = async () => {
     var user = await AsyncStorage.getItem("Userid");
     console.log("userid:", user, ratting, props.ratted_user);
+    props.CloseModal();
+
     axios({
       method: "POST",
       url: BASE_URL + "reivewUser.php",
@@ -53,6 +55,7 @@ const RattingModal = (props) => {
   const ratingCompleted = (rating) => {
     console.log("Rating is: " + rating);
     setRatting(rating);
+    props?.setRating(rating);
   };
 
   return (
@@ -66,7 +69,7 @@ const RattingModal = (props) => {
         <View style={styles.modalView}>
           <View style={styles.textview}>
             <Text style={styles.toptext}>
-              {TranslationStrings.RATE_PROFILE}
+              {props?.title ? props?.title : TranslationStrings.RATE_PROFILE}
             </Text>
           </View>
           <View
@@ -84,11 +87,23 @@ const RattingModal = (props) => {
               onFinishRating={ratingCompleted}
             />
           </View>
-          <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
-            <TouchableOpacity onPress={() => AddRattings()}>
-              <Text style={styles.Pendingtext}>{TranslationStrings.DONE}</Text>
-            </TouchableOpacity>
-          </View>
+          {props?.onDone ? (
+            <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
+              <TouchableOpacity onPress={props.onDone}>
+                <Text style={styles.Pendingtext}>
+                  {TranslationStrings.DONE}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
+              <TouchableOpacity onPress={() => AddRattings()}>
+                <Text style={styles.Pendingtext}>
+                  {TranslationStrings.DONE}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </Modal>

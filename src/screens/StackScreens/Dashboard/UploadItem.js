@@ -656,7 +656,7 @@ const UploadItem = ({ navigation, route }) => {
             }
           </Text>
           <View style={{ paddingHorizontal: wp(4) }}>
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -675,7 +675,7 @@ const UploadItem = ({ navigation, route }) => {
                   setExchangebuyChecked(!exchangebuychecked);
                 }}
               />
-            </View>
+            </View> */}
             {/* {exchangebuychecked && (
               <Text style={{ color: "red", fontSize: 11 }}>
                 Check if you don't want to see Exchange offers on your listing.
