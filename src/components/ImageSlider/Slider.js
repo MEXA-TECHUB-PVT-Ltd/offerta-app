@@ -194,6 +194,7 @@ const Slider = (props) => {
               hideMenu={props?.hideMenu}
               menudata={props.menuoptions}
               setShowBlockModal={setShowBlockModal}
+              otherParams={props?.otherParams}
             />
           )}
           {/* <Text style={styles.price}>item.price</Text> */}

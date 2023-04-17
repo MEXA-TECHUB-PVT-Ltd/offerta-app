@@ -42,6 +42,9 @@ import { appImages } from "../../constant/images";
 import BlockUserView from "../BlockUserView";
 import { get_user_status } from "../../api/GetApis";
 import TranslationStrings from "../../utills/TranslationStrings";
+import RattingModal from "../Modal/RattingModal";
+
+import { Snackbar } from "react-native-paper";
 
 const CustomMenu = (props) => {
   /////////////navigation state////////////
@@ -58,6 +61,13 @@ const CustomMenu = (props) => {
   const [msgmodalVisible1, setMsgModalVisible1] = React.useState(false);
 
   const [showBlockModal, setShowBlockModal] = useState(false);
+
+  const [rating, setRating] = useState(3.5);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [selected_user_id, setSelected_user_id] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
 
   //////////////delete/////////////
   const delete_Listing = () => {
@@ -102,10 +112,39 @@ const CustomMenu = (props) => {
 
     axios(config)
       .then(function (response) {
-        navigation.navigate("Listings");
+        if (props?.otherParams?.type == "sale") {
+          setShowRatingModal(true);
+        } else {
+          navigation.navigate("Listings");
+        }
       })
       .catch(function (error) {
         console.log(error);
+      });
+  };
+
+  const AddRattings = async (ratted_user, rating) => {
+    var user = await AsyncStorage.getItem("Userid");
+    axios({
+      method: "POST",
+      url: BASE_URL + "reivewUser.php",
+      data: {
+        user_id: user,
+        reviewed_user_id: ratted_user,
+        review: rating,
+      },
+    })
+      .then(async function (response) {
+        // console.log("response  : ", response?.data);
+        // setsnackbarValue({
+        //   value: "Review Submitted Successfully",
+        //   color: "green",
+        // });
+        // setVisible(true);
+        navigation.replace("Listings");
+      })
+      .catch(function (error) {
+        console.log("error", error);
       });
   };
   //////////////delete/////////////
@@ -150,6 +189,17 @@ const CustomMenu = (props) => {
   };
   return (
     <View>
+      <RattingModal
+        title={"Rate Buyer"}
+        modalVisible={showRatingModal}
+        CloseModal={() => setShowRatingModal(false)}
+        ratted_user={props?.otherParams?.buyer_id}
+        setRating={setRating}
+        onDone={() => {
+          setShowRatingModal(false);
+          AddRattings(props?.otherParams?.buyer_id, rating);
+        }}
+      />
       <Modal
         visible={modalVisible}
         onRequestClose={() => {

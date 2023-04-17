@@ -11,7 +11,6 @@ import {
 } from "react-native-responsive-screen";
 
 import { fontFamily } from "../../../../constant/fonts";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -47,4 +46,5 @@ const styles = StyleSheet.create({
     marginTop: wp("2%"),
   },
 });
+
 export default styles;

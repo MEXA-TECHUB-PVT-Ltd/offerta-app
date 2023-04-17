@@ -43,7 +43,7 @@ const ShippingAddressCard = (props) => {
           borderBottomColor: Colors.Appthemecolor,
           borderBottomWidth: 2,
           alignSelf: "flex-end",
-          width: wp(10),
+          // width: wp(10),
           marginBottom: hp(1),
         }}
         onPress={props.onpress}

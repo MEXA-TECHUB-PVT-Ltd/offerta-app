@@ -349,23 +349,22 @@ const ChatScreen = ({ route, navigation }) => {
             : route.params.userid + "-" + user;
       }
       let updated = false;
-      const ORDER_ITEMS = firestore()
+      const messagesList = firestore()
         .collection("chats")
         .doc(docid)
         .collection("messages");
       // console.log("ORDER_ITEMS  :  ", ORDER_ITEMS);
-      ORDER_ITEMS.where("read", "==", false)
+      messagesList
+        .where("read", "==", false)
         .get()
         .then((snapshots) => {
           if (snapshots.size > 0) {
-            snapshots.forEach((orderItem) => {
-              if (orderItem?._data?.user?._id != user) {
-                ORDER_ITEMS.doc(orderItem?.id).update({
+            snapshots.forEach((message) => {
+              if (message?._data?.user?._id != user) {
+                messagesList.doc(message?.id).update({
                   read: true,
                 });
-
                 if (!updated) {
-                  console.log("updated....");
                   dispatch(setChatCount(0));
                   updated = true;
                 } else {

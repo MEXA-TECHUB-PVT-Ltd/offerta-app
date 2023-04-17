@@ -24,9 +24,14 @@ const ProductCondition = (props) => {
 
   //////////dropdownlink data/////////////
   const [dddata] = useState([
-    { id: "1", condition: "like new" },
-    { id: "2", condition: "lightly used" },
-    { id: "3", condition: "heavely used" },
+    // { id: "1", condition: "like new" },
+    // { id: "2", condition: "lightly used" },
+    // { id: "3", condition: "heavely used" },
+
+    { id: "1", condition: TranslationStrings.LIKE_NEW },
+    { id: "2", condition: TranslationStrings.LIGHTLY_USED },
+    { id: "3", condition: TranslationStrings.HEAVELY_USED },
+    { id: "4", condition: TranslationStrings.NEW },
   ]);
   return (
     <RBSheet

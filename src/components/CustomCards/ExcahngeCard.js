@@ -28,7 +28,11 @@ const ExcahangeCard = (props) => {
     //     })
     //   }
     // >
-    <View style={styles.Exchangecard}>
+    <TouchableOpacity
+      disabled={props?.onPress ? false : true}
+      onPress={props?.onPress}
+      style={styles.Exchangecard}
+    >
       {/* <View style={{backgroundColor:'red',height:hp(2),width:wp(5)}}>
   
   </View> */}
@@ -83,7 +87,7 @@ const ExcahangeCard = (props) => {
       </View>
 
       {/* </View> */}
-    </View>
+    </TouchableOpacity>
     // </TouchableOpacity>
   );
 };

@@ -20,6 +20,11 @@ import { appImages } from "../../../constant/images";
 ////////////////api functions///////////
 import { get_Sales, get_Orders } from "../../../api/Sales&Promotions";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import { BASE_URL, IMAGE_URL } from "../../../utills/ApiRootUrl";
+import RattingModal from "../../../components/Modal/RattingModal";
+import { Snackbar } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 // const Top_Tab = [
 //   {
@@ -35,6 +40,13 @@ import TranslationStrings from "../../../utills/TranslationStrings";
 // ];
 
 const SalesOrders = ({ navigation }) => {
+  const [rating, setRating] = useState(3.5);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [selected_user_id, setSelected_user_id] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
+
   const [Top_Tab, setTop_Tab] = useState([
     {
       id: "1",
@@ -95,6 +107,31 @@ const SalesOrders = ({ navigation }) => {
       type={"sales&orders"}
     />
   );
+
+  const AddRattings = async (ratted_user, rating) => {
+    var user = await AsyncStorage.getItem("Userid");
+    axios({
+      method: "POST",
+      url: BASE_URL + "reivewUser.php",
+      data: {
+        user_id: user,
+        reviewed_user_id: ratted_user,
+        review: rating,
+      },
+    })
+      .then(async function (response) {
+        console.log("response", JSON.stringify(response.data));
+        setsnackbarValue({
+          value: "Review Submitted Successfully",
+          color: "green",
+        });
+        setVisible(true);
+      })
+      .catch(function (error) {
+        console.log("error", error);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
@@ -140,10 +177,28 @@ const SalesOrders = ({ navigation }) => {
           data={data}
           renderItem={({ item }) => (
             <ExcahangeCard
+              onPress={() => {
+                if (selectedId == 2) {
+                  //orders
+                  let seller_id = item?.listing?.user_id;
+                  setSelected_user_id(seller_id);
+                  setShowRatingModal(true);
+                } else {
+                  //sales
+                  let buyer_id = item?.order_by?.id;
+
+                  navigation.navigate("ListingsDetails", {
+                    listing_id: item?.listing?.id,
+                    buyer_id: buyer_id,
+                    type: "sale",
+                  });
+                }
+              }}
               image={
-                item.listing.images === []
+                typeof item?.listing?.images == "undefined" ||
+                item?.listing?.images === []
                   ? null
-                  : IMAGE_URL + item.listing.images[0]
+                  : IMAGE_URL + item?.listing?.images[0]
               }
               maintext={item.listing.title}
               subtext={item.listing.description}
@@ -155,6 +210,29 @@ const SalesOrders = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
+      <Snackbar
+        duration={400}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(9),
+          zIndex: 999,
+        }}
+      >
+        {snackbarValue.value}
+      </Snackbar>
+      <RattingModal
+        title={"Rate Seller"}
+        modalVisible={showRatingModal}
+        CloseModal={() => setShowRatingModal(false)}
+        ratted_user={selected_user_id}
+        setRating={setRating}
+        onDone={() => {
+          setShowRatingModal(false);
+          AddRattings(selected_user_id, rating);
+        }}
+      />
     </SafeAreaView>
   );
 };

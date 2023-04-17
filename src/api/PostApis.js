@@ -39,7 +39,7 @@ export const post_Comments_Listings = async (listing_id, description) => {
   });
 };
 
-/////////////////////Exchange Offer////////////                   
+/////////////////////Exchange Offer////////////
 export const post_Listings_Exchange_Offer = async (props) => {
   return axios.post(BASE_URL + "createExchange.php", {
     user_id: props.myuser_id,
@@ -106,5 +106,12 @@ export const post_UnFollow_Users = async (props) => {
   return axios.post(BASE_URL + "unfollow.php", {
     user_id: user_id,
     following_id: props,
+  });
+};
+
+export const update_notification = async (id, status) => {
+  return axios.put(BASE_URL + "UpdateNotificationStatus.php", {
+    id: id,
+    status: status,
   });
 };

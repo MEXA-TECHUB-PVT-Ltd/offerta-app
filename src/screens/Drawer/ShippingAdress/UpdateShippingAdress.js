@@ -39,6 +39,7 @@ import { useDispatch, useSelector } from "react-redux";
 ////////////////api functions///////////
 import { update_shipping_Address } from "../../../api/ShippingAddress";
 import { setCityName, setCountryName } from "../../../redux/Location/actions";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const UpdateShippingAddress = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -176,7 +177,7 @@ const UpdateShippingAddress = ({ navigation, route }) => {
           <View></View>
         )}
         <CustomHeader
-          headerlabel={"Shipping Address"}
+          headerlabel={TranslationStrings.SHIPPING_ADDRESS}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -248,7 +249,7 @@ const UpdateShippingAddress = ({ navigation, route }) => {
         </View>
         <View style={{ marginBottom: hp(12) }}>
           <CustomButtonhere
-            title={"Update"}
+            title={TranslationStrings.UPDATE}
             widthset={80}
             topDistance={10}
             loading={loading}

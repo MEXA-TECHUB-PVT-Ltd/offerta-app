@@ -489,7 +489,7 @@ const EditList = ({ navigation, route }) => {
             }
           </Text>
           <View style={{ paddingHorizontal: wp(4) }}>
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -508,7 +508,7 @@ const EditList = ({ navigation, route }) => {
                   setExchangebuyChecked(!exchangebuychecked);
                 }}
               />
-            </View>
+            </View> */}
           </View>
           <View style={{ paddingHorizontal: wp(4) }}>
             <View
