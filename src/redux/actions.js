@@ -240,3 +240,19 @@ export const setNotificationCount = (nav_plcae) => (dispatch) => {
     payload: nav_plcae,
   });
 };
+
+export const SET_NOTIFICATION_LIST = "SET_NOTIFICATION_LIST";
+export const setNotificationList = (nav_plcae) => (dispatch) => {
+  dispatch({
+    type: SET_NOTIFICATION_LIST,
+    payload: nav_plcae,
+  });
+};
+
+export const SET_CHAT_LIST = "SET_CHAT_LIST";
+export const setChatList = (nav_plcae) => (dispatch) => {
+  dispatch({
+    type: SET_CHAT_LIST,
+    payload: nav_plcae,
+  });
+};

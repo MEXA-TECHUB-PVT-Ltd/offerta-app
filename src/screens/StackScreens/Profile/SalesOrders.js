@@ -223,7 +223,7 @@ const SalesOrders = ({ navigation }) => {
         {snackbarValue.value}
       </Snackbar>
       <RattingModal
-        title={"Rate Seller"}
+        title={TranslationStrings.RATE_SELLER}
         modalVisible={showRatingModal}
         CloseModal={() => setShowRatingModal(false)}
         ratted_user={selected_user_id}

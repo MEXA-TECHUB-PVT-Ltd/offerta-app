@@ -10,7 +10,16 @@ import PushNotification from "react-native-push-notification";
 import messaging from "@react-native-firebase/messaging";
 import { navigationRef } from "./RootNavigation";
 import { Store } from "./src/redux/store";
-import { setChatCount, setNotificationCount } from "./src/redux/actions";
+import {
+  setChatCount,
+  setChatList,
+  setNotificationCount,
+  setNotificationList,
+} from "./src/redux/actions";
+import { get_Notifications } from "./src/api/GetApis";
+import { get_Chat_Users } from "./src/api/ChatApis";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import firestore from "@react-native-firebase/firestore";
 
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   console.log("Message handled in the background!", remoteMessage);
@@ -27,6 +36,72 @@ PushNotification.createChannel(
   },
   (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
 );
+
+const get_user_notifications = async () => {
+  get_Notifications()
+    .then(async (response) => {
+      if (response.data.msg === "No Result") {
+        Store.dispatch(setNotificationList([]));
+      } else if (response.data?.length > 0) {
+        let notificationList = response?.data ? response?.data : [];
+        Store.dispatch(setNotificationList(notificationList?.reverse()));
+      }
+    })
+    .catch((err) => {
+      console.log("Error : ", err);
+    });
+};
+
+const countUnreadMessages_OF_Specific_User = async (user_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      var user = await AsyncStorage.getItem("Userid");
+      let unread_count = 0;
+      let docid = user_id > user ? user + "-" + user_id : user_id + "-" + user;
+      const user_list = firestore()
+        .collection("chats")
+        .doc(docid)
+        .collection("messages");
+      user_list
+        .where("read", "==", false)
+        .get()
+        .then((snapshots) => {
+          let myArr = [];
+          snapshots.forEach((item) => {
+            if (item?._data?.user?._id != user) {
+              myArr.push(item);
+            }
+          });
+          resolve(myArr?.length);
+        });
+    } catch (error) {
+      resolve(0);
+    }
+  });
+};
+
+const getDetails = async () => {
+  get_Chat_Users().then(async (response) => {
+    if (response.data.msg === "No Result") {
+      dispatch(setChatList([]));
+    } else {
+      let list = [];
+      let totalCount = 0;
+      for (const element of response?.data) {
+        let count1 = await countUnreadMessages_OF_Specific_User(
+          element?.user?.id
+        );
+        let obj = {
+          ...element,
+          count: count1,
+        };
+        totalCount += count1;
+        list.push(obj);
+      }
+      Store.dispatch(setChatList(list));
+    }
+  });
+};
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -51,6 +126,7 @@ PushNotification.configure({
     if (data.userInteraction) {
       console.log("navigationRef : ", navigationRef);
       if (data?.data?.type == "chat") {
+        getDetails();
         navigationRef?.current?.navigate("ChatScreen", {
           navtype: "chatlist",
           userid: data?.data?.user_id,
@@ -59,6 +135,7 @@ PushNotification.configure({
         // navigationRef?.current?.navigate("NotificationStackScreens", {
         //   data,
         // });
+        get_user_notifications();
 
         navigationRef?.current?.navigate("BottomTab", {
           screen: "Notification",
@@ -66,9 +143,11 @@ PushNotification.configure({
       }
     } else {
       if (data?.data?.type == "chat") {
+        getDetails();
         let prev_chatCount = Store.getState().userReducer.chatCount;
         Store.dispatch(setChatCount(prev_chatCount + 1));
       } else {
+        get_user_notifications();
         let prev_notificationCount =
           Store.getState().userReducer.notificationCount;
         Store.dispatch(setNotificationCount(prev_notificationCount + 1));

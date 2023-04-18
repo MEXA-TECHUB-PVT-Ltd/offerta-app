@@ -31,11 +31,12 @@ import { appImages } from "../../../constant/images";
 
 ////////////////////api function/////////////
 import { get_Notifications } from "../../../api/GetApis";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setChatCount,
   setExchangeOffer_OtherListing,
   setNotificationCount,
+  setNotificationList,
 } from "../../../redux/actions";
 import Loader from "../../../components/Loader/Loader";
 import { useFocusEffect } from "@react-navigation/native";
@@ -52,6 +53,10 @@ import { update_notification } from "../../../api/PostApis";
 
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { chatCount, notificationList } = useSelector(
+    (state) => state.userReducer
+  );
+
   ///////////////////data state///////////
   const [notification, setNotification] = useState("");
   const [refreshing, setRefreshing] = useState(false);
@@ -132,36 +137,41 @@ const Notification = ({ navigation }) => {
     get_Notifications()
       .then(async (response) => {
         //setData(response.data)
-        setRefreshing(false);
-        setLoading(false);
         if (response.data.msg === "No Result") {
           setNotification("");
         } else {
           if (response.data?.length > 0) {
-            let notificationList = response.data;
+            let notificationList1 = response.data;
+            let sorted_list = notificationList1.reverse();
+            setNotification(sorted_list);
+            dispatch(setNotificationList(sorted_list));
 
-            let lastNotification = await AsyncStorage.getItem(
-              "LastNotification"
-            );
-            console.log("lastNotification  :   ", lastNotification);
-            const filter = notificationList.filter(
-              (item) => parseInt(item?.id) > parseInt(lastNotification)
-            );
-
-            dispatch(setNotificationCount(filter?.length));
-            let lastItem = response.data?.pop();
+            // let lastItem = response.data?.pop();
+            let lastItem = notificationList1[0];
+            console.log("lastItem?.id :  ", lastItem?.id);
             await AsyncStorage.setItem(
               "LastNotification",
               lastItem?.id?.toString()
             );
-            setNotification(notificationList.reverse());
+            let lastNotification = await AsyncStorage.getItem(
+              "LastNotification"
+            );
+            const filter = notificationList1.filter(
+              (item) => parseInt(item?.id) > parseInt(lastNotification)
+            );
+            dispatch(setNotificationCount(filter?.length));
           }
         }
       })
       .catch((err) => {
         console.log("Error : ", err);
+      })
+      .finally(() => {
+        setRefreshing(false);
+        setLoading(false);
       });
   };
+
   const handleRefresh = () => {
     setRefreshing(true);
     get_user_notifications();
@@ -169,13 +179,13 @@ const Notification = ({ navigation }) => {
 
   const handleNotificationPress = async (item) => {
     updateNotificationStatus(item?.id, true);
-    setLoading(true);
-    let user_status = await get_user_status();
-    if (user_status == "block") {
-      setShowBlockModal(true);
-      return;
-    }
-    setLoading(false);
+
+    // let user_status = await get_user_status();
+    // if (user_status == "block") {
+    //   setShowBlockModal(true);
+    //   return;
+    // }
+
     // console.log("item?.type : ", item?.type);
 
     // return;
@@ -341,6 +351,7 @@ const Notification = ({ navigation }) => {
   };
 
   const updateNotificationStatus = async (id, status) => {
+    setLoading(true);
     update_notification(id, status)
       .then((response) => {
         const newData = notification?.map((item) => {
@@ -356,10 +367,12 @@ const Notification = ({ navigation }) => {
           }
         });
         setNotification(newData);
+        dispatch(setNotificationList(newData));
       })
       .catch((err) => {
         console.log("err : ", err);
-      });
+      })
+      .finally(() => setLoading(false));
   };
   const renderItem = (item) => {
     return (
@@ -485,7 +498,8 @@ const Notification = ({ navigation }) => {
               onRefresh={() => handleRefresh()}
             />
           }
-          data={notification}
+          // data={notification}
+          data={notificationList}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
           scrollEnabled={true}
@@ -494,9 +508,11 @@ const Notification = ({ navigation }) => {
           ListEmptyComponent={() => {
             return (
               <View style={{ height: 200, width: wp(100) }}>
-                <Text style={{ color: "#000", textAlign: "center" }}>
-                  {TranslationStrings.NO_RECORD_FOUND}
-                </Text>
+                {!loading && (
+                  <Text style={{ color: "#000", textAlign: "center" }}>
+                    {TranslationStrings.NO_RECORD_FOUND}
+                  </Text>
+                )}
               </View>
             );
           }}

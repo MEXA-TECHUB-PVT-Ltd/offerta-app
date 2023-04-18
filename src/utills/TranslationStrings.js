@@ -324,12 +324,16 @@ let TranslationStrings = new LocalizedStrings({
     ADVERTISEMENT: "Advertisement",
     EXPIRED: "Expired",
 
-    LIKE_NEW: "Like new",
-    LIGHTLY_USED: "Lightly used",
-    HEAVELY_USED: "Heavely used",
+    LIKE_NEW: "like new",
+    LIGHTLY_USED: "lightly used",
+    HEAVELY_USED: "heavely used",
     NEW: "New",
 
     All: "All",
+
+    BUYERS: "Buyers",
+    RATE_BUYER: "Rate Buyer",
+    RATE_SELLER: "Rate Seller",
   },
   //spanish
   es: {
@@ -672,6 +676,10 @@ let TranslationStrings = new LocalizedStrings({
     NEW: "Nuevo",
 
     All: "Todo",
+    BUYERS: "Compradoras",
+    RATE_BUYER: "Tasa de comprador",
+
+    RATE_SELLER: "Calificar a la vendedora",
   },
 });
 

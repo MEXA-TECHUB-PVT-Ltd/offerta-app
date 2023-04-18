@@ -38,11 +38,11 @@ import Loader from "../../../components/Loader/Loader";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import firestore from "@react-native-firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
-import { setChatCount } from "../../../redux/actions";
+import { setChatCount, setChatList } from "../../../redux/actions";
 import { useFocusEffect } from "@react-navigation/native";
 
 const ChatList = ({ navigation }) => {
-  const { chatCount } = useSelector((state) => state.userReducer);
+  const { chatCount, chatList } = useSelector((state) => state.userReducer);
   ///////////////////data state///////////
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -133,7 +133,8 @@ const ChatList = ({ navigation }) => {
     getuser();
     get_Chat_Users().then(async (response) => {
       if (response.data.msg === "No Result") {
-        setData();
+        // setData();
+        dispatch(setChatList([]));
       } else {
         //setData(response.data);
         // let count = await countUnreadMessages(response);
@@ -150,7 +151,8 @@ const ChatList = ({ navigation }) => {
           totalCount += count1;
           list.push(obj);
         }
-        setData(list);
+        // setData(list);
+        dispatch(setChatList(list));
         // dispatch(setChatCount(count));
         dispatch(setChatCount(totalCount));
       }
@@ -311,7 +313,8 @@ const ChatList = ({ navigation }) => {
       <Loader isLoading={loading} />
 
       <FlatList
-        data={data}
+        // data={data}
+        data={chatList}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
