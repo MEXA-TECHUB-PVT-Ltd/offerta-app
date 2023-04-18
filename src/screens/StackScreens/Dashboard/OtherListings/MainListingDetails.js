@@ -63,11 +63,11 @@ import {
 } from "../../../../api/PostApis";
 
 ///////////////////Menu Data//////////
-import {
-  offer_options,
-  exchange_options,
-  generic_options,
-} from "../../../../data/Menulists";
+// import {
+//   // offer_options,
+//   // exchange_options,
+//   // generic_options,
+// } from "../../../../data/Menulists";
 
 import BlockUserView from "../../../../components/BlockUserView";
 import { get_user_status } from "../../../../api/GetApis";
@@ -78,6 +78,27 @@ import CustomMenu1 from "../../../../components/CustomMenu/CustomMenu1";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const MainListingsDetails = ({ navigation, route }) => {
+  const offer_options = [
+    { id: "1", label: TranslationStrings.VIEW_PROFILE, icon: "eye" },
+    { id: "2", label: TranslationStrings.REPORT_ITEM, icon: "alert" },
+    { id: "3", label: TranslationStrings.MAKE_AN_OFFER, icon: "tag" },
+    { id: "4", label: TranslationStrings.SHARE, icon: "share-variant" },
+  ];
+  const exchange_options = [
+    { id: "1", label: TranslationStrings.VIEW_PROFILE, icon: "eye" },
+    { id: "2", label: TranslationStrings.REPORT_ITEM, icon: "alert" },
+    {
+      id: "3",
+      label: TranslationStrings.REQUEST_EXCHANGE,
+      icon: "swap-horizontal-bold",
+    },
+    { id: "4", label: TranslationStrings.SHARE, icon: "share-variant" },
+  ];
+  const generic_options = [
+    { id: "1", label: TranslationStrings.VIEW_PROFILE, icon: "eye" },
+    { id: "2", label: TranslationStrings.REPORT_ITEM, icon: "alert" },
+    { id: "3", label: TranslationStrings.SHARE, icon: "share-variant" },
+  ];
   ///////////////PREVIOUS DATA////////////
   const [predata] = useState(route.params);
 
@@ -189,7 +210,7 @@ const MainListingsDetails = ({ navigation, route }) => {
     GetListingsDetails(predata.listing_id)
       .then((response) => {
         setListing_user_detail(response?.data?.user);
-        console.log("losting ldetail  :  ", response.data);
+
         setListing_User_Id(response.data.user_id);
         dispatch(setExchangeOffer_OtherListing(response.data));
         setListing_Images(response.data.images);
@@ -423,7 +444,21 @@ const MainListingsDetails = ({ navigation, route }) => {
               <Text style={styles.rowlefttext}>
                 {TranslationStrings.PRODUCT_CONDITION}
               </Text>
-              <Text style={styles.rowrighttext}>{listing_condition}</Text>
+
+              <Text style={styles.rowrighttext}>
+                {listing_condition == "like new" ||
+                listing_condition == "Como nuevo"
+                  ? TranslationStrings.LIKE_NEW
+                  : listing_condition == "lightly used" ||
+                    listing_condition == "Poco usado"
+                  ? TranslationStrings.LIGHTLY_USED
+                  : listing_condition == "heavely used" ||
+                    listing_condition == "Muy usado"
+                  ? TranslationStrings.HEAVELY_USED
+                  : listing_condition == "New" || listing_condition == "Nuevo"
+                  ? TranslationStrings.NEW
+                  : listing_condition}
+              </Text>
             </View>
             {listing_date === "" ? null : (
               <View style={styles.rowtextview}>

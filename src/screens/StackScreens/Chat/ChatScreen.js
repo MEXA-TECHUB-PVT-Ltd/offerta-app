@@ -18,15 +18,7 @@
 
 // const styles = StyleSheet.create({});
 
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useLayoutEffect,
-  Button,
-  TextInput,
-} from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -34,6 +26,8 @@ import {
   PermissionsAndroid,
   Text,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  TextInput,
 } from "react-native";
 
 ///////////////import app components/////////////
@@ -74,6 +68,7 @@ import uuid from "react-native-uuid";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setChatCount,
+  setChatList,
   setExchangeOffer_MyListing,
   setExchangeOffer_OtherListing,
 } from "../../../redux/actions";
@@ -111,6 +106,9 @@ import PushNotification from "react-native-push-notification";
 const ChatScreen = ({ route, navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
+
+  const { chatCount, chatList } = useSelector((state) => state.userReducer);
+
   ////////////////redux/////////////
   const { exchange_other_listing, exchange_my_listing, user_image } =
     useSelector((state) => state.userReducer);
@@ -364,11 +362,27 @@ const ChatScreen = ({ route, navigation }) => {
                 messagesList.doc(message?.id).update({
                   read: true,
                 });
+
                 if (!updated) {
                   dispatch(setChatCount(0));
+                  let prevChatList = chatList;
+                  const newData = prevChatList?.map((item) => {
+                    if (item?.user?.id == message?._data?.user?._id) {
+                      return {
+                        ...item,
+                        count: 0,
+                      };
+                    } else {
+                      return {
+                        ...item,
+                      };
+                    }
+                  });
+                  dispatch(setChatList(newData));
+
                   updated = true;
                 } else {
-                  console.log("else not updated....", updated);
+                  // console.log("else not updated....", updated);
                 }
               } else {
                 // console.log("else called......");
@@ -805,6 +819,16 @@ const ChatScreen = ({ route, navigation }) => {
       // userid: route.params.userid,
     });
   };
+  const renderComposer = (composerProps) => {
+    return (
+      <Composer
+        {...composerProps}
+        placeholder={TranslationStrings.TYPE_A_MESSAGE}
+        // Add any additional props or styles you want to customize
+      />
+    );
+  };
+
   const CustomInputToolbar = (props) => {
     return (
       <View
@@ -841,6 +865,10 @@ const ChatScreen = ({ route, navigation }) => {
         > */}
         <InputToolbar
           {...props}
+          // renderComposer={renderComposer}
+          // renderComposer={(composerProps) => (
+          //   <InputToolbar {...composerProps} />
+          // )}
           containerStyle={{
             //   backgroundColor: 'red',
             height: hp(7),
@@ -1160,8 +1188,9 @@ const ChatScreen = ({ route, navigation }) => {
       />
 
       <GiftedChat
-        placeholder={TranslationStrings.TYPE_A_MESSAGE}
+        // placeholder={TranslationStrings.TYPE_A_MESSAGE}
         alwaysShowSend
+        // isKeyboardInternallyHandled={true}
         renderInputToolbar={(props) => {
           return <CustomInputToolbar {...props} />;
         }}

@@ -90,6 +90,8 @@ import PriceOfferNoti from "./src/screens/StackScreens/Notification/PriceOfferNo
 import AllListingsByCategory from "./src/screens/StackScreens/Profile/Listings/AllListingsByCategory";
 import AccountVerification from "./src/screens/Auth/AccountVerification";
 
+import BuyersList from "./src/screens/StackScreens/Profile/Listings/BuyersList";
+
 import { navigationRef } from "./RootNavigation";
 
 const Stack = createNativeStackNavigator();
@@ -518,6 +520,13 @@ function App() {
           <Stack.Screen
             name="AccountVerification"
             component={AccountVerification}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="BuyersList"
+            component={BuyersList}
             options={{
               headerShown: false,
             }}

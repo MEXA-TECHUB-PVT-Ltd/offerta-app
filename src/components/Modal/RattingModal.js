@@ -88,21 +88,19 @@ const RattingModal = (props) => {
             />
           </View>
           {props?.onDone ? (
-            <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
-              <TouchableOpacity onPress={props.onDone}>
-                <Text style={styles.Pendingtext}>
-                  {TranslationStrings.DONE}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={[styles.ApprovedView, { marginTop: hp(5) }]}
+              onPress={props.onDone}
+            >
+              <Text style={styles.Pendingtext}>{TranslationStrings.DONE}</Text>
+            </TouchableOpacity>
           ) : (
-            <View style={[styles.ApprovedView, { marginTop: hp(5) }]}>
-              <TouchableOpacity onPress={() => AddRattings()}>
-                <Text style={styles.Pendingtext}>
-                  {TranslationStrings.DONE}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => AddRattings()}
+              style={[styles.ApprovedView, { marginTop: hp(5) }]}
+            >
+              <Text style={styles.Pendingtext}>{TranslationStrings.DONE}</Text>
+            </TouchableOpacity>
           )}
         </View>
       </View>

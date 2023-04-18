@@ -115,7 +115,10 @@ const CustomMenu = (props) => {
         if (props?.otherParams?.type == "sale") {
           setShowRatingModal(true);
         } else {
-          navigation.navigate("Listings");
+          // navigation.navigate("Listings");
+          navigation.replace("BuyersList", {
+            listing_id: listing_id,
+          });
         }
       })
       .catch(function (error) {
@@ -187,10 +190,11 @@ const CustomMenu = (props) => {
     }
     setModalVisible(true);
   };
+
   return (
     <View>
       <RattingModal
-        title={"Rate Buyer"}
+        title={TranslationStrings.RATE_BUYER}
         modalVisible={showRatingModal}
         CloseModal={() => setShowRatingModal(false)}
         ratted_user={props?.otherParams?.buyer_id}

@@ -57,7 +57,7 @@ import {
 } from "../../../../api/PostApis";
 
 ////////////menu array/////////////
-import { my_listing_options } from "../../../../data/Menulists";
+// import { my_listing_options } from "../../../../data/Menulists";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import BlockUserView from "../../../../components/BlockUserView";
@@ -65,6 +65,21 @@ import { get_user_status } from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 
 const ListingsDetails = ({ navigation, route }) => {
+  const my_listing_options = [
+    {
+      id: "1",
+      label: TranslationStrings.EDIT_ITEM,
+      icon: "square-edit-outline",
+    },
+    {
+      id: "2",
+      label: TranslationStrings.MARK_AS_SOLD,
+      icon: "checkbox-marked",
+    },
+    { id: "3", label: TranslationStrings.DELETE, icon: "delete" },
+    { id: "3", label: TranslationStrings.SHARE, icon: "share-variant" },
+  ];
+
   ///////////previous data///////////
   const [predata] = useState(route.params);
 
@@ -413,7 +428,21 @@ const ListingsDetails = ({ navigation, route }) => {
             <Text style={styles.rowlefttext}>
               {TranslationStrings.PRODUCT_CONDITION}
             </Text>
-            <Text style={styles.rowrighttext}>{listing_condition}</Text>
+            {/* <Text style={styles.rowrighttext}>{listing_condition}</Text> */}
+            <Text style={styles.rowrighttext}>
+              {listing_condition == "like new" ||
+              listing_condition == "Como nuevo"
+                ? TranslationStrings.LIKE_NEW
+                : listing_condition == "lightly used" ||
+                  listing_condition == "Poco usado"
+                ? TranslationStrings.LIGHTLY_USED
+                : listing_condition == "heavely used" ||
+                  listing_condition == "Muy usado"
+                ? TranslationStrings.HEAVELY_USED
+                : listing_condition == "New" || listing_condition == "Nuevo"
+                ? TranslationStrings.NEW
+                : listing_condition}
+            </Text>
           </View>
           {listing_date === "" ? null : (
             <View style={styles.rowtextview}>

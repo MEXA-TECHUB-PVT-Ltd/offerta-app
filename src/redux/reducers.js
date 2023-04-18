@@ -54,6 +54,8 @@ import {
   SET_NAV_PLACE,
   SET_CHAT_COUNT,
   SET_NOTIFICATION_COUNT,
+  SET_NOTIFICATION_LIST,
+  SET_CHAT_LIST,
 } from "./actions";
 
 const initialState = {
@@ -109,6 +111,8 @@ const initialState = {
 
   chatCount: 0,
   notificationCount: 0,
+  notificationList: [],
+  chatList: [],
 };
 
 function userReducer(state = initialState, action) {
@@ -189,7 +193,10 @@ function userReducer(state = initialState, action) {
       return { ...state, chatCount: action.payload };
     case SET_NOTIFICATION_COUNT:
       return { ...state, notificationCount: action.payload };
-
+    case SET_NOTIFICATION_LIST:
+      return { ...state, notificationList: action.payload };
+    case SET_CHAT_LIST:
+      return { ...state, chatList: action.payload };
     default:
       return state;
   }
