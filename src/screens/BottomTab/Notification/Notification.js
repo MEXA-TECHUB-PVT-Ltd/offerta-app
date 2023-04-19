@@ -179,6 +179,10 @@ const Notification = ({ navigation }) => {
 
   const handleNotificationPress = async (item) => {
     updateNotificationStatus(item?.id, true);
+    // dispatch(setExchangeOffer_OtherListing(""));
+    // navigation.navigate("ListingsDetails", {
+    //   listing_id: item?.list?.id,
+    // });
 
     // let user_status = await get_user_status();
     // if (user_status == "block") {
@@ -235,7 +239,14 @@ const Notification = ({ navigation }) => {
         console.log("reject offer response  :;  ", obj);
         navigation.navigate("PriceOfferNoti", obj);
       } else if (item?.offer_status == "accept") {
-        navigation.navigate("ConfirmAddress", {
+        // navigation.navigate("ConfirmAddress", {
+        //   index: 0,
+        // });
+
+        console.log("item?.list  : ", item?.list);
+
+        dispatch(setExchangeOffer_OtherListing(item?.list));
+        navigation.navigate("PaymentOptions", {
           index: 0,
         });
       } else if (

@@ -105,7 +105,6 @@ const BuyersList = ({ navigation, route }) => {
         console.log("error", error);
       });
   };
-
   const handleRefresh = async () => {
     setRefreshing(true);
     getBuyers();

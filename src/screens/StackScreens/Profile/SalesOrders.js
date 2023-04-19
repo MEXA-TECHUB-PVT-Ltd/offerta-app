@@ -68,7 +68,6 @@ const SalesOrders = ({ navigation }) => {
   };
   const GetSalesList = async (props) => {
     get_Sales().then((response) => {
-      console.log("response get_Sales list", JSON.stringify(response.data));
       if (response.data[0]?.order_by === [] || response.data?.status == false) {
         setdata("");
       } else {
@@ -176,34 +175,37 @@ const SalesOrders = ({ navigation }) => {
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <ExcahangeCard
-              onPress={() => {
-                if (selectedId == 2) {
-                  //orders
-                  let seller_id = item?.listing?.user_id;
-                  setSelected_user_id(seller_id);
-                  setShowRatingModal(true);
-                } else {
-                  //sales
-                  let buyer_id = item?.order_by?.id;
-
-                  navigation.navigate("ListingsDetails", {
-                    listing_id: item?.listing?.id,
-                    buyer_id: buyer_id,
-                    type: "sale",
-                  });
-                }
-              }}
-              image={
-                typeof item?.listing?.images == "undefined" ||
-                item?.listing?.images === []
-                  ? null
-                  : IMAGE_URL + item?.listing?.images[0]
-              }
-              maintext={item.listing.title}
-              subtext={item.listing.description}
-              pricetext={item.listing.price}
-            />
+            <>
+              {item?.listing?.message == "No data available" ? null : (
+                <ExcahangeCard
+                  onPress={() => {
+                    if (selectedId == 2) {
+                      //orders
+                      let seller_id = item?.listing?.user_id;
+                      setSelected_user_id(seller_id);
+                      setShowRatingModal(true);
+                    } else {
+                      //sales
+                      let buyer_id = item?.order_by?.id;
+                      navigation.navigate("ListingsDetails", {
+                        listing_id: item?.listing?.id,
+                        buyer_id: buyer_id,
+                        type: "sale",
+                      });
+                    }
+                  }}
+                  image={
+                    typeof item?.listing?.images == "undefined" ||
+                    item?.listing?.images === []
+                      ? null
+                      : IMAGE_URL + item?.listing?.images[0]
+                  }
+                  maintext={item.listing.title}
+                  subtext={item.listing.description}
+                  pricetext={item.listing.price}
+                />
+              )}
+            </>
           )}
           keyExtractor={(item, index) => index}
           showsVerticalScrollIndicator={false}
