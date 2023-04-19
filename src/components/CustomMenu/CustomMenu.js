@@ -138,7 +138,7 @@ const CustomMenu = (props) => {
       },
     })
       .then(async function (response) {
-        // console.log("response  : ", response?.data);
+        console.log("response  : ", response?.data);
         // setsnackbarValue({
         //   value: "Review Submitted Successfully",
         //   color: "green",

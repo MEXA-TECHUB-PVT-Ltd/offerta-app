@@ -18,7 +18,7 @@ import { get_Notifications } from "../../api/GetApis";
 const LoaderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   ////////////////loading/////////////
-  const [loading, setloading] = useState(true);
+  const [loading, setloading] = useState(false);
   const getData = async () => {
     try {
       getSelectedLanguage();
@@ -42,6 +42,7 @@ const LoaderScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    setloading(true);
     getDetails();
     get_user_notifications();
     getData();

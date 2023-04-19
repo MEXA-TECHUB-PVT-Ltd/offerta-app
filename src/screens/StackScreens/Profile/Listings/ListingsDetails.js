@@ -83,6 +83,8 @@ const ListingsDetails = ({ navigation, route }) => {
   ///////////previous data///////////
   const [predata] = useState(route.params);
 
+  console.log("predata  : ", predata);
+
   const [refreshing, setRefreshing] = useState(false);
 
   //camera and imagepicker
@@ -277,6 +279,7 @@ const ListingsDetails = ({ navigation, route }) => {
       >
         <Loader isLoading={loading} />
         {/* {listingImages?.length > 0 && ( */}
+
         <Slider
           imagearray={listingImages}
           listing_owner_id={listing_user_id}
@@ -430,16 +433,17 @@ const ListingsDetails = ({ navigation, route }) => {
             </Text>
             {/* <Text style={styles.rowrighttext}>{listing_condition}</Text> */}
             <Text style={styles.rowrighttext}>
-              {listing_condition == "like new" ||
+              {listing_condition?.toLowerCase() == "like new" ||
               listing_condition == "Como nuevo"
                 ? TranslationStrings.LIKE_NEW
-                : listing_condition == "lightly used" ||
+                : listing_condition?.toLowerCase() == "lightly used" ||
                   listing_condition == "Poco usado"
                 ? TranslationStrings.LIGHTLY_USED
-                : listing_condition == "heavely used" ||
+                : listing_condition?.toLowerCase() == "heavely used" ||
                   listing_condition == "Muy usado"
                 ? TranslationStrings.HEAVELY_USED
-                : listing_condition == "New" || listing_condition == "Nuevo"
+                : listing_condition?.toLowerCase() == "new" ||
+                  listing_condition == "Nuevo"
                 ? TranslationStrings.NEW
                 : listing_condition}
             </Text>

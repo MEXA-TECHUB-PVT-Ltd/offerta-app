@@ -446,12 +446,12 @@ const ConfirmAddress = ({ navigation, route }) => {
         <View style={{ marginBottom: hp(15) }}>
           {route?.params?.index == 0 ? (
             <CustomButtonhere
-              // title={TranslationStrings.NEXT}
-              title={
-                TranslationStrings.getLanguage() == "en"
-                  ? TranslationStrings.NEXT
-                  : TranslationStrings.SUBMIT
-              }
+              title={TranslationStrings.NEXT}
+              // title={
+              //   TranslationStrings.getLanguage() == "en"
+              //     ? TranslationStrings.NEXT
+              //     : TranslationStrings.SUBMIT
+              // }
               widthset={80}
               topDistance={10}
               onPress={() => {

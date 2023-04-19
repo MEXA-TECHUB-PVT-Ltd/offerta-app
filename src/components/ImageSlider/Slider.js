@@ -123,6 +123,7 @@ const Slider = (props) => {
       userid: exchange_other_listing.user_id,
     });
   };
+
   return (
     <View>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
@@ -197,6 +198,7 @@ const Slider = (props) => {
               otherParams={props?.otherParams}
             />
           )}
+
           {/* <Text style={styles.price}>item.price</Text> */}
         </View>
       )}

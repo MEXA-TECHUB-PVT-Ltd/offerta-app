@@ -65,7 +65,6 @@ const PriceOfferNoti = ({ navigation, route }) => {
     // console.log("exchnage response hereL:", props);
     offer_Accept_Reject_Listings(route.params.offerid, props).then(
       (response) => {
-        console.log("response  :: ", response?.data?.senderId);
         setModalVisible1(true);
       }
     );
@@ -80,9 +79,8 @@ const PriceOfferNoti = ({ navigation, route }) => {
   const checkData = async () => {
     let user_id = await AsyncStorage.getItem("Userid");
     setCurrentUser(user_id);
-    console.log("route?.params :  ", route?.params?.sale_by);
-    console.log("route.params?.senderId :  ", route.params?.senderId);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -226,8 +224,14 @@ const PriceOfferNoti = ({ navigation, route }) => {
         onPress={() => {
           setModalVisible(false);
           // navigation.navigate("BottomTab");
+          // navigation.navigate("ListingsDetails", {
+          //   listing_id: route?.params?.listing_id,
+          // });
+          dispatch(setExchangeOffer_OtherListing(""));
           navigation.navigate("ListingsDetails", {
             listing_id: route?.params?.listing_id,
+            buyer_id: route?.params?.buyer_id,
+            type: "sale",
           });
         }}
       />

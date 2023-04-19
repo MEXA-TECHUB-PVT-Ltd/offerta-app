@@ -446,16 +446,17 @@ const MainListingsDetails = ({ navigation, route }) => {
               </Text>
 
               <Text style={styles.rowrighttext}>
-                {listing_condition == "like new" ||
+                {listing_condition?.toLowerCase() == "like new" ||
                 listing_condition == "Como nuevo"
                   ? TranslationStrings.LIKE_NEW
-                  : listing_condition == "lightly used" ||
+                  : listing_condition?.toLowerCase() == "lightly used" ||
                     listing_condition == "Poco usado"
                   ? TranslationStrings.LIGHTLY_USED
-                  : listing_condition == "heavely used" ||
+                  : listing_condition?.toLowerCase() == "heavely used" ||
                     listing_condition == "Muy usado"
                   ? TranslationStrings.HEAVELY_USED
-                  : listing_condition == "New" || listing_condition == "Nuevo"
+                  : listing_condition?.toLowerCase() == "new" ||
+                    listing_condition == "Nuevo"
                   ? TranslationStrings.NEW
                   : listing_condition}
               </Text>
