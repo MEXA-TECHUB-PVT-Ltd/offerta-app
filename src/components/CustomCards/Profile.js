@@ -174,7 +174,9 @@ const ProfileCard = (props) => {
         {props.type === "other_user" ? (
           <View style={{ alignItems: "center" }}>
             <View style={{ alignItems: "center", flexDirection: "row" }}>
-              <Text style={styles.verticletext}>{props.ratting}</Text>
+              <Text style={styles.verticletext}>
+                {props?.ratting ? props?.ratting?.toFixed(1) : 0}
+              </Text>
               <Icon name={"star"} size={20} color={"orange"} />
             </View>
             <TouchableOpacity
@@ -192,7 +194,10 @@ const ProfileCard = (props) => {
           </View>
         ) : (
           <View style={{ alignItems: "center" }}>
-            <Text style={styles.verticletext}>{props.ratting}</Text>
+            <Text style={styles.verticletext}>
+              {props?.ratting ? props?.ratting?.toFixed(1) : 0}
+            </Text>
+
             <Text
               style={styles.verticletext}
               //onPress={() => navigation.navigate("Reviews")}

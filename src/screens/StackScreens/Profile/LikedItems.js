@@ -59,6 +59,7 @@ const LikedItems = ({ navigation }) => {
         }}
         icon={"arrow-back"}
       />
+
       <View style={{ flex: 1 }}>
         {data === "" ? (
           <NoDataFound
