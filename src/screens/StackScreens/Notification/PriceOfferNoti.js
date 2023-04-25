@@ -204,10 +204,12 @@ const PriceOfferNoti = ({ navigation, route }) => {
           }}
           onPress={() => {
             // navigation.navigate("ChatScreen", {
+            console.log("route?.params : ", route?.params);
             navigation.replace("ChatScreen", {
               navtype: "chatlist",
               // userid: predata.userid,
-              userid: route?.params?.userid,
+              // userid: route?.params?.userid,
+              userid: route?.params?.buyer_id,
             });
           }}
         >

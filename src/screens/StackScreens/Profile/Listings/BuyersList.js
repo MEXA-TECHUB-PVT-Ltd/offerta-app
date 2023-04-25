@@ -94,11 +94,22 @@ const BuyersList = ({ navigation, route }) => {
     })
       .then(async function (response) {
         console.log("response : ", response?.data);
-        setsnackbarValue({
-          value: "Review Submitted Successfully",
-          color: "green",
-        });
-        setVisible(true);
+        if (response?.data?.status == true) {
+          setsnackbarValue({
+            value: "Review Submitted Successfully",
+            color: "green",
+          });
+          setVisible(true);
+        } else {
+          console.log("else.");
+          setsnackbarValue({
+            value: response?.data?.message
+              ? response?.data?.message
+              : response?.data?.msg,
+            color: "red",
+          });
+          setVisible(true);
+        }
         // navigation.replace("Listings");
       })
       .catch(function (error) {

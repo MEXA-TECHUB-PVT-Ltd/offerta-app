@@ -44,6 +44,7 @@ const get_user_notifications = async () => {
         Store.dispatch(setNotificationList([]));
       } else if (response.data?.length > 0) {
         let notificationList = response?.data ? response?.data : [];
+
         Store.dispatch(setNotificationList(notificationList?.reverse()));
       }
     })
@@ -98,6 +99,10 @@ const getDetails = async () => {
         totalCount += count1;
         list.push(obj);
       }
+      // list.sort((a, b) => {
+      //   return b.count - a.count;
+      // });
+
       Store.dispatch(setChatList(list));
     }
   });

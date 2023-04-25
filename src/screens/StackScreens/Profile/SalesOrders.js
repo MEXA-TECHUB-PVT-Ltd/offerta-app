@@ -25,6 +25,7 @@ import RattingModal from "../../../components/Modal/RattingModal";
 import { Snackbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Loader from "../../../components/Loader/Loader";
 
 // const Top_Tab = [
 //   {
@@ -40,6 +41,7 @@ import axios from "axios";
 // ];
 
 const SalesOrders = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(3.5);
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [selected_user_id, setSelected_user_id] = useState("");
@@ -67,24 +69,42 @@ const SalesOrders = ({ navigation }) => {
     //GetPromotionsFeaturesList(item);
   };
   const GetSalesList = async (props) => {
-    get_Sales().then((response) => {
-      if (response.data[0]?.order_by === [] || response.data?.status == false) {
-        setdata("");
-      } else {
-        setdata(response.data);
-      }
-    });
+    setLoading(true);
+    get_Sales()
+      .then((response) => {
+        if (
+          response.data[0]?.order_by === [] ||
+          response.data?.status == false
+        ) {
+          setdata("");
+        } else {
+          let list = response?.data ? response?.data?.reverse() : [];
+          setdata(list);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   const GetOrderList = async (props) => {
-    get_Orders().then((response) => {
-      console.log("response get_Orders list", JSON.stringify(response.data));
-
-      if (response.data[0]?.order_by === [] || response.data?.status == false) {
-        setdata("");
-      } else {
-        setdata(response.data);
-      }
-    });
+    setLoading(true);
+    get_Orders()
+      .then((response) => {
+        console.log("response get_Orders list", JSON.stringify(response.data));
+        if (
+          response.data[0]?.order_by === [] ||
+          response.data?.status == false
+        ) {
+          setdata("");
+        } else {
+          // setdata(response.data);
+          let list = response?.data ? response?.data?.reverse() : [];
+          setdata(list);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -108,6 +128,8 @@ const SalesOrders = ({ navigation }) => {
   );
 
   const AddRattings = async (ratted_user, rating) => {
+    console.log("...");
+    setLoading(true);
     var user = await AsyncStorage.getItem("Userid");
     axios({
       method: "POST",
@@ -119,15 +141,30 @@ const SalesOrders = ({ navigation }) => {
       },
     })
       .then(async function (response) {
-        console.log("response", JSON.stringify(response.data));
-        setsnackbarValue({
-          value: "Review Submitted Successfully",
-          color: "green",
-        });
-        setVisible(true);
+        console.log("response", response?.data);
+        if (response?.data?.status == true) {
+          setsnackbarValue({
+            value: "Review Submitted Successfully",
+            color: "green",
+          });
+          setVisible(true);
+        } else {
+          console.log("else.");
+          setsnackbarValue({
+            value: response?.data?.message
+              ? response?.data?.message
+              : response?.data?.msg,
+            color: "red",
+          });
+          setVisible(true);
+        }
       })
       .catch(function (error) {
         console.log("error", error);
+      })
+      .finally(() => {
+        console.log("finall...");
+        setLoading(false);
       });
   };
 
@@ -140,6 +177,7 @@ const SalesOrders = ({ navigation }) => {
         }}
         icon={"chevron-back"}
       />
+      <Loader isLoading={loading} />
       <View style={TopTabstyles.TopTabView}>
         <FlatList
           data={Top_Tab}
