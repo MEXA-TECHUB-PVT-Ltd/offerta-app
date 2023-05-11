@@ -53,10 +53,16 @@ import { fontFamily } from "../../constant/fonts";
 import CamerBottomSheet from "../../components/CameraBottomSheet/CameraBottomSheet";
 import { Modal, Snackbar } from "react-native-paper";
 import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
-import { get_user_status } from "../../api/GetApis";
+import {
+  Get_Account_Fees,
+  get_Login_UserData,
+  get_user_status,
+} from "../../api/GetApis";
 import { Block_user_message } from "../../utills/AppStrings";
 import BlockUserView from "../../components/BlockUserView";
 import TranslationStrings from "../../utills/TranslationStrings";
+
+import Loader from "../../components/Loader/Loader";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -107,9 +113,10 @@ const AccountVerification = ({ navigation, route }) => {
       setShowBlockModal(true);
       return;
     }
+    let user_id = await AsyncStorage.getItem("Userid");
 
     setLoading(true);
-    let user_id = await AsyncStorage.getItem("Userid");
+
     console.log("user_id  :   ", user_id);
     if (!user_id) {
       setsnackbarValue({
@@ -117,19 +124,26 @@ const AccountVerification = ({ navigation, route }) => {
         color: "red",
       });
       setVisible(true);
+      setLoading(false);
     } else if (userImage?.uri == "") {
       setsnackbarValue({
         value: "Please upload your picture",
         color: "red",
       });
       setVisible(true);
+      setLoading(false);
     } else if (cnicImage?.uri == "") {
       setsnackbarValue({
         value: "Please upload your  CNIC Image",
         color: "red",
       });
       setVisible(true);
+      setLoading(false);
     } else {
+      getAccountFees();
+      setLoading(false);
+      return;
+
       const formData = new FormData();
       formData.append("user_id", user_id);
       formData.append("cnic", cnicImage);
@@ -167,10 +181,52 @@ const AccountVerification = ({ navigation, route }) => {
       console.log("formData", formData);
     }
   };
+
+  const getAccountFees = async () => {
+    try {
+      get_Login_UserData()
+        .then((user_response) => {
+          //getting user account fees
+          Get_Account_Fees()
+            .then(async (response) => {
+              let fee = 0;
+              if (user_response?.data?.role == "user") {
+                fee = response?.data?.user_fee;
+              } else {
+                fee = response?.data?.company_fee;
+              }
+              let user_id = await AsyncStorage.getItem("Userid");
+              navigation?.replace("CardDetails", {
+                user_id: user_id,
+                cnic: cnicImage,
+                live_image: userImage,
+                fee: fee,
+                type: "account_verify",
+              });
+            })
+            .catch((err) => {
+              console.log("Error  : ", err);
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        })
+        .catch((err) => {
+          console.log("err : ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log("Error raised in getAccountFee : ", error);
+      setLoading(false);
+    }
+  };
   const onDismissSnackBar = () => setVisible(false);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        {/* <Loader isLoading={loading} /> */}
         <Ionicons
           name={"arrow-back"}
           size={25}

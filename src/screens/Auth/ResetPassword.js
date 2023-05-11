@@ -33,7 +33,6 @@ import { fontFamily } from "../../constant/fonts";
 import TranslationStrings from "../../utills/TranslationStrings";
 
 const ResetPassword = ({ navigation, route }) => {
-  console.log(" previous data:", route.params);
   /////////////////////previous data//////////////
   const [predata] = useState(route.params);
 
@@ -69,17 +68,23 @@ const ResetPassword = ({ navigation, route }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   //////////////Api Calling////////////////////
   const ChangePassword = async () => {
+    console.log("predata __________", predata);
+    let body = {
+      // email: predata.data.email.toLowerCase(),
+      email: predata?.data?.email?.toLowerCase(),
+      // password: password,
+      // conformPassword: confirmPassword,
+      newpassword: password,
+      cpassword: confirmPassword,
+    };
+    console.log("body : ", body);
     axios({
       method: "put",
       url: BASE_URL + "ResetPassword.php",
-      data: {
-        email: predata.data.email.toLowerCase(),
-        password: password,
-        conformPassword: confirmPassword,
-      },
+      data: body,
     })
       .then(async function (response) {
-        console.log("response", JSON.stringify(response.data.data));
+        console.log("response", response?.data);
         setloading(0);
         setdisable(0);
         setModalVisible(true);

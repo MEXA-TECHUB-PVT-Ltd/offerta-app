@@ -1,4 +1,3 @@
-
 ////////////////api////////////////
 import axios from "axios";
 import { BASE_URL } from "../utills/ApiRootUrl";
@@ -23,5 +22,3 @@ export const get_Privacy_Policy = async () => {
 export const get_Terms_Condition = async () => {
   return axios.get(BASE_URL + "getTermsAndCondition.php");
 };
-
-

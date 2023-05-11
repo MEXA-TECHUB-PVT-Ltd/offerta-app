@@ -53,6 +53,9 @@ import { appImages } from "../../../constant/images";
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import Loader from "../../../components/Loader/Loader";
+
+import { Snackbar } from "react-native-paper";
 
 const AddBanner = ({ navigation, route }) => {
   //camera and imagepicker
@@ -69,6 +72,8 @@ const AddBanner = ({ navigation, route }) => {
   const [image, setImage] = useState("");
 
   const [showBlockModal, setShowBlockModal] = useState(false);
+
+  const [loading1, setLoading1] = useState(false);
 
   //////////////////////cameraimage//////////////////
   const takePhotoFromCamera = () => {
@@ -109,7 +114,7 @@ const AddBanner = ({ navigation, route }) => {
   };
 
   ///////////////data states////////////////////
-  const [bannerlink, setBannerLink] = React.useState();
+  const [bannerlink, setBannerLink] = React.useState("");
   // const [startdate, setStartDate] = React.useState();
   // const [enddate, setEndDate] = React.useState();
   //////////////////////Api Calling/////////////////
@@ -145,22 +150,79 @@ const AddBanner = ({ navigation, route }) => {
         alert("error" + error);
       });
   };
+
+  const validateURL = (url) => {
+    var validUrl = require("valid-url");
+    if (validUrl.isUri(url)) {
+      console.log("Looks like an URI");
+      return true;
+    } else {
+      console.log("Not a URI");
+      return false;
+    }
+  };
   //////////////////////Api Calling/////////////////
   const CreateBanner = async () => {
+    setLoading(true);
     let user_status = await get_user_status();
     if (user_status == "block") {
       setShowBlockModal(true);
+      setLoading(false);
       return;
     }
+    if (user_image === "" || user_image?.length == 0) {
+      console.log("start date : ", startDate_String);
+      setsnackbarValue({ value: "Please upload image", color: "red" });
+      setVisible(true);
+      setLoading(false);
+    } else if (startDate_String?.length == 0) {
+      setsnackbarValue({ value: "Please Select Start Date", color: "red" });
+      setVisible(true);
+      setLoading(false);
+    } else if (endDate_String?.length == 0) {
+      setsnackbarValue({ value: "Please Select end Date", color: "red" });
+      setVisible(true);
+      setLoading(false);
+    } else if (bannerlink?.length == 0) {
+      setsnackbarValue({ value: "Please Enter banner link", color: "red" });
+      setVisible(true);
+      setLoading(false);
+    } else if (!validateURL(bannerlink)) {
+      setsnackbarValue({
+        value: "Please Enter valid banner link",
+        color: "red",
+      });
+      setVisible(true);
+      setLoading(false);
+    } else {
+      let imageObj = {
+        uri: user_image,
+        name: user_image?.split("/")?.pop(),
+        type: "image/jpeg",
+      };
+      var user_id = await AsyncStorage.getItem("Userid");
 
-    var user_id = await AsyncStorage.getItem("Userid");
+      navigation?.replace("CardDetails", {
+        type: "addbanner",
+        user_id: user_id,
+        start_date: moment(startDate).format("YYYY-MM-DD"),
+        end_date: moment(endDate).format("YYYY-MM-DD"),
+        app_img: imageObj,
+        app_img_link: bannerlink,
+        cast: bannerPrice * daysDifference,
+      });
+      setLoading(false);
+    }
+    setLoading(false);
 
+    return;
     var formdata = new FormData();
     formdata.append("user_id", user_id);
-    formdata.append("start_date", startDate);
-    formdata.append("end_date", endDate);
-    formdata.append("app_img", user_image);
+    formdata.append("start_date", moment(startDate).format("YYYY-MM-DD"));
+    formdata.append("end_date", moment(endDate).format("YYYY-MM-DD"));
+    formdata.append("app_img", imageObj);
     formdata.append("app_img_link", bannerlink);
+    formdata.append("cast", bannerPrice * daysDifference);
 
     var requestOptions = {
       method: "POST",
@@ -169,8 +231,16 @@ const AddBanner = ({ navigation, route }) => {
     };
 
     fetch(BASE_URL + "bannerAdApi.php", requestOptions)
-      .then((response) => response.text())
-      .catch((error) => console.log("error", error));
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("create banner response : ", response);
+        if (response?.status == true) {
+          alert(response?.message); //success
+        } else {
+          alert(response?.message); //error
+        }
+      })
+      .catch((error) => console.log("error in create banner api", error));
   };
 
   const [bannerDescription, setBannerDescription] = useState("");
@@ -189,6 +259,7 @@ const AddBanner = ({ navigation, route }) => {
   };
   const [bannerPrice, setBannerPrice] = useState("");
   const GetBannerPrice = async () => {
+    setLoading(true);
     axios({
       method: "GET",
       url: BASE_URL + "getBannerConfiguration.php",
@@ -198,6 +269,9 @@ const AddBanner = ({ navigation, route }) => {
       })
       .catch(function (error) {
         console.log("error", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -235,6 +309,12 @@ const AddBanner = ({ navigation, route }) => {
 
   const [startDate_String, setStartDate_String] = useState("");
   const [endDate_String, setEndDate_String] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
 
   const [showyearwise, setshowyearwise] = useState(false);
   const [showdaywise, setshowdaywise] = useState("");
@@ -335,6 +415,19 @@ const AddBanner = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
 
+      <Loader isLoading={loading} />
+      <Snackbar
+        duration={2000}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(20),
+          zIndex: 999,
+        }}
+      >
+        {snackbarValue.value}
+      </Snackbar>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

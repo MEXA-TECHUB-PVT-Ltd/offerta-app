@@ -135,8 +135,8 @@ const CamerBottomSheet = (props) => {
         skipBackup: true,
         path: "images",
       },
-      maxWidth: 500,
-      maxHeight: 500,
+      maxWidth: 300,
+      maxHeight: 300,
       quality: 0.5,
     };
 
@@ -155,6 +155,16 @@ const CamerBottomSheet = (props) => {
             mime: res.assets[0].type,
             name: res.assets[0].fileName,
           };
+          // const result = await Image.compress(res.assets[0].uri, {
+          //   compressionMethod: "auto",
+          // });
+          // let image = {
+          //   path: result,
+          //   mime: "image.jpeg",
+          //   name: result?.split("/").pop(),
+          // };
+
+          console.log("picked image : ", image);
           props.refRBSheet.current.close();
           if (props?.type == "verify") {
             props?.onCameraImageSelect(image);
@@ -168,7 +178,7 @@ const CamerBottomSheet = (props) => {
         }
       })
       .catch((err) => {
-        console.log("error  :  ", err);
+        console.log("error in camera image uploading  :  ", err);
       });
   };
 
@@ -200,8 +210,8 @@ const CamerBottomSheet = (props) => {
         skipBackup: true,
         path: "images",
       },
-      maxWidth: 500,
-      maxHeight: 500,
+      maxWidth: 300,
+      maxHeight: 300,
       quality: 0.5,
     };
     await launchImageLibrary(options).then((res) => {

@@ -107,23 +107,35 @@ const Home = ({ navigation }) => {
     //   }
 
     // });
-    get_Categories_Listings(props).then((response) => {
-      // console.log("response  :   ", response?.data);
-      if (response.data.message === "No data available") {
-        setCategoryList("");
-      } else {
-        setCategoryList(response.data);
-      }
-    });
+    get_Categories_Listings(props)
+      .then((response) => {
+        console.log("response  :   ", response?.data);
+        if (response.data.message === "No data available") {
+          setCategoryList("");
+        } else {
+          setCategoryList(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log("Error while getting category list : ", err);
+      });
   };
 
   const getAllListings = async (props) => {
-    get_all_listings().then((response) => {
-      // console.log("response  :   ", response?.data);
-      let list = response?.data ? response?.data : [];
-      // console.log("list  :  ", list);
-      setCategoryList(list);
-    });
+    get_all_listings()
+      .then((response) => {
+        // console.log("response  :   ", response?.data);
+        let list = response?.data ? response?.data : [];
+        if (typeof list == "string") {
+          //error : response contain  some error strings
+          console.log("error : response contain  some error strings  ");
+        } else {
+          setCategoryList(list);
+        }
+      })
+      .catch((err) => {
+        console.log("Error while getting listings: ", err);
+      });
   };
   const [categorydata, setCategoryData] = useState("");
   useEffect(() => {
@@ -133,7 +145,7 @@ const Home = ({ navigation }) => {
       GetCategories()
         .then((response) => {
           dispatch(setExchangeOffer_OtherListing(response.data[0]));
-          console.log("response.data  :  ", response.data);
+
           let obj = {
             created_at: "2023-03-21 10:49:00",
             id: "All",
@@ -239,7 +251,8 @@ const Home = ({ navigation }) => {
     <IconsTopTabs
       title={item.name == "All" ? TranslationStrings.All : item.name}
       icon={item.image_url.replace("{{baseurl}}", "")}
-      width={wp(5)}
+      width={wp(10)}
+      // maxWidth={wp(6)}
       selected={selectedId}
       id={item.id}
       onpress={() => onselect(item.id)}
@@ -348,13 +361,13 @@ const Home = ({ navigation }) => {
             data={Categorylist}
             numColumns={2}
             // item.user_id === login_user_id ? null :
-
             renderItem={({ item }) => (
               <DashboardCard
                 image={
                   item?.images?.length == 0 ? null : IMAGE_URL + item?.images[0]
                 }
                 // image={null}
+                tag={item?.tag}
                 sold={item?.sold}
                 // image={item}
                 maintext={item.title}

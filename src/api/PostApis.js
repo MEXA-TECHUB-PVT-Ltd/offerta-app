@@ -115,3 +115,19 @@ export const update_notification = async (id, status) => {
     status: status,
   });
 };
+
+// update like notification
+export const update_like_notification = async (id, status) => {
+  return axios.put(BASE_URL + "updatelikestatus.php", {
+    id: id,
+    // status: status,
+  });
+};
+
+// update comment notification
+export const update_comment_notification = async (id, status) => {
+  return axios.put(BASE_URL + "updatecommentstatus.php", {
+    id: id,
+    // status: status,
+  });
+};

@@ -111,6 +111,12 @@ const Location = ({ navigation, route }) => {
                 longitude: pinlog,
               }}
               onDragEnd={(item) => {
+                // dispatch(setLocationAddress("San Salvador, El Salvador"));
+                // dispatch(setLocationLat(13.794185));
+                // dispatch(setLocationLng(-88.89653));
+                // navigation.goBack();
+                // return;
+
                 Geocoder.init(MapKeyApi);
                 Geocoder.from(
                   item.nativeEvent.coordinate.latitude,

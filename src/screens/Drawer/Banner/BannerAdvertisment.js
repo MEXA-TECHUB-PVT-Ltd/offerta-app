@@ -33,10 +33,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 /////////////////////app images/////////////////////
 import { appImages } from "../../../constant/images";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import Loader from "../../../components/Loader/Loader";
 
 const BannerAdvertisment = ({ navigation, route }) => {
   //////////render html width///////////
   const { width } = useWindowDimensions();
+  const [loading, setLoading] = useState(false);
 
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,11 +53,15 @@ const BannerAdvertisment = ({ navigation, route }) => {
         setBannerDescription(response.data.description);
       })
       .catch(function (error) {
-        console.log("error", error);
+        console.log("error in getbannerDescription ", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   useEffect(() => {
+    setLoading(true);
     GetBannerDescription();
   }, []);
   const tagsStyles = {
@@ -83,6 +89,7 @@ const BannerAdvertisment = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+        <Loader isLoading={loading} />
         <CustomHeader
           headerlabel={TranslationStrings.BANNER_ADVERTISEMENT}
           iconPress={() => {
@@ -98,16 +105,18 @@ const BannerAdvertisment = ({ navigation, route }) => {
             tagsStyles={tagsStyles}
           />
         </View>
-        <View style={{ marginBottom: hp(15) }}>
-          <CustomButtonhere
-            title={TranslationStrings.CONTINUE}
-            widthset={80}
-            topDistance={10}
-            onPress={() => {
-              navigation.navigate("AddBanner");
-            }}
-          />
-        </View>
+        {!loading && (
+          <View style={{ marginBottom: hp(15) }}>
+            <CustomButtonhere
+              title={TranslationStrings.CONTINUE}
+              widthset={80}
+              topDistance={10}
+              onPress={() => {
+                navigation?.replace("AddBanner");
+              }}
+            />
+          </View>
+        )}
         <CustomModal
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}

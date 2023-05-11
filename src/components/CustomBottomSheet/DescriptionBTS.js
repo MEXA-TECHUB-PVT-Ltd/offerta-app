@@ -172,7 +172,9 @@ const DescriptionBottomSheet = (props) => {
         Icon={appImages.sucess}
         text={TranslationStrings.SUCCESS}
         subtext={
-          props.btntext === "REPORT"
+          props?.description
+            ? props?.description
+            : props.btntext === "REPORT"
             ? TranslationStrings.REPORT_SUCCESSFULLY
             : TranslationStrings.REVIEW_ADDED_SUCCESSFULLY
         }

@@ -52,6 +52,9 @@ import PendingAccountApproval from "../../components/Modal/PendingAccountApprova
 import messaging from "@react-native-firebase/messaging";
 import TranslationStrings from "../../utills/TranslationStrings";
 
+import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
+import GoogleButton from "../../components/Button/GoogleButton";
+
 const Login = ({ navigation }) => {
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
@@ -148,6 +151,9 @@ const Login = ({ navigation }) => {
   };
 
   const LoginUser = async () => {
+    console.log("email : ", email);
+    console.log("password : ", password);
+
     // navigation.navigate("Drawerroute");
     // return;
     // let fcm_token = await getUserFCMToken();
@@ -158,56 +164,19 @@ const Login = ({ navigation }) => {
       method: "post",
       url: BASE_URL + "loginUser.php",
       data: {
-        email: email,
-        password: password,
+        email: email?.trim(),
+        password: password?.trim(),
         fcm: fcm_token,
       },
     })
       .then(async function (response) {
         // console.log("response", JSON.stringify(response.data));
-        console.log("respo nkfsdfjsf", response?.data);
+        console.log("login api response  : ", response?.data);
         setloading(0);
         setdisable(0);
         if (response.data.status == true) {
           await AsyncStorage.setItem("Userid", response.data.data.id);
           navigation.replace("Drawerroute");
-
-          // console.log(" response.data.data.id  :  ", response.data.data.id);
-
-          // let isVerified = await checkUserAccountVerification(
-          //   response.data.data.id
-          // );
-          // return;
-          // let verification_status = response?.data?.data?.subscription;
-          // console.log("verification_status", verification_status);
-          // if (verification_status == false || verification_status == "false") {
-          //   //not uploaded verification documents
-          //   navigation?.navigate("AccountVerification", {
-          //     signup_role: response?.data?.data?.role,
-          //     type: "login",
-          //   });
-          // } else if (
-          //   verification_status == true ||
-          //   verification_status == "true"
-          // ) {
-          //   //waiting for aprroval
-          //   setModalVisible2(true);
-          // } else {
-          //   navigation.navigate("Drawerroute");
-          //   await AsyncStorage.setItem("Userid", response.data.data.id);
-          // }
-          // navigation.navigate("Drawerroute");
-          // await AsyncStorage.setItem("Userid", response.data.data.id);
-          // if (isVerified) {
-          //   navigation.navigate("Drawerroute");
-          // } else {
-          //   console.log("account not verified");
-          //   console.log(
-          //     "user details :::::::      ....   ...  ...  . .  ",
-          //     response?.data?.data?.role
-          //   );
-          //   // signup_role
-          // }
         } else {
           setloading(0);
           setdisable(0);
@@ -278,13 +247,8 @@ const Login = ({ navigation }) => {
       // console.log('User Info currentUser tokeen--> ', currentUser);
       setUserInfo(userInfo);
       _signOut();
-      GoogleSignupUser(userInfo.user.email);
-      // navigation.navigate("GooglePassword", {
-      //   email: userInfo.user.email,
-      //   name: userInfo.user.name,
-      //   photo: userInfo.user.photo,
-      //   navplace: "login",
-      // });
+      // GoogleSignupUser(userInfo.user.email);
+      GoogleLoginUser(userInfo.user.email);
     } catch (error) {
       console.log("Message", JSON.stringify(error));
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -323,6 +287,7 @@ const Login = ({ navigation }) => {
 
   //////////////Google Login Api Calling////////////////////
   const GoogleLoginUser = async (props) => {
+    setloading(true);
     axios({
       method: "post",
       url: BASE_URL + "loginUser.php",
@@ -333,29 +298,25 @@ const Login = ({ navigation }) => {
     })
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
-        if (response.data.message) {
-          // let verification_status = response?.data?.data?.subscription;
-          // console.log("verification_status", verification_status);
-          // if (verification_status == false || verification_status == "false") {
-          //   //not uploaded verification documents
-          //   navigation?.navigate("AccountVerification", {
-          //     signup_role: response?.data?.data?.role,
-          //     type: "login",
-          //   });
-          // } else if (
-          //   verification_status == true ||
-          //   verification_status == "true"
-          // ) {
-          //   //waiting for aprroval
-          //   setModalVisible2(true);
-          // } else {
-          //   navigation.navigate("Drawerroute");
-          //   await AsyncStorage.setItem("Userid", response.data.data.id);
-          // }
+        // if (response.data.message) {
+        //   await AsyncStorage.setItem("Userid", response.data.data.id);
+        //   navigation.navigate("Drawerroute");
+        // } else {
+        //   setModalVisible(true);
+        // }
+
+        console.log("respo nkfsdfjsf", response?.data);
+        setloading(0);
+        setdisable(0);
+        if (response.data.status == true) {
           await AsyncStorage.setItem("Userid", response.data.data.id);
-          navigation.navigate("Drawerroute");
+          navigation.replace("Drawerroute");
         } else {
-          setModalVisible(true);
+          setloading(0);
+          setdisable(0);
+          // setModalVisible(true);
+          setsnackbarValue({ value: response?.data?.message, color: "red" });
+          setVisible("true");
         }
       })
       .catch(function (error) {
@@ -519,7 +480,9 @@ const Login = ({ navigation }) => {
               texterror={"invalid"}
               term={email}
               placeholder={TranslationStrings.EMAIL_ADDRESS}
-              onTermChange={(newEmail) => setEmail(newEmail)}
+              onTermChange={(newEmail) => {
+                setEmail(newEmail);
+              }}
             />
             <CustomTextInput
               icon={appImages.lock}
@@ -590,25 +553,32 @@ const Login = ({ navigation }) => {
           />
         </View> */}
 
-        {/* <View
+        <View
           style={{
             marginHorizontal: wp(5),
             flexDirection: "row",
             justifyContent: "space-between",
+            // width: wp(60),
+            alignSelf: "center",
           }}
         >
-          <SocialIcons icon={appImages.apple} bgcolor={"#000000"} />
-          <SocialIcons
+          {/* <SocialIcons icon={appImages.apple} bgcolor={"#000000"} /> */}
+          {/* <SocialIcons
             icon={appImages.facebook}
             bgcolor={"#4267B2"}
             onpress={() => fbLogin()}
-          />
-          <SocialIcons
+          /> */}
+          {/* <SocialIcons
             icon={appImages.google}
             bgcolor={"#4285F4"}
             onpress={() => gmailLoginHandler()}
+          /> */}
+
+          <GoogleButton
+            title="Sign in with Google"
+            onPress={() => gmailLoginHandler()}
           />
-        </View> */}
+        </View>
 
         <View style={{ marginTop: hp(0) }}>
           <CustomButtonhere

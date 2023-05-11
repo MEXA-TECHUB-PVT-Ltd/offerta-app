@@ -22,6 +22,7 @@ const appImages = {
   apple: require(IMAGES_DIR + "apple.png"),
   facebook: require(IMAGES_DIR + "facebook.png"),
   google: require(IMAGES_DIR + "google.png"),
+  google1: require(IMAGES_DIR + "google1.png"),
 
   /////////////////Profile/////////////
   User: require(IMAGES_DIR + "User.png"),

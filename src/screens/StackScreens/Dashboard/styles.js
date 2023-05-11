@@ -149,5 +149,28 @@ const styles = StyleSheet.create({
     fontSize: hp(1.8),
     fontFamily: fontFamily.Poppins_Medium,
   },
+
+  // ---------subcategory bottom sheet --------------------
+  card: {
+    borderColor: "rgba(0, 0, 0, 0.2)",
+    borderBottomWidth: 1,
+    width: wp(82),
+    marginHorizontal: wp(8),
+  },
+  cardtext: {
+    color: "black",
+    marginBottom: hp(2),
+    marginTop: hp(2),
+    fontFamily: "Poppins",
+    fontSize: hp(2),
+    marginLeft: wp(5),
+    color: "grey",
+  },
+  bottomsheettext: {
+    paddingHorizontal: wp(8),
+    fontWeight: "600",
+    fontSize: hp(2.5),
+    color: "black",
+  },
 });
 export default styles;

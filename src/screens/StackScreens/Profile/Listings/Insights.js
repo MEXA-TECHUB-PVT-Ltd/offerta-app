@@ -35,13 +35,13 @@ const Insights = ({ navigation, route }) => {
 
   useEffect(() => {
     get_Listings_Insights(predata.list_id).then((response) => {
-      setPopularity(response.data.popularity);
-      setViews(response.data.tatal_view);
-      setComments(response.data.tatal_comments);
-      setLikes(response.data.tatal_like);
-      setExchange_Requests(response.data.tatal_Exchange);
-      setVisited_Cities(response.data.tatal_Exchange);
-      setMost_Visited_Cities(response.data.most_visted);
+      setPopularity(response?.data?.popularity);
+      setViews(response.data?.tatal_view);
+      setComments(response.data?.tatal_comments);
+      setLikes(response.data?.tatal_like);
+      setExchange_Requests(response.data?.tatal_Exchange);
+      setVisited_Cities(response.data?.Total_Visted_City);
+      setMost_Visited_Cities(response.data?.most_visted);
     });
   }, []);
 
@@ -91,13 +91,13 @@ const Insights = ({ navigation, route }) => {
           <Text style={styles.righttext}>{views}</Text>
         </View>
         <View style={styles.borderview}></View>
-        <View style={styles.rowview}>
+        {/* <View style={styles.rowview}>
           <Text style={styles.lefttext}>
             {TranslationStrings.REQUEST_EXCHANGE}
           </Text>
           <Text style={styles.righttext}>{exchange_requests}</Text>
-        </View>
-        <View style={styles.borderview}></View>
+        </View> */}
+        {/* <View style={styles.borderview}></View> */}
         <View style={styles.rowview}>
           <Text style={styles.lefttext}>
             {TranslationStrings.TOTAL_VISITED_CITIES}

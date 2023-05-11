@@ -1,5 +1,13 @@
 import React, { useState, useRef } from "react";
-import { Text, View, Dimensions, Image, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Dimensions,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 // import Carousel, { Pagination } from "react-native-snap-carousel";
 
 import { SwiperFlatList } from "react-native-swiper-flatlist";
@@ -14,6 +22,8 @@ import {
 } from "react-native-responsive-screen";
 import Colors from "../../utills/Colors";
 import { BASE_URL, IMAGE_URL } from "../../utills/ApiRootUrl";
+
+import { Snackbar } from "react-native-paper";
 
 const data = [
   {
@@ -56,6 +66,10 @@ const CustomImageSlider = ({ imagearray }) => {
   const [index, setIndex] = useState(0);
   const isCarousel = useRef(null);
 
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
+
   return (
     <View style={{ width: wp(100), marginVertical: 10 }}>
       {imagearray ? (
@@ -68,7 +82,16 @@ const CustomImageSlider = ({ imagearray }) => {
           data={imagearray}
           renderItem={({ item }) => {
             return (
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(item?.app_img_link).catch((err) => {
+                    setsnackbarValue({
+                      value: "Something went wrong.Unable to open url",
+                      color: "red",
+                    });
+                    setVisible(true);
+                  });
+                }}
                 style={{
                   width: wp(90),
                   marginHorizontal: wp(5),
@@ -97,7 +120,7 @@ const CustomImageSlider = ({ imagearray }) => {
                     resizeMode: "contain",
                   }}
                 />
-              </View>
+              </TouchableOpacity>
             );
           }}
           paginationStyleItemInactive={{
@@ -124,6 +147,19 @@ const CustomImageSlider = ({ imagearray }) => {
           }}
         />
       ) : null}
+
+      <Snackbar
+        duration={2000}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(20),
+          zIndex: 999,
+        }}
+      >
+        {snackbarValue.value}
+      </Snackbar>
     </View>
   );
 };

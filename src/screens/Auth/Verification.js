@@ -74,7 +74,7 @@ const Verification = ({ navigation, route }) => {
   //code Confirmation states
   const [value, setValue] = useState();
   //cell number
-  const CELL_COUNT = 4;
+  const CELL_COUNT = 5;
 
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -125,7 +125,13 @@ const Verification = ({ navigation, route }) => {
           {TranslationStrings.ENTER_CODE_THAT_YOU_RECEIVED_ON_EMAIL}
         </Text>
       </View>
-      <View style={styles.Cellview}>
+      <View
+        style={{
+          ...styles.Cellview,
+          paddingHorizontal: wp(3),
+          alignItems: "center",
+        }}
+      >
         <CodeField
           ref={ref}
           {...props}
@@ -140,7 +146,11 @@ const Verification = ({ navigation, route }) => {
           renderCell={({ index, symbol, isFocused }) => (
             <Text
               key={index}
-              style={[styles.cell, isFocused && styles.focusCell]}
+              style={[
+                styles.cell,
+                isFocused && styles.focusCell,
+                { marginRight: 5 },
+              ]}
               onLayout={getCellOnLayoutHandler(index)}
             >
               {symbol || (isFocused ? <Cursor /> : "0")}

@@ -25,7 +25,7 @@ const LoaderScreen = ({ navigation }) => {
       await AsyncStorage.getItem("Userid")
         .then((db) => {
           // setloading(false);
-          console.log("usertype", { db });
+          console.log("usertype...", { db });
           if (db === null) {
             setloading(false);
             navigation.replace("Login");
@@ -38,7 +38,9 @@ const LoaderScreen = ({ navigation }) => {
           }
         })
         .done();
-    } catch (error) {}
+    } catch (error) {
+      console.log("error  :  ", error);
+    }
   };
 
   useEffect(() => {
@@ -56,9 +58,9 @@ const LoaderScreen = ({ navigation }) => {
       ChangeAppLanguage(language);
       console.log("______________", TranslationStrings.getLanguage());
     } else {
-      ChangeAppLanguage("en");
+      ChangeAppLanguage("es");
       console.log("else_________________________________");
-      await AsyncStorage.setItem("Language", "en");
+      await AsyncStorage.setItem("Language", "es");
     }
   };
 
@@ -112,15 +114,20 @@ const LoaderScreen = ({ navigation }) => {
   };
 
   const getDetails = async () => {
-    get_Chat_Users().then(async (response) => {
-      if (response.data.msg === "No Result") {
-        //
-      } else {
-        let count = await countUnreadMessages(response);
-        console.log("count ______________________________", count);
-        dispatch(setChatCount(count));
-      }
-    });
+    get_Chat_Users()
+      .then(async (response) => {
+        if (response.data.msg === "No Result") {
+          //
+          console.log("////////////////");
+        } else {
+          let count = await countUnreadMessages(response);
+          console.log("count ______________________________", count);
+          dispatch(setChatCount(count));
+        }
+      })
+      .catch((err) => {
+        console.log("126 error : ", err);
+      });
   };
 
   const get_user_notifications = async () => {
@@ -130,7 +137,7 @@ const LoaderScreen = ({ navigation }) => {
 
         if (response.data.msg === "No Result") {
           // setNotification("");
-          console.log("no record found ");
+          console.log("no record found........... ");
         } else {
           if (response.data?.length > 0) {
             let notificationList = response.data;

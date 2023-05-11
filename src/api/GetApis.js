@@ -13,6 +13,10 @@ export const get_Login_UserData = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getUserById.php?user_id=" + user_id);
 };
+//////////////Get User Account Fee //////////
+export const Get_Account_Fees = async () => {
+  return axios.get(BASE_URL + "getAccountFees.php");
+};
 
 export const get_user_status = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
@@ -80,6 +84,9 @@ export const GetCategories = async () => {
 };
 
 //------------>GET SUB CATEGORIES
+export const GetSubCategoriesByID = async (id) => {
+  return axios.get(BASE_URL + `specficdsubvcategors.php`);
+};
 export const GetSubCategories = async () => {
   return axios.get(BASE_URL + "getAllSubCategories.php");
 };
@@ -171,6 +178,24 @@ export const get_Expired_Promotion_List = async () => {
 export const get_Notifications = async (props) => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getnotifications.php?user_id=" + user_id);
+};
+
+///////////////////Like Notification /////////////
+export const get_like_notifications = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  // let user_id = "55";
+  // return axios.post(BASE_URL + "getlikenotification.php?user_id=" + user_id);
+  return axios.post(BASE_URL + "getlikenotification.php", {
+    to_id: user_id,
+  });
+};
+///////////////////Comment Notification /////////////
+export const get_comment_notifications = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  // let user_id = "1";
+  return axios.post(BASE_URL + "getcommentsnotification.php", {
+    to_id: user_id,
+  });
 };
 
 ////////////////////////get banners////////////

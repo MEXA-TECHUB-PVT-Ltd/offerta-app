@@ -74,7 +74,7 @@ const ForgetPassword = ({ navigation }) => {
       method: "post",
       url: BASE_URL + "forgetPassword.php",
       data: {
-        email: email.toLowerCase(),
+        email: email?.trim()?.toLowerCase(),
       },
     })
       .then(function (response) {
@@ -84,8 +84,11 @@ const ForgetPassword = ({ navigation }) => {
         // setVisible("true");
         setloading(0);
         setdisable(0);
-        if (response.data.status == true) {
-          navigation.navigate("Verification", response.data);
+        if (response.data.status == true || response?.data?.Error == false) {
+          navigation.navigate("Verification", {
+            code: response.data?.otp,
+            email: email?.trim()?.toLowerCase(),
+          });
         } else if (response.data.status == false) {
           setsnackbarValue({ value: response?.data?.message, color: "red" });
           setVisible("true");

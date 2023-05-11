@@ -23,7 +23,9 @@ const IconsTopTabs = (props) => {
       style={{
         alignItems: "center",
         justifyContent: "center",
-        width: wp(props.width),
+        // width: wp(props.width),
+        maxWidth: 150,
+        marginHorizontal: 5,
       }}
       onPress={props.onpress}
     >
@@ -55,7 +57,8 @@ const IconsTopTabs = (props) => {
         <View
           style={{
             height: hp(0.5),
-            width: wp(props.width),
+            // width: wp(props.width),
+            width: "100%",
             marginTop: hp(1.2),
             backgroundColor:
               props.selected === props.id ? Colors.activetextinput : "#AAAAAA",

@@ -46,11 +46,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Snackbar } from "react-native-paper";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
 import { post_Promotions } from "../../../../../api/Sales&Promotions";
+import { BASE_URL } from "../../../../../utills/ApiRootUrl";
 
 const CardDetails = ({ navigation, route }) => {
   ////////////////redux/////////////
   const { exchange_other_listing } = useSelector((state) => state.userReducer);
-
   ////////////////redux/////////////
   const { login_user_shipping_address } = useSelector(
     (state) => state.loginuserReducer
@@ -73,7 +73,6 @@ const CardDetails = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
-
   const validate = async () => {
     if (cardno?.length == 0) {
       // please enter card no
@@ -152,12 +151,178 @@ const CardDetails = ({ navigation, route }) => {
         });
     }
   };
+  const payForBannerAd = async () => {
+    // CreatePromotion();
+    // return;
+    if (await validate()) {
+      let user_id = await AsyncStorage.getItem("Userid");
+      let expiryDate = expirydate?.split("/");
+      let month = expiryDate[0];
+      let year = expiryDate[1];
+      let obj = {
+        user_id: user_id,
+        listing_id: exchange_other_listing.id,
+        card_number: cardno,
+        card_exp_month: month,
+        card_exp_year: year,
+        card_cvc: cvv,
+        description: "nill",
+        currency: "inr",
+        type: "credit_card",
+      };
+
+      checkout(obj)
+        .then((res) => {
+          console.log("checkout api response", res?.data);
+          if (res?.data?.status == false) {
+            setsnackbarValue({ value: res?.data?.message, color: "red" });
+            setVisible(true);
+          } else {
+            CreateBanner();
+          }
+        })
+        .catch((err) => {
+          console.log("error raised : ", err);
+          setsnackbarValue({
+            value: "Something went wrong",
+            color: "red",
+          });
+          setVisible(true);
+        });
+    }
+  };
+
+  const payForUserVerification = async () => {
+    console.log("pay for user verification called....");
+    try {
+      if (await validate()) {
+        let user_id = await AsyncStorage.getItem("Userid");
+        let expiryDate = expirydate?.split("/");
+        let month = expiryDate[0];
+        let year = expiryDate[1];
+        let obj = {
+          user_id: route?.params?.user_id,
+          card_number: cardno,
+          card_exp_month: month,
+          card_exp_year: year,
+          card_cvc: cvv,
+          fee: route?.params?.fee,
+          description: "nill",
+          currency: "inr",
+          type: "credit_card",
+        };
+
+        checkout(obj)
+          .then((res) => {
+            console.log("checkout api response", res?.data);
+            if (res?.data?.status == false) {
+              setsnackbarValue({ value: res?.data?.message, color: "red" });
+              setVisible(true);
+            } else {
+              SubmitVerificationDocument();
+            }
+          })
+          .catch((err) => {
+            console.log("error raised : ", err);
+            setsnackbarValue({
+              value: "Something went wrong",
+              color: "red",
+            });
+            setVisible(true);
+          });
+      }
+    } catch (error) {
+      console.log("Error raised in payForUserVerification");
+    }
+  };
+
+  const SubmitVerificationDocument = async () => {
+    const formData = new FormData();
+    formData.append("user_id", route?.params?.user_id);
+    formData.append("cnic", route?.params?.cnic);
+    formData.append("live_image", route?.params?.live_image);
+
+    let url = BASE_URL + "accountVerify.php";
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("response of SubmitVerificationDocument :  ", response);
+        if (response?.status == true) {
+          setsnackbarValue({
+            value: "Verification document submitted successfully!",
+            color: "green",
+          });
+          setVisible(true);
+          setTimeout(() => {
+            navigation?.goBack();
+          }, 1000);
+        } else {
+          setsnackbarValue({
+            value: response?.message,
+            color: "red",
+          });
+          setVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log("error : ", err);
+        setsnackbarValue({
+          value: "Something went wrong",
+          color: "red",
+        });
+        setVisible(true);
+      });
+  };
+
+  const CreateBanner = async () => {
+    console.log("CreateBanner function called...");
+    var formdata = new FormData();
+    formdata.append("user_id", route?.params?.user_id);
+    formdata.append("start_date", route?.params?.start_date);
+    formdata.append("end_date", route?.params?.end_date);
+    formdata.append("app_img", route?.params?.app_img);
+    formdata.append("app_img_link", route?.params?.app_img_link);
+    formdata.append("cast", route?.params?.cast);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(BASE_URL + "bannerAdApi.php", requestOptions)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response?.status == true) {
+          setsnackbarValue({
+            value: "Banner Ad created successfully!",
+            color: "green",
+          });
+          setVisible(true);
+          setTimeout(() => {
+            navigation.navigate("Drawerroute");
+          }, 1000);
+        } else {
+          setsnackbarValue({ value: response?.message, color: "red" });
+          setVisible(true);
+        }
+      })
+      .catch((error) => console.log("error in create banner api", error));
+  };
 
   ////////////Create Order//////////
   const Listing_Create_Order = async () => {
     let user_id = await AsyncStorage.getItem("Userid");
     if (route?.params?.type == "promote") {
       payFORPromotion();
+    } else if (route?.params?.type == "addbanner") {
+      payForBannerAd();
+    } else if (route?.params?.type == "account_verify") {
+      payForUserVerification();
     } else {
       if (await validate()) {
         let expiryDate = expirydate?.split("/");
@@ -419,7 +584,13 @@ const CardDetails = ({ navigation, route }) => {
         subtext={TranslationStrings.PAYED_SUCCESSFULLY}
         buttontext={TranslationStrings.OK}
         onPress={() => {
-          navigation.navigate("BottomTab"), setModalVisible(false);
+          if (route?.params?.type == "promote") {
+            navigation?.goBack();
+          } else {
+            // navigation.navigate("BottomTab")
+            navigation.navigate("SalesOrders");
+            setModalVisible(false);
+          }
         }}
       />
     </SafeAreaView>
