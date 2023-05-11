@@ -234,7 +234,7 @@ const PriceOfferNoti = ({ navigation, route }) => {
             listing_id: route?.params?.listing_id,
             buyer_id: route?.params?.buyer_id,
             type: "sale",
-          });
+          }); 
         }}
       />
       <CustomModal

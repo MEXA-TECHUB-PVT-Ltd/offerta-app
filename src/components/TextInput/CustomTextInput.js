@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   TextInput,
   StyleSheet,
@@ -96,7 +97,6 @@ const CustomTextInput = ({
           numberOfLines={Lines}
           multiline={multiline}
         ></TextInput>
-
         {type == "phone" && (
           <TouchableOpacity style={{ position: "absolute", right: 0 }}>
             <MaterialCommunityIcons

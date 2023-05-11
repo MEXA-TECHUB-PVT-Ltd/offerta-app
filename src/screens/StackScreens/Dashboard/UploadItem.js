@@ -43,6 +43,7 @@ import {
   setLocationAddress,
   setLocationLat,
   setLocationLng,
+  setSubCategoryId,
 } from "../../../redux/actions";
 
 /////////////////App Api function/////////////////
@@ -61,7 +62,11 @@ import { get_user_status } from "../../../api/GetApis";
 import CustomModal1 from "../../../components/Modal/CustomModal1";
 import TranslationStrings from "../../../utills/TranslationStrings";
 
+import RBSheet from "react-native-raw-bottom-sheet";
+
 const UploadItem = ({ navigation, route }) => {
+  const refRBSheetSubCat = useRef(null);
+  const [subCatList, setSubCatList] = useState([]);
   /////////////redux states///////
   const {
     category_name,
@@ -268,6 +273,7 @@ const UploadItem = ({ navigation, route }) => {
     axios(config)
       .then(function (response) {
         let res = response.data;
+        console.log("upload listing response : ", res);
         if (res?.status == false) {
           setsnackbarValue({
             value: res?.message,
@@ -352,6 +358,8 @@ const UploadItem = ({ navigation, route }) => {
   //Api form validation
 
   const formValidation = async () => {
+    console.log("uploaded images list  :  ", item_images_array);
+    // return;
     // post_Item_Images({
     //   item_id: "147",
     //   item_images: item_images_array,
@@ -466,6 +474,34 @@ const UploadItem = ({ navigation, route }) => {
       </View>
     );
   };
+  useEffect(() => {
+    console.log("Category changed ....   :   ", category_id, category_name);
+    GetItemSubCategories(category_id);
+  }, [category_id]);
+
+  const GetItemSubCategories = async (category_id) => {
+    console.log("category_id  passed  :::::::::::::::::::::: ", category_id);
+    axios({
+      method: "POST",
+      url: BASE_URL + "specficdsubvcategors.php",
+      data: {
+        category_id: category_id,
+      },
+    })
+      .then((res) => {
+        if (res?.data?.error == false) {
+          setSubCatList(res?.data?.Subcategory);
+          console.log("res?.data?.Subcategory :  ", res?.data?.Subcategory);
+        } else {
+          setSubCatList([]);
+          console.log("no data found......");
+        }
+        // console.log("res : ", res?.data);
+      })
+      .finally(() => {
+        //handle final
+      });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
@@ -546,20 +582,29 @@ const UploadItem = ({ navigation, route }) => {
               editable={false}
               disable={false}
               placeholder={TranslationStrings.SELECT_CATEGORY}
-              onTermChange={(category) => setCategoryName(category)}
+              onTermChange={(category) => {
+                console.log("category selected :  ", category);
+                setCategoryName(category);
+              }}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => refsubddRBSheet.current.open()}>
-            <CustomTextInput
-              icon={appImages.downarrow}
-              type={"iconinput"}
-              term={sub_category_name}
-              editable={false}
-              disable={false}
-              placeholder={TranslationStrings.SELECT_SUB_CATEGORY}
-              onTermChange={(subcategory) => setSubCategoryName(subcategory)}
-            />
-          </TouchableOpacity>
+          {category_name?.length == 0 ? null : (
+            <TouchableOpacity
+              // onPress={() => refsubddRBSheet.current.open()}
+              onPress={() => refRBSheetSubCat.current?.open()}
+            >
+              <CustomTextInput
+                icon={appImages.downarrow}
+                type={"iconinput"}
+                term={sub_category_name}
+                editable={false}
+                disable={false}
+                placeholder={TranslationStrings.SELECT_SUB_CATEGORY}
+                onTermChange={(subcategory) => setSubCategoryName(subcategory)}
+              />
+            </TouchableOpacity>
+          )}
+
           <TouchableOpacity
             onPress={() => refproductcondionddRBSheet.current.open()}
           >
@@ -875,6 +920,80 @@ const UploadItem = ({ navigation, route }) => {
           }}
         />
       </ScrollView>
+
+      {/* ____________________________subcategory_________________________________________ */}
+      <RBSheet
+        //sstyle={{flex:1}}
+        ref={refRBSheetSubCat}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        openDuration={50}
+        closeDuration={50}
+        animationType="fade"
+        //height={500}
+        customStyles={{
+          wrapper: {
+            backgroundColor: "rgba(52, 52, 52, 0.5)",
+          },
+          draggableIcon: {
+            backgroundColor: "white",
+          },
+          container: {
+            borderTopLeftRadius: wp(10),
+            borderTopRightRadius: wp(10),
+            height: hp(95),
+          },
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginHorizontal: 0,
+          }}
+        >
+          <Text style={styles.bottomsheettext}>
+            {TranslationStrings.SELECT_CATEGORY}
+          </Text>
+        </View>
+
+        <FlatList
+          data={subCatList}
+          renderItem={({ item, index, separators }) => (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                refRBSheetSubCat.current?.close();
+                dispatch(setSubCategoryName(item.name));
+                dispatch(setSubCategoryId(item.id));
+              }}
+            >
+              <View style={styles.card}>
+                <Text style={styles.cardtext}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={() => {
+            return (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{ color: "gray", marginVertical: 40, fontSize: 14 }}
+                >
+                  No Record Found
+                </Text>
+              </View>
+            );
+          }}
+        />
+      </RBSheet>
+      {/* ____________________________subcategory_________________________________________ */}
     </SafeAreaView>
   );
 };

@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   StatusBar,
   RefreshControl,
+  useWindowDimensions,
 } from "react-native";
 
 ////////////////app components///////////
@@ -51,6 +52,11 @@ import TranslationStrings from "../../../utills/TranslationStrings";
 import { Avatar } from "react-native-paper";
 import { update_notification } from "../../../api/PostApis";
 
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import LikesNotifications from "./LikesNotifications";
+import CommentNotifications from "./CommentNotifications";
+import OffersNotifications from "./OffersNotifications";
+
 const Notification = ({ navigation }) => {
   const dispatch = useDispatch();
   const { chatCount, notificationList } = useSelector(
@@ -64,16 +70,36 @@ const Notification = ({ navigation }) => {
   const [showBlockModal, setShowBlockModal] = useState(false);
 
   //textfields
-  useEffect(() => {
-    setLoading(true);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  // }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      get_user_notifications();
-      // getTimeZone();
-    }, [])
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     get_user_notifications();
+  //     // getTimeZone();
+  //   }, [])
+  // );
+
+  const FirstRoute = () => (
+    <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
   );
+
+  const SecondRoute = () => (
+    <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
+  );
+  const layout = useWindowDimensions();
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "Offers" },
+    { key: "second", title: "Like" },
+    { key: "third", title: "Comments" },
+  ]);
+  const renderScene = SceneMap({
+    first: OffersNotifications,
+    second: LikesNotifications,
+    third: CommentNotifications,
+  });
 
   function changeDatetimeByTimezone(datetime, timezone) {
     console.log("datetime, timezone  :   ", datetime, timezone);
@@ -494,39 +520,48 @@ const Notification = ({ navigation }) => {
         backgroundColor={Colors.Appthemecolor}
         barStyle="light-content"
       />
-      <CustomHeader headerlabel={TranslationStrings.NOTIFICATIONS} />
+      <CustomHeader
+        type={"profile"}
+        headerlabel={TranslationStrings.NOTIFICATIONS}
+      />
       <BlockUserView visible={showBlockModal} setVisible={setShowBlockModal} />
-      <View style={{ ...styles.postcard, marginTop: 0, marginBottom: hp(13) }}>
-        <Loader isLoading={loading} />
-        <FlatList
-          style={{
-            width: wp(100),
-          }}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              colors={[Colors.Appthemecolor]}
-              onRefresh={() => handleRefresh()}
+      {/* <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        style={{ backgroundColor: "#fff" }}
+        initialLayout={{ width: layout.width }}
+      /> */}
+
+      <View style={{ flex: 1 }}>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+          renderTabBar={(props) => (
+            <TabBar
+              {...props}
+              style={{ backgroundColor: "#F7F9FC" }}
+              renderLabel={({ route, focused, color }) => (
+                <Text
+                  style={{
+                    color: focused ? Colors.Appthemecolor : "#8f9bb3",
+                    // fontFamily: fontFamily.OpenSans_Bold,
+                    fontSize: hp(1.8),
+                  }}
+                >
+                  {route.title}
+                </Text>
+              )}
+              activeColor={"#fff"}
+              indicatorStyle={{
+                padding: 1.5,
+                marginBottom: -2,
+                backgroundColor: Colors.Appthemecolor,
+              }}
             />
-          }
-          // data={notification}
-          data={notificationList}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          scrollEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => {
-            return (
-              <View style={{ height: 200, width: wp(100) }}>
-                {!loading && (
-                  <Text style={{ color: "#000", textAlign: "center" }}>
-                    {TranslationStrings.NO_RECORD_FOUND}
-                  </Text>
-                )}
-              </View>
-            );
-          }}
+          )}
         />
       </View>
     </SafeAreaView>

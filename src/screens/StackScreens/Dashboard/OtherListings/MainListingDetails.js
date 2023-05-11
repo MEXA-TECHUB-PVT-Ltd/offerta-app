@@ -335,11 +335,19 @@ const MainListingsDetails = ({ navigation, route }) => {
                 : generic_options
             }
           />
-          <View style={{ marginTop: hp(4), marginHorizontal: wp(7) }}>
+          <View
+            style={{
+              marginTop: hp(4),
+              marginHorizontal: wp(7),
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={styles.maintext}>{listing_item_title}</Text>
             <Text style={styles.pricetext}>
               {giveaway_status === "true" ? "Free" : listing_item_price + " $"}
             </Text>
-            <Text style={styles.maintext}>{listing_item_title}</Text>
           </View>
 
           <TouchableOpacity

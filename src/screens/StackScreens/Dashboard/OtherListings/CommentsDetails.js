@@ -46,6 +46,7 @@ import { post_Comments_Listings } from "../../../../api/PostApis";
 /////////////////image url/////////////
 import { IMAGE_URL } from "../../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../../utills/TranslationStrings";
+import { Avatar } from "react-native-paper";
 
 const CommentsDetails = ({ navigation, route }) => {
   //////////////redux///////////////
@@ -78,7 +79,6 @@ const CommentsDetails = ({ navigation, route }) => {
     GetListingsDetails(listing_id).then((response) => {
       let imagesList = response?.data?.images ? response.data.images : [];
       setListing_Images(imagesList);
-
       GetComments(listing_id)
         .then((response) => {
           if (
@@ -111,11 +111,15 @@ const CommentsDetails = ({ navigation, route }) => {
     return (
       <View style={{ paddingHorizontal: wp(5) }}>
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <Avatar.Image
+            source={{ uri: IMAGE_URL + item.user.image }}
+            size={wp(12)}
+          />
+          {/* <Image
             source={{ uri: IMAGE_URL + item.user.image }}
             style={{ width: wp(12), height: hp(6), borderRadius: wp(10) }}
             resizeMode="contain"
-          />
+          /> */}
           <View style={{ marginLeft: wp(4), justifyContent: "center" }}>
             <Text style={styles.usertext}>{item.user.user_name}</Text>
             {/* <View
@@ -200,6 +204,7 @@ const CommentsDetails = ({ navigation, route }) => {
         subtitle={TranslationStrings.ENTER_COMMENT}
         btntext={TranslationStrings.ADD}
         listingID={listing_id}
+        description={"Comment added successfully!"}
         onpress={() => {
           {
             doSomethingCallback();

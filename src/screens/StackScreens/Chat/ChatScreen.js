@@ -819,6 +819,7 @@ const ChatScreen = ({ route, navigation }) => {
       // userid: route.params.userid,
     });
   };
+
   const renderComposer = (composerProps) => {
     return (
       <Composer

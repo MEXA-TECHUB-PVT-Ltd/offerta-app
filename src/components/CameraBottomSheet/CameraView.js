@@ -38,6 +38,7 @@ import {
 import TranslationStrings from "../../utills/TranslationStrings";
 
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import Loader from "../../components/Loader/Loader";
 
 function CameraViewScreen({ route, navigation }) {
   /////////////redux states///////
@@ -45,7 +46,7 @@ function CameraViewScreen({ route, navigation }) {
   const dispatch = useDispatch();
 
   // console.log("item_images_array : ", item_images_array);
-
+  const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([]);
   const [data, setData] = useState([]);
   const [image, setImage] = useState(null);
@@ -102,6 +103,7 @@ function CameraViewScreen({ route, navigation }) {
   };
   const takePhotoFromCamera = async () => {
     requestCameraPermission();
+    setLoading(true);
     var options = {
       storageOptions: {
         skipBackup: true,
@@ -149,6 +151,9 @@ function CameraViewScreen({ route, navigation }) {
       })
       .catch((err) => {
         console.log("Error Occured: " + err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     // await ImagePicker.openCamera({
@@ -180,33 +185,39 @@ function CameraViewScreen({ route, navigation }) {
   };
   ////////////////////library image//////////////////
   const choosePhotoFromLibrary = () => {
+    setLoading(true);
     ImagePicker.openPicker({
       width: 500,
       height: 500,
       //cropping: true,
       // compressImageQuality: 0.7,
-    }).then((image) => {
-      setImage(image.path);
-      setImages([...images, image]);
-      dispatch(
-        setItemImagesArray([
+    })
+      .then((image) => {
+        setImage(image.path);
+        setImages([...images, image]);
+        dispatch(
+          setItemImagesArray([
+            ...data,
+            {
+              path: image.path,
+            },
+          ])
+        );
+        setData([
           ...data,
           {
             path: image.path,
           },
-        ])
-      );
-      setData([
-        ...data,
-        {
-          path: image.path,
-        },
-      ]);
-      scrollRef.current.scrollToEnd();
-    });
+        ]);
+        scrollRef.current.scrollToEnd();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <View style={{ flex: 1 }}>
+      <Loader isLoading={loading} />
       <Appbar.Header
         style={{
           backgroundColor: "white",

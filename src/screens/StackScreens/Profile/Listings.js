@@ -4,6 +4,7 @@ import {
   ScrollView,
   FlatList,
   RefreshControl,
+  Linking,
 } from "react-native";
 
 //////////////////app components///////////////

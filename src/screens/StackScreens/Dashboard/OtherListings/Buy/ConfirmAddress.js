@@ -47,7 +47,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Snackbar } from "react-native-paper";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
-import { checkout } from "../../../../../api/Offer";
+import { checkout, create_order_Listings } from "../../../../../api/Offer";
 
 const ConfirmAddress = ({ navigation, route }) => {
   ///////////////data states////////////////////
@@ -144,28 +144,38 @@ const ConfirmAddress = ({ navigation, route }) => {
         currency: "inr",
         type: type,
       };
-      console.log("adress  :  ", login_user_shipping_address?.id);
-      // console.log("exchange_other_listing  :  ", exchange_other_listing);
-      console.log("selected type :  ", obj);
-      checkout(obj).then((response) => {
-        console.log("checkout response :  ", response?.data);
-        if (response?.data?.status == true) {
-          setsnackbarValue({
-            value: "Order Confirmed",
-            color: "green",
+
+      create_order_Listings(
+        exchange_other_listing.user_id,
+        exchange_other_listing.id,
+        login_user_shipping_address.id
+      )
+        .then((res) => {
+          console.log("create order response : ", res);
+          checkout(obj).then((response) => {
+            console.log("checkout response :  ", response?.data);
+            if (response?.data?.status == true) {
+              setsnackbarValue({
+                value: "Order Confirmed",
+                color: "green",
+              });
+              setVisible(true);
+              setTimeout(() => {
+                // navigation.navigate("BottomTab");
+                navigation.navigate("SalesOrders");
+              }, 1000);
+            } else {
+              setsnackbarValue({
+                value: "Something went wrong",
+                color: "red",
+              });
+              setVisible(true);
+            }
           });
-          setVisible(true);
-          setTimeout(() => {
-            navigation.navigate("BottomTab");
-          }, 1000);
-        } else {
-          setsnackbarValue({
-            value: "Something went wrong",
-            color: "red",
-          });
-          setVisible(true);
-        }
-      });
+        })
+        .catch((err) => {
+          console.log("err ", err);
+        });
     } else {
       //do nothing type is not valid
       console.log("do nothing type is not valid");

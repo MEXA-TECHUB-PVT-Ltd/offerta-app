@@ -22,12 +22,21 @@ import {
 } from "../../redux/actions";
 
 //////////////api helper functions////////
-import { GetCategories, GetSubCategories } from "../../api/GetApis";
+import {
+  GetCategories,
+  GetSubCategories,
+  GetSubCategoriesByID,
+} from "../../api/GetApis";
 import TranslationStrings from "../../utills/TranslationStrings";
+import axios from "axios";
+import { BASE_URL } from "../../utills/ApiRootUrl";
 
 const Categories = (props) => {
   /////////////redux states///////
-  const { category_name } = useSelector((state) => state.userReducer);
+  const { category_id, category_name, sub_category_id } = useSelector(
+    (state) => state.userReducer
+  );
+
   const dispatch = useDispatch();
 
   //////////dropdownlink data/////////////
@@ -45,18 +54,42 @@ const Categories = (props) => {
       });
   };
   ///////////////HotelTypes function///////////////
-  const GetItemSubCategories = async () => {
-    GetSubCategories()
-      .then((response) => {
-        setsubdddata(response.data);
-        // console.log("sub categorise : ", response.data);
+  const GetItemSubCategories = async (category_id) => {
+    console.log("category_id  passed  : ", category_id);
+    axios({
+      method: "POST",
+      url: BASE_URL + "specficdsubvcategors.php",
+      data: {
+        category_id: category_id,
+      },
+    })
+      .then((res) => {
+        if (res?.data?.error == false) {
+          setsubdddata(res?.data?.Subcategory);
+          console.log("res?.data?.Subcategory :  ", res?.data?.Subcategory);
+        } else {
+          setsubdddata([]);
+          console.log("no data found......");
+        }
+        // console.log("res : ", res?.data);
       })
-      .catch((error) => {
-        console.error(error);
+      .finally(() => {
+        //handle final
       });
+    // category_id
+    // GetSubCategories()
+    //   .then((response) => {
+    //     setsubdddata(response.data);
+    //     // console.log("sub categorise : ", response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   };
   useEffect(() => {
-    props.type === "subcategory" ? GetItemSubCategories() : GetItemCategories();
+    props.type === "subcategory"
+      ? GetItemSubCategories(category_id)
+      : GetItemCategories();
   }, []);
   return (
     <RBSheet
@@ -93,19 +126,83 @@ const Categories = (props) => {
           {TranslationStrings.SELECT_CATEGORY}
         </Text>
       </View>
-      <FlatList
+      {props?.type == "subcategory" ? (
+        <FlatList
+          data={subdddata}
+          renderItem={({ item, index, separators }) => (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                props.refRBSheet.current.close();
+                props.type === "subcategory"
+                  ? dispatch(setSubCategoryName(item.name))
+                  : dispatch(
+                      setCategoryName(item.name),
+                      dispatch(setSubCategoryName(""))
+                    ),
+                  props.type === "subcategory"
+                    ? dispatch(setSubCategoryId(item.id))
+                    : (dispatch(setCategoryId(item.id)),
+                      dispatch(setSubCategoryId("")),
+                      GetItemSubCategories(item?.id));
+              }}
+            >
+              <View style={styles.card}>
+                <Text style={styles.cardtext}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <FlatList
+          data={dddata}
+          renderItem={({ item, index, separators }) => (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                props.refRBSheet.current.close();
+
+                props.type === "subcategory"
+                  ? dispatch(setSubCategoryName(item.name))
+                  : dispatch(
+                      setCategoryName(item.name),
+                      dispatch(setSubCategoryName(""))
+                    ),
+                  props.type === "subcategory"
+                    ? dispatch(setSubCategoryId(item.id))
+                    : (dispatch(setCategoryId(item.id)),
+                      dispatch(setSubCategoryId("")),
+                      GetItemSubCategories(item?.id));
+              }}
+            >
+              <View style={styles.card}>
+                <Text style={styles.cardtext}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      )}
+      {/* <FlatList
         data={props.type === "subcategory" ? subdddata : dddata}
         renderItem={({ item, index, separators }) => (
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
+              props.refRBSheet.current.close();
+
               props.type === "subcategory"
                 ? dispatch(setSubCategoryName(item.name))
-                : dispatch(setCategoryName(item.name)),
+                : dispatch(
+                    setCategoryName(item.name),
+                    dispatch(setSubCategoryName(""))
+                  ),
                 props.type === "subcategory"
                   ? dispatch(setSubCategoryId(item.id))
-                  : dispatch(setCategoryId(item.id)),
-                props.refRBSheet.current.close();
+                  : (dispatch(setCategoryId(item.id)),
+                    dispatch(setSubCategoryId("")),
+                    GetItemSubCategories(item?.id));
             }}
           >
             <View style={styles.card}>
@@ -114,7 +211,7 @@ const Categories = (props) => {
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
-      />
+      /> */}
     </RBSheet>
   );
 };

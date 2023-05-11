@@ -53,6 +53,37 @@ const get_user_notifications = async () => {
     });
 };
 
+const getLastMessage = async (user_list) => {
+  return new Promise((resolve, reject) => {
+    try {
+      user_list
+        .orderBy("createdAt", "desc")
+        .limit(1)
+        .get()
+        .then((snapshots) => {
+          let myArr = [];
+          snapshots.forEach((item) => {
+            // if (item?._data?.user?._id != user) {
+            let date = new Date(
+              item?._data?.createdAt.seconds * 1000 +
+                item?._data?.createdAt.nanoseconds / 1000000
+            );
+            let obj = {
+              ...item?._data,
+              createdAt: date,
+            };
+            myArr.push(obj);
+            return;
+            // }
+          });
+          resolve(myArr[0]);
+        });
+    } catch (error) {
+      resolve(false);
+    }
+  });
+};
+
 const countUnreadMessages_OF_Specific_User = async (user_id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -63,6 +94,7 @@ const countUnreadMessages_OF_Specific_User = async (user_id) => {
         .collection("chats")
         .doc(docid)
         .collection("messages");
+      let last_message = await getLastMessage(user_list);
       user_list
         .where("read", "==", false)
         .get()
@@ -73,13 +105,46 @@ const countUnreadMessages_OF_Specific_User = async (user_id) => {
               myArr.push(item);
             }
           });
-          resolve(myArr?.length);
+          let obj = {
+            last_message: last_message,
+            count: myArr?.length,
+          };
+          resolve(obj);
         });
     } catch (error) {
+      console.log("error : ", error);
       resolve(0);
     }
   });
 };
+
+// const countUnreadMessages_OF_Specific_User = async (user_id) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       var user = await AsyncStorage.getItem("Userid");
+//       let unread_count = 0;
+//       let docid = user_id > user ? user + "-" + user_id : user_id + "-" + user;
+//       const user_list = firestore()
+//         .collection("chats")
+//         .doc(docid)
+//         .collection("messages");
+//       user_list
+//         .where("read", "==", false)
+//         .get()
+//         .then((snapshots) => {
+//           let myArr = [];
+//           snapshots.forEach((item) => {
+//             if (item?._data?.user?._id != user) {
+//               myArr.push(item);
+//             }
+//           });
+//           resolve(myArr?.length);
+//         });
+//     } catch (error) {
+//       resolve(0);
+//     }
+//   });
+// };
 
 const getDetails = async () => {
   get_Chat_Users().then(async (response) => {
@@ -88,22 +153,36 @@ const getDetails = async () => {
     } else {
       let list = [];
       let totalCount = 0;
+      var user_id = await AsyncStorage.getItem("Userid");
       for (const element of response?.data) {
-        let count1 = await countUnreadMessages_OF_Specific_User(
-          element?.user?.id
+        let chat_user_id =
+          element?.user?.id == user_id
+            ? element?.chat_user?.id
+            : element?.user?.id;
+        let messages_detail = await countUnreadMessages_OF_Specific_User(
+          chat_user_id
         );
+        let count1 = messages_detail?.count;
         let obj = {
           ...element,
           count: count1,
+          last_message: messages_detail?.last_message
+            ? messages_detail?.last_message
+            : null,
         };
         totalCount += count1;
         list.push(obj);
       }
-      // list.sort((a, b) => {
-      //   return b.count - a.count;
-      // });
-
-      Store.dispatch(setChatList(list));
+      let sortedList = list.sort(
+        (a, b) =>
+          (b?.last_message?.createdAt
+            ? new Date(b?.last_message?.createdAt)
+            : 1) -
+          (a?.last_message?.createdAt
+            ? new Date(a?.last_message?.createdAt)
+            : 0)
+      );
+      Store.dispatch(setChatList(sortedList));
     }
   });
 };

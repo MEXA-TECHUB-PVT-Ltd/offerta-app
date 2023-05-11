@@ -47,6 +47,14 @@ import { setsignupRole } from "../../redux/actions";
 
 import messaging from "@react-native-firebase/messaging";
 import TranslationStrings from "../../utills/TranslationStrings";
+import SocialIcons from "../../components/SocialView/SocialIcons";
+
+import GoogleButton from "../../components/Button/GoogleButton";
+
+import {
+  GoogleSignin,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
 
 const SignUp = ({ navigation }) => {
   //////////////redux////////////////////
@@ -102,6 +110,8 @@ const SignUp = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [userInfo, setUserInfo] = useState(null);
+  const [gettingLoginStatus, setGettingLoginStatus] = useState(true);
 
   const getUserFCMToken = async () => {
     return new Promise(async (resolve, reject) => {
@@ -165,6 +175,113 @@ const SignUp = ({ navigation }) => {
       });
   };
 
+  useEffect(() => {
+    GoogleSignin.configure();
+  }, []);
+
+  const _signOut = async () => {
+    setGettingLoginStatus(true);
+    // Remove user session from the device.
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      // Removing user Info
+      setUserInfo(null);
+    } catch (error) {
+      console.error(error);
+    }
+    setGettingLoginStatus(false);
+  };
+  const gmailLoginHandler = async () => {
+    console.log("gmailLoginHandler  :  ");
+    // It will prompt google Signin Widget
+    try {
+      await GoogleSignin.hasPlayServices({
+        // Check if device has Google Play Services installed
+        // Always resolves to true on iOS
+        showPlayServicesUpdateDialog: true,
+      });
+      const userInfo = await GoogleSignin.signIn();
+
+      console.log("User Info --> ", userInfo);
+      // console.log('User Info currentUser tokeen--> ', currentUser);
+      setUserInfo(userInfo);
+      _signOut();
+      GoogleSignupUser(userInfo.user.email);
+    } catch (error) {
+      console.log("Message", JSON.stringify(error));
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        //alert('User Cancelled the Login Flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        //alert('Signing In');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        //alert('Play Services Not Available or Outdated');
+      } else {
+        //alert(error.message);
+      }
+    }
+  };
+
+  //////////////Google Signup Api Calling////////////////////
+  const GoogleSignupUser = async (props) => {
+    if (signup_role == "" || signup_role?.length == 0) {
+      setsnackbarValue({
+        value: TranslationStrings.PLEASE_SELECT_ROLE,
+        color: "red",
+      });
+      setVisible("true");
+    } else {
+      let fcm_token = await getUserFCMToken();
+      setloading(true);
+      axios({
+        method: "post",
+        url: BASE_URL + "regisrationApi.php",
+        data: {
+          email: props.toLowerCase(),
+          password: "google123",
+          conformPassword: "google123",
+          role: signup_role,
+          fcm: fcm_token,
+          phone: "",
+        },
+      })
+        .then(async function (response) {
+          console.log("response", response.data);
+          // if (response.data.message === "User Already Registered") {
+          //   GoogleLoginUser(props);
+          // } else {
+          //   await AsyncStorage.setItem("Userid", response.data.data.id);
+          //   navigation.navigate("Drawerroute");
+          // }
+
+          setloading(0);
+          setdisable(0);
+          if (
+            response.data?.data?.message === "User Register successful" ||
+            response?.data?.message === "User Register successful"
+          ) {
+            console.log("if_________________________");
+            await AsyncStorage.setItem("Userid", response.data.data.id);
+            await AsyncStorage.setItem("UserEmail", response.data.data.email);
+            navigation.navigate("CreateProfile", {
+              useremail: response.data.data.email,
+              signup_role: signup_role,
+            });
+          } else {
+            console.log("else____________________________");
+            setloading(0);
+            setdisable(0);
+            setModalVisible(true);
+          }
+        })
+        .catch(function (error) {
+          console.log("error  : ", error);
+          if (error) {
+            console.log("Wrong");
+          }
+        });
+    }
+  };
   //Api form validation
   const formValidation = async () => {
     // navigation.navigate("AccountVerification");
@@ -239,7 +356,6 @@ const SignUp = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {}, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -336,10 +452,39 @@ const SignUp = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+
+        <View
+          style={{
+            marginHorizontal: wp(5),
+            flexDirection: "row",
+            justifyContent: "space-between",
+            // width: wp(60),
+            alignSelf: "center",
+            marginTop: 30,
+          }}
+        >
+          {/* <SocialIcons icon={appImages.apple} bgcolor={"#000000"} /> */}
+          {/* <SocialIcons
+            icon={appImages.facebook}
+            bgcolor={"#4267B2"}
+            onpress={() => fbLogin()}
+          /> */}
+          {/* <SocialIcons
+            icon={appImages.google}
+            bgcolor={"#4285F4"}
+            onpress={() => gmailLoginHandler()}
+          /> */}
+
+          <GoogleButton
+            title="Sign up with Google"
+            onPress={() => gmailLoginHandler()}
+          />
+        </View>
+
         <View
           style={{
             flex: 1,
-            marginTop: hp(10),
+            marginTop: hp(3),
           }}
         >
           <View style={{ marginTop: hp(0) }}>
