@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, FlatList, View } from "react-native";
+import { SafeAreaView, FlatList, View, Text } from "react-native";
 
 //////////////////app components///////////////
 import CustomHeader from "../../../components/Header/CustomHeader";
@@ -26,6 +26,7 @@ import { Snackbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
+import NoNotificationFound from "../../BottomTab/Notification/NoNotificationFound";
 
 // const Top_Tab = [
 //   {
@@ -210,45 +211,49 @@ const SalesOrders = ({ navigation }) => {
       </View> */}
 
       <View style={{ flex: 1 }}>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <>
-              {item?.listing?.message == "No data available" ? null : (
-                <ExcahangeCard
-                  onPress={() => {
-                    if (selectedId == 2) {
-                      //orders
-                      let seller_id = item?.listing?.user_id;
-                      setSelected_user_id(seller_id);
-                      setShowRatingModal(true);
-                    } else {
-                      //sales
-                      let buyer_id = item?.order_by?.id;
-                      navigation.navigate("ListingsDetails", {
-                        listing_id: item?.listing?.id,
-                        buyer_id: buyer_id,
-                        type: "sale",
-                      });
+        {data?.length == 0 ? (
+          <NoNotificationFound loading={loading} />
+        ) : (
+          <FlatList
+            data={data}
+            renderItem={({ item }) => (
+              <>
+                {item?.listing?.message == "No data available" ? null : (
+                  <ExcahangeCard
+                    onPress={() => {
+                      if (selectedId == 2) {
+                        //orders
+                        let seller_id = item?.listing?.user_id;
+                        setSelected_user_id(seller_id);
+                        setShowRatingModal(true);
+                      } else {
+                        //sales
+                        let buyer_id = item?.order_by?.id;
+                        navigation.navigate("ListingsDetails", {
+                          listing_id: item?.listing?.id,
+                          buyer_id: buyer_id,
+                          type: "sale",
+                        });
+                      }
+                    }}
+                    image={
+                      typeof item?.listing?.images == "undefined" ||
+                      item?.listing?.images === []
+                        ? null
+                        : IMAGE_URL + item?.listing?.images[0]
                     }
-                  }}
-                  image={
-                    typeof item?.listing?.images == "undefined" ||
-                    item?.listing?.images === []
-                      ? null
-                      : IMAGE_URL + item?.listing?.images[0]
-                  }
-                  maintext={item.listing.title}
-                  subtext={item.listing.description}
-                  pricetext={item.listing.price}
-                />
-              )}
-            </>
-          )}
-          keyExtractor={(item, index) => index}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+                    maintext={item.listing.title}
+                    subtext={item.listing.description}
+                    pricetext={item.listing.price}
+                  />
+                )}
+              </>
+            )}
+            keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          />
+        )}
       </View>
       <Snackbar
         duration={400}

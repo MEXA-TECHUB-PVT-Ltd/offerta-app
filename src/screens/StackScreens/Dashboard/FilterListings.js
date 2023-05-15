@@ -83,7 +83,7 @@ const FilterListings = ({ navigation, route }) => {
         slider_distance,
     })
       .then(async function (response) {
-        console.log("response", JSON.stringify(response.data));
+        console.log("filter listing response : ", response?.data);
         if (response.data.msg === "No Result") {
           setCategoryList("no");
         } else {
@@ -102,6 +102,12 @@ const FilterListings = ({ navigation, route }) => {
         }
         //setModalVisible(true);
         console.log("error", error);
+      })
+      .finally(() => {
+        dispatch(setSortByDD(""));
+        dispatch(setCategoryId(""));
+        dispatch(setCategoryName(""));
+        setloading(false);
       });
   };
   useEffect(() => {
@@ -120,19 +126,21 @@ const FilterListings = ({ navigation, route }) => {
     );
   }, [isFocused]);
 
-  const renderItem = ({ item }) => (
-    <DashboardCard
-      //image={IMAGE_URL + item.images[0]}
-      maintext={item.title}
-      subtext={item.location}
-      price={item.price + "$"}
-      onpress={() => {
-        navigation.navigate("MainListingsDetails", {
-          listing_id: item.id,
-        });
-      }}
-    />
-  );
+  const renderItem = ({ item }) => {
+    return (
+      <DashboardCard
+        // image={IMAGE_URL + item.images[0]}
+        maintext={item.title}
+        subtext={item.location}
+        price={item?.price}
+        onpress={() => {
+          navigation.navigate("MainListingsDetails", {
+            listing_id: item.id,
+          });
+        }}
+      />
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       {/* <ScrollView
@@ -148,10 +156,12 @@ const FilterListings = ({ navigation, route }) => {
       />
       <Loader isLoading={loading} />
       {Categorylist === "no" ? (
-        <NoDataFound
-          icon={"exclamation-thick"}
-          text={TranslationStrings.NO_DATA_FOUND}
-        />
+        loading == false && (
+          <NoDataFound
+            icon={"exclamation-thick"}
+            text={TranslationStrings.NO_DATA_FOUND}
+          />
+        )
       ) : (
         <FlatList
           data={Categorylist}

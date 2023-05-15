@@ -316,6 +316,8 @@ const UploadItem = ({ navigation, route }) => {
                 setloading(0);
                 setdisable(0);
                 // listing_id
+                console.log("res?.id  : ", res?.id, res?.id);
+
                 let listing_id = res?.id;
                 setAddedListingId(listing_id);
                 setModalVisible(true);
@@ -346,6 +348,8 @@ const UploadItem = ({ navigation, route }) => {
             setloading(0);
             setdisable(0);
             let listing_id = res?.id;
+            console.log("res?.id  : ", res?.id, res?.id);
+
             setAddedListingId(listing_id);
             setModalVisible(true);
           }

@@ -40,7 +40,11 @@ import { appImages } from "../../../../constant/images";
 import { Rating, AirbnbRating } from "react-native-ratings";
 
 //////////////api helper functions//////////
-import { GetComments, GetListingsDetails } from "../../../../api/GetApis";
+import {
+  GetComments,
+  GetListingsDetails,
+  GetListingsDetails_New,
+} from "../../../../api/GetApis";
 import { post_Comments_Listings } from "../../../../api/PostApis";
 
 /////////////////image url/////////////
@@ -76,7 +80,8 @@ const CommentsDetails = ({ navigation, route }) => {
   }, [isFocused, Comments]);
 
   const doSomethingCallback = useCallback(() => {
-    GetListingsDetails(listing_id).then((response) => {
+    // GetListingsDetails(listing_id)
+    GetListingsDetails_New(listing_id).then((response) => {
       let imagesList = response?.data?.images ? response.data.images : [];
       setListing_Images(imagesList);
       GetComments(listing_id)

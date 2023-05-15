@@ -25,8 +25,12 @@ import {
 } from "../../../api/GetApis";
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import Loader from "../../../components/Loader/Loader";
+import NoNotificationFound from "../../BottomTab/Notification/NoNotificationFound";
 
 const Promotions = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+  const [selectedType, setSelectedType] = useState("Urgent");
   const Top_Tab = [
     {
       id: "1",
@@ -51,36 +55,65 @@ const Promotions = ({ navigation }) => {
     useState("");
 
   const GetUrgentPromotionsList = async (props) => {
-    get_Urgent_Promotion_List().then((response) => {
-      console.log("GetUrgentPromotionsLists   : ", response?.data?.msg);
+    try {
+      setLoading(true);
+      get_Urgent_Promotion_List()
+        .then((response) => {
+          console.log("GetUrgentPromotionsLists   : ", response?.data?.msg);
 
-      if (response?.data?.msg == "No Result") {
-        setUrgent_Promotion__List([]);
-      } else {
-        setUrgent_Promotion__List(response.data);
-      }
-    });
+          if (response?.data?.msg == "No Result") {
+            setUrgent_Promotion__List([]);
+          } else {
+            setUrgent_Promotion__List(response.data?.reverse());
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      setUrgent_Promotion__List([]);
+      setLoading(false);
+    }
   };
   const GetAdvertisementPromotionsList = async (props) => {
-    get_Advertisement_Promotion_List().then((response) => {
-      console.log("GetAdvertisementPromotionsList   : ", response?.data);
-      if (response?.data?.msg == "No Result") {
-        setUrgent_Promotion__List([]);
-      } else {
-        setUrgent_Promotion__List(response.data);
-      }
-    });
+    try {
+      setLoading(true);
+      get_Advertisement_Promotion_List()
+        .then((response) => {
+          console.log("GetAdvertisementPromotionsList   : ", response?.data);
+          if (response?.data?.msg == "No Result") {
+            setUrgent_Promotion__List([]);
+          } else {
+            setUrgent_Promotion__List(response.data?.reverse());
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      setLoading(false);
+      setUrgent_Promotion__List([]);
+    }
   };
   const GetExpiredPromotionsList = async (props) => {
-    get_Expired_Promotion_List().then((response) => {
-      console.log("GetExpiredPromotionsList   : ", response?.data);
-
-      if (response?.data?.msg == "No Result") {
-        setUrgent_Promotion__List([]);
-      } else {
-        setUrgent_Promotion__List(response.data);
-      }
-    });
+    try {
+      setLoading(true);
+      get_Expired_Promotion_List()
+        .then((response) => {
+          console.log("GetExpiredPromotionsList   : ", response?.data);
+          if (response?.data?.msg == "No Result") {
+            setUrgent_Promotion__List([]);
+          } else {
+            setUrgent_Promotion__List(response.data?.reverse());
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      setLoading(false);
+      setUrgent_Promotion__List([]);
+    }
   };
   const togglePromotionsList = async (props) => {
     console.log("props  ; ", props);
@@ -104,6 +137,7 @@ const Promotions = ({ navigation }) => {
   const onselect = (item) => {
     setSelectedId(item.id);
     togglePromotionsList(item.title);
+    setSelectedType(item?.title);
   };
 
   const renderItem = ({ item, index }) => {
@@ -129,34 +163,37 @@ const Promotions = ({ navigation }) => {
       // </TouchableOpacity>
     );
   };
+
   const list_renderItem = ({ item, index }) => {
-    console.log("item : ", item);
-    // return (
-    //   //item.listing === "No data available"?null:
-    //   <PromotionsCard
-    //     image={
-    //       null
-    //       // item.listing === "No data available"
-    //       //   ? null
-    //       //   : IMAGE_URL + item.listing.images[0]
-    //     }
-    //     maintext={
-    //       item?.listing === "No data available" ? null : item?.listing?.title
-    //     }
-    //     subtext={
-    //       item?.listing === "No data available"
-    //         ? null
-    //         : item?.listing?.description
-    //     }
-    //     pricetext={
-    //       item?.listing === "No data available" ? null : item?.listing?.price
-    //     }
-    //     type={item?.promotion?.type}
-    //   />
-    // );
+    return (
+      //item.listing === "No data available"?null:
+      <PromotionsCard
+        image={
+          item.listing === "No data available"
+            ? null
+            : IMAGE_URL + item.listing.images[0]
+        }
+        maintext={
+          item?.listing === "No data available" ? null : item?.listing?.title
+        }
+        subtext={
+          item?.listing === "No data available"
+            ? null
+            : item?.listing?.description
+        }
+        pricetext={
+          item?.listing === "No data available" ? null : item?.listing?.price
+        }
+        // type={item?.promotion?.type}
+        type={selectedType}
+        item={item}
+      />
+    );
   };
+
   return (
     <SafeAreaView style={styles.container}>
+      <Loader isLoading={loading} />
       <CustomHeader
         headerlabel={TranslationStrings.PROMOTIONS}
         iconPress={() => {
@@ -176,13 +213,17 @@ const Promotions = ({ navigation }) => {
         />
       </View>
       <View style={{ flex: 1 }}>
-        <FlatList
-          data={urgent_promotion_list}
-          renderItem={list_renderItem}
-          keyExtractor={(item, index) => index}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+        {urgent_promotion_list?.length == 0 ? (
+          <NoNotificationFound loading={loading} />
+        ) : (
+          <FlatList
+            data={urgent_promotion_list}
+            renderItem={list_renderItem}
+            keyExtractor={(item, index) => index}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

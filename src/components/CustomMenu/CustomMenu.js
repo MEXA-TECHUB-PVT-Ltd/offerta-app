@@ -115,10 +115,10 @@ const CustomMenu = (props) => {
         if (props?.otherParams?.type == "sale") {
           setShowRatingModal(true);
         } else {
-          // navigation.navigate("Listings");
-          navigation.replace("BuyersList", {
-            listing_id: listing_id,
-          });
+          navigation.navigate("Listings");
+          // navigation.replace("BuyersList", {
+          //   listing_id: listing_id,
+          // });
         }
       })
       .catch(function (error) {

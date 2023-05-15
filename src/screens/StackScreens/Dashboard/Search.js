@@ -37,10 +37,12 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 ////////////////app Images///////////////
 import { appImages } from "../../../constant/images";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import Loader from "../../../components/Loader/Loader";
 
 const Search = ({ navigation, route }) => {
   ///////////////post search state////////////
   const [search, setSearch] = useState();
+  const [loading, setLoading] = useState(false);
 
   ////////////get search result data///////////
   const [searchdata, setSearchData] = useState("");
@@ -48,6 +50,7 @@ const Search = ({ navigation, route }) => {
 
   ////////////////Search Function////////////
   const listing_Search = (props) => {
+    setLoading(true);
     get_Listing_Search(props)
       .then((response) => {
         setSearchData(response.data);
@@ -55,13 +58,20 @@ const Search = ({ navigation, route }) => {
       .catch(function (error) {
         console.log("error", error);
         setSearchData("No data Found");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   ////////////////Search Function////////////
   const listing_Search_Most = () => {
     get_Listing_Most_Search()
       .then((response) => {
-        setMost_SearchData(response.data);
+        console.log("most search list : ", response?.data);
+        const filter = response.data?.filter(
+          (item) => typeof item?.listing_id != "undefined"
+        );
+        setMost_SearchData(filter);
       })
       .catch(function (error) {
         console.log("error", error);
@@ -73,22 +83,30 @@ const Search = ({ navigation, route }) => {
     listing_Search_Most();
   }, []);
 
-  const renderItem = ({ item }) => (
-    <DashboardCard
-      //image={IMAGE_URL + item.images[0]}
-      maintext={item.title}
-      subtext={item.location}
-      price={item.price + "$"}
-      onpress={() => {
-        navigation.navigate("MainListingsDetails", {
-          listing_id: item.id,
-        });
-      }}
-    />
-  );
+  const renderItem = ({ item }) => {
+    // console.log("item", item?.images);
+    return (
+      <DashboardCard
+        image={item?.images[0] ? IMAGE_URL + item.images[0] : null}
+        maintext={item.title}
+        subtext={item.location}
+        price={item.price + "$"}
+        onpress={() => {
+          navigation.navigate("MainListingsDetails", {
+            listing_id: item.id,
+          });
+        }}
+      />
+    );
+  };
   const renderItem_most_search = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => setSearch(item.item)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSearch(item.item);
+          listing_Search(item?.item);
+        }}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -100,7 +118,7 @@ const Search = ({ navigation, route }) => {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-around",
+              // justifyContent: "space-around",
               alignItems: "center",
               width: wp(30),
             }}
@@ -112,14 +130,15 @@ const Search = ({ navigation, route }) => {
               style={{}}
             />
 
-            <Text style={styles.text}>{item.item?.title}</Text>
+            {/* <Text style={styles.text}>{item.item?.title}</Text> */}
+            <Text style={{ ...styles.text, marginLeft: 10 }}>{item.item}</Text>
           </View>
           {/* <Image
         source={appImages.AddIcon}
         resizeMode='contain'
         style={{width:wp(5),height:hp(5)}}
         /> */}
-          <Icon name={"close"} size={25} color={"black"} style={{}} />
+          {/* <Icon name={"close"} size={25} color={"black"} style={{}} /> */}
         </View>
         <View
           style={{
@@ -140,6 +159,7 @@ const Search = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+        <Loader isLoading={loading} />
         <View style={[styles.headerView]}>
           <Icon
             name={"arrow-back"}
@@ -159,7 +179,7 @@ const Search = ({ navigation, route }) => {
 
         {searchdata === "" ? (
           <View>
-            <Text style={styles.searchmaintext}>
+            <Text style={{ ...styles.searchmaintext, marginBottom: 5 }}>
               {TranslationStrings.TRENDING_SEARCHES}
             </Text>
             <FlatList

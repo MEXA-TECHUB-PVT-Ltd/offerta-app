@@ -32,12 +32,14 @@ export const post_Promotions = async (
   promotion_id
 ) => {
   var user_id = await AsyncStorage.getItem("Userid");
-  return axios.post(BASE_URL + "createPromotion.php", {
+  let data = {
     user_id: user_id,
     listing_id: list_id,
-    type: promotion_type,
-    promotion_type_id: promotion_id,
-  });
+    type: promotion_id,
+    promotion_type_id: promotion_type,
+  };
+  console.log("data passed to create promotion", data);
+  return axios.post(BASE_URL + "createPromotion.php", data);
 };
 
 //////////////Get Listings Insights//////////

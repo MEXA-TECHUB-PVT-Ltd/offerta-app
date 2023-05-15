@@ -117,7 +117,10 @@ const LikesNotifications = ({}) => {
         } else {
           if (response.data?.length > 0) {
             let notificationList1 = response.data;
-            let sorted_list = notificationList1.reverse();
+            // let sorted_list = notificationList1.reverse();
+            let sorted_list = notificationList1.sort(
+              (a, b) => new Date(b?.created_at) - new Date(a.created_at)
+            );
             setData(sorted_list);
             // setNotification(sorted_list);
             //   dispatch(setNotificationList(sorted_list));
@@ -168,6 +171,7 @@ const LikesNotifications = ({}) => {
   };
 
   const updateNotificationStatus = async (id) => {
+    console.log("id pass to update like notification status : ", id);
     setLoading(true);
     update_like_notification(id)
       .then((response) => {
