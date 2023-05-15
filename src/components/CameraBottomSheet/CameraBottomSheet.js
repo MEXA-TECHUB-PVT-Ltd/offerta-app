@@ -277,8 +277,6 @@ const CamerBottomSheet = (props) => {
   const [selectedimage, setselectedimage] = useState(false);
   /////////////////image api calling///////////////
   const Uploadpic = (file) => {
-    console.log("file  :;  ", file);
-    console.log("file path  :  ", file.path);
     const formData = new FormData();
     let imageobj = {
       uri: file.path,
@@ -288,7 +286,6 @@ const CamerBottomSheet = (props) => {
     formData.append(`image`, imageobj);
     console.log("image obj  : ", imageobj);
     let url = BASE_URL + "uploadImage.php";
-    console.log("url  :  ", url);
 
     fetch(url, {
       method: "POST",

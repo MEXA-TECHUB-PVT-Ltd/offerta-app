@@ -104,11 +104,14 @@ const CommentNotifications = () => {
           if (response.data?.length > 0) {
             let notificationList1 = response.data;
             //sort list by date_time
+            // let sorted_list = notificationList1.sort(
+            //   (a, b) => Date.parse(b?.created_at) - Date.parse(a?.created_at)
+            // );
             let sorted_list = notificationList1.sort(
-              (a, b) => Date.parse(b?.created_at) - Date.parse(a?.created_at)
+              (a, b) => new Date(b?.created_at) - new Date(a.created_at)
             );
-            setData(notificationList1);
-            // setNotification(sorted_list);
+            // setData(notificationList1);
+            setNotification(sorted_list);
             //   dispatch(setNotificationList(sorted_list));
 
             // let lastItem = response.data?.pop();
@@ -274,6 +277,7 @@ const CommentNotifications = () => {
 
       <View style={{ ...styles.postcard, marginTop: 0, marginBottom: hp(13) }}>
         <Loader isLoading={loading} />
+
         <FlatList
           style={{
             width: wp(100),

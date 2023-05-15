@@ -131,7 +131,7 @@ const Promote = ({ navigation, route }) => {
     }
 
     console.log({ listingID, promotionID, promotionType });
-    navigation.navigate("CardDetails", {
+    navigation.replace("CardDetails", {
       type: "promote",
       listingID: listingID,
       promotionID: promotionID,

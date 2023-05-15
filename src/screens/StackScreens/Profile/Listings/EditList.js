@@ -58,7 +58,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { appImages } from "../../../../constant/images";
 
 ///////////////////////api funtion///////////////
-import { GetListingsDetails } from "../../../../api/GetApis";
+import {
+  GetListingsDetails,
+  GetListingsDetails_New,
+} from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 import Loader from "../../../../components/Loader/Loader";
 
@@ -203,7 +206,8 @@ const EditList = ({ navigation, route }) => {
   };
   const GetListData = async () => {
     setloading(true);
-    GetListingsDetails(listing_id)
+    // GetListingsDetails(listing_id)
+    GetListingsDetails_New(listing_id)
       .then((response) => {
         dispatch(setItemImagesArray(response.data.images));
         dispatch(setLocationAddress(response.data.location));

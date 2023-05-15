@@ -666,7 +666,7 @@ let TranslationStrings = new LocalizedStrings({
       "Enter your email for account verification",
     SEND: "Send",
 
-    URGENT: "Urget",
+    URGENT: "Urgent",
     ADVERTISEMENT: "Advertisement",
     EXPIRED: "Expired",
 

@@ -78,29 +78,30 @@ const DashboardCard = (props) => {
             </View>
           )} */}
 
-          {/* {
-        props?.tag=='Urgent'?(
-          <View
-          style={{
-            backgroundColor: "red",
-            position: "absolute",
-            left: 0,
-            borderBottomLeftRadius: 8,
-            paddingHorizontal: 8,
-            paddingTop: 3,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 12,
-              fontFamily: fontFamily.Poppins_Regular,
-              color: "#fff",
-            }}
-          >
-            kjk
-          </Text>
-        </View>
-        ) */}
+          {props?.promotion?.tag == "Advertised" && (
+            <View
+              style={{
+                backgroundColor: props?.promotion?.color
+                  ? props?.promotion?.color
+                  : "#576AF4",
+                position: "absolute",
+                left: 0,
+                borderBottomLeftRadius: 8,
+                paddingHorizontal: 15,
+                paddingTop: 3,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: fontFamily.Poppins_Regular,
+                  color: "#fff",
+                }}
+              >
+                Ad
+              </Text>
+            </View>
+          )}
 
           {(props?.sold == "sold" ||
             props?.sold == true ||

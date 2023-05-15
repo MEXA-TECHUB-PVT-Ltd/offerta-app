@@ -49,6 +49,7 @@ import {
   GetComments,
   GetLikes,
   GetListingViews,
+  GetListingsDetails_New,
 } from "../../../../api/GetApis";
 import {
   post_Like_Listings,
@@ -185,16 +186,22 @@ const ListingsDetails = ({ navigation, route }) => {
   const [giveaway_status, setGiveaway_Status] = useState();
 
   const GetListData = async () => {
-    GetListingsDetails(predata.listing_id)
-      .then((response) => {
+    console.log("_____________________________________");
+    // GetListingsDetails(predata.listing_id)
+    GetListingsDetails_New(predata.listing_id)
+      .then((res) => {
+        let response = {
+          data: res?.data[0],
+        };
         setListing_Id(response.data.id);
+        setListingId(response.data.id);
         setListing_User_Id(response.data.user_id);
         setListing_Images(response.data.images);
         setListing_Item_Price(response.data.price);
         setListing_Item_Title(response.data.title);
         setListing_Details(response.data.description);
-        //setListing_Category(response.data.category.category_name);
-        //setListing_SubCategory(response.data.subcategory.sub_category_name);
+        setListing_Category(response?.data?.category?.category_name);
+        setListing_SubCategory(response.data?.subcategory?.sub_category_name);
         setListing_Condition(response.data.product_condition);
         getuser();
         //////////date//////////
@@ -318,6 +325,8 @@ const ListingsDetails = ({ navigation, route }) => {
           style={{
             marginTop: listingImages?.length == 0 ? hp(8) : hp(4),
             marginHorizontal: wp(7),
+            flexDirection: "row-reverse",
+            justifyContent: "space-between",
           }}
         >
           <Text style={styles.pricetext}>

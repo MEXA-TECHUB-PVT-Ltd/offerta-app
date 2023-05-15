@@ -12,35 +12,51 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
+import TranslationStrings from "../../utills/TranslationStrings";
 
 const PromotionsCard = (props) => {
-    /////////price formatter
-    const formatter = new Intl.NumberFormat('en-US', {
-      notation: 'compact',
-      compactDisplay: 'short'
-    });
-    const formattedLikes = formatter.format(props.pricetext);
+  const navigation = useNavigation();
+  /////////price formatter
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+  });
+  const formattedLikes = formatter.format(props.pricetext);
+
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("SliderScreen", {
-          navplace: "Market",
-          navtype: item.type,
-        })
-      }
+      onPress={() => {
+        // navigation.navigate("SliderScreen", {
+        //   navplace: "Market",
+        //   navtype: item.type,
+        // });
+
+        navigation.navigate("ListingsDetails", {
+          listing_id: props.item?.listing?.id,
+        });
+      }}
       style={styles.Promotionscard}
     >
       <View style={{ alignItems: "center" }}>
         <View
           style={{
             backgroundColor:
-              props.type === "Urgent" || props.type === "urgent"
+              props.type === "Urgent" ||
+              props.type === "urgent" ||
+              props.type === "Urget" ||
+              props.type === TranslationStrings.URGENT
                 ? "red"
-                : props.type === "Advertisement" || props.type === "advertisement"
+                : props.type === "Advertisement" ||
+                  props.type === "advertisement" ||
+                  props.type == TranslationStrings.ADVERTISEMENT
                 ? "#576AF4"
                 : Colors.inactivetextinput,
             height: hp(3.5),
-            width: props.type === "Advertisement" || props.type === "advertisement" ? wp(15) : wp(20),
+            width:
+              props.type === "Advertisement" || props.type === "advertisement"
+                ? wp(15)
+                : wp(20),
             alignItems: "center",
             justifyContent: "center",
             alignSelf: "flex-end",
@@ -48,9 +64,13 @@ const PromotionsCard = (props) => {
           }}
         >
           <Text style={styles.Promotionstagtext}>
-            {props.type === "Urgent"  || props.type === "urgent"
+            {props.type === "Urgent" ||
+            props.type === "urgent" ||
+            props.type === TranslationStrings.URGENT
               ? "Urgent"
-              : props.type === "Advertisement" || props.type === "advertisement"
+              : props.type === "Advertisement" ||
+                props.type === "advertisement" ||
+                props.type == TranslationStrings.ADVERTISEMENT
               ? "Ad"
               : "Expired"}
           </Text>
@@ -66,9 +86,17 @@ const PromotionsCard = (props) => {
           >
             <Image
               source={{ uri: props.image }}
-              style={styles.Promotionsimage}
-              resizeMode="contain"
-            ></Image>
+              // style={styles.Promotionsimage}
+              style={{
+                // height: wp(15),
+                // width: wp(15),
+                height: "100%",
+                width: "100%",
+                borderRadius: 10,
+                resizeMode: "contain",
+                backgroundColor: "gray",
+              }}
+            />
           </View>
 
           <View style={{ marginLeft: wp(3) }}>
@@ -80,7 +108,7 @@ const PromotionsCard = (props) => {
             style={[styles.Promotionspricetext, { right: wp(0) }]}
             numberOfLines={1}
           >
-                 {formattedLikes === "0"?"free":"$"+formattedLikes}
+            {formattedLikes === "0" ? "free" : "$" + formattedLikes}
           </Text>
         </View>
       </View>

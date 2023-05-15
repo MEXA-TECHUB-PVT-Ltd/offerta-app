@@ -55,6 +55,7 @@ import {
   GetComments,
   GetLikes,
   GetListingViews,
+  GetListingsDetails_New,
 } from "../../../../api/GetApis";
 import {
   post_Like_Listings,
@@ -126,6 +127,7 @@ const MainListingsDetails = ({ navigation, route }) => {
       return;
     }
     post_Like_Listings(props).then((response) => {
+      console.log("like listing response : ", response?.data);
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
@@ -147,6 +149,7 @@ const MainListingsDetails = ({ navigation, route }) => {
   //----------likes count
   const likes_count = async () => {
     GetLikes(predata.listing_id).then((response) => {
+      console.log("getting like count od listings : ", response?.data);
       if (response.data.msg === "No one liked yet") {
         setListing_Likes_count(0);
       } else {
@@ -207,8 +210,14 @@ const MainListingsDetails = ({ navigation, route }) => {
   const [showBlockModal, setShowBlockModal] = useState(false);
 
   const GetListData = async () => {
-    GetListingsDetails(predata.listing_id)
-      .then((response) => {
+    // GetListingsDetails(predata.listing_id)
+    console.log("getting listings details....");
+    GetListingsDetails_New(predata.listing_id)
+      .then((res) => {
+        let response = {
+          data: res?.data[0],
+        };
+
         setListing_user_detail(response?.data?.user);
 
         setListing_User_Id(response.data.user_id);
@@ -217,6 +226,7 @@ const MainListingsDetails = ({ navigation, route }) => {
         setListing_Item_Price(response.data.price);
         setListing_Item_Title(response.data.title);
         setListing_Details(response.data.description);
+
         setListing_Category(response.data.category.category_name);
         setListing_SubCategory(response.data.subcategory.sub_category_name);
         setListing_Condition(response.data.product_condition);

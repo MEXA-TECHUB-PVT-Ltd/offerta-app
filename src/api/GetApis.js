@@ -94,8 +94,17 @@ export const GetSubCategories = async () => {
 export const get_Categories_Listings = async (props) => {
   return axios.get(BASE_URL + "getListByCategoryId.php?id=" + props);
 };
+
+export const get_Categories_Listings_new = async (id) => {
+  console.log("cat_id : ", id);
+  return axios.post(BASE_URL + "getlistingbycategoryid.php", {
+    category_id: id,
+  });
+};
+
 export const get_all_listings = async (props) => {
-  return axios.get(BASE_URL + "getAllList.php");
+  // return axios.get(BASE_URL + "getAllList.php");
+  return axios.get(BASE_URL + "getalllisting.php"); //new api
 };
 //----------->GET CATEGORIES LISTINGS BY LOCATION
 export const get_Categories_Listings_By_Location = async (
@@ -117,6 +126,13 @@ export const get_Categories_Listings_By_Location = async (
 ////////////////GET LISTINGS DETAILS//////////
 export const GetListingsDetails = async (props) => {
   return axios.get(BASE_URL + "getListById.php?id=" + props);
+};
+
+export const GetListingsDetails_New = async (id) => {
+  console.log("GetListingsDetails_New  : ", id);
+  return axios.post(BASE_URL + "getlistingbyid.php", {
+    id: id,
+  });
 };
 
 //////////////////user liked listings//////////////
@@ -183,6 +199,7 @@ export const get_Notifications = async (props) => {
 ///////////////////Like Notification /////////////
 export const get_like_notifications = async (props) => {
   var user_id = await AsyncStorage.getItem("Userid");
+  console.log("user_id : ", user_id);
   // let user_id = "55";
   // return axios.post(BASE_URL + "getlikenotification.php?user_id=" + user_id);
   return axios.post(BASE_URL + "getlikenotification.php", {

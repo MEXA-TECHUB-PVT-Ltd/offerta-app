@@ -49,7 +49,10 @@ import { Snackbar } from "react-native-paper";
 import CustomModal from "../../../../components/Modal/CustomModal";
 import { counter_offer_Accept_OR_Reject } from "../../../../api/Offer";
 
-import { GetListingsDetails } from "../../../../api/GetApis";
+import {
+  GetListingsDetails,
+  GetListingsDetails_New,
+} from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 
 //////////////////appImages.//////////////////
@@ -214,7 +217,8 @@ const CounterOffer = ({ navigation, route }) => {
   };
 
   const getListingDetail = async () => {
-    GetListingsDetails(route?.params?.listing_id)
+    // GetListingsDetails(route?.params?.listing_id)
+    GetListingsDetails_New(route?.params?.listing_id)
       .then((response) => {
         // setListing_Images(response.data.images);
         // navigation?.goBack();

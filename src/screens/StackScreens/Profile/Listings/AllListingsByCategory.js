@@ -16,6 +16,7 @@ import NoDataFound from "../../../../components/NoDataFound/NoDataFound";
 /////////////api function/////////
 import {
   get_Categories_Listings,
+  get_Categories_Listings_new,
   get_User_Listings,
 } from "../../../../api/GetApis";
 
@@ -49,7 +50,8 @@ const AllListingsByCategory = ({ navigation, route }) => {
   }, [route?.params]);
 
   const getData = async () => {
-    get_Categories_Listings(route?.params?.id)
+    // get_Categories_Listings(route?.params?.id)
+    get_Categories_Listings_new(route?.params?.id)
       .then((response) => {
         if (response.data.message === "No data available") {
           setdata("");
@@ -75,6 +77,7 @@ const AllListingsByCategory = ({ navigation, route }) => {
       subtext={item.location}
       price={item.price}
       sold={item?.sold}
+      promotion={item?.Promotion}
       onpress={() => {
         // navigation.navigate("ListingsDetails", { listing_id: item.id });
         navigation.navigate("MainListingsDetails", {

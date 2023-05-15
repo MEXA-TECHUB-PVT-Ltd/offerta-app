@@ -51,6 +51,7 @@ import {
   get_Login_UserData,
   get_Banners,
   get_all_listings,
+  get_Categories_Listings_new,
 } from "../../../api/GetApis";
 
 //////////////////location////////////////
@@ -97,7 +98,6 @@ const Home = ({ navigation }) => {
   const [Categorylist, setCategoryList] = useState("");
   const GetCategoriesList = async (props) => {
     // get_Categories_Listings_By_Location(props,cur_lat,cur_lng).then((response) => {
-
     //   if(response.data.message === "No data available")
     //   {
     //     setCategoryList("");
@@ -105,13 +105,16 @@ const Home = ({ navigation }) => {
     //   else{
     //     setCategoryList(response.data);
     //   }
-
     // });
-    get_Categories_Listings(props)
+    // get_Categories_Listings(props)
+    get_Categories_Listings_new(props)
       .then((response) => {
         console.log("response  :   ", response?.data);
         if (response.data.message === "No data available") {
           setCategoryList("");
+        } else if (response?.data?.error == true) {
+          setCategoryList("");
+          console.log("here................................");
         } else {
           setCategoryList(response.data);
         }
@@ -367,7 +370,7 @@ const Home = ({ navigation }) => {
                   item?.images?.length == 0 ? null : IMAGE_URL + item?.images[0]
                 }
                 // image={null}
-                tag={item?.tag}
+                promotion={item?.Promotion}
                 sold={item?.sold}
                 // image={item}
                 maintext={item.title}
