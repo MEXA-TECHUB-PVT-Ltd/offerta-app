@@ -196,7 +196,15 @@ const AccountVerification = ({ navigation, route }) => {
                 fee = response?.data?.company_fee;
               }
               let user_id = await AsyncStorage.getItem("Userid");
-              navigation?.replace("CardDetails", {
+              // navigation?.replace("CardDetails", {
+              //   user_id: user_id,
+              //   cnic: cnicImage,
+              //   live_image: userImage,
+              //   fee: fee,
+              //   type: "account_verify",
+              // });
+
+              navigation.replace("PaymentMethods", {
                 user_id: user_id,
                 cnic: cnicImage,
                 live_image: userImage,

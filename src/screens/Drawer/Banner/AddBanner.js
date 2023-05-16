@@ -202,7 +202,17 @@ const AddBanner = ({ navigation, route }) => {
       };
       var user_id = await AsyncStorage.getItem("Userid");
 
-      navigation?.replace("CardDetails", {
+      // navigation?.replace("CardDetails", {
+      //   type: "addbanner",
+      //   user_id: user_id,
+      //   start_date: moment(startDate).format("YYYY-MM-DD"),
+      //   end_date: moment(endDate).format("YYYY-MM-DD"),
+      //   app_img: imageObj,
+      //   app_img_link: bannerlink,
+      //   cast: bannerPrice * daysDifference,
+      // });
+
+      navigation.navigate("PaymentMethods", {
         type: "addbanner",
         user_id: user_id,
         start_date: moment(startDate).format("YYYY-MM-DD"),
@@ -210,7 +220,9 @@ const AddBanner = ({ navigation, route }) => {
         app_img: imageObj,
         app_img_link: bannerlink,
         cast: bannerPrice * daysDifference,
+        fee: bannerPrice * daysDifference,
       });
+
       setLoading(false);
     }
     setLoading(false);

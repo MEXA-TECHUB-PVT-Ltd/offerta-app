@@ -53,7 +53,13 @@ const PaymentOptions = ({ navigation, route }) => {
 
   const handlePress = async (index) => {
     setSelected_index(index);
-    if (index !== 1) {
+    console.log("index  : ", index);
+
+    if (index == 0) {
+      navigation.navigate("PaymentMethods1", {
+        index: index,
+      });
+    } else if (index !== 1) {
       navigation.navigate("ConfirmAddress", {
         index: index,
       });
@@ -67,6 +73,7 @@ const PaymentOptions = ({ navigation, route }) => {
       >
         <CustomHeader
           headerlabel={TranslationStrings.BUY}
+          // headerlabel={"fksdjfksdjk"}
           iconPress={() => {
             navigation.goBack();
           }}

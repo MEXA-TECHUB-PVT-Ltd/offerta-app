@@ -28,7 +28,6 @@ const DashboardCard = (props) => {
     compactDisplay: "short",
   });
   const formattedLikes = formatter.format(props.price);
-
   return (
     <TouchableOpacity onPress={props.onpress} activeOpacity={0.9}>
       <View
@@ -78,7 +77,8 @@ const DashboardCard = (props) => {
             </View>
           )} */}
 
-          {props?.promotion?.tag == "Advertised" && (
+          {(props?.promotion?.tag == "Advertised" ||
+            props?.promotion?.tag == "Advertisement") && (
             <View
               style={{
                 backgroundColor: props?.promotion?.color
@@ -95,7 +95,7 @@ const DashboardCard = (props) => {
                 style={{
                   fontSize: 12,
                   fontFamily: fontFamily.Poppins_Regular,
-                  color: "#fff",
+                  color: props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
                 }}
               >
                 Ad

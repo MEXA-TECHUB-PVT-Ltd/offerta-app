@@ -56,7 +56,16 @@ const AllListingsByCategory = ({ navigation, route }) => {
         if (response.data.message === "No data available") {
           setdata("");
         } else {
-          setdata(response.data);
+          let list = response?.data ? response?.data : [];
+          // setdata(response.data);
+          const urgentList = list?.filter(
+            (item) => item?.Promotion?.tag == "Urgent"
+          );
+          const orthersList = list?.filter(
+            (item) => item?.Promotion?.tag !== "Urgent"
+          );
+          const finallist = [...urgentList, ...orthersList];
+          setdata(finallist);
         }
       })
       .finally(() => {

@@ -217,16 +217,13 @@ const MainListingsDetails = ({ navigation, route }) => {
         let response = {
           data: res?.data[0],
         };
-
         setListing_user_detail(response?.data?.user);
-
         setListing_User_Id(response.data.user_id);
         dispatch(setExchangeOffer_OtherListing(response.data));
         setListing_Images(response.data.images);
         setListing_Item_Price(response.data.price);
         setListing_Item_Title(response.data.title);
         setListing_Details(response.data.description);
-
         setListing_Category(response.data.category.category_name);
         setListing_SubCategory(response.data.subcategory.sub_category_name);
         setListing_Condition(response.data.product_condition);

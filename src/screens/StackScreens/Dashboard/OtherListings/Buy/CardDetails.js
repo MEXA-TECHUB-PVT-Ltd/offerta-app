@@ -45,7 +45,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Snackbar } from "react-native-paper";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
-import { post_Promotions } from "../../../../../api/Sales&Promotions";
+import {
+  post_Promotions,
+  post_Promotions_new,
+} from "../../../../../api/Sales&Promotions";
 import { BASE_URL } from "../../../../../utills/ApiRootUrl";
 
 const CardDetails = ({ navigation, route }) => {
@@ -97,18 +100,36 @@ const CardDetails = ({ navigation, route }) => {
     }
   };
 
+  // const CreatePromotion = async () => {
+  //   let listingID = route?.params?.listingID;
+  //   let promotionID = route?.params?.promotionID;
+  //   let promotionType = route?.params?.promotionType;
+
+  //   console.log({ listingID, promotionID, promotionType });
+
+  //   post_Promotions(listingID, promotionID, promotionType).then((response) => {
+  //     console.log("hessdsre we go in:", response.data);
+  //     //setModalVisible(true)
+  //     setModalVisible(true);
+  //   });
+  // };
   const CreatePromotion = async () => {
     let listingID = route?.params?.listingID;
+    let feature_id = route?.params?.feature_id;
     let promotionID = route?.params?.promotionID;
     let promotionType = route?.params?.promotionType;
 
-    console.log({ listingID, promotionID, promotionType });
+    console.log({ listingID, feature_id, promotionID, promotionType });
 
-    post_Promotions(listingID, promotionID, promotionType).then((response) => {
-      console.log("hessdsre we go in:", response.data);
-      //setModalVisible(true)
-      setModalVisible(true);
-    });
+    post_Promotions_new(listingID, feature_id, promotionID, promotionType)
+      .then((response) => {
+        console.log("hessdsre we go in:", response.data);
+        //setModalVisible(true)
+        setModalVisible(true);
+      })
+      .catch((err) => {
+        console.log("err : ", err);
+      });
   };
 
   const payFORPromotion = async () => {
@@ -387,6 +408,7 @@ const CardDetails = ({ navigation, route }) => {
       }
     }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       {CountryPickerView == true ? (
