@@ -86,13 +86,23 @@ const Home = ({ navigation }) => {
   /////////////user data states/////////////
   const [banners, setBanners] = useState([]);
   const Get_Banners = async () => {
-    get_Banners().then((response) => {
-      if (response.data.msg === "No Result") {
+    get_Banners()
+      .then((response) => {
+        console.log("response : ", response?.data);
+        if (
+          response.data.msg === "No Result" ||
+          typeof response?.data == "string"
+        ) {
+          console.log("her..,...................");
+          setBanners([]);
+        } else {
+          setBanners(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log("Error :  ", err);
         setBanners([]);
-      } else {
-        setBanners(response.data);
-      }
-    });
+      });
   };
   /////////////main menu status states/////////////
   const [Categorylist, setCategoryList] = useState("");
@@ -109,14 +119,22 @@ const Home = ({ navigation }) => {
     // get_Categories_Listings(props)
     get_Categories_Listings_new(props)
       .then((response) => {
-        console.log("response  :   ", response?.data);
+        let list = response?.data ? response?.data : [];
         if (response.data.message === "No data available") {
           setCategoryList("");
         } else if (response?.data?.error == true) {
           setCategoryList("");
           console.log("here................................");
         } else {
-          setCategoryList(response.data);
+          const urgentList = list?.filter(
+            (item) => item?.Promotion?.tag == "Urgent"
+          );
+          const orthersList = list?.filter(
+            (item) => item?.Promotion?.tag !== "Urgent"
+          );
+          const finallist = [...urgentList, ...orthersList];
+          setCategoryList(finallist);
+          // setCategoryList(response.data);
         }
       })
       .catch((err) => {
@@ -133,7 +151,18 @@ const Home = ({ navigation }) => {
           //error : response contain  some error strings
           console.log("error : response contain  some error strings  ");
         } else {
-          setCategoryList(list);
+          // list.sort((a, b) => a.Promotion?.tag == "Advertisement");
+          // THE SORTED ARRAY:
+
+          const urgentList = list?.filter(
+            (item) => item?.Promotion?.tag == "Urgent"
+          );
+          const orthersList = list?.filter(
+            (item) => item?.Promotion?.tag !== "Urgent"
+          );
+          const finallist = [...urgentList, ...orthersList];
+          setCategoryList(finallist);
+          // setCategoryList(list);
         }
       })
       .catch((err) => {

@@ -37,7 +37,22 @@ import TranslationStrings from "../../../../../utills/TranslationStrings";
 const Checkout = ({ navigation, route }) => {
   ////////////////redux/////////////
   const { exchange_other_listing } = useSelector((state) => state.userReducer);
+  const { login_user_shipping_address } = useSelector(
+    (state) => state.loginuserReducer
+  );
+
   const dispatch = useDispatch();
+
+  const handleNext = () => {
+    if (route?.params?.payment_type == "Paypal") {
+      navigation.navigate("PaypalPayment", {
+        fee: exchange_other_listing?.price,
+        type: "listing_paypal",
+      });
+    } else {
+      navigation.navigate("CardDetails");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -135,7 +150,7 @@ const Checkout = ({ navigation, route }) => {
             widthset={80}
             topDistance={10}
             onPress={() => {
-              navigation.navigate("CardDetails");
+              handleNext();
             }}
           />
         </View>

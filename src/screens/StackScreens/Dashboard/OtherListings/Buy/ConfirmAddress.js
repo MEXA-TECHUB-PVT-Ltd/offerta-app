@@ -106,6 +106,10 @@ const ConfirmAddress = ({ navigation, route }) => {
   }, [isFocused]);
 
   const handleNext = async () => {
+    // navigation.navigate("Checkout", {
+    //   payment_type: route?.params?.payment_type,
+    // });
+    // return;
     if (shippinglist?.length == 0) {
       setsnackbarValue({
         value: "Please Add Shipping Address to continue",
@@ -119,7 +123,9 @@ const ConfirmAddress = ({ navigation, route }) => {
       } else {
         console.log("address mil gya..");
       }
-      navigation.navigate("Checkout");
+      navigation.navigate("Checkout", {
+        payment_type: route?.params?.payment_type,
+      });
     }
   };
 

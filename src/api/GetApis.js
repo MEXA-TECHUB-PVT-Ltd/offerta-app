@@ -186,6 +186,9 @@ export const get_Advertisement_Promotion_List = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getPromotionAdv.php?user_id=" + user_id);
 };
+export const get_Promotion_on_tag_basis = async () => {
+  return axios.get(BASE_URL + "getpromotionontagbasis.php");
+};
 export const get_Expired_Promotion_List = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getExpairepromotion.php?user_id=" + user_id);

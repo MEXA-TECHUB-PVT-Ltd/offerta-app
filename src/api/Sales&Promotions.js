@@ -41,6 +41,21 @@ export const post_Promotions = async (
   console.log("data passed to create promotion", data);
   return axios.post(BASE_URL + "createPromotion.php", data);
 };
+export const post_Promotions_new = async (
+  list_id,
+  feature_id,
+  promotion_id
+) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  let data = {
+    user_id: user_id,
+    listing_id: list_id,
+    feature_id: feature_id,
+    promotion_id: promotion_id,
+  };
+  console.log("data passed to create promotion", data);
+  return axios.post(BASE_URL + "promotelisting.php", data);
+};
 
 //////////////Get Listings Insights//////////
 export const get_Listings_Insights = async (props) => {

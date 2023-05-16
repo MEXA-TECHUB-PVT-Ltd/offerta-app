@@ -84,13 +84,13 @@ const Search = ({ navigation, route }) => {
   }, []);
 
   const renderItem = ({ item }) => {
-    // console.log("item", item?.images);
     return (
       <DashboardCard
         image={item?.images[0] ? IMAGE_URL + item.images[0] : null}
+        promotion={item?.Promotion[0] ? item?.Promotion[0] : item?.Promotion}
         maintext={item.title}
         subtext={item.location}
-        price={item.price + "$"}
+        price={item.price}
         onpress={() => {
           navigation.navigate("MainListingsDetails", {
             listing_id: item.id,

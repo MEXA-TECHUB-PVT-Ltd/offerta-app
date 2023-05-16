@@ -54,6 +54,9 @@ import TranslationStrings from "../../utills/TranslationStrings";
 
 import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
 import GoogleButton from "../../components/Button/GoogleButton";
+import paypalApi from "../../api/paypalApi";
+import WebView from "react-native-webview";
+const queryString = require("query-string");
 
 const Login = ({ navigation }) => {
   //Modal States
@@ -197,6 +200,11 @@ const Login = ({ navigation }) => {
   };
   //Api form validation
   const formValidation = async () => {
+    // await AsyncStorage.setItem("Userid", "63");
+    // navigation.replace("Drawerroute");
+    // return;
+    // testPayPalPayment();
+
     // input validation
     if (email == "") {
       setsnackbarValue({
@@ -230,6 +238,9 @@ const Login = ({ navigation }) => {
     }
   };
 
+  // __________________________________________paypal payment______________________
+
+  // ___________________________________________________________________________________
   /////////////////Google states//////////////////
   const [userInfo, setUserInfo] = useState(null);
   const [gettingLoginStatus, setGettingLoginStatus] = useState(true);

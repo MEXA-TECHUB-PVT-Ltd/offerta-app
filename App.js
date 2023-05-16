@@ -73,6 +73,10 @@ import CameraViewScreen from "./src/components/CameraBottomSheet/CameraView";
 /////////////////drawer///////////
 import BlogsDetails from "./src/screens/StackScreens/Drawer/BlogsDetails";
 
+import PaymentMethods from "./src/screens/StackScreens/PaymentMethods";
+import PaypalPayment from "./src/screens/StackScreens/PaymentMethods/PaypalPayment";
+import PaymentMethods1 from "./src/screens/StackScreens/PaymentMethods/PaymentMethos1";
+
 //////////////////location////////////////
 import Location from "./src/screens/Location/Location";
 
@@ -323,6 +327,28 @@ function App() {
           <Stack.Screen
             name="PaymentOptions"
             component={PaymentOptions}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PaymentMethods"
+            component={PaymentMethods}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PaymentMethods1"
+            component={PaymentMethods1}
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="PaypalPayment"
+            component={PaypalPayment}
             options={{
               headerShown: false,
             }}
