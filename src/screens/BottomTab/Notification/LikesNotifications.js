@@ -158,6 +158,8 @@ const LikesNotifications = ({}) => {
 
   const handleNotificationPress = async (item) => {
     try {
+      dispatch(setNotificationCount(0));
+
       updateNotificationStatus(item?.id);
       dispatch(setExchangeOffer_OtherListing(item?.listing));
       dispatch(setListingId(item?.listing?.id));

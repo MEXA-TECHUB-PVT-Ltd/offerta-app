@@ -64,6 +64,7 @@ import { colors } from "react-native-swiper-flatlist/src/themes";
 import CustomImageSlider from "../../../components/ImageSlider/CustomImageSlider";
 
 import TranslationStrings from "../../../utills/TranslationStrings";
+import moment from "moment";
 
 const Home = ({ navigation }) => {
   const { name, age } = useSelector((state) => state.userReducer);
@@ -127,12 +128,27 @@ const Home = ({ navigation }) => {
           console.log("here................................");
         } else {
           const urgentList = list?.filter(
-            (item) => item?.Promotion?.tag == "Urgent"
+            (item) =>
+              item?.Promotion?.tag == "Urgent" &&
+              moment(new Date())?.format("YYYY-MM-DD") <
+                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
           );
+
+          const urgentList_expire = list?.filter(
+            (item) =>
+              item?.Promotion?.tag == "Urgent" &&
+              moment(new Date())?.format("YYYY-MM-DD") >=
+                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+          );
+
           const orthersList = list?.filter(
             (item) => item?.Promotion?.tag !== "Urgent"
           );
-          const finallist = [...urgentList, ...orthersList];
+          const finallist = [
+            ...urgentList,
+            ...urgentList_expire,
+            ...orthersList,
+          ];
           setCategoryList(finallist);
           // setCategoryList(response.data);
         }
@@ -155,12 +171,27 @@ const Home = ({ navigation }) => {
           // THE SORTED ARRAY:
 
           const urgentList = list?.filter(
-            (item) => item?.Promotion?.tag == "Urgent"
+            (item) =>
+              item?.Promotion?.tag == "Urgent" &&
+              moment(new Date())?.format("YYYY-MM-DD") <
+                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
           );
+
+          const urgentList_expire = list?.filter(
+            (item) =>
+              item?.Promotion?.tag == "Urgent" &&
+              moment(new Date())?.format("YYYY-MM-DD") >=
+                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+          );
+
           const orthersList = list?.filter(
             (item) => item?.Promotion?.tag !== "Urgent"
           );
-          const finallist = [...urgentList, ...orthersList];
+          const finallist = [
+            ...urgentList,
+            ...urgentList_expire,
+            ...orthersList,
+          ];
           setCategoryList(finallist);
           // setCategoryList(list);
         }

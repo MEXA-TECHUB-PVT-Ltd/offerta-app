@@ -118,10 +118,26 @@ const CardDetails = ({ navigation, route }) => {
     let feature_id = route?.params?.feature_id;
     let promotionID = route?.params?.promotionID;
     let promotionType = route?.params?.promotionType;
+    let start_date = route?.params?.start_date;
+    let expiry_date = route?.params?.expiry_date;
 
-    console.log({ listingID, feature_id, promotionID, promotionType });
+    console.log({
+      listingID,
+      feature_id,
+      promotionID,
+      promotionType,
+      start_date,
+      expiry_date,
+    });
 
-    post_Promotions_new(listingID, feature_id, promotionID, promotionType)
+    post_Promotions_new(
+      listingID,
+      feature_id,
+      promotionID,
+      promotionType,
+      start_date,
+      expiry_date
+    )
       .then((response) => {
         console.log("hessdsre we go in:", response.data);
         //setModalVisible(true)
@@ -607,7 +623,11 @@ const CardDetails = ({ navigation, route }) => {
         buttontext={TranslationStrings.OK}
         onPress={() => {
           if (route?.params?.type == "promote") {
+            // navigation?.goBack();
+            navigation.navigate("Promotions");
+          } else if (route?.params?.type == "addbanner") {
             navigation?.goBack();
+            setModalVisible(false);
           } else {
             // navigation.navigate("BottomTab")
             navigation.navigate("SalesOrders");

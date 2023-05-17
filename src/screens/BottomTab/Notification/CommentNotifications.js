@@ -166,14 +166,14 @@ const CommentNotifications = () => {
 
   const handleNotificationPress = async (item) => {
     try {
+      dispatch(setNotificationCount(0));
       updateNotificationStatus(item?.id);
-
       dispatch(setExchangeOffer_OtherListing(item?.listing));
       dispatch(setListingId(item?.listing?.id));
+
       navigation.navigate("CommentsDetails", {
         listing_id: item?.listing?.id,
       });
-      console.log("notificationPress :  ", item?.id);
     } catch (error) {
       console.log("Error raised in notification press : ", error);
     }

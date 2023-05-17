@@ -44,7 +44,10 @@ export const post_Promotions = async (
 export const post_Promotions_new = async (
   list_id,
   feature_id,
-  promotion_id
+  promotion_id,
+  promotionType,
+  start_date,
+  expiry_date
 ) => {
   var user_id = await AsyncStorage.getItem("Userid");
   let data = {
@@ -52,6 +55,8 @@ export const post_Promotions_new = async (
     listing_id: list_id,
     feature_id: feature_id,
     promotion_id: promotion_id,
+    createddate: start_date,
+    Expirydate: expiry_date,
   };
   console.log("data passed to create promotion", data);
   return axios.post(BASE_URL + "promotelisting.php", data);

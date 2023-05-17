@@ -38,6 +38,7 @@ import {
 } from "../../../../api/Sales&Promotions";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 import { get_Promotion_on_tag_basis } from "../../../../api/GetApis";
+import moment from "moment";
 
 //////////top tab/////////////
 
@@ -75,6 +76,7 @@ const Promote = ({ navigation, route }) => {
   const [urgent_promotion_id, setUrgent_promotion_id] = useState("");
 
   const [feature_id, setFeature_id] = useState("");
+  const [promotion_days, setPromotion_days] = useState("");
 
   const GetUrgentPromotions = async (props) => {
     // get_Urgent_Promotions().then((response) => {
@@ -97,6 +99,7 @@ const Promote = ({ navigation, route }) => {
           console.log("filter[0]?.feature_id  : ", filter[0]?.feature_id);
           setUrgent_Promotion_Price(filter[0]?.price);
           setUrgent_Promotion_Feature(filter[0]?.text);
+          setPromotion_days(filter[0]?.day);
         } else {
           setUrgent_Promotion_Price("");
         }
@@ -179,16 +182,24 @@ const Promote = ({ navigation, route }) => {
     //   promotionID: promotionID,
     //   promotionType: promotionType,
     // });
-    console.log("promotionID passed...: ", promotionID);
-    console.log("feature_id passed...: ", feature_id);
-    navigation.navigate("PaymentMethods", {
+    let day = promotion_days;
+    day = day?.split(" ")[0];
+    let expiry_date = moment(new Date())
+      .add(day, "days")
+      .format("YYYY-MM-DD hh:mm:ss");
+    let start_date = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
+    let obj = {
       type: "promote",
       fee: price,
       listingID: listingID,
       feature_id: feature_id,
       promotionID: promotionID,
       promotionType: promotionType,
-    });
+      start_date: start_date,
+      expiry_date: expiry_date,
+    };
+
+    navigation.navigate("PaymentMethods", obj);
 
     return;
 
@@ -269,6 +280,7 @@ const Promote = ({ navigation, route }) => {
               setPromotion_Type("advertisment");
               setFeature_id(item?.feature_id);
               handleCheckbox(item.promotion_id);
+              setPromotion_days(item?.day);
             }}
           />
           {/* <Text style={styles.promotepricetext}>{item.offer_time}</Text> */}
@@ -306,7 +318,8 @@ const Promote = ({ navigation, route }) => {
       >
         <RenderHtml
           contentWidth={width}
-          source={{ html: item.feature }}
+          // source={{ html: item.feature }}
+          source={{ html: item?.text }}
           tagsStyles={tagsStyles}
         />
       </View>
@@ -378,7 +391,10 @@ const Promote = ({ navigation, route }) => {
                     setPromotion_Type("urgent");
                   }}
                 /> */}
-                <Text style={styles.promotepricetext}>1-day</Text>
+                {/* <Text style={styles.promotepricetext}>1-day</Text> */}
+                <Text style={styles.promotepricetext}>
+                  {promotion_days} Days
+                </Text>
               </View>
               <Text style={styles.promotepricetext}>
                 {TranslationStrings.BUY_AT} {urgent_promotion_price}$

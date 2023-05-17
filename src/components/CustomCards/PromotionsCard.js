@@ -33,7 +33,8 @@ const PromotionsCard = (props) => {
         // });
 
         navigation.navigate("ListingsDetails", {
-          listing_id: props.item?.listing?.id,
+          // listing_id: props.item?.listing?.id,
+          listing_id: props.item?.listing_detail?.id,
         });
       }}
       style={styles.Promotionscard}
