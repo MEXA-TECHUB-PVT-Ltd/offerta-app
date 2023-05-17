@@ -111,7 +111,10 @@ const LikesNotifications = ({}) => {
     get_like_notifications()
       .then(async (response) => {
         //setData(response.data)
-        if (response.data.msg === "No Result") {
+        if (
+          response.data.msg === "No Result" ||
+          response?.data?.message == "No record found"
+        ) {
           // setNotification("");
           setData([]);
         } else {
@@ -238,12 +241,12 @@ const LikesNotifications = ({}) => {
               <Text style={{ ...styles.username }}>
                 {item?.item?.user?.full_name}
               </Text>
-              <Text
+              {/* <Text
                 style={[styles.recomend, { color: "#7A8FA6", width: "auto" }]}
               >
                 {item?.item?.created_at &&
                   convertUTCToLocalTime(item?.item?.created_at)}
-              </Text>
+              </Text> */}
             </View>
             <Text
               style={[styles.recomend, { color: "#7A8FA6", width: wp(57) }]}
