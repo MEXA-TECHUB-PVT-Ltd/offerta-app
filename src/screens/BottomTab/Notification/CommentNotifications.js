@@ -110,8 +110,10 @@ const CommentNotifications = () => {
             let sorted_list = notificationList1.sort(
               (a, b) => new Date(b?.created_at) - new Date(a.created_at)
             );
+
             // setData(notificationList1);
             setNotification(sorted_list);
+            setData(sorted_list);
             //   dispatch(setNotificationList(sorted_list));
 
             // let lastItem = response.data?.pop();
@@ -245,12 +247,12 @@ const CommentNotifications = () => {
               <Text style={{ ...styles.username }}>
                 {item?.item?.user?.full_name}
               </Text>
-              <Text
+              {/* <Text
                 style={[styles.recomend, { color: "#7A8FA6", width: "auto" }]}
               >
                 {item?.item?.created_at &&
                   convertUTCToLocalTime(item?.item?.created_at)}
-              </Text>
+              </Text> */}
             </View>
             <Text
               style={[styles.recomend, { color: "#7A8FA6", width: wp(57) }]}

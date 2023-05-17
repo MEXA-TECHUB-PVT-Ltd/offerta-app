@@ -298,6 +298,8 @@ const Login = ({ navigation }) => {
 
   //////////////Google Login Api Calling////////////////////
   const GoogleLoginUser = async (props) => {
+    let fcm_token = await getUserFCMToken();
+    console.log("fcm_token  :  ", fcm_token);
     setloading(true);
     axios({
       method: "post",
@@ -305,6 +307,7 @@ const Login = ({ navigation }) => {
       data: {
         email: props,
         password: "google123",
+        fcm: fcm_token,
       },
     })
       .then(async function (response) {

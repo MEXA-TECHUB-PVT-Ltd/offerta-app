@@ -110,6 +110,35 @@ const DashboardCard = (props) => {
               </View>
             )}
 
+          {(props?.promotion?.tag == "urgent" ||
+            props?.promotion?.tag == "Urgent") &&
+            moment(new Date())?.format("YYYY-MM-DD") <
+              moment(props?.promotion?.Expirydate)?.format("YYYY-MM-DD") && (
+              <View
+                style={{
+                  backgroundColor: props?.promotion?.color
+                    ? props?.promotion?.color
+                    : "#576AF4",
+                  position: "absolute",
+                  left: 0,
+                  borderBottomLeftRadius: 8,
+                  paddingHorizontal: 15,
+                  paddingTop: 3,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontFamily: fontFamily.Poppins_Regular,
+                    color:
+                      props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
+                  }}
+                >
+                  Urgent
+                </Text>
+              </View>
+            )}
+
           {(props?.sold == "sold" ||
             props?.sold == true ||
             props?.sold == "true") && (
