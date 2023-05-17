@@ -26,6 +26,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../../../../utills/Colors";
 import Loader from "../../../../components/Loader/Loader";
 import TranslationStrings from "../../../../utills/TranslationStrings";
+import moment from "moment";
 
 const AllListingsByCategory = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
@@ -59,12 +60,28 @@ const AllListingsByCategory = ({ navigation, route }) => {
           let list = response?.data ? response?.data : [];
           // setdata(response.data);
           const urgentList = list?.filter(
-            (item) => item?.Promotion?.tag == "Urgent"
+            (item) =>
+              item?.Promotion?.tag == "Urgent" &&
+              moment(new Date())?.format("YYYY-MM-DD") <
+                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
           );
+
+          const urgentList_expire = list?.filter(
+            (item) =>
+              item?.Promotion?.tag == "Urgent" &&
+              moment(new Date())?.format("YYYY-MM-DD") >=
+                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+          );
+
           const orthersList = list?.filter(
             (item) => item?.Promotion?.tag !== "Urgent"
           );
-          const finallist = [...urgentList, ...orthersList];
+          const finallist = [
+            ...urgentList,
+            ...urgentList_expire,
+            ...orthersList,
+          ];
+          // setCategoryList(finallist);
           setdata(finallist);
         }
       })

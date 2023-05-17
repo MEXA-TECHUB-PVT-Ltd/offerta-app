@@ -87,7 +87,11 @@ const Search = ({ navigation, route }) => {
     return (
       <DashboardCard
         image={item?.images[0] ? IMAGE_URL + item.images[0] : null}
-        promotion={item?.Promotion[0] ? item?.Promotion[0] : item?.Promotion}
+        promotion={
+          item?.Promotion?.length > 0
+            ? item?.Promotion[item?.Promotion?.length - 1]
+            : item?.Promotion
+        }
         maintext={item.title}
         subtext={item.location}
         price={item.price}

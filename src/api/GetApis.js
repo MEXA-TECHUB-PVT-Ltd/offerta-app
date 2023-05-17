@@ -182,6 +182,14 @@ export const get_Urgent_Promotion_List = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getPromotionsUrgent.php?user_id=" + user_id);
 };
+
+export const get_user_all_promotions = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.get(
+    BASE_URL + "getallpromotionsbyuserid.php?user_id=" + user_id
+  );
+};
+
 export const get_Advertisement_Promotion_List = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getPromotionAdv.php?user_id=" + user_id);

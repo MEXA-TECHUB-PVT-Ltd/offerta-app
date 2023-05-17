@@ -18,6 +18,7 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { fontFamily } from "../../constant/fonts";
 import TranslationStrings from "../../utills/TranslationStrings";
+import moment from "moment";
 
 const DashboardCard = (props) => {
   const [checked, setChecked] = React.useState(true);
@@ -77,31 +78,37 @@ const DashboardCard = (props) => {
             </View>
           )} */}
 
+          {/* moment(new Date())?.format("YYYY-MM-DD") <
+              moment(item?.promoted_detail?.Expirydate)?.format("YYYY-MM-DD") */}
+
           {(props?.promotion?.tag == "Advertised" ||
-            props?.promotion?.tag == "Advertisement") && (
-            <View
-              style={{
-                backgroundColor: props?.promotion?.color
-                  ? props?.promotion?.color
-                  : "#576AF4",
-                position: "absolute",
-                left: 0,
-                borderBottomLeftRadius: 8,
-                paddingHorizontal: 15,
-                paddingTop: 3,
-              }}
-            >
-              <Text
+            props?.promotion?.tag == "Advertisement") &&
+            moment(new Date())?.format("YYYY-MM-DD") <
+              moment(props?.promotion?.Expirydate)?.format("YYYY-MM-DD") && (
+              <View
                 style={{
-                  fontSize: 12,
-                  fontFamily: fontFamily.Poppins_Regular,
-                  color: props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
+                  backgroundColor: props?.promotion?.color
+                    ? props?.promotion?.color
+                    : "#576AF4",
+                  position: "absolute",
+                  left: 0,
+                  borderBottomLeftRadius: 8,
+                  paddingHorizontal: 15,
+                  paddingTop: 3,
                 }}
               >
-                Ad
-              </Text>
-            </View>
-          )}
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontFamily: fontFamily.Poppins_Regular,
+                    color:
+                      props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
+                  }}
+                >
+                  Ad
+                </Text>
+              </View>
+            )}
 
           {(props?.sold == "sold" ||
             props?.sold == true ||

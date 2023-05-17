@@ -10,7 +10,10 @@ import WebView from "react-native-webview";
 import GoogleButton from "../../../components/Button/GoogleButton";
 const queryString = require("query-string");
 import Loader from "../../../components/Loader/Loader";
-import { post_Promotions } from "../../../api/Sales&Promotions";
+import {
+  post_Promotions,
+  post_Promotions_new,
+} from "../../../api/Sales&Promotions";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import { appImages } from "../../../constant/images";
 import CustomModal from "../../../components/Modal/CustomModal";
@@ -196,12 +199,20 @@ const PaypalPayment = ({ navigation, route }) => {
 
   const CreatePromotion = async () => {
     let listingID = route?.params?.listingID;
+    let feature_id = route?.params?.feature_id;
     let promotionID = route?.params?.promotionID;
     let promotionType = route?.params?.promotionType;
+    let start_date = route?.params?.start_date;
+    let expiry_date = route?.params?.expiry_date;
 
-    console.log({ listingID, promotionID, promotionType });
-
-    post_Promotions(listingID, promotionID, promotionType).then((response) => {
+    post_Promotions_new(
+      listingID,
+      feature_id,
+      promotionID,
+      promotionType,
+      start_date,
+      expiry_date
+    ).then((response) => {
       console.log("hessdsre we go in:", response.data);
       //setModalVisible(true)
       setModalVisible(true);
@@ -350,10 +361,9 @@ const PaypalPayment = ({ navigation, route }) => {
         subtext={TranslationStrings.PAYED_SUCCESSFULLY}
         buttontext={TranslationStrings.OK}
         onPress={() => {
-          if (
-            route?.params?.type == "promote" ||
-            route?.params?.type == "addbanner"
-          ) {
+          if (route?.params?.type == "promote") {
+            navigation.navigate("Promotions");
+          } else if (route?.params?.type == "addbanner") {
             navigation?.goBack();
             setModalVisible(false);
           } else {
