@@ -21,7 +21,10 @@ import { setExchangeOffer_OtherListing } from "../../../redux/actions";
 import styles from "./styles";
 
 //////////////app functions///////////////
-import { offer_Accept_Reject_Listings } from "../../../api/Offer";
+import {
+  create_order_Listings,
+  offer_Accept_Reject_Listings,
+} from "../../../api/Offer";
 
 /////////////image url/////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
@@ -36,6 +39,7 @@ import {
 import { appImages } from "../../../constant/images";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import { get_Shipping_Address } from "../../../api/ShippingAddress";
 
 const PriceOfferNoti = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -50,14 +54,62 @@ const PriceOfferNoti = ({ navigation, route }) => {
 
   const [currentUser, setCurrentUser] = useState("");
 
+  const [shipping_id, setShipping_id] = useState("");
+
+  useEffect(() => {
+    GETAddress();
+  }, [shipping_id]);
+
+  const GETAddress = () => {
+    get_Shipping_Address()
+      .then((response) => {
+        console.log("get shipping adress repnse  :  ", response?.data);
+        if (response.data.msg === "No Result") {
+          setShipping_id(0);
+        } else {
+          let list = response?.data ? response?.data : [];
+          if (list?.length > 0) {
+            setShipping_id(list[0]?.id);
+          } else {
+            setShipping_id(0);
+          }
+        }
+      })
+      .catch((err) =>
+        console.log("errr raised while getting shipping address : ", err)
+      );
+  };
   ////////////Offer Accept//////////
   const offerAcceptListings = (props) => {
+    let obj = {
+      sale_by: route?.params?.sale_by,
+      order_by: route?.params?.buyer_id,
+      listing_id: route?.params?.listing_id,
+      shipping_id: shipping_id,
+    };
+    console.log("obj : ", obj);
+    console.log("route.params.offerid, props  : ", route.params.offerid, props);
     offer_Accept_Reject_Listings(route.params.offerid, props).then(
       (response) => {
         console.log("response   of accepting offer   :    ", response?.data);
         setModalVisible(true);
+        if (props == "accept") {
+          CreteOrder();
+        }
       }
     );
+  };
+
+  const CreteOrder = async () => {
+    create_order_Listings(
+      route?.params?.sale_by,
+      route?.params?.listing_id,
+      shipping_id
+    )
+      .then((response) => {})
+      .catch((err) => {
+        console.log("err : ", err);
+      });
   };
 
   ////////////Offer Reject//////////
@@ -230,11 +282,12 @@ const PriceOfferNoti = ({ navigation, route }) => {
           //   listing_id: route?.params?.listing_id,
           // });
           dispatch(setExchangeOffer_OtherListing(""));
-          navigation.navigate("ListingsDetails", {
-            listing_id: route?.params?.listing_id,
-            buyer_id: route?.params?.buyer_id,
-            type: "sale",
-          }); 
+          // navigation.navigate("ListingsDetails", {
+          //   listing_id: route?.params?.listing_id,
+          //   buyer_id: route?.params?.buyer_id,
+          //   type: "sale",
+          // });
+          navigation?.navigate("SaleAndOrder");
         }}
       />
       <CustomModal

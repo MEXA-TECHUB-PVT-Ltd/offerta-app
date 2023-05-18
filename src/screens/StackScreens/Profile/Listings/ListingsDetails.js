@@ -50,10 +50,13 @@ import {
   GetLikes,
   GetListingViews,
   GetListingsDetails_New,
+  GETLIKES_NEW,
 } from "../../../../api/GetApis";
 import {
   post_Like_Listings,
+  post_Like_Listings_NEW,
   post_UnLike_Listings,
+  post_UnLike_Listings_NEW,
   post_Views_Listings,
 } from "../../../../api/PostApis";
 
@@ -104,40 +107,123 @@ const ListingsDetails = ({ navigation, route }) => {
     route?.params?.like ? route?.params?.login_user_id : ""
   );
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
-  //-----------like list
-  const listing_like = (props) => {
-    post_Like_Listings(props).then((response) => {
-      console.log(
-        "response.data.data.user_id  :  ",
-        response.data.data.user_id
-      );
+  // //-----------like list
+  // const listing_like = (props) => {
+  //   post_Like_Listings(props).then((response) => {
+  //     console.log(
+  //       "response.data.data.user_id  :  ",
+  //       response.data.data.user_id
+  //     );
+  //     setListing_Like_User_id(response.data.data.user_id);
+  //     likes_count();
+  //   });
+  // };
+  // //-----------unlike list
+  // const listing_unlike = (props) => {
+  //   post_UnLike_Listings(props).then((response) => {
+  //     console.log(
+  //       "response.data.data.user_id  :  ",
+  //       response.data.data.user_id
+  //     );
+  //     setListing_Like_User_id("");
+  //     likes_count();
+  //   });
+  // };
+  // //----------likes count
+  // const likes_count = () => {
+  //   GetLikes(predata.listing_id).then((response) => {
+  //     console.log("response like count  :  ", response?.data);
+  //     if (response.data.msg === "No one liked yet") {
+  //       setListing_Likes_count(0);
+  //     } else {
+  //       setListing_Likes_count(response.data.Total);
+  //       // listing_like(predata.listing_id);
+  //     }
+  //   });
+  // };
+
+  const GetLikeStatus = async () => {
+    var user_id = await AsyncStorage.getItem("Userid");
+    GET_LIKE_STATUS_NEW(predata.listing_id)
+      .then((response) => {
+        console.log("response : ", response?.data);
+
+        let isLike = response?.data?.islike ? response?.data?.islike : false;
+        console.log("isLike  :  ", isLike);
+        if (isLike) {
+          setListing_Like_User_id(user_id);
+        } else {
+          setListing_Like_User_id("");
+        }
+      })
+      .catch((err) => {
+        console.log("Error : ", err);
+      });
+  };
+  useEffect(() => {
+    GetLikeStatus();
+  }, [listing_like_user_id]);
+
+  const listing_like = async (props) => {
+    console.log("props  :  ", props);
+    let user_status = await get_user_status();
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+    // post_Like_Listings(props).then((response) => {
+    //   console.log("like listing response : ", response?.data);
+    //   setListing_Like_User_id(response.data.data.user_id);
+    //   likes_count();
+    // });
+    post_Like_Listings_NEW(props).then((response) => {
+      console.log("like listing response : ", response?.data);
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
   };
   //-----------unlike list
-  const listing_unlike = (props) => {
-    post_UnLike_Listings(props).then((response) => {
-      console.log(
-        "response.data.data.user_id  :  ",
-        response.data.data.user_id
-      );
-      setListing_Like_User_id("");
+  const listing_unlike = async (props) => {
+    let user_status = await get_user_status();
+
+    if (user_status == "block") {
+      setShowBlockModal(true);
+      return;
+    }
+
+    // post_UnLike_Listings(props).then((response) => {
+    //   setListing_Like_User_id(" ");
+    //   likes_count();
+    // });
+    post_UnLike_Listings_NEW(props).then((response) => {
+      setListing_Like_User_id(" ");
       likes_count();
     });
   };
   //----------likes count
-  const likes_count = () => {
-    GetLikes(predata.listing_id).then((response) => {
-      console.log("response like count  :  ", response?.data);
-      if (response.data.msg === "No one liked yet") {
-        setListing_Likes_count(0);
-      } else {
-        setListing_Likes_count(response.data.Total);
-        // listing_like(predata.listing_id);
-      }
+  const likes_count = async () => {
+    // GetLikes(predata.listing_id).then((response) => {
+    //   console.log("getting like count od listings : ", response?.data);
+    //   if (response.data.msg === "No one liked yet") {
+    //     setListing_Likes_count(0);
+    //   } else {
+    //     setListing_Likes_count(response.data.Total);
+    //     // listing_like(predata.listing_id);
+    //   }
+    // });
+    GETLIKES_NEW(predata.listing_id).then((response) => {
+      console.log("getting like count od listings : ", response?.data);
+      let count = response?.data?.Total ? response?.data?.Total : 0;
+      setListing_Likes_count(count);
+      // if (response.data.msg === "No one liked yet") {
+      //   setListing_Likes_count(0);
+      // } else {
+      //   setListing_Likes_count(response.data.Total);
+      //   // listing_like(predata.listing_id);
+      // }
     });
   };
+
   //---------------comments count
   const comments_count = () => {
     GetComments(predata.listing_id).then((response) => {

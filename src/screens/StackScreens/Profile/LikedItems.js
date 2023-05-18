@@ -24,12 +24,16 @@ import {
 import { appImages } from "../../../constant/images";
 
 ///////////////api functions///////////////
-import { get_User_Liked_Listings } from "../../../api/GetApis";
+import {
+  get_User_Liked_Listings,
+  get_User_Liked_Listings_NEw,
+} from "../../../api/GetApis";
 
 /////////////image url//////////////
 import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 const LikedItems = ({ navigation }) => {
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
@@ -39,16 +43,24 @@ const LikedItems = ({ navigation }) => {
     setlogin_user_id(user_id);
   };
 
-  useEffect(() => {
-    getuser();
-    get_User_Liked_Listings().then((response) => {
-      if (response.data.msg === "No Result") {
-        setdata("");
-      } else {
-        setdata(response.data);
-      }
-    });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getuser();
+      // get_User_Liked_Listings().then((response) => {
+      //   if (response.data.msg === "No Result") {
+      //     setdata("");
+      //   } else {
+      //     setdata(response.data);
+      //   }
+      // });
+      console.log("klldklk...");
+      get_User_Liked_Listings_NEw().then((response) => {
+        let list = response?.data?.data ? response?.data?.data : [];
+
+        setdata(list);
+      });
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,21 +83,26 @@ const LikedItems = ({ navigation }) => {
             data={data}
             renderItem={({ item }) => (
               <ExcahangeCard
-                image={item.images === [] ? null : IMAGE_URL + item.images[0]}
-                maintext={item.title}
-                subtext={item.description}
-                pricetext={item.total_likes}
+                // image={item.images === [] ? null : IMAGE_URL + item.images[0]}
+                image={
+                  item?.listing_images === []
+                    ? null
+                    : IMAGE_URL + item?.listing_images[0]
+                }
+                maintext={item?.listing_detail?.title}
+                subtext={item?.listing_detail?.description}
+                pricetext={null}
                 cardtype={"like"}
                 onPress={() => {
-                  if (item.user_id === login_user_id) {
+                  if (item?.listing_detail?.user_id === login_user_id) {
                     navigation.navigate("ListingsDetails", {
-                      listing_id: item.id,
+                      listing_id: item?.listing_detail?.id,
                       like: true,
                       login_user_id: login_user_id,
                     });
                   } else {
                     navigation.navigate("MainListingsDetails", {
-                      listing_id: item.id,
+                      listing_id: item?.listing_detail?.id,
                       like: true,
                       login_user_id: login_user_id,
                     });

@@ -11,10 +11,33 @@ export const post_Like_Listings = async (props) => {
     listing_id: props,
   });
 };
+export const post_Like_Listings_NEW = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.post(BASE_URL + "likelist.php", {
+    user_id: user_id,
+    listing_id: props,
+  });
+};
+
+export const GET_LIKE_STATUS_NEW = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.post(BASE_URL + "islike.php", {
+    user_id: user_id,
+    listing_id: props,
+  });
+};
+
 ////////////LISTING UNLIKES//////////
 export const post_UnLike_Listings = async (props) => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.post(BASE_URL + "disLike.php", {
+    user_id: user_id,
+    listing_id: props,
+  });
+};
+export const post_UnLike_Listings_NEW = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.post(BASE_URL + "dislikelist.php", {
     user_id: user_id,
     listing_id: props,
   });
@@ -56,13 +79,14 @@ export const post_Listings_Price_Offer = async (
   offer_price
 ) => {
   var user_id = await AsyncStorage.getItem("Userid");
-
-  return axios.post(BASE_URL + "createOffer.php", {
+  let data = {
     user_id: user_id,
     sale_by: other_user,
     listing_id: other_listings,
     price: offer_price,
-  });
+  };
+  console.log("data : ", data);
+  return axios.post(BASE_URL + "createOffer.php", data);
 };
 
 /////////////////////Counter Offer////////////

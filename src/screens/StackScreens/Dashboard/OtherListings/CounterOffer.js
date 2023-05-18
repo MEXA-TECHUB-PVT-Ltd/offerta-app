@@ -47,13 +47,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Snackbar } from "react-native-paper";
 import CustomModal from "../../../../components/Modal/CustomModal";
-import { counter_offer_Accept_OR_Reject } from "../../../../api/Offer";
+import {
+  counter_offer_Accept_OR_Reject,
+  create_order_Listings,
+} from "../../../../api/Offer";
 
 import {
   GetListingsDetails,
   GetListingsDetails_New,
 } from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
+import { get_Shipping_Address } from "../../../../api/ShippingAddress";
 
 //////////////////appImages.//////////////////
 
@@ -191,9 +195,41 @@ const CounterOffer = ({ navigation, route }) => {
   //   console.log("image here:", exchange_other_listing);
   // }, []);
 
+  const [shipping_id, setShipping_id] = useState("");
+
+  useEffect(() => {
+    GETAddress();
+  }, [shipping_id]);
+
+  const GETAddress = () => {
+    get_Shipping_Address()
+      .then((response) => {
+        console.log("get shipping adress repnse  :  ", response?.data);
+        if (response.data.msg === "No Result") {
+          setShipping_id(0);
+        } else {
+          let list = response?.data ? response?.data : [];
+          if (list?.length > 0) {
+            setShipping_id(list[0]?.id);
+          } else {
+            setShipping_id(0);
+          }
+        }
+      })
+      .catch((err) =>
+        console.log("errr raised while getting shipping address : ", err)
+      );
+  };
+
   const handleCountOfferAccept_Reject = (status) => {
     console.log("offer id  :::   ", route?.params?.offerid);
     console.log("status ::   ", status);
+    let obj = {
+      sale_by: route?.params?.sale_by,
+      order_by: route?.params?.buyer_id,
+      listing_id: route?.params?.listing_id,
+      shipping_id: shipping_id,
+    };
 
     counter_offer_Accept_OR_Reject(route?.params?.offerid, status).then(
       (response) => {
@@ -205,6 +241,7 @@ const CounterOffer = ({ navigation, route }) => {
         if (response?.data?.status == true) {
           if (status == "accept") {
             setModalVisible(true);
+            CreteOrder();
           } else {
             setModalVisible1(true);
           }
@@ -214,6 +251,20 @@ const CounterOffer = ({ navigation, route }) => {
         }
       }
     );
+  };
+
+  const CreteOrder = async () => {
+    create_order_Listings(
+      route?.params?.sale_by,
+      route?.params?.listing_id,
+      shipping_id
+    )
+      .then((response) => {
+        console.log("response ::::::", response?.data);
+      })
+      .catch((err) => {
+        console.log("err : ", err);
+      });
   };
 
   const getListingDetail = async () => {

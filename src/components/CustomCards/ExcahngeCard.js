@@ -18,7 +18,9 @@ const ExcahangeCard = (props) => {
     notation: "compact",
     compactDisplay: "short",
   });
-  const formattedLikes = formatter.format(props.pricetext);
+  const formattedLikes =
+    props.pricetext == null ? null : formatter.format(props.pricetext);
+  console.log("formattedLikes  :  ", props.pricetext);
   return (
     // <TouchableOpacity
     //   onPress={() =>
@@ -64,17 +66,20 @@ const ExcahangeCard = (props) => {
           marginTop: hp(1),
         }}
       >
-        <Text
-          style={[
-            styles.Exchangepricetext,
-            { right: props.pricetag != undefined ? wp(3) : wp(7) },
-          ]}
-          //numberOfLines={1}
-        >
-          {props.pricetag != undefined
-            ? formattedLikes + props.pricetag
-            : formattedLikes}
-        </Text>
+        {formattedLikes && (
+          <Text
+            style={[
+              styles.Exchangepricetext,
+              { right: props.pricetag != undefined ? wp(3) : wp(7) },
+            ]}
+            //numberOfLines={1}
+          >
+            {props.pricetag != undefined
+              ? formattedLikes + props.pricetag
+              : formattedLikes}
+          </Text>
+        )}
+
         {props.cardtype === "like" ? (
           <Ionicons
             name={"heart"}

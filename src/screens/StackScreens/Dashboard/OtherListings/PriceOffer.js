@@ -87,22 +87,26 @@ const PriceOffer = ({ navigation, route }) => {
       exchange_other_listing.user_id,
       exchange_other_listing.id,
       offerprice
-    ).then((response) => {
-      //dispatch(setExchangeOffer_OtherListing(list_data))
-      console.log("exchnage response hereL:", response?.data);
+    )
+      .then((response) => {
+        //dispatch(setExchangeOffer_OtherListing(list_data))
+        console.log("exchnage response hereL:", response?.data);
 
-      navigation.replace("ChatScreen", {
-        buyer_id: user_id,
-        sale_by: exchange_other_listing.user_id,
-        userid: exchange_other_listing.user_id,
-        offerprice: props,
-        offerid: response.data.data.id,
-        item_price: exchange_other_listing.price,
-        navtype: "price_offer",
-        listing_id: exchange_other_listing.id,
+        navigation.replace("ChatScreen", {
+          buyer_id: user_id,
+          sale_by: exchange_other_listing.user_id,
+          userid: exchange_other_listing.user_id,
+          offerprice: props,
+          offerid: response.data.data.id,
+          item_price: exchange_other_listing.price,
+          navtype: "price_offer",
+          listing_id: exchange_other_listing.id,
+        });
+        // setListing_Like_User_id(response.data.data.user_id);
+      })
+      .catch((err) => {
+        console.log("Error  : ", err);
       });
-      // setListing_Like_User_id(response.data.data.user_id);
-    });
   };
   const [list_data, setList_Date] = useState({
     otheruser_id: exchange_other_listing.user_id,

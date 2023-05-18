@@ -140,6 +140,11 @@ export const get_User_Liked_Listings = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getLikeListByUser.php?user_id=" + user_id);
 };
+export const get_User_Liked_Listings_NEw = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  console.log("user_id  :  ", user_id);
+  return axios.get(BASE_URL + "userlikelist.php?user_id=" + user_id);
+};
 
 ////////////LISTING COMMENTS//////////
 export const GetComments = async (props) => {
@@ -149,6 +154,12 @@ export const GetComments = async (props) => {
 ////////////LISTING LIKES//////////
 export const GetLikes = async (props) => {
   return axios.get(BASE_URL + "totalLikes.php?listing_id=" + props);
+};
+export const GETLIKES_NEW = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.post(BASE_URL + "totalcountonlist.php", {
+    listing_id: props,
+  });
 };
 ////////////LISTING VIEWS//////////
 export const get_User_Listing = async () => {

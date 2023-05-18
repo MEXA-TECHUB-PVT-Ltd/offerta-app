@@ -56,10 +56,14 @@ import {
   GetLikes,
   GetListingViews,
   GetListingsDetails_New,
+  GETLIKES_NEW,
 } from "../../../../api/GetApis";
 import {
+  GET_LIKE_STATUS_NEW,
   post_Like_Listings,
+  post_Like_Listings_NEW,
   post_UnLike_Listings,
+  post_UnLike_Listings_NEW,
   post_Views_Listings,
 } from "../../../../api/PostApis";
 
@@ -121,12 +125,18 @@ const MainListingsDetails = ({ navigation, route }) => {
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
   //-----------like list
   const listing_like = async (props) => {
+    console.log("props  :  ", props);
     let user_status = await get_user_status();
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
     }
-    post_Like_Listings(props).then((response) => {
+    // post_Like_Listings(props).then((response) => {
+    //   console.log("like listing response : ", response?.data);
+    //   setListing_Like_User_id(response.data.data.user_id);
+    //   likes_count();
+    // });
+    post_Like_Listings_NEW(props).then((response) => {
       console.log("like listing response : ", response?.data);
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
@@ -141,21 +151,36 @@ const MainListingsDetails = ({ navigation, route }) => {
       return;
     }
 
-    post_UnLike_Listings(props).then((response) => {
+    // post_UnLike_Listings(props).then((response) => {
+    //   setListing_Like_User_id(" ");
+    //   likes_count();
+    // });
+    post_UnLike_Listings_NEW(props).then((response) => {
       setListing_Like_User_id(" ");
       likes_count();
     });
   };
   //----------likes count
   const likes_count = async () => {
-    GetLikes(predata.listing_id).then((response) => {
+    // GetLikes(predata.listing_id).then((response) => {
+    //   console.log("getting like count od listings : ", response?.data);
+    //   if (response.data.msg === "No one liked yet") {
+    //     setListing_Likes_count(0);
+    //   } else {
+    //     setListing_Likes_count(response.data.Total);
+    //     // listing_like(predata.listing_id);
+    //   }
+    // });
+    GETLIKES_NEW(predata.listing_id).then((response) => {
       console.log("getting like count od listings : ", response?.data);
-      if (response.data.msg === "No one liked yet") {
-        setListing_Likes_count(0);
-      } else {
-        setListing_Likes_count(response.data.Total);
-        // listing_like(predata.listing_id);
-      }
+      let count = response?.data?.Total ? response?.data?.Total : 0;
+      setListing_Likes_count(count);
+      // if (response.data.msg === "No one liked yet") {
+      //   setListing_Likes_count(0);
+      // } else {
+      //   setListing_Likes_count(response.data.Total);
+      //   // listing_like(predata.listing_id);
+      // }
     });
   };
   //---------------comments count
@@ -208,6 +233,28 @@ const MainListingsDetails = ({ navigation, route }) => {
   const [giveaway_status, setGiveaway_Status] = useState();
 
   const [showBlockModal, setShowBlockModal] = useState(false);
+
+  const GetLikeStatus = async () => {
+    var user_id = await AsyncStorage.getItem("Userid");
+    GET_LIKE_STATUS_NEW(predata.listing_id)
+      .then((response) => {
+        console.log("response : ", response?.data);
+
+        let isLike = response?.data?.islike ? response?.data?.islike : false;
+        console.log("isLike  :  ", isLike);
+        if (isLike) {
+          setListing_Like_User_id(user_id);
+        } else {
+          setListing_Like_User_id("");
+        }
+      })
+      .catch((err) => {
+        console.log("Error : ", err);
+      });
+  };
+  useEffect(() => {
+    GetLikeStatus();
+  }, [listing_like_user_id]);
 
   const GetListData = async () => {
     // GetListingsDetails(predata.listing_id)
@@ -423,7 +470,7 @@ const MainListingsDetails = ({ navigation, route }) => {
                 style={{ marginRight: wp(3) }}
               />
               <Text style={styles.icontext}>
-                {listing_likes_count} {TranslationStrings.LIKES}
+                {listing_likes_count} {TranslationStrings.LIKES}{" "}
               </Text>
             </TouchableOpacity>
           )}
