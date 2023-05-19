@@ -329,7 +329,10 @@ const ConfirmAddress = ({ navigation, route }) => {
                 borderRadius: wp(3),
               }}
               onPress={() =>
-                navigation.navigate("ShippingAddress", { navtype: "Buy" })
+                navigation.navigate("ShippingAddress", {
+                  navtype: "Buy",
+                  index: route?.params?.index,
+                })
               }
             >
               <Text style={[styles.timelinetext, { color: "white" }]}>
@@ -361,7 +364,9 @@ const ConfirmAddress = ({ navigation, route }) => {
                   }}
                   onpress={() => {
                     dispatch(setLoginUserShippingAddress(item));
-                    navigation.navigate("UpdateShippingAddress");
+                    navigation.navigate("UpdateShippingAddress", {
+                      index: route?.params?.index,
+                    });
                   }}
                   // onLongPress={() => {
                   //   setSelectedAddress(item?.id);

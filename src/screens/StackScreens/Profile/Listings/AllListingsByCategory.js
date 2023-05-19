@@ -61,25 +61,25 @@ const AllListingsByCategory = ({ navigation, route }) => {
           // setdata(response.data);
           const urgentList = list?.filter(
             (item) =>
-              item?.Promotion?.tag == "Urgent" &&
+              item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") <
-                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+                moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const urgentList_expire = list?.filter(
             (item) =>
-              item?.Promotion?.tag == "Urgent" &&
+              item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") >=
-                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+                moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const orthersList = list?.filter(
-            (item) => item?.Promotion?.tag !== "Urgent"
+            (item) => item?.Promotion[0]?.tag !== "Urgent"
           );
           const finallist = [
             ...urgentList,
-            ...urgentList_expire,
             ...orthersList,
+            ...urgentList_expire,
           ];
           // setCategoryList(finallist);
           setdata(finallist);
@@ -103,7 +103,7 @@ const AllListingsByCategory = ({ navigation, route }) => {
       subtext={item.location}
       price={item.price}
       sold={item?.sold}
-      promotion={item?.Promotion}
+      promotion={item?.Promotion[0]}
       onpress={() => {
         // navigation.navigate("ListingsDetails", { listing_id: item.id });
         navigation.navigate("MainListingsDetails", {

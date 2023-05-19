@@ -47,7 +47,10 @@ import {
 } from "../../../../redux/actions";
 
 /////////////////App Api function/////////////////
-import { edit_Item_Images } from "../../../../api/Upload Item";
+import {
+  edit_Item_Images,
+  post_Item_Images,
+} from "../../../../api/Upload Item";
 
 //////////////////////////app api/////////////////////////
 import axios from "axios";
@@ -170,15 +173,22 @@ const EditList = ({ navigation, route }) => {
         item_images_array
       );
       setModalVisible(true);
-      //   edit_Item_Images({
-      //     item_id: listing_id,
-      //     item_images: item_images_array,
-      //   })
-      //     .then((response) => response.json())
-      //     .then((responseData) => {
-      //       console.log("heer data:",responseData)
-      //       setModalVisible(true);
-      //     });
+      // edit_Item_Images({
+      //   item_id: listing_id,
+      //   item_images: item_images_array,
+      // })
+      post_Item_Images({
+        item_id: response.data.id,
+        item_images: item_images_array,
+      })
+        .then((response) => response.json())
+        .then((responseData) => {
+          console.log(
+            "listing images upload response.................:",
+            responseData
+          );
+          // setModalVisible(true);
+        });
     });
   };
   //Api form validation
@@ -208,7 +218,10 @@ const EditList = ({ navigation, route }) => {
     setloading(true);
     // GetListingsDetails(listing_id)
     GetListingsDetails_New(listing_id)
-      .then((response) => {
+      .then((res) => {
+        let response = {
+          data: res?.data[0],
+        };
         dispatch(setItemImagesArray(response.data.images));
         dispatch(setLocationAddress(response.data.location));
         dispatch(setLocationLat(response.data.location_lat));
