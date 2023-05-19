@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1003482259191",
+    "project_id": "ofertasv-a3fa7",
+    "storage_bucket": "ofertasv-a3fa7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003482259191:android:23c4637dcf49935d19bdf2",
+        "android_client_info": {
+          "package_name": "com.ofertasvAppMtechub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003482259191-66q91u0nc6b4u2m8ehamnhb6fsclujo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo-h4nFagkIS903BBJAUV7BRpHk7Dq5JI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003482259191-0o4ejbqlak5i673ht2hm90hoaa1v4dpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
