@@ -73,48 +73,49 @@ const LikedItems = ({ navigation }) => {
       />
 
       <View style={{ flex: 1 }}>
-        {data === "" ? (
-          <NoDataFound
-            icon={"exclamation-thick"}
-            text={TranslationStrings.NO_DATA_FOUND}
-          />
-        ) : (
-          <FlatList
-            data={data}
-            renderItem={({ item }) => (
-              <ExcahangeCard
-                // image={item.images === [] ? null : IMAGE_URL + item.images[0]}
-                image={
-                  item?.listing_images === []
-                    ? null
-                    : IMAGE_URL + item?.listing_images[0]
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <ExcahangeCard
+              // image={item.images === [] ? null : IMAGE_URL + item.images[0]}
+              image={
+                item?.listing_images === []
+                  ? null
+                  : IMAGE_URL + item?.listing_images[0]
+              }
+              maintext={item?.listing_detail?.title}
+              subtext={item?.listing_detail?.description}
+              pricetext={null}
+              cardtype={"like"}
+              onPress={() => {
+                if (item?.listing_detail?.user_id === login_user_id) {
+                  navigation.navigate("ListingsDetails", {
+                    listing_id: item?.listing_detail?.id,
+                    like: true,
+                    login_user_id: login_user_id,
+                  });
+                } else {
+                  navigation.navigate("MainListingsDetails", {
+                    listing_id: item?.listing_detail?.id,
+                    like: true,
+                    login_user_id: login_user_id,
+                  });
                 }
-                maintext={item?.listing_detail?.title}
-                subtext={item?.listing_detail?.description}
-                pricetext={null}
-                cardtype={"like"}
-                onPress={() => {
-                  if (item?.listing_detail?.user_id === login_user_id) {
-                    navigation.navigate("ListingsDetails", {
-                      listing_id: item?.listing_detail?.id,
-                      like: true,
-                      login_user_id: login_user_id,
-                    });
-                  } else {
-                    navigation.navigate("MainListingsDetails", {
-                      listing_id: item?.listing_detail?.id,
-                      like: true,
-                      login_user_id: login_user_id,
-                    });
-                  }
-                }}
+              }}
+            />
+          )}
+          keyExtractor={(item, index) => index}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() => {
+            return (
+              <NoDataFound
+                icon={"exclamation-thick"}
+                text={TranslationStrings.NO_DATA_FOUND}
               />
-            )}
-            keyExtractor={(item, index) => index}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          />
-        )}
+            );
+          }}
+        />
       </View>
     </SafeAreaView>
   );

@@ -52,6 +52,7 @@ const ShippingAddresss = ({ navigation, route }) => {
   const { country_name, state_name, city_name } = useSelector(
     (state) => state.locationReducer
   );
+
   const dispatch = useDispatch();
 
   //Modal States
@@ -270,7 +271,9 @@ const ShippingAddresss = ({ navigation, route }) => {
           onPress={() => {
             setModalVisible(false),
               route.params.navtype === "Buy"
-                ? navigation.navigate("ConfirmAddress")
+                ? navigation.navigate("ConfirmAddress", {
+                    index: route?.params?.index,
+                  })
                 : navigation.navigate("ShippingAddressList");
           }}
         />

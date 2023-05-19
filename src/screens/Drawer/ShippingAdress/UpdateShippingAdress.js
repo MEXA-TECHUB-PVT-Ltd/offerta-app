@@ -268,7 +268,10 @@ const UpdateShippingAddress = ({ navigation, route }) => {
           subtext={"Update Shipping Address Sucessfully"}
           buttontext={"OK"}
           onPress={() => {
-            setModalVisible(false), navigation.navigate("ShippingAddressList");
+            setModalVisible(false),
+              navigation.navigate("ShippingAddressList", {
+                index: route?.params?.index,
+              });
           }}
         />
         <CountryDropDown

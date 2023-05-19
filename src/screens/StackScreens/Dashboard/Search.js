@@ -38,6 +38,7 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import { appImages } from "../../../constant/images";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import Loader from "../../../components/Loader/Loader";
+import moment from "moment";
 
 const Search = ({ navigation, route }) => {
   ///////////////post search state////////////
@@ -53,7 +54,28 @@ const Search = ({ navigation, route }) => {
     setLoading(true);
     get_Listing_Search(props)
       .then((response) => {
-        setSearchData(response.data);
+        let list = response?.data ? response?.data : [];
+
+        const urgentList = list?.filter(
+          (item) =>
+            item?.Promotion[0]?.tag == "Urgent" &&
+            moment(new Date())?.format("YYYY-MM-DD") <
+              moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
+        );
+
+        const urgentList_expire = list?.filter(
+          (item) =>
+            item?.Promotion[0]?.tag == "Urgent" &&
+            moment(new Date())?.format("YYYY-MM-DD") >=
+              moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
+        );
+
+        const orthersList = list?.filter(
+          (item) => item?.Promotion[0]?.tag !== "Urgent"
+        );
+        const finallist = [...urgentList, ...orthersList, ...urgentList_expire];
+        // setSearchData(response.data);
+        setSearchData(finallist);
       })
       .catch(function (error) {
         console.log("error", error);
@@ -87,11 +109,12 @@ const Search = ({ navigation, route }) => {
     return (
       <DashboardCard
         image={item?.images[0] ? IMAGE_URL + item.images[0] : null}
-        promotion={
-          item?.Promotion?.length > 0
-            ? item?.Promotion[item?.Promotion?.length - 1]
-            : item?.Promotion
-        }
+        // promotion={
+        //   item?.Promotion?.length > 0
+        //     ? item?.Promotion[item?.Promotion?.length - 1]
+        //     : item?.Promotion
+        // }
+        promotion={item?.Promotion[0]}
         maintext={item.title}
         subtext={item.location}
         price={item.price}

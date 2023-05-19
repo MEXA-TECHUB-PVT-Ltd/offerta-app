@@ -107,6 +107,7 @@ const Home = ({ navigation }) => {
   };
   /////////////main menu status states/////////////
   const [Categorylist, setCategoryList] = useState("");
+
   const GetCategoriesList = async (props) => {
     // get_Categories_Listings_By_Location(props,cur_lat,cur_lng).then((response) => {
     //   if(response.data.message === "No data available")
@@ -129,25 +130,25 @@ const Home = ({ navigation }) => {
         } else {
           const urgentList = list?.filter(
             (item) =>
-              item?.Promotion?.tag == "Urgent" &&
+              item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") <
-                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+                moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const urgentList_expire = list?.filter(
             (item) =>
-              item?.Promotion?.tag == "Urgent" &&
+              item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") >=
-                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+                moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const orthersList = list?.filter(
-            (item) => item?.Promotion?.tag !== "Urgent"
+            (item) => item?.Promotion[0]?.tag !== "Urgent"
           );
           const finallist = [
             ...urgentList,
-            ...urgentList_expire,
             ...orthersList,
+            ...urgentList_expire,
           ];
           setCategoryList(finallist);
           // setCategoryList(response.data);
@@ -172,25 +173,25 @@ const Home = ({ navigation }) => {
 
           const urgentList = list?.filter(
             (item) =>
-              item?.Promotion?.tag == "Urgent" &&
+              item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") <
-                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+                moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const urgentList_expire = list?.filter(
             (item) =>
-              item?.Promotion?.tag == "Urgent" &&
+              item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") >=
-                moment(item?.Promotion?.Expirydate)?.format("YYYY-MM-DD")
+                moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const orthersList = list?.filter(
-            (item) => item?.Promotion?.tag !== "Urgent"
+            (item) => item?.Promotion[0]?.tag !== "Urgent"
           );
           const finallist = [
             ...urgentList,
-            ...urgentList_expire,
             ...orthersList,
+            ...urgentList_expire,
           ];
           setCategoryList(finallist);
           // setCategoryList(list);
@@ -200,7 +201,9 @@ const Home = ({ navigation }) => {
         console.log("Error while getting listings: ", err);
       });
   };
+
   const [categorydata, setCategoryData] = useState("");
+
   useEffect(() => {
     try {
       LogBox.ignoreAllLogs();
@@ -247,6 +250,7 @@ const Home = ({ navigation }) => {
     var user_id = await AsyncStorage.getItem("Userid");
     setlogin_user_id(user_id);
   };
+
   const getLiveLocation = async () => {
     const locPermissionDenied = await locationPermission();
     if (locPermissionDenied) {
@@ -255,6 +259,7 @@ const Home = ({ navigation }) => {
       setCur_Lng(longitude);
     }
   };
+
   ////////////select state////////////
   const [selectedId, setSelectedId] = useState(null);
   ///////////////select function/////////////
@@ -430,7 +435,7 @@ const Home = ({ navigation }) => {
                   item?.images?.length == 0 ? null : IMAGE_URL + item?.images[0]
                 }
                 // image={null}
-                promotion={item?.Promotion}
+                promotion={item?.Promotion[0]}
                 sold={item?.sold}
                 // image={item}
                 maintext={item.title}
