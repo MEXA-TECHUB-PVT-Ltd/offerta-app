@@ -245,7 +245,7 @@ const AccountVerification = ({ navigation, route }) => {
               //   type: "account_verify",
               // });
 
-              navigation.replace("PaymentMethods", {
+              navigation.navigate("PaymentMethods", {
                 user_id: user_id,
                 cnic: cnicImage,
                 live_image: userImage,
