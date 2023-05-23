@@ -57,8 +57,12 @@ import GoogleButton from "../../components/Button/GoogleButton";
 import paypalApi from "../../api/paypalApi";
 import WebView from "react-native-webview";
 const queryString = require("query-string");
+import { Checkbox } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Login = ({ navigation }) => {
+  const [isRemembered, setIsRemembered] = useState(false);
+
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -153,6 +157,37 @@ const Login = ({ navigation }) => {
     });
   };
 
+  const saveUserPreferences = async (email, password) => {
+    if (isRemembered) {
+      let obj = {
+        email: email,
+        password: password,
+      };
+      await AsyncStorage.setItem("remember", JSON.stringify(obj));
+    } else {
+      console.log(
+        "account preferences not saved.bcz use not checked rembered me"
+      );
+      await AsyncStorage.removeItem("remember");
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserPreferences();
+    }, [])
+  );
+
+  const getUserPreferences = async () => {
+    let data = await AsyncStorage.getItem("remember");
+    console.log("data : ", data);
+    if (data) {
+      let parse = JSON.parse(data);
+      setEmail(parse?.email);
+      setPassword(parse?.password);
+      setIsRemembered(true);
+    }
+  };
+
   const LoginUser = async () => {
     console.log("email : ", email);
     console.log("password : ", password);
@@ -178,6 +213,7 @@ const Login = ({ navigation }) => {
         setloading(0);
         setdisable(0);
         if (response.data.status == true) {
+          saveUserPreferences(email?.trim(), password?.trim());
           await AsyncStorage.setItem("Userid", response.data.data.id);
           navigation.replace("Drawerroute");
         } else {
@@ -261,7 +297,7 @@ const Login = ({ navigation }) => {
       // GoogleSignupUser(userInfo.user.email);
       GoogleLoginUser(userInfo.user.email);
     } catch (error) {
-      console.log("Message", JSON.stringify(error));
+      console.log("Error Message", error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         //alert('User Cancelled the Login Flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -269,7 +305,9 @@ const Login = ({ navigation }) => {
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         //alert('Play Services Not Available or Outdated');
       } else {
-        //alert(error.message);
+        console.log("else......................");
+        setsnackbarValue({ value: "Something went wrong", color: "red" });
+        setVisible("true");
       }
     }
   };
@@ -298,46 +336,52 @@ const Login = ({ navigation }) => {
 
   //////////////Google Login Api Calling////////////////////
   const GoogleLoginUser = async (props) => {
-    let fcm_token = await getUserFCMToken();
-    console.log("fcm_token  :  ", fcm_token);
-    setloading(true);
-    axios({
-      method: "post",
-      url: BASE_URL + "loginUser.php",
-      data: {
-        email: props,
-        password: "google123",
-        fcm: fcm_token,
-      },
-    })
-      .then(async function (response) {
-        console.log("response", JSON.stringify(response.data));
-        // if (response.data.message) {
-        //   await AsyncStorage.setItem("Userid", response.data.data.id);
-        //   navigation.navigate("Drawerroute");
-        // } else {
-        //   setModalVisible(true);
-        // }
+    try {
+      let fcm_token = await getUserFCMToken();
+      console.log("fcm_token  :  ", fcm_token);
+      setloading(true);
+      axios({
+        method: "post",
+        url: BASE_URL + "loginUser.php",
+        data: {
+          email: props,
+          password: "google123",
+          fcm: fcm_token,
+        },
+      })
+        .then(async function (response) {
+          console.log("response", JSON.stringify(response.data));
+          // if (response.data.message) {
+          //   await AsyncStorage.setItem("Userid", response.data.data.id);
+          //   navigation.navigate("Drawerroute");
+          // } else {
+          //   setModalVisible(true);
+          // }
 
-        console.log("respo nkfsdfjsf", response?.data);
-        setloading(0);
-        setdisable(0);
-        if (response.data.status == true) {
-          await AsyncStorage.setItem("Userid", response.data.data.id);
-          navigation.replace("Drawerroute");
-        } else {
+          console.log("respo nkfsdfjsf", response?.data);
           setloading(0);
           setdisable(0);
-          // setModalVisible(true);
-          setsnackbarValue({ value: response?.data?.message, color: "red" });
-          setVisible("true");
-        }
-      })
-      .catch(function (error) {
-        if (error) {
-          console.log("Wrong");
-        }
-      });
+          if (response.data.status == true) {
+            await AsyncStorage.setItem("Userid", response.data.data.id);
+            navigation.replace("Drawerroute");
+            saveUserPreferences(props, "google123");
+          } else {
+            setloading(0);
+            setdisable(0);
+            // setModalVisible(true);
+            setsnackbarValue({ value: response?.data?.message, color: "red" });
+            setVisible("true");
+          }
+        })
+        .catch(function (error) {
+          console.log("error  :  ", error);
+          if (error) {
+            console.log("Wrong");
+          }
+        });
+    } catch (error) {
+      console.log("Error occured : ", error);
+    }
   };
   //////////////Google Signup Api Calling////////////////////
   const GoogleSignupUser = async (props) => {
@@ -511,21 +555,54 @@ const Login = ({ navigation }) => {
           </View>
           <View
             style={{
-              ...styles.forgettextview,
-              width: "auto",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 18,
+              marginTop: 10,
             }}
           >
-            <TouchableOpacity
-              activeOpacity={0.4}
-              onPress={() => navigation.navigate("ForgetPassword")}
+            <View
+              style={{
+                flex: 1,
+                marginLeft: wp(8),
+              }}
             >
-              <Text
-                style={styles.forgettext}
-                //onPress={() => navigation.navigate("ForgetPassword")}
+              <TouchableOpacity
+                activeOpacity={0.4}
+                onPress={() => {
+                  setIsRemembered(!isRemembered);
+                }}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
               >
-                {TranslationStrings.FORGET_PASSWORD}?
-              </Text>
-            </TouchableOpacity>
+                <Checkbox
+                  status={isRemembered ? "checked" : "unchecked"}
+                  onPress={() => {
+                    setIsRemembered(!isRemembered);
+                  }}
+                />
+                <Text style={{ ...styles.forgettext, marginBottom: 0 }}>
+                  {TranslationStrings.REMEMBER_ME}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                // ...styles.forgettextview,
+                width: "auto",
+              }}
+            >
+              <TouchableOpacity
+                activeOpacity={0.4}
+                onPress={() => navigation.navigate("ForgetPassword")}
+              >
+                <Text style={{ ...styles.forgettext, marginBottom: 0 }}>
+                  {TranslationStrings.FORGET_PASSWORD}?
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         {/* <View
