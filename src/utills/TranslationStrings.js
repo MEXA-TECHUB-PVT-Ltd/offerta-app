@@ -56,6 +56,7 @@ let TranslationStrings = new LocalizedStrings({
     START_DATE: "Fecha de inicio",
     END_DATE: "Fecha final",
     TOTAL_AMOUNT: "Cantidad total",
+    ACCOUNT_FEE: "Tarifa de cuenta",
     PAY_NOW: "PAGAR AHORA",
 
     // CATEGORY: "Category",
@@ -348,6 +349,8 @@ let TranslationStrings = new LocalizedStrings({
     RATE_BUYER: "Tasa de comprador",
 
     RATE_SELLER: "Calificar a la vendedora",
+
+    REMEMBER_ME: "Acuérdate de mí",
   },
   en: {
     //home
@@ -402,6 +405,7 @@ let TranslationStrings = new LocalizedStrings({
     START_DATE: "Start Date",
     END_DATE: "End Date",
     TOTAL_AMOUNT: "Total Amount",
+    ACCOUNT_FEE: "Account Fee",
     PAY_NOW: "PAY NOW",
 
     CATEGORY: "Category",
@@ -680,6 +684,7 @@ let TranslationStrings = new LocalizedStrings({
     BUYERS: "Buyers",
     RATE_BUYER: "Rate Buyer",
     RATE_SELLER: "Rate Seller",
+    REMEMBER_ME: "Remember Me",
   },
 });
 

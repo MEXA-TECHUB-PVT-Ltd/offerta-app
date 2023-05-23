@@ -112,7 +112,7 @@ const BannerAdvertisment = ({ navigation, route }) => {
               widthset={80}
               topDistance={10}
               onPress={() => {
-                navigation?.replace("AddBanner");
+                navigation?.navigate("AddBanner");
               }}
             />
           </View>

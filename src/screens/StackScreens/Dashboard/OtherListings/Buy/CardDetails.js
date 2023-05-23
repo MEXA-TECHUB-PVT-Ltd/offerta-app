@@ -50,6 +50,7 @@ import {
   post_Promotions_new,
 } from "../../../../../api/Sales&Promotions";
 import { BASE_URL } from "../../../../../utills/ApiRootUrl";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CardDetails = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -76,6 +77,43 @@ const CardDetails = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getCardDetails();
+    }, [])
+  );
+
+  const getCardDetails = async () => {
+    let data = await AsyncStorage.getItem("cardDetail");
+    console.log("cardDetail :  ", data);
+    if (data) {
+      let cardDetail = JSON.parse(data);
+      setCardNo(cardDetail?.cardNumber);
+      let exp_Date = cardDetail?.month + "/" + cardDetail?.year;
+      setExpiryDate(exp_Date);
+      setCvv(cardDetail?.cvc);
+      setChecked(true);
+    } else {
+      await AsyncStorage.removeItem("cardDetail");
+    }
+  };
+
+  const saveCardDetails = async (cardNumber, month, year, cvc) => {
+    if (checked) {
+      let obj = {
+        cardNumber: cardNumber,
+        month: month,
+        year: year,
+        cvc: cvc,
+      };
+      await AsyncStorage.setItem("cardDetail", JSON.stringify(obj));
+      console.log("card details saved........");
+    } else {
+      await AsyncStorage.removeItem("cardDetail");
+    }
+  };
+
   const validate = async () => {
     if (cardno?.length == 0) {
       // please enter card no
@@ -176,6 +214,8 @@ const CardDetails = ({ navigation, route }) => {
             setVisible(true);
           } else {
             CreatePromotion();
+
+            saveCardDetails(cardno, month, year, cvv);
           }
         })
         .catch((err) => {
@@ -216,6 +256,7 @@ const CardDetails = ({ navigation, route }) => {
             setVisible(true);
           } else {
             CreateBanner();
+            saveCardDetails(cardno, month, year, cvv);
           }
         })
         .catch((err) => {
@@ -257,6 +298,7 @@ const CardDetails = ({ navigation, route }) => {
               setVisible(true);
             } else {
               SubmitVerificationDocument();
+              saveCardDetails(cardno, month, year, cvv);
             }
           })
           .catch((err) => {
@@ -293,6 +335,7 @@ const CardDetails = ({ navigation, route }) => {
             value: "Verification document submitted successfully!",
             color: "green",
           });
+
           setVisible(true);
           setTimeout(() => {
             navigation?.goBack();
@@ -388,6 +431,7 @@ const CardDetails = ({ navigation, route }) => {
             add_User_Stripe_Credentials().then(() => {
               checkout(obj)
                 .then((res) => {
+                  saveCardDetails(cardno, month, year, cvv);
                   console.log("checkout api response", res?.data);
                   if (res?.data?.status == false) {
                     setsnackbarValue({

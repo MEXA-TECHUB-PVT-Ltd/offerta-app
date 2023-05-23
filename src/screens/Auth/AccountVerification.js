@@ -63,6 +63,7 @@ import BlockUserView from "../../components/BlockUserView";
 import TranslationStrings from "../../utills/TranslationStrings";
 
 import Loader from "../../components/Loader/Loader";
+import { useFocusEffect } from "@react-navigation/native";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -83,6 +84,9 @@ const AccountVerification = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
 
   const [selected, setSelected] = useState("");
+
+  const [accountFee, setAccountFee] = useState(0);
+  const [loading1, setLoading1] = useState(false);
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
@@ -182,6 +186,42 @@ const AccountVerification = ({ navigation, route }) => {
     }
   };
 
+  const getUserAccountFee = async () => {
+    return new Promise((resolve, reject) => {
+      get_Login_UserData()
+        .then((user_response) => {
+          Get_Account_Fees()
+            .then(async (response) => {
+              let fee = 0;
+              if (user_response?.data?.role == "user") {
+                fee = response?.data?.user_fee;
+              } else {
+                fee = response?.data?.company_fee;
+              }
+              resolve(fee);
+            })
+            .catch((err) => {
+              console.log("Error  : ", err);
+              resolve(0);
+            });
+        })
+        .catch((err) => {
+          resolve(0);
+        });
+    });
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserFee();
+    }, [])
+  );
+  const getUserFee = async () => {
+    setLoading1(true);
+    let fee = await getUserAccountFee();
+    setAccountFee(fee);
+    setLoading1(false);
+  };
+
   const getAccountFees = async () => {
     try {
       get_Login_UserData()
@@ -195,6 +235,7 @@ const AccountVerification = ({ navigation, route }) => {
               } else {
                 fee = response?.data?.company_fee;
               }
+              setAccountFee(fee);
               let user_id = await AsyncStorage.getItem("Userid");
               // navigation?.replace("CardDetails", {
               //   user_id: user_id,
@@ -234,7 +275,7 @@ const AccountVerification = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        {/* <Loader isLoading={loading} /> */}
+        <Loader isLoading={loading1} />
         <Ionicons
           name={"arrow-back"}
           size={25}
@@ -396,6 +437,25 @@ const AccountVerification = ({ navigation, route }) => {
               </View>
             </View>
           </TouchableOpacity>
+
+          <View
+            style={{
+              paddingHorizontal: 30,
+              // padding: 20,
+              alignItems: "flex-end",
+            }}
+          >
+            <Text
+              style={{
+                color: Colors.Appthemecolor,
+                fontFamily: fontFamily.Poppins_SemiBold,
+                fontSize: hp(2),
+              }}
+            >
+              {TranslationStrings.ACCOUNT_FEE} :{accountFee}
+              {"$"}
+            </Text>
+          </View>
         </View>
         <View style={{ height: 120 }}>
           <CustomButtonhere
