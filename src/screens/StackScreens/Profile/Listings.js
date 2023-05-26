@@ -23,6 +23,7 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../../../utills/Colors";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import Loader from "../../../components/Loader/Loader";
 
 const Listings = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
@@ -95,6 +96,8 @@ const Listings = ({ navigation, route }) => {
           />
         }
       >
+        <Loader isLoading={loading} />
+
         <CustomHeader
           headerlabel={TranslationStrings.LISTINGS}
           iconPress={() => {

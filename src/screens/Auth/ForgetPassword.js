@@ -67,6 +67,7 @@ const ForgetPassword = ({ navigation }) => {
 
   ///////////////data states////////////////////
   const [email, setEmail] = React.useState("");
+  const [errorMEssage, setErrorMEssage] = useState("");
   //Api Calling
   const ForgetUserPassword = async () => {
     console.log("email here:", email);
@@ -89,8 +90,16 @@ const ForgetPassword = ({ navigation }) => {
             code: response.data?.otp,
             email: email?.trim()?.toLowerCase(),
           });
-        } else if (response.data.status == false) {
-          setsnackbarValue({ value: response?.data?.message, color: "red" });
+        } else if (
+          response.data.status == false ||
+          response?.data?.Error == true
+        ) {
+          setsnackbarValue({
+            value: response?.data?.message
+              ? response?.data?.message
+              : response?.data?.Message,
+            color: "red",
+          });
           setVisible("true");
         } else {
           setloading(0);
@@ -195,7 +204,8 @@ const ForgetPassword = ({ navigation }) => {
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.failed}
           text={TranslationStrings.ERROR}
-          subtext={TranslationStrings.SOMETHING_WENT_WRONG}
+          // subtext={TranslationStrings.SOMETHING_WENT_WRONG}
+          subtext={errorMEssage}
           buttontext={TranslationStrings.GO_BACK}
           onPress={() => {
             setModalVisible(false);

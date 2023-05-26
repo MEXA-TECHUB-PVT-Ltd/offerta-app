@@ -125,26 +125,25 @@ const MainListingsDetails = ({ navigation, route }) => {
   const [listing_views_user_id, setListing_Views_User_id] = useState("");
   //-----------like list
   const listing_like = async (props) => {
-    console.log("props  :  ", props);
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
     }
     // post_Like_Listings(props).then((response) => {
-    //   console.log("like listing response : ", response?.data);
+
     //   setListing_Like_User_id(response.data.data.user_id);
     //   likes_count();
     // });
     post_Like_Listings_NEW(props).then((response) => {
-      console.log("like listing response : ", response?.data);
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
   };
   //-----------unlike list
   const listing_unlike = async (props) => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -238,8 +237,6 @@ const MainListingsDetails = ({ navigation, route }) => {
     var user_id = await AsyncStorage.getItem("Userid");
     GET_LIKE_STATUS_NEW(predata.listing_id)
       .then((response) => {
-        console.log("response : ", response?.data);
-
         let isLike = response?.data?.islike ? response?.data?.islike : false;
         console.log("isLike  :  ", isLike);
         if (isLike) {
@@ -329,7 +326,7 @@ const MainListingsDetails = ({ navigation, route }) => {
   };
 
   const handleCommentPress = async () => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -340,7 +337,8 @@ const MainListingsDetails = ({ navigation, route }) => {
     navigation.navigate("CommentsDetails", route.params);
   };
   const handleBuyNow = async () => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;

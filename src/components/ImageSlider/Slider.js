@@ -114,7 +114,8 @@ const Slider = (props) => {
     setCurrent_user_id(user_id);
   };
   const handleChatPress = async () => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;

@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ShippingAddressList = ({ navigation }) => {
   ////////////////navigation/////////////////
@@ -67,7 +68,8 @@ const ShippingAddressList = ({ navigation }) => {
         searchicon={"plus"}
         type={"left_icon"}
         onpresseacrh={async () => {
-          let user_status = await get_user_status();
+          let user_status = await AsyncStorage.getItem("account_status");
+
           if (user_status == "block") {
             setShowBlockModal(true);
             return;
@@ -89,7 +91,7 @@ const ShippingAddressList = ({ navigation }) => {
               country={item.country}
               type={"shipping_address"}
               onpress={async () => {
-                let user_status = await get_user_status();
+                let user_status = await AsyncStorage.getItem("account_status");
                 if (user_status == "block") {
                   setShowBlockModal(true);
                   return;

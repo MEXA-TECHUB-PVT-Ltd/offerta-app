@@ -658,6 +658,7 @@ const CardDetails = ({ navigation, route }) => {
       >
         {snackbarValue.value}
       </Snackbar>
+
       <CustomModal
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}
@@ -668,13 +669,13 @@ const CardDetails = ({ navigation, route }) => {
         onPress={() => {
           if (route?.params?.type == "promote") {
             // navigation?.goBack();
-            navigation.navigate("Promotions");
+            navigation.replace("Promotions");
           } else if (route?.params?.type == "addbanner") {
             navigation?.goBack();
             setModalVisible(false);
           } else {
             // navigation.navigate("BottomTab")
-            navigation.navigate("SalesOrders");
+            navigation.replace("SalesOrders");
             setModalVisible(false);
           }
         }}

@@ -125,6 +125,7 @@ const Notification = ({ navigation }) => {
       const localTime = new Date(milliseconds);
       // localTime.getDate(); // local date
       // let hours = localTime.getHours(); // local hour
+
       return moment(localTime).fromNow();
     } catch (error) {
       return "";

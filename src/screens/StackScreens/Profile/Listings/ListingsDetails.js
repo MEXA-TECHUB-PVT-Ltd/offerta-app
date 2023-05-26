@@ -53,6 +53,7 @@ import {
   GETLIKES_NEW,
 } from "../../../../api/GetApis";
 import {
+  GET_LIKE_STATUS_NEW,
   post_Like_Listings,
   post_Like_Listings_NEW,
   post_UnLike_Listings,
@@ -166,7 +167,7 @@ const ListingsDetails = ({ navigation, route }) => {
 
   const listing_like = async (props) => {
     console.log("props  :  ", props);
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
@@ -184,7 +185,7 @@ const ListingsDetails = ({ navigation, route }) => {
   };
   //-----------unlike list
   const listing_unlike = async (props) => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -622,7 +623,8 @@ const ListingsDetails = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.btn}
             onPress={async () => {
-              let user_status = await get_user_status();
+              let user_status = await AsyncStorage.getItem("account_status");
+
               if (user_status == "block") {
                 setShowBlockModal(true);
                 return;
@@ -637,7 +639,8 @@ const ListingsDetails = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.btn}
             onPress={async () => {
-              let user_status = await get_user_status();
+              let user_status = await AsyncStorage.getItem("account_status");
+
               if (user_status == "block") {
                 setShowBlockModal(true);
                 return;

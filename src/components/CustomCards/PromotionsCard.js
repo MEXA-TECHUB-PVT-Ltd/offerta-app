@@ -106,7 +106,10 @@ const PromotionsCard = (props) => {
           </View>
 
           <Text
-            style={[styles.Promotionspricetext, { right: wp(0) }]}
+            style={[
+              styles.Promotionspricetext,
+              { right: wp(0), width: "auto" },
+            ]}
             numberOfLines={1}
           >
             {formattedLikes === "0" ? "free" : "$" + formattedLikes}

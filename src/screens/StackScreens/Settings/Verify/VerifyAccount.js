@@ -100,7 +100,7 @@ const VerifyAccount = ({ navigation }) => {
   };
   //Api form validation
   const formValidation = async () => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);

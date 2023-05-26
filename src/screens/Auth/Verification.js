@@ -50,6 +50,8 @@ import { BASE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TranslationStrings from "../../utills/TranslationStrings";
 
+import { Snackbar } from "react-native-paper";
+
 const Verification = ({ navigation, route }) => {
   /////////////previous data state///////////////
   const [predata] = useState(route.params);
@@ -86,20 +88,95 @@ const Verification = ({ navigation, route }) => {
   const [loading, setloading] = useState(0);
   const [disable, setdisable] = useState(0);
 
+  const [optCode, setOptCode] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [isOTPResended, setIsOTPResended] = useState(false);
+
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+  const onDismissSnackBar = () => setVisible(false);
+
+  useEffect(() => {
+    if (route?.params) {
+      setOptCode(route?.params?.code);
+      setEmail(route?.params?.email);
+    }
+  }, [route?.params]);
+
   //check OTP Code
   const verifyno = () => {
     setloading(1);
 
-    if (predata?.code == value) {
+    // if (predata?.code == value) {
+    console.log({ optCode, value });
+    if (optCode == value) {
       setloading(0);
-      navigation.navigate("ResetPassword", { data: predata });
+      navigation.navigate("ResetPassword", {
+        data: {
+          code: optCode,
+          email: email,
+        },
+      });
     } else {
       setModalVisible(true);
       setloading(0);
     }
   };
+
+  const handleResendCode = async () => {
+    console.log("email here:", email);
+    setloading(true);
+
+    axios({
+      method: "post",
+      url: BASE_URL + "forgetPassword.php",
+      data: {
+        email: email?.trim()?.toLowerCase(),
+      },
+    })
+      .then(function (response) {
+        console.log("resend code response :::  ", response?.data);
+        if (response.data.status == true || response?.data?.Error == false) {
+          setsnackbarValue({
+            value: "Otp sended successfully",
+            color: "green",
+          });
+          setVisible("true");
+          setOptCode(response?.data?.otp);
+        } else if (
+          response.data.status == false ||
+          response?.data?.Error == true
+        ) {
+          setsnackbarValue({
+            value: response?.data?.message
+              ? response?.data?.message
+              : response?.data?.Message,
+            color: "red",
+          });
+          setVisible("true");
+        } else {
+          console.log("else executed............");
+          setsnackbarValue({
+            value: response?.data?.message
+              ? response?.data?.message
+              : response?.data?.Message,
+            color: "red",
+          });
+          setVisible("true");
+        }
+      })
+      .catch(function (error) {
+        console.log("error", error);
+      })
+      .finally(() => {
+        setloading(false);
+      });
+  };
+
   // useEffect(() => {
   // },[]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Ionicons
@@ -187,17 +264,27 @@ const Verification = ({ navigation, route }) => {
                 //return { shouldRepeat: true, delay: 1.5 } // repeat animation in 1.5 seconds
               }}
             >
-              {({ remainingTime }) => (
-                <Text style={{ color: "black", fontSize: hp(2) }}>
-                  {remainingTime}(s)
-                </Text>
-              )}
+              {({ remainingTime }) => {
+                if (remainingTime <= 1 && isOTPResended == false) {
+                  setIsOTPResended(true);
+                  handleResendCode();
+                }
+                // return (
+                //   <Text style={{ color: "black", fontSize: hp(2) }}>
+                //     {remainingTime}(s)
+                //   </Text>
+                // );
+              }}
             </CountdownCircleTimer>
           ) : null}
         </View>
         <TouchableOpacity
           disabled={disabletimer}
-          onPress={() => setdisableTimer(true)}
+          onPress={() => {
+            handleResendCode();
+            // setIsOTPResended(false);
+            // setdisableTimer(true);
+          }}
           style={{ marginLeft: wp(8) }}
         >
           <Text style={styles.Cellmaintext}>
@@ -215,6 +302,18 @@ const Verification = ({ navigation, route }) => {
           onPress={() => verifyno()}
         />
       </View>
+      <Snackbar
+        duration={600}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(20),
+          zIndex: 999,
+        }}
+      >
+        {snackbarValue.value}
+      </Snackbar>
       <CustomModal
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}

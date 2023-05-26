@@ -362,13 +362,13 @@ const PaypalPayment = ({ navigation, route }) => {
         buttontext={TranslationStrings.OK}
         onPress={() => {
           if (route?.params?.type == "promote") {
-            navigation.navigate("Promotions");
+            navigation.replace("Promotions");
           } else if (route?.params?.type == "addbanner") {
             navigation?.goBack();
             setModalVisible(false);
           } else {
             // navigation.navigate("BottomTab")
-            navigation.navigate("SalesOrders");
+            navigation.replace("SalesOrders");
             setModalVisible(false);
           }
         }}

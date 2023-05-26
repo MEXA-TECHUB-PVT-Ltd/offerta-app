@@ -16,14 +16,25 @@ import ResetPassword from "../../screens/Auth/ResetPassword";
 import VerificationDocuments from "../../screens/StackScreens/Settings/VerificationDocuments";
 
 import AccountVerification from "../../screens/Auth/AccountVerification";
+import Coinbase from "../../screens/StackScreens/Payment/Coinbase";
+import AddBanner from "../../screens/Drawer/Banner/AddBanner";
+import BannerAdvertisment from "../../screens/Drawer/Banner/BannerAdvertisment";
 
 const Stack = createNativeStackNavigator();
+
 function AuthNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="LoaderScreen"
         component={LoaderScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Coinbase"
+        component={Coinbase}
         options={{
           headerShown: false,
         }}
@@ -87,6 +98,21 @@ function AuthNav() {
       <Stack.Screen
         name="VerificationDocuments"
         component={VerificationDocuments}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AddBanner"
+        component={AddBanner}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="BannerAdvertisment"
+        component={BannerAdvertisment}
         options={{
           headerShown: false,
         }}

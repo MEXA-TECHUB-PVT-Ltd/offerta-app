@@ -215,6 +215,10 @@ const Login = ({ navigation }) => {
         if (response.data.status == true) {
           saveUserPreferences(email?.trim(), password?.trim());
           await AsyncStorage.setItem("Userid", response.data.data.id);
+          await AsyncStorage.setItem(
+            "account_status",
+            response?.data?.data?.status ? response?.data?.data?.status : ""
+          );
           navigation.replace("Drawerroute");
         } else {
           setloading(0);
@@ -327,11 +331,6 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     GoogleSignin.configure();
-    // checkPermission().then(result => {
-
-    //   setFCMToken(result)
-    //   //do something with the result
-    // })
   }, []);
 
   //////////////Google Login Api Calling////////////////////
@@ -363,6 +362,10 @@ const Login = ({ navigation }) => {
           setdisable(0);
           if (response.data.status == true) {
             await AsyncStorage.setItem("Userid", response.data.data.id);
+            await AsyncStorage.setItem(
+              "account_status",
+              response?.data?.data?.status ? response?.data?.data?.status : ""
+            );
             navigation.replace("Drawerroute");
             saveUserPreferences(props, "google123");
           } else {
@@ -383,6 +386,7 @@ const Login = ({ navigation }) => {
       console.log("Error occured : ", error);
     }
   };
+
   //////////////Google Signup Api Calling////////////////////
   const GoogleSignupUser = async (props) => {
     axios({
@@ -400,6 +404,10 @@ const Login = ({ navigation }) => {
           GoogleLoginUser(props);
         } else {
           await AsyncStorage.setItem("Userid", response.data.data.id);
+          await AsyncStorage.setItem(
+            "account_status",
+            response?.data?.data?.status ? response?.data?.data?.status : ""
+          );
           navigation.navigate("Drawerroute");
         }
       })
@@ -454,6 +462,10 @@ const Login = ({ navigation }) => {
         console.log("response", JSON.stringify(response.data));
         if (response.data.message) {
           await AsyncStorage.setItem("Userid", response.data.data.id);
+          await AsyncStorage.setItem(
+            "account_status",
+            response?.data?.data?.status ? response?.data?.data?.status : ""
+          );
           navigation.navigate("Drawerroute");
 
           // let verification_status = response?.data?.data?.subscription;
@@ -498,6 +510,10 @@ const Login = ({ navigation }) => {
           FacebookLoginUser(props);
         } else {
           await AsyncStorage.setItem("Userid", response.data.data.id);
+          await AsyncStorage.setItem(
+            "account_status",
+            response?.data?.data?.status ? response?.data?.data?.status : ""
+          );
           navigation.navigate("Drawerroute");
         }
       })

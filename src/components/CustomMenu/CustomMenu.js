@@ -180,8 +180,9 @@ const CustomMenu = (props) => {
 
   const handleMenuPress = async () => {
     console.log("this called...");
-    // setShowBlockModal
-    let user_status = await get_user_status();
+
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       console.log("her......");
       props.setShowBlockModal(true);

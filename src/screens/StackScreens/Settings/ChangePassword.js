@@ -52,6 +52,10 @@ const ChangePassword = ({ navigation, route }) => {
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
 
+  const [showOldPass, setShowOldPass] = useState(false);
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [showCPass, setShowCPass] = useState(false);
+
   //password eye function and states
   const [data, setData] = React.useState({
     check_textInputChange: false,
@@ -59,6 +63,7 @@ const ChangePassword = ({ navigation, route }) => {
     isValidUser: true,
     isValidPassword: true,
   });
+
   const updateSecureTextEntry = () => {
     setData({
       ...data,
@@ -86,9 +91,19 @@ const ChangePassword = ({ navigation, route }) => {
     })
       .then(async function (response) {
         console.log("response", JSON.stringify(response.data));
-        setloading(0);
-        setdisable(0);
-        setModalVisible(true);
+        if (response?.data?.status == true) {
+          setloading(0);
+          setdisable(0);
+          setModalVisible(true);
+        } else {
+          //error
+          setsnackbarValue({
+            value: "Old Password incorrect",
+            color: "red",
+          });
+          setVisible("true");
+        }
+
         //navigation.navigate('Login')
       })
       .catch(function (error) {
@@ -99,11 +114,16 @@ const ChangePassword = ({ navigation, route }) => {
         }
         setModalVisible(true);
         console.log("error", error);
+      })
+      .finally(() => {
+        setloading(0);
+        setdisable(0);
       });
   };
   //Api form validation
   const formValidation = async () => {
-    let user_status = await get_user_status();
+    // let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -145,11 +165,13 @@ const ChangePassword = ({ navigation, route }) => {
       ChangePassword();
     }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flex: 1 }}
       >
         <CustomHeader
           headerlabel={TranslationStrings.CHANGE_PASSWORD}
@@ -166,6 +188,9 @@ const ChangePassword = ({ navigation, route }) => {
               term={old_password}
               placeholder={TranslationStrings.OLD_PASSWORD}
               onTermChange={(newPassword) => setOldPassword(newPassword)}
+              mode={"password"}
+              secureTextEntry={!showOldPass}
+              onclick={() => setShowOldPass(!showOldPass)}
             />
             <CustomTextInput
               icon={appImages.lock}
@@ -173,18 +198,27 @@ const ChangePassword = ({ navigation, route }) => {
               term={password}
               placeholder={TranslationStrings.NEW_PASSWORD}
               onTermChange={(newPassword) => setPassword(newPassword)}
+              mode={"password"}
+              secureTextEntry={!showNewPass}
+              onclick={() => setShowNewPass(!showNewPass)}
             />
+
             <CustomTextInput
               icon={appImages.lock}
               type={"iconinput"}
               term={confirmPassword}
               placeholder={TranslationStrings.CONFIRM_PASSWORD}
               onTermChange={(newPassword) => setConfirmPassword(newPassword)}
+              mode={"password"}
+              secureTextEntry={!showCPass}
+              onclick={() => setShowCPass(!showCPass)}
             />
           </View>
         </View>
 
-        <View style={{ marginTop: hp(25) }}>
+        <View
+          style={{ marginTop: hp(25), justifyContent: "flex-end", flex: 0.8 }}
+        >
           <CustomButtonhere
             title={TranslationStrings.CHANGE}
             widthset={80}
@@ -220,7 +254,9 @@ const ChangePassword = ({ navigation, route }) => {
           subtext={"Password Changed Successfully"}
           buttontext={"GO BACK"}
           onPress={() => {
-            setModalVisible(false), navigation.navigate("Settings        ");
+            setModalVisible(false),
+              //  navigation.navigate("Settings");
+              navigation?.goBack();
           }}
         />
       </ScrollView>

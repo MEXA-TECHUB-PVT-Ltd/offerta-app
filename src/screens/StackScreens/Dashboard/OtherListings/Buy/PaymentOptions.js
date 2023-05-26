@@ -56,11 +56,11 @@ const PaymentOptions = ({ navigation, route }) => {
     console.log("index  : ", index);
 
     if (index == 0) {
-      navigation.navigate("PaymentMethods1", {
+      navigation.replace("PaymentMethods1", {
         index: index,
       });
     } else if (index !== 1) {
-      navigation.navigate("ConfirmAddress", {
+      navigation.replace("ConfirmAddress", {
         index: index,
       });
     }

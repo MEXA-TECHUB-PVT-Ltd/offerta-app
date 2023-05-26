@@ -38,6 +38,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 //////////////IMAGE URL/////////////////
 import { ADMIN_IMAGE_URL } from "../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import Hyperlink from "react-native-hyperlink";
 
 const BlogsDetails = ({ navigation, route }) => {
   //////////////////previous data/////////
@@ -92,13 +93,13 @@ const BlogsDetails = ({ navigation, route }) => {
       }
     });
   }, []);
-  const handlePress = () => {
-    Linking.openURL(blog_reference);
+  const handlePress = (url) => {
+    Linking.openURL(url);
   };
 
   const tagsStyles = {
     p: {
-      fontSize: hp(2),
+      fontSize: hp(1.8),
       color: "black",
       width: wp(90),
       marginHorizontal: wp(5),
@@ -197,9 +198,15 @@ const BlogsDetails = ({ navigation, route }) => {
           }}
         >
           <Text style={styles.lefttext}>{TranslationStrings.REFERENCES}</Text>
-          <Text style={styles.righttext} onPress={() => handlePress()}>
-            {blog_reference}
-          </Text>
+          <Hyperlink
+            style={{ flex: 1 }}
+            linkStyle={{ color: "#2980b9" }}
+            onPress={(url, text) => handlePress(url)}
+          >
+            <Text style={{ ...styles.righttext, flex: 1 }}>
+              {blog_reference}
+            </Text>
+          </Hyperlink>
         </View>
         <View
           style={{

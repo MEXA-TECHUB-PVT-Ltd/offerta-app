@@ -8,6 +8,8 @@ import BlogCard from "../../components/CustomCards/BlogCard";
 /////////////app styles////////////////
 import styles from "./styles";
 
+import Loader from "../../components/Loader/Loader";
+
 /////////////api function/////////////////
 import { get_All_Blogs } from "../../api/Blogs";
 import TranslationStrings from "../../utills/TranslationStrings";
@@ -15,15 +17,22 @@ import TranslationStrings from "../../utills/TranslationStrings";
 const Blogs = ({ navigation, route }) => {
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    get_All_Blogs().then((response) => {
-      if (response.data.message === "No data available") {
-        setdata("");
-      } else {
-        setdata(response.data);
-      }
-    });
+    setLoading(true);
+    get_All_Blogs()
+      .then((response) => {
+        if (response.data.message === "No data available") {
+          setdata("");
+        } else {
+          let list = response?.data ? response?.data : [];
+          setdata(list?.reverse());
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const renderItem = (item) => {
@@ -48,7 +57,7 @@ const Blogs = ({ navigation, route }) => {
         }}
         icon={"arrow-back"}
       />
-
+      <Loader isLoading={loading} />
       <FlatList
         data={data}
         numColumns={2}

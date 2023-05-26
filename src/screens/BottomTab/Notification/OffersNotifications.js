@@ -429,12 +429,12 @@ const OffersNotifications = () => {
               <Text style={{ ...styles.username }}>
                 {item.item.requester.full_name}
               </Text>
-              <Text
+              {/* <Text
                 style={[styles.recomend, { color: "#7A8FA6", width: "auto" }]}
               >
                 {item?.item?.created_at &&
                   convertUTCToLocalTime(item?.item?.created_at)}
-              </Text>
+              </Text> */}
             </View>
             <Text
               style={[styles.recomend, { color: "#7A8FA6", width: wp(57) }]}

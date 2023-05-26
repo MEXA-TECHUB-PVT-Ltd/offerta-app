@@ -25,6 +25,7 @@ export default function Drawerroute() {
         name="BottomTab"
         component={BottomTab}
       />
+
       <Drawer.Screen
         options={{
           headerShown: false,
@@ -32,6 +33,7 @@ export default function Drawerroute() {
         name="PrivacyTerms"
         component={PrivacyTerms}
       />
+
       <Drawer.Screen
         options={{
           headerShown: false,
@@ -39,6 +41,7 @@ export default function Drawerroute() {
         name="TermsCondition"
         component={TermsCondition}
       />
+
       <Drawer.Screen
         options={{
           headerShown: false,
@@ -46,6 +49,7 @@ export default function Drawerroute() {
         name="Language"
         component={Language}
       />
+
       <Drawer.Screen
         options={{
           headerShown: false,
@@ -53,6 +57,7 @@ export default function Drawerroute() {
         name="InviteFriends"
         component={InviteFriends}
       />
+
       <Drawer.Screen
         options={{
           headerShown: false,
@@ -60,6 +65,7 @@ export default function Drawerroute() {
         name="BannerAdvertisment"
         component={BannerAdvertisment}
       />
+
       <Drawer.Screen
         options={{
           headerShown: false,
