@@ -34,8 +34,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { appImages } from "../../../constant/images";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import Loader from "../../../components/Loader/Loader";
+import { useNavigation } from "@react-navigation/native";
 
-const BannerAdvertisment = ({ navigation, route }) => {
+const BannerAdvertisment = ({ route }) => {
+  const navigation = useNavigation();
   //////////render html width///////////
   const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(false);

@@ -123,7 +123,8 @@ const ConfirmAddress = ({ navigation, route }) => {
       } else {
         console.log("address mil gya..");
       }
-      navigation.navigate("Checkout", {
+
+      navigation.replace("Checkout", {
         payment_type: route?.params?.payment_type,
       });
     }

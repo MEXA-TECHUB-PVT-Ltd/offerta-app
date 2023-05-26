@@ -49,6 +49,8 @@ import { get_Login_UserData, get_user_status } from "../../../api/GetApis";
 import BlockUserView from "../../../components/BlockUserView";
 import TranslationStrings from "../../../utills/TranslationStrings";
 
+import Loader from "../../../components/Loader/Loader";
+
 const EditProfile = ({ navigation, route }) => {
   /////////////previous data////////////
   const [predata] = useState(route.params);
@@ -69,6 +71,8 @@ const EditProfile = ({ navigation, route }) => {
   const ref_input2 = useRef();
   const ref_input3 = useRef();
   const ref_input4 = useRef();
+
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
@@ -91,7 +95,7 @@ const EditProfile = ({ navigation, route }) => {
   const [showBlockModal, setShowBlockModal] = useState(false);
   //////////////////////Api Calling/////////////////
   const Edit_User_Profile = async () => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -127,17 +131,20 @@ const EditProfile = ({ navigation, route }) => {
       .finally(() => setloading(false));
   };
   const get_user_data = () => {
-    get_Login_UserData().then((response) => {
-      if (response?.data?.image) {
-        dispatch(setUserImage(IMAGE_URL + response?.data?.image));
-      }
-      setuser_id(response.data.id);
-      setusername(response.data.user_name);
-      setfname(response.data.full_name);
-      setlname(response.data.full_name);
-      setPhoneNo(response?.data?.phone_no);
-      setEmail(response.data.email);
-    });
+    setIsDataLoading(true);
+    get_Login_UserData()
+      .then((response) => {
+        if (response?.data?.image) {
+          dispatch(setUserImage(IMAGE_URL + response?.data?.image));
+        }
+        setuser_id(response.data.id);
+        setusername(response.data.user_name);
+        setfname(response.data.full_name);
+        setlname(response.data.full_name);
+        setPhoneNo(response?.data?.phone_no);
+        setEmail(response.data.email);
+      })
+      .finally(() => setIsDataLoading(false));
   };
   useEffect(() => {
     get_user_data();
@@ -156,6 +163,8 @@ const EditProfile = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor={"#26295E"} barStyle="light-content" />
+
+        <Loader isLoading={isDataLoading} />
 
         <CustomHeader
           headerlabel={TranslationStrings.EDIT_PROFILE}

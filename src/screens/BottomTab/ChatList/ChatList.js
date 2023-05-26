@@ -133,7 +133,6 @@ const ChatList = ({ navigation }) => {
     return new Promise(async (resolve, reject) => {
       try {
         var user = await AsyncStorage.getItem("Userid");
-
         let unread_count = 0;
         let docid =
           user_id > user ? user + "-" + user_id : user_id + "-" + user;
@@ -157,6 +156,9 @@ const ChatList = ({ navigation }) => {
               count: myArr?.length,
             };
             resolve(obj);
+          })
+          .catch((err) => {
+            console.log("Err : ", err);
           });
       } catch (error) {
         console.log("error : ", error);
@@ -211,6 +213,7 @@ const ChatList = ({ navigation }) => {
   // };
 
   //
+
   const getDetails = async () => {
     getuser();
     get_Chat_Users().then(async (response) => {

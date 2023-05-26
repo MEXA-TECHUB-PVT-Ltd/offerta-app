@@ -56,8 +56,10 @@ import TranslationStrings from "../../../utills/TranslationStrings";
 import Loader from "../../../components/Loader/Loader";
 
 import { Snackbar } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
-const AddBanner = ({ navigation, route }) => {
+const AddBanner = ({ route }) => {
+  const navigation = useNavigation();
   //camera and imagepicker
   const refRBSheet = useRef();
 
@@ -164,7 +166,8 @@ const AddBanner = ({ navigation, route }) => {
   //////////////////////Api Calling/////////////////
   const CreateBanner = async () => {
     setLoading(true);
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       setLoading(false);
@@ -212,7 +215,7 @@ const AddBanner = ({ navigation, route }) => {
       //   cast: bannerPrice * daysDifference,
       // });
 
-      navigation.navigate("PaymentMethods", {
+      navigation.replace("PaymentMethods", {
         type: "addbanner",
         user_id: user_id,
         start_date: moment(startDate).format("YYYY-MM-DD"),

@@ -13,7 +13,7 @@ import { get_Chat_Users } from "../../api/ChatApis";
 import { useDispatch } from "react-redux";
 import { setChatCount, setNotificationCount } from "../../redux/actions";
 import firestore from "@react-native-firebase/firestore";
-import { get_Notifications } from "../../api/GetApis";
+import { get_Notifications, get_user_status } from "../../api/GetApis";
 
 const LoaderScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -23,13 +23,21 @@ const LoaderScreen = ({ navigation }) => {
     try {
       getSelectedLanguage();
       await AsyncStorage.getItem("Userid")
-        .then((db) => {
+        .then(async (db) => {
           // setloading(false);
           console.log("usertype...", { db });
           if (db === null) {
             setloading(false);
             navigation.replace("Login");
           } else {
+            let user_status = await AsyncStorage.getItem("account_status");
+            if (user_status == null || user_status?.length == 0) {
+              console.log(
+                "user_status updated.............................................."
+              );
+              let user_status = await get_user_status();
+              await AsyncStorage.setItem("account_status", user_status);
+            }
             setTimeout(() => {
               console.log("here..");
               setloading(false);

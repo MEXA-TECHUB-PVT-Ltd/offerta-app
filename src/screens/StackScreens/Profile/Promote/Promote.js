@@ -55,6 +55,7 @@ const Promote = ({ navigation, route }) => {
       title: TranslationStrings.ADVERTISEMENT,
     },
   ];
+
   ////////////////////previous state///////////////
   const [predata] = useState(route.params);
 
@@ -199,7 +200,7 @@ const Promote = ({ navigation, route }) => {
       expiry_date: expiry_date,
     };
 
-    navigation.navigate("PaymentMethods", obj);
+    navigation.replace("PaymentMethods", obj);
 
     return;
 
@@ -236,7 +237,7 @@ const Promote = ({ navigation, route }) => {
       if (item?.promotion_id == id) {
         return {
           ...item,
-          checked: true,
+          checked: !item.checked,
         };
       } else {
         return {
@@ -245,6 +246,7 @@ const Promote = ({ navigation, route }) => {
         };
       }
     });
+
     setAdvertisement_Promotion(newData);
   };
 

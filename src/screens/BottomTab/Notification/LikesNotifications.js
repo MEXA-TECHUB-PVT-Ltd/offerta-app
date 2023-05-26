@@ -113,7 +113,7 @@ const LikesNotifications = ({}) => {
         //setData(response.data)
         if (
           response.data.msg === "No Result" ||
-          response?.data?.message == "No record found"
+          response?.data[0]?.message == "No record found"
         ) {
           // setNotification("");
           setData([]);
@@ -124,6 +124,7 @@ const LikesNotifications = ({}) => {
             let sorted_list = notificationList1.sort(
               (a, b) => new Date(b?.created_at) - new Date(a.created_at)
             );
+
             setData(sorted_list);
             // setNotification(sorted_list);
             //   dispatch(setNotificationList(sorted_list));

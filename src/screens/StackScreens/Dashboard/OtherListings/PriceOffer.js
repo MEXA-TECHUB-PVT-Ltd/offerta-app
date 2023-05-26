@@ -64,7 +64,8 @@ const PriceOffer = ({ navigation, route }) => {
 
   ////////////LISTING LIKES//////////
   const Listings_Exchange_Offer = async (props) => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;

@@ -43,7 +43,7 @@ const PaymentMethods1 = ({ navigation, route }) => {
     //   //paypal payment
     //   navigation.navigate("PaypalPayment", route?.params);
     // }
-    navigation.navigate("ConfirmAddress", {
+    navigation.replace("ConfirmAddress", {
       index: route?.params?.index,
       payment_type: index == 0 ? "Credit_card" : "Paypal",
     });

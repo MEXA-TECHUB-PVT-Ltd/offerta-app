@@ -34,10 +34,14 @@ import { IMAGE_URL } from "../../../utills/ApiRootUrl";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import Loader from "../../../components/Loader/Loader";
+
 const LikedItems = ({ navigation }) => {
   ////////////////LIST DATA/////////
   const [data, setdata] = useState();
   const [login_user_id, setlogin_user_id] = useState();
+  const [loading, setLoading] = useState(false);
+
   const getuser = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
     setlogin_user_id(user_id);
@@ -53,12 +57,19 @@ const LikedItems = ({ navigation }) => {
       //     setdata(response.data);
       //   }
       // });
-      console.log("klldklk...");
-      get_User_Liked_Listings_NEw().then((response) => {
-        let list = response?.data?.data ? response?.data?.data : [];
 
-        setdata(list);
-      });
+      setLoading(true);
+      get_User_Liked_Listings_NEw()
+        .then((response) => {
+          let list = response?.data?.data ? response?.data?.data : [];
+          if (list?.length > 0) {
+            const filter = list?.filter((item) => item?.listing_detail != null);
+            setdata(filter);
+          } else {
+            setdata(list);
+          }
+        })
+        .finally(() => setLoading(false));
     }, [])
   );
 
@@ -71,6 +82,7 @@ const LikedItems = ({ navigation }) => {
         }}
         icon={"arrow-back"}
       />
+      <Loader isLoading={loading} />
 
       <View style={{ flex: 1 }}>
         <FlatList

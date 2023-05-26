@@ -111,7 +111,7 @@ const AccountVerification = ({ navigation, route }) => {
     // });
     // setVisible(true);
     // return;
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
 
     if (user_status == "block") {
       setShowBlockModal(true);

@@ -52,22 +52,40 @@ const Promotions = ({ navigation }) => {
     useState("");
   const [expire_list, setExpire_list] = useState([]);
 
+  const getFormattedPrice = async (price) => {
+    if (price) {
+      const formatter = new Intl.NumberFormat("en-US", {
+        notation: "compact",
+        compactDisplay: "short",
+      });
+      const formattedPrice = formatter.format(price);
+
+      return formattedPrice;
+    } else {
+      return 0;
+    }
+  };
+
   const getAllUserPromotions = async () => {
     get_user_all_promotions()
       .then((response) => {
-        const urgent_promotion_list = response.data?.data?.filter(
+        let responseList = response.data?.data ? response.data?.data : [];
+        const filter = responseList?.filter(
+          (item) => item?.listing_detail != null
+        );
+        const urgent_promotion_list = filter?.filter(
           (item) =>
             item?.tag_detail?.tag == "Urgent" &&
             moment(new Date())?.format("YYYY-MM-DD") <
               moment(item?.promoted_detail?.Expirydate)?.format("YYYY-MM-DD")
         );
-        const advertisement_promotion_list = response.data?.data?.filter(
+        const advertisement_promotion_list = filter?.filter(
           (item) =>
             item?.tag_detail?.tag == "Advertisement" &&
             moment(new Date())?.format("YYYY-MM-DD") <
               moment(item?.promoted_detail?.Expirydate)?.format("YYYY-MM-DD")
         );
-        const expire_promotionsList = response.data?.data?.filter(
+        const expire_promotionsList = filter?.filter(
           (item) =>
             moment(new Date())?.format("YYYY-MM-DD") >=
             moment(item?.promoted_detail?.Expirydate)?.format("YYYY-MM-DD")
@@ -143,6 +161,9 @@ const Promotions = ({ navigation }) => {
         }
         pricetext={
           item?.listing_detail?.price ? item?.listing_detail?.price : null
+          // item?.listing_detail?.price
+          //   ? getFormattedPrice(item?.listing_detail?.price)
+          //   : null
         }
         // type={item?.promotion?.type}
         type={selectedType}

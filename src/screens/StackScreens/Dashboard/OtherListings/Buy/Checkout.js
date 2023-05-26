@@ -50,7 +50,7 @@ const Checkout = ({ navigation, route }) => {
         type: "listing_paypal",
       });
     } else {
-      navigation.navigate("CardDetails");
+      navigation.replace("CardDetails");
     }
   };
 

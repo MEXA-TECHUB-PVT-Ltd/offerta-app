@@ -200,6 +200,8 @@ const ChatScreen = ({ route, navigation }) => {
         ? user + "-" + route.params.userid
         : route.params.userid + "-" + user;
 
+    console.log("doc_id  :  ", doc_id);
+
     const messageRef = firestore()
       .collection("chats")
       .doc(doc_id)
@@ -207,7 +209,7 @@ const ChatScreen = ({ route, navigation }) => {
       .orderBy("createdAt", "desc");
 
     messageRef.onSnapshot((querySnap) => {
-      const allmsg = querySnap.docs.map((docsnap) => {
+      const allmsg = querySnap?.docs?.map((docsnap) => {
         const data = docsnap.data();
         if (data.createdAt) {
           return {
@@ -395,7 +397,7 @@ const ChatScreen = ({ route, navigation }) => {
 
   const handleSend = async (messageArray) => {
     console.log("messageArray  :  ", messageArray);
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
@@ -771,7 +773,8 @@ const ChatScreen = ({ route, navigation }) => {
   }, []);
 
   const handleCounterOfferPress = async (props) => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
@@ -797,7 +800,8 @@ const ChatScreen = ({ route, navigation }) => {
   };
 
   const handlePriceOfferPress = async (props) => {
-    let user_status = await get_user_status();
+    let user_status = await AsyncStorage.getItem("account_status");
+
     if (user_status == "block") {
       setShowBlockModal(true);
       return;
@@ -910,7 +914,8 @@ const ChatScreen = ({ route, navigation }) => {
             size={25}
             color={"black"}
             onPress={async () => {
-              let user_status = await get_user_status();
+              let user_status = await AsyncStorage.getItem("account_status");
+
               if (user_status == "block") {
                 setShowBlockModal(true);
                 return;
