@@ -40,7 +40,7 @@ import {
   setNotificationList,
 } from "../../../redux/actions";
 import Loader from "../../../components/Loader/Loader";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import BlockUserView from "../../../components/BlockUserView";
 import { get_user_status } from "../../../api/GetApis";
@@ -57,7 +57,10 @@ import LikesNotifications from "./LikesNotifications";
 import CommentNotifications from "./CommentNotifications";
 import NoNotificationFound from "./NoNotificationFound";
 
+import { Snackbar } from "react-native-paper";
+
 const OffersNotifications = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const { chatCount, notificationList } = useSelector(
     (state) => state.userReducer
@@ -68,6 +71,12 @@ const OffersNotifications = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showBlockModal, setShowBlockModal] = useState(false);
+
+  //snackbar
+  const [visible, setVisible] = React.useState(false);
+  const onDismissSnackBar = () => setVisible(false);
+  const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
+
   useEffect(() => {
     setLoading(true);
   }, []);
@@ -284,7 +293,17 @@ const OffersNotifications = () => {
         };
 
         console.log("obj : ", obj);
-        navigation.navigate("PriceOfferNoti", obj);
+
+        if (typeof obj?.listing_id == "undefined") {
+          setsnackbarValue({
+            value: "Oops.Listing Details not found.",
+            color: "red",
+          });
+          setLoading(false);
+          setVisible(true);
+        } else {
+          navigation.navigate("PriceOfferNoti", obj);
+        }
       }
     } else if (item?.type == "Counter Offer") {
       if (item?.offer_status == "created") {
@@ -306,7 +325,18 @@ const OffersNotifications = () => {
           offer_status: item?.offer_status,
           type: "view",
         };
-        navigation.navigate("CounterOffer", obj);
+        if (typeof obj?.listing_id == "undefined") {
+          console.log("listing details not found...");
+          console.log("counter offer object:::::::::::::::::", obj);
+          setsnackbarValue({
+            value: "Oops.Listing Details not found.",
+            color: "red",
+          });
+          setLoading(false);
+          setVisible(true);
+        } else {
+          navigation.navigate("CounterOffer", obj);
+        }
       } else {
         let obj = {
           buyer_id: item?.offer?.requester_id,
@@ -326,7 +356,16 @@ const OffersNotifications = () => {
           offer_status: item?.offer_status,
           type: "view",
         };
-        navigation.navigate("CounterOffer", obj);
+        if (typeof obj?.listing_id == "undefined") {
+          setsnackbarValue({
+            value: "Oops.Listing Details not found.",
+            color: "red",
+          });
+          setLoading(false);
+          setVisible(true);
+        } else {
+          navigation.navigate("CounterOffer", obj);
+        }
       }
     } else if (item?.type == "exchange") {
       //item1  : requester_list
@@ -483,6 +522,16 @@ const OffersNotifications = () => {
           ListEmptyComponent={<NoNotificationFound loading={loading} />}
         />
       </View>
+      <Snackbar
+        duration={2000}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+        }}
+      >
+        {snackbarValue?.value}
+      </Snackbar>
     </SafeAreaView>
   );
 };

@@ -264,9 +264,12 @@ const UpdateShippingAddress = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Update Shipping Address Sucessfully"}
-          buttontext={"OK"}
+          // text={"Success"}
+          text={TranslationStrings.SUCCESS}
+          // subtext={"Shipping Address updated successfully"}
+          subtext={TranslationStrings.SHIPPING_ADDRESS_UPDATED_SUCCESSFULLY}
+          // buttontext={"OK"}
+          buttontext={TranslationStrings.OK}
           onPress={() => {
             setModalVisible(false),
               navigation.navigate("ShippingAddressList", {

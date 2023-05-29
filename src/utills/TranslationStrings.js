@@ -351,6 +351,15 @@ let TranslationStrings = new LocalizedStrings({
     RATE_SELLER: "Calificar a la vendedora",
 
     REMEMBER_ME: "Acuérdate de mí",
+
+    SHIPPING_ADDRESS_UPDATED_SUCCESSFULLY:
+      "Dirección de envío actualizada exitosamente",
+
+    SHIPPING_ADDRESS_CREATED_SUCCESSFULLY:
+      "Dirección de envío creada con éxito.",
+    AD: "Destacado",
+
+    OFFERS: "Ofertas",
   },
   en: {
     //home
@@ -685,6 +694,15 @@ let TranslationStrings = new LocalizedStrings({
     RATE_BUYER: "Rate Buyer",
     RATE_SELLER: "Rate Seller",
     REMEMBER_ME: "Remember Me",
+
+    SHIPPING_ADDRESS_UPDATED_SUCCESSFULLY:
+      "Shipping Address updated successfully",
+
+    SHIPPING_ADDRESS_CREATED_SUCCESSFULLY:
+      "Shipping Address created Successfully.",
+    AD: "Ad",
+
+    OFFERS: "Offers",
   },
 });
 
