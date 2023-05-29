@@ -105,7 +105,8 @@ const DashboardCard = (props) => {
                       props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
                   }}
                 >
-                  Ad
+                  {/* Ad */}
+                  {TranslationStrings.AD}
                 </Text>
               </View>
             )}
@@ -134,7 +135,8 @@ const DashboardCard = (props) => {
                       props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
                   }}
                 >
-                  Urgent
+                  {/* Urgent */}
+                  {TranslationStrings.URGENT}
                 </Text>
               </View>
             )}

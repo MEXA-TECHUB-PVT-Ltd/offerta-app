@@ -336,6 +336,7 @@ const MainListingsDetails = ({ navigation, route }) => {
     dispatch(setListingId(predata.listing_id));
     navigation.navigate("CommentsDetails", route.params);
   };
+
   const handleBuyNow = async () => {
     let user_status = await AsyncStorage.getItem("account_status");
 
@@ -344,7 +345,7 @@ const MainListingsDetails = ({ navigation, route }) => {
       return;
     }
     // navigation.navigate("ConfirmAddress");
-    navigation.navigate("PaymentOptions");
+    navigation.replace("PaymentOptions");
   };
 
   const handleRefresh = () => {

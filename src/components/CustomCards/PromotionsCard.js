@@ -47,11 +47,15 @@ const PromotionsCard = (props) => {
               props.type === "urgent" ||
               props.type === "Urget" ||
               props.type === TranslationStrings.URGENT
-                ? "red"
+                ? props?.tag_detail?.color
+                  ? props?.tag_detail?.color
+                  : "red"
                 : props.type === "Advertisement" ||
                   props.type === "advertisement" ||
                   props.type == TranslationStrings.ADVERTISEMENT
-                ? "#576AF4"
+                ? props?.tag_detail?.color
+                  ? props?.tag_detail?.color
+                  : "#576AF4"
                 : Colors.inactivetextinput,
             height: hp(3.5),
             width:
@@ -68,12 +72,12 @@ const PromotionsCard = (props) => {
             {props.type === "Urgent" ||
             props.type === "urgent" ||
             props.type === TranslationStrings.URGENT
-              ? "Urgent"
+              ? TranslationStrings.URGENT
               : props.type === "Advertisement" ||
                 props.type === "advertisement" ||
                 props.type == TranslationStrings.ADVERTISEMENT
-              ? "Ad"
-              : "Expired"}
+              ? TranslationStrings.AD
+              : TranslationStrings.EXPIRED}
           </Text>
         </View>
         <View style={{ flexDirection: "row" }}>

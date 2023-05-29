@@ -265,9 +265,9 @@ const ShippingAddresss = ({ navigation, route }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.sucess}
-          text={"Success"}
-          subtext={"Shipping Address Sucessfully"}
-          buttontext={"OK"}
+          text={TranslationStrings.SUCCESS}
+          subtext={TranslationStrings.SHIPPING_ADDRESS_CREATED_SUCCESSFULLY}
+          buttontext={TranslationStrings.OK}
           onPress={() => {
             setModalVisible(false),
               route.params.navtype === "Buy"

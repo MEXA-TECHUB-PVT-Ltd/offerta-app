@@ -275,7 +275,7 @@ const CounterOffer = ({ navigation, route }) => {
         // navigation?.goBack();
         dispatch(setExchangeOffer_OtherListing(response?.data));
         // navigation.navigate("ConfirmAddress");
-        navigation.navigate("PaymentOptions");
+        navigation.replace("PaymentOptions");
       })
       .catch(() => {
         navigation?.goBack();

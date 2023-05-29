@@ -167,6 +167,7 @@ const Promotions = ({ navigation }) => {
         }
         // type={item?.promotion?.type}
         type={selectedType}
+        tag_detail={item?.tag_detail}
         item={item}
       />
     );

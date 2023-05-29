@@ -287,7 +287,7 @@ const PriceOfferNoti = ({ navigation, route }) => {
           //   buyer_id: route?.params?.buyer_id,
           //   type: "sale",
           // });
-          navigation?.navigate("SaleAndOrder");
+          navigation?.replace("SalesOrders");
         }}
       />
       <CustomModal

@@ -20,7 +20,7 @@ const ExcahangeCard = (props) => {
   });
   const formattedLikes =
     props.pricetext == null ? null : formatter.format(props.pricetext);
-  console.log("formattedLikes  :  ", props.pricetext);
+
   return (
     // <TouchableOpacity
     //   onPress={() =>
@@ -56,10 +56,11 @@ const ExcahangeCard = (props) => {
         </View>
 
         <View style={{ marginLeft: wp(3) }}>
-          <Text style={styles.Exchangetext}>{props.maintext}</Text>
+          <Text style={{ ...styles.Exchangetext }}>{props.maintext}</Text>
           <Text style={styles.Exchangesubtext}>{props.subtext}</Text>
         </View>
       </View>
+
       <View
         style={{
           flexDirection: props.pricetag != undefined ? "column" : "row",
@@ -74,6 +75,7 @@ const ExcahangeCard = (props) => {
             ]}
             //numberOfLines={1}
           >
+            $
             {props.pricetag != undefined
               ? formattedLikes + props.pricetag
               : formattedLikes}

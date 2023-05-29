@@ -88,8 +88,6 @@ const ListingsDetails = ({ navigation, route }) => {
   ///////////previous data///////////
   const [predata] = useState(route.params);
 
-  console.log("predata  : ", predata);
-
   const [refreshing, setRefreshing] = useState(false);
 
   //camera and imagepicker
@@ -147,10 +145,8 @@ const ListingsDetails = ({ navigation, route }) => {
     var user_id = await AsyncStorage.getItem("Userid");
     GET_LIKE_STATUS_NEW(predata.listing_id)
       .then((response) => {
-        console.log("response : ", response?.data);
-
         let isLike = response?.data?.islike ? response?.data?.islike : false;
-        console.log("isLike  :  ", isLike);
+
         if (isLike) {
           setListing_Like_User_id(user_id);
         } else {
@@ -166,7 +162,6 @@ const ListingsDetails = ({ navigation, route }) => {
   }, [listing_like_user_id]);
 
   const listing_like = async (props) => {
-    console.log("props  :  ", props);
     let user_status = await AsyncStorage.getItem("account_status");
     if (user_status == "block") {
       setShowBlockModal(true);
@@ -178,11 +173,11 @@ const ListingsDetails = ({ navigation, route }) => {
     //   likes_count();
     // });
     post_Like_Listings_NEW(props).then((response) => {
-      console.log("like listing response : ", response?.data);
       setListing_Like_User_id(response.data.data.user_id);
       likes_count();
     });
   };
+
   //-----------unlike list
   const listing_unlike = async (props) => {
     let user_status = await AsyncStorage.getItem("account_status");
@@ -213,7 +208,6 @@ const ListingsDetails = ({ navigation, route }) => {
     //   }
     // });
     GETLIKES_NEW(predata.listing_id).then((response) => {
-      console.log("getting like count od listings : ", response?.data);
       let count = response?.data?.Total ? response?.data?.Total : 0;
       setListing_Likes_count(count);
       // if (response.data.msg === "No one liked yet") {
@@ -273,7 +267,6 @@ const ListingsDetails = ({ navigation, route }) => {
   const [giveaway_status, setGiveaway_Status] = useState();
 
   const GetListData = async () => {
-    console.log("_____________________________________");
     // GetListingsDetails(predata.listing_id)
     GetListingsDetails_New(predata.listing_id)
       .then((res) => {

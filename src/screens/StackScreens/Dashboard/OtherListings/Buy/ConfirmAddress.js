@@ -169,8 +169,8 @@ const ConfirmAddress = ({ navigation, route }) => {
               setVisible(true);
               setTimeout(() => {
                 // navigation.navigate("BottomTab");
-                navigation.navigate("SalesOrders");
-              }, 1000);
+                navigation.replace("SalesOrders");
+              }, 500);
             } else {
               setsnackbarValue({
                 value: "Something went wrong",

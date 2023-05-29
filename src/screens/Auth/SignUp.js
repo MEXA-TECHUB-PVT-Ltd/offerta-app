@@ -532,8 +532,8 @@ const SignUp = ({ navigation }) => {
           modalVisible={modalVisible}
           CloseModal={() => setModalVisible(false)}
           Icon={appImages.failed}
-          text={"Error"}
-          subtext={"User Already Registered"}
+          text={TranslationStrings.ERROR}
+          subtext={TranslationStrings.USER_ALREADY_REGISTERED}
           buttontext={"GO BACK"}
           onPress={() => {
             setModalVisible(false);

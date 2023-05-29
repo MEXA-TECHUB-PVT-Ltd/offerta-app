@@ -91,9 +91,9 @@ const Notification = ({ navigation }) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Offers" },
-    { key: "second", title: "Like" },
-    { key: "third", title: "Comments" },
+    { key: "first", title: TranslationStrings.OFFERS },
+    { key: "second", title: TranslationStrings.LIKES },
+    { key: "third", title: TranslationStrings.COMMENTS },
   ]);
   const renderScene = SceneMap({
     first: OffersNotifications,
