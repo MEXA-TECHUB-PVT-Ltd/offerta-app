@@ -1,10 +1,13 @@
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useMemo, useState, useCallback, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import { generateOnRampURL } from "@coinbase/cbpay-js";
 import "react-native-url-polyfill/auto";
 
-const Coinbase = () => {
+import { Appbar } from "react-native-paper";
+import Colors from "../../../utills/Colors";
+
+const Coinbase = ({ navigation, route }) => {
   const [currentAmount, setCurrentAmount] = useState(1);
   const [destinationAddress, setDestinationAddress] = useState([
     { address: "0xabcdef", blockchains: ["solana"] },
@@ -41,12 +44,31 @@ const Coinbase = () => {
   const onUrlChange = async (webviewstate) => {
     console.log("webviewstate : ", webviewstate);
   };
+
   return (
-    <View style={{ flex: 1, backgroundColor: "red" }}>
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Appbar.Header style={{ backgroundColor: Colors.Appthemecolor }}>
+        <Appbar.BackAction
+          color="#FFFFFF"
+          onPress={() => {
+            navigation?.goBack();
+          }}
+        />
+        <Appbar.Content title="Make Payment" color="#FFFF" />
+        {/* <Appbar.Action icon="calendar" onPress={() => {}} /> */}
+        <Appbar.Action
+          color="#FFFFFF"
+          icon="close"
+          onPress={() => {
+            navigation?.goBack();
+          }}
+        />
+      </Appbar.Header>
+
       <WebView
         source={{
           //   uri: coinbaseURL,
-          uri: "https://commerce.coinbase.com/charges/7A7W3FP7",
+          uri: route?.params?.payment_url,
         }}
         onNavigationStateChange={onUrlChange}
         // onMessage={onMessage}

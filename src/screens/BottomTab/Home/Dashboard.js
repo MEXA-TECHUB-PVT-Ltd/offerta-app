@@ -429,32 +429,37 @@ const Home = ({ navigation }) => {
             data={Categorylist}
             numColumns={2}
             // item.user_id === login_user_id ? null :
-            renderItem={({ item }) => (
-              <DashboardCard
-                image={
-                  item?.images?.length == 0 ? null : IMAGE_URL + item?.images[0]
-                }
-                // image={null}
-                promotion={item?.Promotion[0]}
-                sold={item?.sold}
-                // image={item}
-                maintext={item.title}
-                subtext={item.location}
-                price={item.price}
-                onpress={() => {
-                  dispatch(setListingId(item.id));
-                  if (item.user_id === login_user_id) {
-                    navigation.navigate("ListingsDetails", {
-                      listing_id: item.id,
-                    });
-                  } else {
-                    navigation.navigate("MainListingsDetails", {
-                      listing_id: item.id,
-                    });
+            renderItem={({ item }) => {
+              console.log("item  : ", item.title, item?.images);
+              return (
+                <DashboardCard
+                  image={
+                    item?.images?.length == 0
+                      ? null
+                      : IMAGE_URL + item?.images[0]
                   }
-                }}
-              />
-            )}
+                  // image={null}
+                  promotion={item?.Promotion[0]}
+                  sold={item?.sold}
+                  // image={item}
+                  maintext={item.title}
+                  subtext={item.location}
+                  price={item.price}
+                  onpress={() => {
+                    dispatch(setListingId(item.id));
+                    if (item.user_id === login_user_id) {
+                      navigation.navigate("ListingsDetails", {
+                        listing_id: item.id,
+                      });
+                    } else {
+                      navigation.navigate("MainListingsDetails", {
+                        listing_id: item.id,
+                      });
+                    }
+                  }}
+                />
+              );
+            }}
             keyExtractor={(item, index) => index}
             scrollEnabled={false}
           />

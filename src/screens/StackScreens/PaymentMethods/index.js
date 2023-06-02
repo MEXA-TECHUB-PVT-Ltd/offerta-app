@@ -23,27 +23,61 @@ import {
 
 import { fontFamily } from "../../../constant/fonts";
 import TranslationStrings from "../../../utills/TranslationStrings";
+import { get_specific_user_detail } from "../../../api/GetApis";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Loader from "../../../components/Loader/Loader";
 
 const PaymentMethods = ({ navigation, route }) => {
   const [selected_index, setSelected_index] = useState(-1);
+  const [loading, setLoading] = useState(false);
 
   const handlePress = async (index) => {
     //credit_card  : 0
     //paypal  : 1
     //crypto  : 2
 
+    console.log("index : ", index);
+
     setSelected_index(index);
 
-    if (index !== 1) {
-      //   navigation.navigate("ConfirmAddress", {
-      //     index: index,
-      //   });
-      navigation.replace("CardDetails", route?.params);
+    if (index === 0) {
+      navigation.replace("StripePayment", route?.params);
     }
     if (index == 1) {
       //paypal payment
       navigation.navigate("PaypalPayment", route?.params);
     }
+    if (index === 2) {
+      getDAta();
+    }
+
+    console.log("index ::: ", index);
+  };
+  const getDAta = async () => {
+    setLoading(true);
+    var user_id = await AsyncStorage.getItem("Userid");
+    let user_detail = await get_specific_user_detail(user_id);
+    console.log("user_detail  :  ", user_detail?.user_name);
+
+    let url = `http://ofertasvapp.com/testing/offerta-sv/offerta-backend/v1/payment/cryptoInit.php?amount=1&customer_name=${user_detail?.user_name}`;
+    console.log("url : ", url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("response : ", response);
+        let payment_url = response[0]?.payment_url;
+        console.log("payment_url  : ", payment_url);
+        // navigation.navigate("Coinbase", route?.params);
+        navigation.navigate("Coinbase", {
+          payment_url: payment_url,
+        });
+      })
+      .catch((err) => {
+        alert(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -59,6 +93,7 @@ const PaymentMethods = ({ navigation, route }) => {
           }}
           icon={"arrow-back"}
         />
+        <Loader isLoading={loading} />
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text
             style={{

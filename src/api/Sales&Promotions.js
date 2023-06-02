@@ -62,6 +62,30 @@ export const post_Promotions_new = async (
   return axios.post(BASE_URL + "promotelisting.php", data);
 };
 
+export const send_new_banner_req_to_admin = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  let data = {
+    id: user_id,
+  };
+  return axios.post(BASE_URL + "requestsendbanner.php", data);
+};
+
+export const send_new_verification_req_to_admin = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  let data = {
+    id: user_id,
+  };
+  return axios.post(BASE_URL + "requestsenduserverify.php", data);
+};
+
+export const cancel_user_verification = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  let data = {
+    id: user_id,
+  };
+  return axios.post(BASE_URL + "unsubscribe.php", data);
+};
+
 //////////////Get Listings Insights//////////
 export const get_Listings_Insights = async (props) => {
   return axios.get(BASE_URL + "insightOnList.php?listing_id=" + props);

@@ -50,7 +50,11 @@ const Checkout = ({ navigation, route }) => {
         type: "listing_paypal",
       });
     } else {
-      navigation.replace("CardDetails");
+      // navigation.replace("CardDetails");
+      navigation.replace("StripePayment", {
+        fee: exchange_other_listing?.price,
+        type: "listing_stripe",
+      });
     }
   };
 

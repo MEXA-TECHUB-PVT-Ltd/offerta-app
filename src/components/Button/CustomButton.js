@@ -18,6 +18,7 @@ const CustomButtonhere = ({
   iscolor,
   image,
   topDistance,
+  labelWidth,
 }) => {
   return (
     <View style={[styles.container, { top: hp(topDistance) }]}>
@@ -49,7 +50,7 @@ const CustomButtonhere = ({
             textTransform: "uppercase",
             backgroundColor:
               iscolor === "login" ? "white" : Colors.Appthemecolor,
-            width: wp(widthset / 2),
+            width: labelWidth ? labelWidth : wp(widthset / 2),
           },
         ]}
         onPress={onPress}

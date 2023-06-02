@@ -13,6 +13,8 @@ import Loader from "../../../components/Loader/Loader";
 import {
   post_Promotions,
   post_Promotions_new,
+  send_new_banner_req_to_admin,
+  send_new_verification_req_to_admin,
 } from "../../../api/Sales&Promotions";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import { appImages } from "../../../constant/images";
@@ -250,6 +252,14 @@ const PaypalPayment = ({ navigation, route }) => {
           //   }, 1000);
 
           setModalVisible(true);
+          //sending notification to admin to noti new banner is created
+          send_new_banner_req_to_admin()
+            .then((res) => {
+              console.log("banner notification response : ", res?.data);
+            })
+            .catch((err) => {
+              console.log("error raised while sending banner notification");
+            });
         } else {
           setsnackbarValue({ value: response?.message, color: "red" });
           setVisible(true);
@@ -281,6 +291,18 @@ const PaypalPayment = ({ navigation, route }) => {
             color: "green",
           });
           setVisible(true);
+
+          //sending notification to admin to notify new verification is created
+          send_new_verification_req_to_admin()
+            .then((res) => {
+              console.log("verification notification response : ", res?.data);
+            })
+            .catch((err) => {
+              console.log(
+                "error raised while sending verification notification"
+              );
+            });
+
           setTimeout(() => {
             navigation?.goBack();
           }, 1000);

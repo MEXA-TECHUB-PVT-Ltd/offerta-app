@@ -64,7 +64,8 @@ const Profile = ({ navigation }) => {
 
   const GetAcountDetail = async () => {
     get_Login_UserData().then((response) => {
-      setVerificationStatus(response?.data?.subscription);
+      // setVerificationStatus(response?.data?.subscription);
+      setVerificationStatus(response?.data?.verify_status);
       setUserRole(response?.data?.role);
 
       setUserName(response.data.full_name);

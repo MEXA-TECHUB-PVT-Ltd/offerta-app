@@ -17,6 +17,7 @@ import VerificationDocuments from "../../screens/StackScreens/Settings/Verificat
 
 import AccountVerification from "../../screens/Auth/AccountVerification";
 import Coinbase from "../../screens/StackScreens/Payment/Coinbase";
+import StripePayment from "../../screens/StackScreens/Payment/StripePayment";
 import AddBanner from "../../screens/Drawer/Banner/AddBanner";
 import BannerAdvertisment from "../../screens/Drawer/Banner/BannerAdvertisment";
 
@@ -33,12 +34,20 @@ function AuthNav() {
         }}
       />
       <Stack.Screen
+        name="StripePayment"
+        component={StripePayment}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Coinbase"
         component={Coinbase}
         options={{
           headerShown: false,
         }}
       />
+
       <Stack.Screen
         name="OnboardingScreen"
         component={OnboardingScreen}

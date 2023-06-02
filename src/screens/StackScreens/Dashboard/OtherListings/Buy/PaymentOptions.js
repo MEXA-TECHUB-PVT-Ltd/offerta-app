@@ -47,23 +47,59 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fontFamily } from "../../../../../constant/fonts";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
+import Loader from "../../../../../components/Loader/Loader";
+import { get_specific_user_detail } from "../../../../../api/GetApis";
 
 const PaymentOptions = ({ navigation, route }) => {
   const [selected_index, setSelected_index] = useState(-1);
+  const [loading, setLoading] = useState(false);
+  console.log("route?.params : ", route?.params);
 
   const handlePress = async (index) => {
     setSelected_index(index);
     console.log("index  : ", index);
 
+    if (index == 1) {
+      getDAta();
+    }
     if (index == 0) {
       navigation.replace("PaymentMethods1", {
         index: index,
+        listing_user_detail: route?.params?.listing_user_detail,
       });
     } else if (index !== 1) {
       navigation.replace("ConfirmAddress", {
         index: index,
+        listing_user_detail: route?.params?.listing_user_detail,
       });
     }
+  };
+
+  const getDAta = async () => {
+    setLoading(true);
+    var user_id = await AsyncStorage.getItem("Userid");
+    let user_detail = await get_specific_user_detail(user_id);
+    console.log("user_detail  :  ", user_detail?.user_name);
+
+    let url = `http://ofertasvapp.com/testing/offerta-sv/offerta-backend/v1/payment/cryptoInit.php?amount=1&customer_name=${user_detail?.user_name}`;
+    console.log("url : ", url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("response : ", response);
+        let payment_url = response[0]?.payment_url;
+        console.log("payment_url  : ", payment_url);
+        // navigation.navigate("Coinbase", route?.params);
+        navigation.navigate("Coinbase", {
+          payment_url: payment_url,
+        });
+      })
+      .catch((err) => {
+        alert(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -71,6 +107,7 @@ const PaymentOptions = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+        <Loader isLoading={loading} />
         <CustomHeader
           headerlabel={TranslationStrings.BUY}
           // headerlabel={"fksdjfksdjk"}
@@ -90,24 +127,42 @@ const PaymentOptions = ({ navigation, route }) => {
           >
             {TranslationStrings.CHOOSE_PAYMENT_METHOD}
           </Text>
-          <TouchableOpacity style={styles1.btn} onPress={() => handlePress(0)}>
-            <Text style={styles1.btnText}>
-              {TranslationStrings.CREDIT_CARD}
-            </Text>
-            {selected_index == 0 && (
-              <View style={styles1.checkedView}>
-                <Checkbox status={"checked"} />
-              </View>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles1.btn} onPress={() => handlePress(1)}>
-            <Text style={styles1.btnText}>{TranslationStrings.BIT_COIN}</Text>
-            {selected_index == 1 && (
-              <View style={styles1.checkedView}>
-                <Checkbox status={"checked"} />
-              </View>
-            )}
-          </TouchableOpacity>
+          {route?.params?.listing_user_detail?.verify_status == "verified" && (
+            <>
+              {(route?.params?.listing_user_detail?.paypal == "true" ||
+                route?.params?.listing_user_detail?.bank == "true") && (
+                <TouchableOpacity
+                  style={styles1.btn}
+                  onPress={() => handlePress(0)}
+                >
+                  <Text style={styles1.btnText}>
+                    {TranslationStrings.CREDIT_CARD}
+                  </Text>
+                  {selected_index == 0 && (
+                    <View style={styles1.checkedView}>
+                      <Checkbox status={"checked"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              )}
+              {route?.params?.listing_user_detail?.bitcoin == "true" && (
+                <TouchableOpacity
+                  style={styles1.btn}
+                  onPress={() => handlePress(1)}
+                >
+                  <Text style={styles1.btnText}>
+                    {TranslationStrings.BIT_COIN}
+                  </Text>
+                  {selected_index == 1 && (
+                    <View style={styles1.checkedView}>
+                      <Checkbox status={"checked"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              )}
+            </>
+          )}
+
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(2)}>
             <Text style={styles1.btnText}>
               {TranslationStrings.PAY_ON_DELIVERY}

@@ -105,6 +105,7 @@ const VerificationDocuments = ({ navigation, route }) => {
           })
           .catch((err) => {
             console.log("error raised : :   ", data);
+            resolve(false);
           });
       } catch (error) {
         console.log("error  :  ", error);

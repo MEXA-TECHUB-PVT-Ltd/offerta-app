@@ -36,7 +36,10 @@ const LoaderScreen = ({ navigation }) => {
                 "user_status updated.............................................."
               );
               let user_status = await get_user_status();
-              await AsyncStorage.setItem("account_status", user_status);
+              await AsyncStorage.setItem(
+                "account_status",
+                user_status?.toString()
+              );
             }
             setTimeout(() => {
               console.log("here..");
