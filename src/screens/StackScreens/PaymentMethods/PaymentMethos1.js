@@ -73,23 +73,34 @@ const PaymentMethods1 = ({ navigation, route }) => {
           >
             {TranslationStrings.CHOOSE_PAYMENT_METHOD}
           </Text>
-          <TouchableOpacity style={styles1.btn} onPress={() => handlePress(0)}>
-            <Text style={styles1.btnText}>Stripe</Text>
-            {selected_index == 0 && (
-              <View style={styles1.checkedView}>
-                <Checkbox status={"checked"} />
-              </View>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles1.btn} onPress={() => handlePress(1)}>
-            {/* <Text style={styles1.btnText}>{TranslationStrings.BIT_COIN}</Text> */}
-            <Text style={styles1.btnText}>Paypal</Text>
-            {selected_index == 1 && (
-              <View style={styles1.checkedView}>
-                <Checkbox status={"checked"} />
-              </View>
-            )}
-          </TouchableOpacity>
+          {route?.params?.listing_user_detail?.bank == "true" && (
+            <TouchableOpacity
+              style={styles1.btn}
+              onPress={() => handlePress(0)}
+            >
+              <Text style={styles1.btnText}>Stripe</Text>
+              {selected_index == 0 && (
+                <View style={styles1.checkedView}>
+                  <Checkbox status={"checked"} />
+                </View>
+              )}
+            </TouchableOpacity>
+          )}
+
+          {route?.params?.listing_user_detail?.paypal == "true" && (
+            <TouchableOpacity
+              style={styles1.btn}
+              onPress={() => handlePress(1)}
+            >
+              {/* <Text style={styles1.btnText}>{TranslationStrings.BIT_COIN}</Text> */}
+              <Text style={styles1.btnText}>Paypal</Text>
+              {selected_index == 1 && (
+                <View style={styles1.checkedView}>
+                  <Checkbox status={"checked"} />
+                </View>
+              )}
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

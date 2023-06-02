@@ -43,19 +43,20 @@ import {
 
 ////////////////////redux////////////
 import { useSelector, useDispatch } from "react-redux";
-import { setPhoneNumber, setLoginUser } from "../../redux/actions";
+import { setPhoneNumber, setLoginUser, setEmail } from "../../redux/actions";
 
 ////////////////api////////////////
 import axios from "axios";
-import { BASE_URL } from "../../utills/ApiRootUrl";
+import { BASE_URL, IMAGE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
 import CamerBottomSheet from "../../components/CameraBottomSheet/CameraBottomSheet";
-import { Modal, Snackbar } from "react-native-paper";
+import { Checkbox, Modal, Snackbar } from "react-native-paper";
 import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
 import {
   Get_Account_Fees,
   get_Login_UserData,
+  get_specific_user_detail,
   get_user_status,
 } from "../../api/GetApis";
 import { Block_user_message } from "../../utills/AppStrings";
@@ -64,9 +65,15 @@ import TranslationStrings from "../../utills/TranslationStrings";
 
 import Loader from "../../components/Loader/Loader";
 import { useFocusEffect } from "@react-navigation/native";
+import { cancel_user_verification } from "../../api/Sales&Promotions";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
+  const [checked, setChecked] = React.useState(false);
+  const [bitcoin, setBitcoin] = useState(false);
+  const [paypal, setPaypal] = useState(false);
+  const [bankAccount, setBankAccount] = useState(false);
+
   const [modalVisible2, setModalVisible2] = useState(false);
   const [cnicImage, setCnicImage] = useState({
     uri: "",
@@ -92,6 +99,8 @@ const AccountVerification = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [showBlockModal, setShowBlockModal] = useState(false);
+
+  const [subscription, setSubscription] = useState(false);
 
   useEffect(() => {
     if (route?.params?.type == "login") {
@@ -143,7 +152,16 @@ const AccountVerification = ({ navigation, route }) => {
       });
       setVisible(true);
       setLoading(false);
-    } else {
+    }
+    // else if (bitcoin == false && paypal == false && bankAccount == false) {
+    //   setsnackbarValue({
+    //     value: `Please select at least 1 ${TranslationStrings.PAYOUT} method`,
+    //     color: "red",
+    //   });
+    //   setVisible(true);
+    //   setLoading(false);
+    // }
+    else {
       getAccountFees();
       setLoading(false);
       return;
@@ -186,6 +204,42 @@ const AccountVerification = ({ navigation, route }) => {
     }
   };
 
+  const getUserDetail = async () => {
+    let user_id = await AsyncStorage.getItem("Userid");
+    get_specific_user_detail(user_id)
+      .then((response) => {
+        let verify_status = response?.verify_status;
+        console.log("verify_status  : ", verify_status);
+        if (verify_status == null) {
+          return false; // user details not found or error occured dugin get
+        }
+        if (verify_status == "unverified" || verify_status == "verified") {
+          setBitcoin(response?.bitcoin == "true" ? true : false);
+          setPaypal(response?.paypal == "true" ? true : false);
+          setBankAccount(response?.bank == "true" ? true : false);
+
+          setSubscription(true);
+          let live_image = response?.live_image;
+          let cnic = response?.cnic;
+          let obj_liveImage = {
+            uri: IMAGE_URL + live_image,
+            type: "image/jpeg",
+            name: IMAGE_URL + live_image?.split("/").pop(),
+          };
+          setUserImage(obj_liveImage);
+          let obj_cnic = {
+            uri: IMAGE_URL + cnic,
+            type: "image/jpeg",
+            name: IMAGE_URL + cnic?.split("/").pop(),
+          };
+          setCnicImage(obj_cnic);
+        }
+      })
+      .catch((err) => {
+        console.log("Error : ", err);
+      });
+  };
+
   const getUserAccountFee = async () => {
     return new Promise((resolve, reject) => {
       get_Login_UserData()
@@ -213,6 +267,7 @@ const AccountVerification = ({ navigation, route }) => {
   useFocusEffect(
     React.useCallback(() => {
       getUserFee();
+      getUserDetail();
     }, [])
   );
   const getUserFee = async () => {
@@ -245,12 +300,15 @@ const AccountVerification = ({ navigation, route }) => {
               //   type: "account_verify",
               // });
 
-              navigation.navigate("PaymentMethods", {
+              navigation.replace("PaymentMethods", {
                 user_id: user_id,
                 cnic: cnicImage,
                 live_image: userImage,
                 fee: fee,
                 type: "account_verify",
+                bitcoin: bitcoin,
+                paypal: paypal,
+                bankAccount: bankAccount,
               });
             })
             .catch((err) => {
@@ -271,18 +329,50 @@ const AccountVerification = ({ navigation, route }) => {
       setLoading(false);
     }
   };
+
+  const handleCancelUserSubscription = async () => {
+    cancel_user_verification()
+      .then((response) => {
+        console.log("response : ", response?.data);
+
+        setsnackbarValue({
+          value: "Subscription cancelled successfully",
+          color: "green",
+        });
+        setVisible(true);
+        setTimeout(() => {
+          navigation?.goBack();
+        }, 500);
+      })
+      .catch((err) => {
+        console.log("Error raised in handleCancelUserSubscription : ", err);
+      });
+  };
   const onDismissSnackBar = () => setVisible(false);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <Loader isLoading={loading1} />
-        <Ionicons
-          name={"arrow-back"}
-          size={25}
-          color={Colors.Appthemecolor}
-          style={{ marginLeft: wp(5), marginTop: hp(3) }}
-          onPress={() => navigation.goBack()}
-        />
+        <View style={{ flexDirection: "row", marginTop: hp(3) }}>
+          <Ionicons
+            name={"arrow-back"}
+            size={25}
+            color={Colors.Appthemecolor}
+            style={{ marginLeft: wp(5) }}
+            onPress={() => navigation.goBack()}
+          />
+          <Text
+            style={{
+              color: "#000",
+              fontSize: hp(1.6),
+              marginHorizontal: wp(2),
+              fontFamily: fontFamily.Poppins_Regular,
+              flex: 1,
+            }}
+          >
+            {TranslationStrings.VERIFICATION_TOP_MESSAGE}
+          </Text>
+        </View>
 
         <View
           style={[Logostyles.Logoview, { marginTop: hp(2), marginBottom: 2 }]}
@@ -301,6 +391,64 @@ const AccountVerification = ({ navigation, route }) => {
         >
           {TranslationStrings.VERIFY_ACCOUNT}
         </Text>
+        <Text
+          style={{
+            ...Authstyles.maintext,
+            textAlign: "center",
+            color: "#000",
+            fontSize: hp(2.6),
+            width: wp(100),
+            marginBottom: 0,
+          }}
+        >
+          {TranslationStrings.PAYOUT}
+        </Text>
+        <View
+          style={{
+            flex: 1,
+            marginHorizontal: 25,
+          }}
+        >
+          <View style={style.checkboxContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                setBitcoin(!bitcoin);
+              }}
+              style={style.rowViewCheckbox}
+            >
+              <Checkbox status={bitcoin ? "checked" : "unchecked"} />
+              <Text style={style.txtCheckbox}>
+                {TranslationStrings.BITCOIN_WALLET}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                setPaypal(!paypal);
+              }}
+              style={style.rowViewCheckbox}
+            >
+              <Checkbox status={paypal ? "checked" : "unchecked"} />
+              <Text style={style.txtCheckbox}>
+                {TranslationStrings.PAYPAL_EMAIL}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={style.checkboxContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                setBankAccount(!bankAccount);
+              }}
+              style={style.rowViewCheckbox}
+            >
+              <Checkbox status={bankAccount ? "checked" : "unchecked"} />
+              <Text style={style.txtCheckbox}>
+                {TranslationStrings.BANK_Account}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View>
           <Text
             style={{
@@ -458,14 +606,26 @@ const AccountVerification = ({ navigation, route }) => {
           </View>
         </View>
         <View style={{ height: 120 }}>
-          <CustomButtonhere
-            title={TranslationStrings.VERIFY}
-            widthset={80}
-            topDistance={5}
-            loading={loading}
-            disabled={disable}
-            onPress={() => handleVerifyAccount()}
-          />
+          {subscription == true ? (
+            <CustomButtonhere
+              title={TranslationStrings.CANCEL_SUBSCRIPTION}
+              widthset={80}
+              labelWidth={250}
+              topDistance={5}
+              loading={loading}
+              disabled={disable}
+              onPress={() => handleCancelUserSubscription()}
+            />
+          ) : (
+            <CustomButtonhere
+              title={TranslationStrings.VERIFY}
+              widthset={80}
+              topDistance={5}
+              loading={loading}
+              disabled={disable}
+              onPress={() => handleVerifyAccount()}
+            />
+          )}
         </View>
 
         <Snackbar
@@ -571,4 +731,11 @@ const style = StyleSheet.create({
     height: wp(45),
     borderRadius: 20,
   },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  rowViewCheckbox: { flexDirection: "row", alignItems: "center" },
+  txtCheckbox: { color: "#000", fontSize: 14 },
 });

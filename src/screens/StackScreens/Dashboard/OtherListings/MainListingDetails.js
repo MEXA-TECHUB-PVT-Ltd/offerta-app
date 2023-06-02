@@ -345,7 +345,10 @@ const MainListingsDetails = ({ navigation, route }) => {
       return;
     }
     // navigation.navigate("ConfirmAddress");
-    navigation.replace("PaymentOptions");
+    navigation.replace("PaymentOptions", {
+      user_id: listing_user_id,
+      listing_user_detail: listing_user_detail,
+    });
   };
 
   const handleRefresh = () => {
@@ -623,7 +626,8 @@ const MainListingsDetails = ({ navigation, route }) => {
               */}
               <ProfileCard
                 style={{ marginBottom: -30, elevation: 0 }}
-                verificationStatus={listing_user_detail?.subscription}
+                // verificationStatus={listing_user_detail?.subscription}
+                verificationStatus={listing_user_detail?.verify_status}
                 userRole={listing_user_detail?.role}
                 userlogo={listing_user_detail?.image}
                 username={listing_user_detail?.user_name}

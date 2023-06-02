@@ -364,7 +364,9 @@ const Login = ({ navigation }) => {
             await AsyncStorage.setItem("Userid", response.data.data.id);
             await AsyncStorage.setItem(
               "account_status",
-              response?.data?.data?.status ? response?.data?.data?.status : ""
+              response?.data?.data?.status?.toString()
+                ? response?.data?.data?.status?.toString()
+                : ""
             );
             navigation.replace("Drawerroute");
             saveUserPreferences(props, "google123");

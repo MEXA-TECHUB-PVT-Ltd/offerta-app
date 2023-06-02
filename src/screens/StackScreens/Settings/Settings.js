@@ -49,7 +49,7 @@ const Settings = ({ navigation }) => {
   };
 
   // navigation.navigate("AccountVerification", {
-  //   signup_role: route?.params?.signup_role,
+  //   signup_role: route?.params?.signup_role,`
   // });
 
   useFocusEffect(

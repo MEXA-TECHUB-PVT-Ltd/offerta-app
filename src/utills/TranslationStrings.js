@@ -360,6 +360,16 @@ let TranslationStrings = new LocalizedStrings({
     AD: "Destacado",
 
     OFFERS: "Ofertas",
+
+    VERIFICATION_TOP_MESSAGE:
+      'Mejore la credibilidad y genere confianza en sus transacciones en línea mediante la verificación de su cuenta. Como usuario verificado, se le reconoce como una persona o empresa legítima, lo que aumenta la confianza tanto de los compradores como de los vendedores en sus interacciones con usted". Plus le permite recibir pagos a través de nuestras aplicaciones con tarjeta de crédito, Bitcoin y PayPal, y recibe su dinero a través de Bitcoin, PayPal y transferencia bancaria, esto aumentará sus ventas y lo ayudará a cerrar más negocios.',
+    PAYOUT: "Pago",
+
+    CANCEL_SUBSCRIPTION: "Cancelar suscripción",
+
+    BITCOIN_WALLET: "Billetera Bitcoin",
+    PAYPAL_EMAIL: "E-mail de Paypal",
+    BANK_Account: "Cuenta bancaria",
   },
   en: {
     //home
@@ -703,6 +713,17 @@ let TranslationStrings = new LocalizedStrings({
     AD: "Ad",
 
     OFFERS: "Offers",
+
+    VERIFICATION_TOP_MESSAGE:
+      'Enhance credibility and build trust in your online transactions by verifying your account. As a verified user, you are recognized as a legitimate individual or business, increasing the confidence of both buyers and sellers in their interactions with you." Plus allows you to get pay through our apps with credit card, Bitcoin and PayPal, and you receive your money through Bitcoin, PayPal and bank transfer, this will increase your sells and help you closed more deals.',
+
+    PAYOUT: "Payout",
+
+    CANCEL_SUBSCRIPTION: "Cancel Subscription",
+
+    BITCOIN_WALLET: "Bitcoin Wallet",
+    PAYPAL_EMAIL: "PayPal Email",
+    BANK_Account: "Bank Account",
   },
 });
 

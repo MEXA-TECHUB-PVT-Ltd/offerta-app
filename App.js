@@ -97,6 +97,8 @@ import AccountVerification from "./src/screens/Auth/AccountVerification";
 import BuyersList from "./src/screens/StackScreens/Profile/Listings/BuyersList";
 
 import { navigationRef } from "./RootNavigation";
+import StripePayment from "./src/screens/StackScreens/Payment/StripePayment";
+import Coinbase from "./src/screens/StackScreens/Payment/Coinbase";
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -173,6 +175,13 @@ function App() {
           <Stack.Screen
             name="PaymentMethod"
             component={PaymentMethod}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Coinbase"
+            component={Coinbase}
             options={{
               headerShown: false,
             }}
@@ -370,6 +379,13 @@ function App() {
           <Stack.Screen
             name="CardDetails"
             component={CardDetails}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="StripePayment"
+            component={StripePayment}
             options={{
               headerShown: false,
             }}

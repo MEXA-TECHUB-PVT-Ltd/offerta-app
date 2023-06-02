@@ -98,7 +98,8 @@ const ProfileCard = (props) => {
 
           <Text style={styles.itemsubtext}>{props.useremail}</Text>
         </View>
-        {props?.verificationStatus == "subscribed" ? (
+
+        {props?.verificationStatus == "verified" ? (
           <MaterialIcons
             name="verified-user"
             size={25}
