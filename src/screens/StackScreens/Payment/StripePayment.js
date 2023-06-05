@@ -21,6 +21,7 @@ import CustomModal from "../../../components/Modal/CustomModal";
 import { create_order_Listings } from "../../../api/Offer";
 import {
   post_Promotions_new,
+  post_verification_detail,
   send_new_banner_req_to_admin,
   send_new_verification_req_to_admin,
 } from "../../../api/Sales&Promotions";
@@ -30,6 +31,7 @@ import { BASE_URL } from "../../../utills/ApiRootUrl";
 import Colors from "../../../utills/Colors";
 
 import { Publishable_key } from "@env";
+import { async } from "regenerator-runtime";
 
 const StripePayment = ({ navigation, route }) => {
   const [loading1, setLoading1] = useState(false);
@@ -88,6 +90,8 @@ const StripePayment = ({ navigation, route }) => {
         customerEphemeralKeySecret: ephemeralKey,
         paymentIntentClientSecret: paymentIntent,
         merchantDisplayName: "OfertaSV",
+      }).catch((err) => {
+        console.log("err : ", err);
       });
 
       if (error) {
@@ -280,9 +284,11 @@ const StripePayment = ({ navigation, route }) => {
       body: formData,
     })
       .then((response) => response.json())
-      .then((response) => {
+      .then(async (response) => {
         console.log("response of SubmitVerificationDocument :  ", response);
         if (response?.status == true) {
+          submit_varification_details();
+
           setsnackbarValue({
             value: "Verification document submitted successfully!",
             color: "green",
@@ -318,6 +324,56 @@ const StripePayment = ({ navigation, route }) => {
           color: "red",
         });
         setVisible(true);
+      });
+  };
+
+  const submit_varification_details = async () => {
+    console.log("submit_varification_details______________________________");
+    if (
+      route?.params?.paypal != true &&
+      route?.params?.bitcoin != true &&
+      route?.params?.bankAccount != true
+    ) {
+      return false;
+    }
+    let paymentList = [];
+    if (route?.params?.paypal == true) paymentList.push("paypal");
+    if (route?.params?.bitcoin == true) paymentList.push("bitcoin");
+    if (route?.params?.bankAccount == true) paymentList.push("bank_account");
+    var user_id = await AsyncStorage.getItem("Userid");
+    let obj = {
+      payment_types: paymentList,
+      user_id: user_id,
+      paypal: {
+        paypal_email:
+          route?.params?.paypal == true ? route?.params?.paypalEmail : "",
+      },
+      bitcoin:
+        route?.params?.bitcoin == true ? route?.params?.bitcoinWally : "",
+      bank_account: {
+        account_number:
+          route?.params?.bankAccount == true
+            ? route?.params?.bankAccountNumber
+            : "",
+        ZipCode:
+          route?.params?.bankAccount == true ? route?.params?.zipCode : "",
+        AccountHolder:
+          route?.params?.bankAccount == true
+            ? route?.params?.accountHolderName
+            : "",
+        BankName:
+          route?.params?.bankAccount == true ? route?.params?.bankName : "",
+      },
+    };
+
+    console.log("obj  ::::::::::::::::::::::::::::", obj);
+
+    post_verification_detail(obj)
+      .then((response) => {
+        console.log("response_________: " + response);
+      })
+      .catch((err) => {
+        console.log("Errr : ", err);
       });
   };
 

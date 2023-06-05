@@ -44,6 +44,8 @@ const CustomTextInput = ({
   keyboard_type,
   Lines,
   maxLength,
+  borderWidth,
+  borderBottomWidth,
 }) => {
   const [isfocused, setisFocused] = useState(false);
   return (
@@ -59,6 +61,8 @@ const CustomTextInput = ({
                 : Colors.inactivetextinput,
             height: multiline === true ? hp(20) : hp(7),
             borderRadius: multiline === true ? wp(8) : wp(10),
+            borderWidth: borderWidth ? borderWidth : 1,
+            borderBottomWidth: borderBottomWidth ? borderBottomWidth : 1,
           },
         ]}
       >
