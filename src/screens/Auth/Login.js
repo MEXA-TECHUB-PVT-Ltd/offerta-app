@@ -684,7 +684,8 @@ const Login = ({ navigation }) => {
           /> */}
 
           <GoogleButton
-            title="Sign in with Google"
+            // title="Sign in with Google"
+            title={TranslationStrings.SIGN_IN_WITH_GOOGLE}
             onPress={() => gmailLoginHandler()}
           />
         </View>

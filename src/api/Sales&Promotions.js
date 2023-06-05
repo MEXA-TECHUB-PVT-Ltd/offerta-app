@@ -62,6 +62,10 @@ export const post_Promotions_new = async (
   return axios.post(BASE_URL + "promotelisting.php", data);
 };
 
+export const post_verification_detail = async (obj) => {
+  return axios.post(BASE_URL + "payment.php", obj);
+};
+
 export const send_new_banner_req_to_admin = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   let data = {

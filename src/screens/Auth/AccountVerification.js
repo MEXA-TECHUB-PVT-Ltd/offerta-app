@@ -51,7 +51,12 @@ import { BASE_URL, IMAGE_URL } from "../../utills/ApiRootUrl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fontFamily } from "../../constant/fonts";
 import CamerBottomSheet from "../../components/CameraBottomSheet/CameraBottomSheet";
-import { Checkbox, Modal, Snackbar } from "react-native-paper";
+import {
+  Checkbox,
+  Modal,
+  Snackbar,
+  TextInput as TextInputPaper,
+} from "react-native-paper";
 import PendingAccountApproval from "../../components/Modal/PendingAccountApproval";
 import {
   Get_Account_Fees,
@@ -63,16 +68,27 @@ import { Block_user_message } from "../../utills/AppStrings";
 import BlockUserView from "../../components/BlockUserView";
 import TranslationStrings from "../../utills/TranslationStrings";
 
+import CustomTextInput from "../../components/TextInput/CustomTextInput";
+
 import Loader from "../../components/Loader/Loader";
 import { useFocusEffect } from "@react-navigation/native";
 import { cancel_user_verification } from "../../api/Sales&Promotions";
+import CPaperInput from "../../components/TextInput/CPaperInput";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
-  const [checked, setChecked] = React.useState(false);
+
   const [bitcoin, setBitcoin] = useState(false);
   const [paypal, setPaypal] = useState(false);
   const [bankAccount, setBankAccount] = useState(false);
+
+  const [bitcoinWally, setBitcoinWally] = useState("");
+  const [paypalEmail, setPaypalEmail] = useState("");
+  //account details
+  const [bankName, setBankName] = useState("");
+  const [accountHolderName, setAccountHolderName] = useState("");
+  const [bankAccountNumber, setBankAccountNumber] = useState("");
+  const [zipCode, setZipCode] = useState("");
 
   const [modalVisible2, setModalVisible2] = useState(false);
   const [cnicImage, setCnicImage] = useState({
@@ -152,16 +168,28 @@ const AccountVerification = ({ navigation, route }) => {
       });
       setVisible(true);
       setLoading(false);
-    }
-    // else if (bitcoin == false && paypal == false && bankAccount == false) {
-    //   setsnackbarValue({
-    //     value: `Please select at least 1 ${TranslationStrings.PAYOUT} method`,
-    //     color: "red",
-    //   });
-    //   setVisible(true);
-    //   setLoading(false);
-    // }
-    else {
+    } else if (bitcoin == true && bitcoinWally?.length == 0) {
+      setsnackbarValue({
+        value: `Please ${TranslationStrings.ENTER_BITCOIN_WALLY}`,
+        color: "red",
+      });
+      setVisible(true);
+      setLoading(false);
+    } else if (paypal == true && paypalEmail?.length == 0) {
+      setsnackbarValue({
+        value: `Please ${TranslationStrings.ENTER_PAYPAL_EMAIL}`,
+        color: "red",
+      });
+      setVisible(true);
+      setLoading(false);
+    } else if (bankAccount == true && bankAccountNumber?.length == 0) {
+      setsnackbarValue({
+        value: `Please ${TranslationStrings.ENTER_BANK_ACCOUNT_NUMBER}`,
+        color: "red",
+      });
+      setVisible(true);
+      setLoading(false);
+    } else {
       getAccountFees();
       setLoading(false);
       return;
@@ -217,6 +245,21 @@ const AccountVerification = ({ navigation, route }) => {
           setBitcoin(response?.bitcoin == "true" ? true : false);
           setPaypal(response?.paypal == "true" ? true : false);
           setBankAccount(response?.bank == "true" ? true : false);
+
+          if (response?.bitcoin == "true") {
+            setBitcoinWally(response?.payment?.bitcoin);
+          }
+
+          if (response?.paypal == "true") {
+            setPaypalEmail(response?.payment?.paypal_email);
+          }
+
+          if (response?.bank == "true") {
+            setBankName(response?.payment?.BankName);
+            setAccountHolderName(response?.payment?.AccountHolder);
+            setBankAccountNumber(response?.payment?.account_number);
+            setZipCode(response?.payment?.ZipCode);
+          }
 
           setSubscription(true);
           let live_image = response?.live_image;
@@ -309,6 +352,13 @@ const AccountVerification = ({ navigation, route }) => {
                 bitcoin: bitcoin,
                 paypal: paypal,
                 bankAccount: bankAccount,
+                bitcoinWally: bitcoinWally,
+                paypalEmail: paypalEmail,
+                //account
+                bankAccountNumber: bankAccountNumber,
+                bankName: bankName,
+                accountHolderName: accountHolderName,
+                zipCode: zipCode,
               });
             })
             .catch((err) => {
@@ -421,6 +471,13 @@ const AccountVerification = ({ navigation, route }) => {
                 {TranslationStrings.BITCOIN_WALLET}
               </Text>
             </TouchableOpacity>
+            {bitcoin && (
+              <CPaperInput
+                placeholder={TranslationStrings.ENTER_BITCOIN_WALLY}
+                value={bitcoinWally}
+                onChangeText={(text) => setBitcoinWally(text)}
+              />
+            )}
 
             <TouchableOpacity
               onPress={() => {
@@ -433,9 +490,15 @@ const AccountVerification = ({ navigation, route }) => {
                 {TranslationStrings.PAYPAL_EMAIL}
               </Text>
             </TouchableOpacity>
-          </View>
 
-          <View style={style.checkboxContainer}>
+            {paypal && (
+              <CPaperInput
+                placeholder={TranslationStrings.ENTER_PAYPAL_EMAIL}
+                value={paypalEmail}
+                onChangeText={(text) => setPaypalEmail(text)}
+              />
+            )}
+
             <TouchableOpacity
               onPress={() => {
                 setBankAccount(!bankAccount);
@@ -447,6 +510,30 @@ const AccountVerification = ({ navigation, route }) => {
                 {TranslationStrings.BANK_Account}
               </Text>
             </TouchableOpacity>
+            {bankAccount && (
+              <>
+                <CPaperInput
+                  placeholder={"Enter Bank Name"}
+                  value={bankName}
+                  onChangeText={(text) => setBankName(text)}
+                />
+                <CPaperInput
+                  placeholder={"Enter Account Holder Name"}
+                  value={accountHolderName}
+                  onChangeText={(text) => setAccountHolderName(text)}
+                />
+                <CPaperInput
+                  placeholder={TranslationStrings.ENTER_BANK_ACCOUNT_NUMBER}
+                  value={bankAccountNumber}
+                  onChangeText={(text) => setBankAccountNumber(text)}
+                />
+                <CPaperInput
+                  placeholder={"Enter Zip Code"}
+                  value={zipCode}
+                  onChangeText={(text) => setZipCode(text)}
+                />
+              </>
+            )}
           </View>
         </View>
         <View>
@@ -732,9 +819,9 @@ const style = StyleSheet.create({
     borderRadius: 20,
   },
   checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    // flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "space-between",
   },
   rowViewCheckbox: { flexDirection: "row", alignItems: "center" },
   txtCheckbox: { color: "#000", fontSize: 14 },

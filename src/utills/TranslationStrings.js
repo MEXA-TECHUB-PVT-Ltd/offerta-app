@@ -236,8 +236,12 @@ let TranslationStrings = new LocalizedStrings({
     EMAIL_ADDRESS: "Dirección de correo electrónico",
     PASSWORD: "Contraseña",
     FORGET_PASSWORD: "Contraseña olvidada",
-    DO_NOT_HAVE_AN_ACCOUNT: `no tengo una cuenta`,
-    SIGN_UP: "Inscribirse",
+    // DO_NOT_HAVE_AN_ACCOUNT: `no tengo una cuenta`,
+    DO_NOT_HAVE_AN_ACCOUNT: `No tienes cuenta?`,
+    SIGN_UP: "Regístrate",
+
+    SIGN_UP_WITH_GOOGLE: "Regístrese con Google",
+    SIGN_IN_WITH_GOOGLE: "Inicia sesión con Google",
 
     SELECT_ROLE: "Seleccionar rol",
     SIGN_UP_TO_CREATE_YOUR_ACCOUNT: "Regístrese para crear su cuenta",
@@ -370,6 +374,10 @@ let TranslationStrings = new LocalizedStrings({
     BITCOIN_WALLET: "Billetera Bitcoin",
     PAYPAL_EMAIL: "E-mail de Paypal",
     BANK_Account: "Cuenta bancaria",
+
+    ENTER_BITCOIN_WALLY: "Introduzca Bitcoin Wally",
+    ENTER_PAYPAL_EMAIL: "Ingrese el correo electrónico de PayPal",
+    ENTER_BANK_ACCOUNT_NUMBER: "Ingrese el número de cuenta bancaria",
   },
   en: {
     //home
@@ -591,6 +599,9 @@ let TranslationStrings = new LocalizedStrings({
     DO_NOT_HAVE_AN_ACCOUNT: `Don't have an account`,
     SIGN_UP: "Sign Up",
 
+    SIGN_UP_WITH_GOOGLE: "Sign up with Google",
+    SIGN_IN_WITH_GOOGLE: "Sign in with Google",
+
     SELECT_ROLE: "Select Role",
     SIGN_UP_TO_CREATE_YOUR_ACCOUNT: "Sign Up to create your account",
     ALREADY_HAVE_AN_ACCOUNT: "Sign Up to create your account",
@@ -724,6 +735,10 @@ let TranslationStrings = new LocalizedStrings({
     BITCOIN_WALLET: "Bitcoin Wallet",
     PAYPAL_EMAIL: "PayPal Email",
     BANK_Account: "Bank Account",
+
+    ENTER_BITCOIN_WALLY: "Enter Bitcoin Wally",
+    ENTER_PAYPAL_EMAIL: "Enter PayPal Email",
+    ENTER_BANK_ACCOUNT_NUMBER: "Enter Bank Account Number",
   },
 });
 

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { appImages } from "../../../constant/images";
 import Colors from "../../../utills/Colors";
+import TranslationStrings from "../../../utills/TranslationStrings";
 
 const GoogleButton = ({ title, onPress }) => {
   return (
@@ -11,7 +12,7 @@ const GoogleButton = ({ title, onPress }) => {
       style={{
         // backgroundColor: "#4285F4",
         backgroundColor: Colors.Appthemecolor,
-        width: 184,
+        minWidth: TranslationStrings.getLanguage() == "en" ? 184 : 200,
         height: 40,
         // alignItems: "center",
         justifyContent: "center",

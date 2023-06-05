@@ -476,7 +476,8 @@ const SignUp = ({ navigation }) => {
           /> */}
 
           <GoogleButton
-            title="Sign up with Google"
+            // title="Sign up with Google"
+            title={TranslationStrings.SIGN_UP_WITH_GOOGLE}
             onPress={() => gmailLoginHandler()}
           />
         </View>
