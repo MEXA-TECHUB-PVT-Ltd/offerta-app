@@ -76,6 +76,7 @@ import BlogsDetails from "./src/screens/StackScreens/Drawer/BlogsDetails";
 import PaymentMethods from "./src/screens/StackScreens/PaymentMethods";
 import PaypalPayment from "./src/screens/StackScreens/PaymentMethods/PaypalPayment";
 import PaymentMethods1 from "./src/screens/StackScreens/PaymentMethods/PaymentMethos1";
+import PaypalMonthlySubscription from "./src/screens/StackScreens/PaymentMethods/PaypalMonthlySubscription";
 
 //////////////////location////////////////
 import Location from "./src/screens/Location/Location";
@@ -358,6 +359,13 @@ function App() {
           <Stack.Screen
             name="PaypalPayment"
             component={PaypalPayment}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="PaypalMonthlySubscription"
+            component={PaypalMonthlySubscription}
             options={{
               headerShown: false,
             }}

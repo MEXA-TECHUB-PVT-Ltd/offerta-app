@@ -74,6 +74,8 @@ import Loader from "../../components/Loader/Loader";
 import { useFocusEffect } from "@react-navigation/native";
 import { cancel_user_verification } from "../../api/Sales&Promotions";
 import CPaperInput from "../../components/TextInput/CPaperInput";
+import paypalApi from "../../api/paypalApi";
+import { async } from "regenerator-runtime";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -117,6 +119,8 @@ const AccountVerification = ({ navigation, route }) => {
   const [showBlockModal, setShowBlockModal] = useState(false);
 
   const [subscription, setSubscription] = useState(false);
+
+  const [currentPlan, setCurrentPlan] = useState("");
 
   useEffect(() => {
     if (route?.params?.type == "login") {
@@ -309,10 +313,49 @@ const AccountVerification = ({ navigation, route }) => {
   };
   useFocusEffect(
     React.useCallback(() => {
-      getUserFee();
+      // getUserFee();
       getUserDetail();
+      getPaypalPlans();
     }, [])
   );
+
+  const getPaypalPlans = async () => {
+    setLoading1(true);
+    let token = await paypalApi.generateToken();
+    await paypalApi
+      .getSubscriptionPlans(token)
+      .then((response) => {
+        // console.log("plans list  :   ", response);
+        let plansList = response?.plans ? response?.plans : [];
+
+        get_Login_UserData()
+          .then(async (user_response) => {
+            let plan = "";
+            if (user_response?.data?.role == "user") {
+              plan = plansList?.filter((item) => item?.name == "user");
+            } else {
+              fee = response?.data?.company_fee;
+              plan = plansList?.filter((item) => item?.name != "user");
+            }
+            await paypalApi.getPlanDetail(token, plan[0]?.id).then((res) => {
+              setAccountFee(
+                res?.billing_cycles[0]?.pricing_scheme?.fixed_price?.value
+              );
+              setCurrentPlan(res);
+            });
+          })
+          .catch((err) => {
+            console.log("erro: ", err);
+          });
+      })
+      .catch((err) => {
+        console.log("error  :  ", err);
+      })
+      .finally(() => {
+        setLoading1(false);
+      });
+  };
+
   const getUserFee = async () => {
     setLoading1(true);
     let fee = await getUserAccountFee();
@@ -359,6 +402,7 @@ const AccountVerification = ({ navigation, route }) => {
                 bankName: bankName,
                 accountHolderName: accountHolderName,
                 zipCode: zipCode,
+                selectedPlan: currentPlan,
               });
             })
             .catch((err) => {
@@ -381,9 +425,17 @@ const AccountVerification = ({ navigation, route }) => {
   };
 
   const handleCancelUserSubscription = async () => {
+    let subscription_id = await AsyncStorage.getItem("subscription_id");
+    console.log("subscription_id  : ", subscription_id);
+
     cancel_user_verification()
-      .then((response) => {
+      .then(async (response) => {
         console.log("response : ", response?.data);
+
+        //______________unsubscribe from paypal
+        const token = await paypalApi.generateToken();
+        await paypalApi.cancelSubscription(subscription_id, token);
+        //______________unsubscribe from paypal
 
         setsnackbarValue({
           value: "Subscription cancelled successfully",
@@ -711,6 +763,9 @@ const AccountVerification = ({ navigation, route }) => {
               loading={loading}
               disabled={disable}
               onPress={() => handleVerifyAccount()}
+              // onPress={() => {
+              //   navigation?.navigate("PaypalMonthlySubscription");
+              // }}
             />
           )}
         </View>
