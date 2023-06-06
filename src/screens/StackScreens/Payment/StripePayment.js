@@ -114,6 +114,7 @@ const StripePayment = ({ navigation, route }) => {
       let user_detail = await get_specific_user_detail(user_id);
       let obj = {
         email: user_detail ? user_detail?.email : "test@gmail.com",
+        user_id: user_detail?.id,
         currency: "usd",
         amount: amount * 100, // convert cents to dollars
         name: user_detail ? user_detail?.user_name : "test",

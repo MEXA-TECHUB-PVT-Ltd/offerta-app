@@ -45,7 +45,11 @@ const PaymentMethods = ({ navigation, route }) => {
     }
     if (index == 1) {
       //paypal payment
-      navigation.navigate("PaypalPayment", route?.params);
+      if (route?.params?.type == "account_verify") {
+        navigation?.navigate("PaypalMonthlySubscription", route?.params);
+      } else {
+        navigation.navigate("PaypalPayment", route?.params);
+      }
     }
     if (index === 2) {
       getDAta();
