@@ -31,6 +31,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Appbar } from "react-native-paper";
 import Colors from "../../../utills/Colors";
+import { store_subscription_history } from "../../../api/PostApis";
 
 const PaypalMonthlySubscription = ({ navigation, route }) => {
   const webViewRef = useRef();
@@ -102,6 +103,7 @@ const PaypalMonthlySubscription = ({ navigation, route }) => {
           : "";
         await AsyncStorage.setItem("subscription_id", subscription_id);
         clearPaypalState();
+        saveSubscriptionDetails(subscription_id);
         SubmitVerificationDocument();
         // const { PayerID, token } = urlValues.query;
         // if (token) {
@@ -164,9 +166,9 @@ const PaypalMonthlySubscription = ({ navigation, route }) => {
               );
             });
 
-          setTimeout(() => {
-            navigation?.goBack();
-          }, 1000);
+          navigation?.goBack();
+          // setTimeout(() => {
+          // }, 1000);
         } else {
           setsnackbarValue({
             value: response?.message,
@@ -235,6 +237,23 @@ const PaypalMonthlySubscription = ({ navigation, route }) => {
       })
       .catch((err) => {
         console.log("Errr : ", err);
+      });
+  };
+
+  //store subscription data .............
+  const saveSubscriptionDetails = async (subscription_id) => {
+    var user_id = await AsyncStorage.getItem("Userid");
+    let obj = {
+      user_id: user_id,
+      transaction_id: subscription_id,
+      mode: "paypal",
+    };
+    store_subscription_history(obj)
+      .then((response) => {
+        console.log("response____________________", response?.data);
+      })
+      .catch((err) => {
+        console.log("err in  store_subscription_history_________", err);
       });
   };
 

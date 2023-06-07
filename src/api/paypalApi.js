@@ -176,7 +176,7 @@ const subscribePlan = (token = "", plan_id) => {
     // shipping_amount: {
     //   currency_code: "USD",
     //   value: "1.00",
-    // },
+    // },2
     // subscriber: {
     //   name: {
     //     given_name: "FooBuyer",

@@ -18,7 +18,12 @@ import {
 import { appImages } from "../../../constant/images";
 
 ////////////////api functions///////////
-import { get_Sales, get_Orders } from "../../../api/Sales&Promotions";
+import {
+  get_Sales,
+  get_Orders,
+  get_Sales_new,
+  get_Orders_new,
+} from "../../../api/Sales&Promotions";
 import TranslationStrings from "../../../utills/TranslationStrings";
 import { BASE_URL, IMAGE_URL } from "../../../utills/ApiRootUrl";
 import RattingModal from "../../../components/Modal/RattingModal";
@@ -27,6 +32,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
 import NoNotificationFound from "../../BottomTab/Notification/NoNotificationFound";
+import { update_order_status } from "../../../api/Offer";
 
 // const Top_Tab = [
 //   {
@@ -71,13 +77,10 @@ const SalesOrders = ({ navigation }) => {
   };
   const GetSalesList = async (props) => {
     setLoading(true);
-    get_Sales()
+    get_Sales_new()
       .then((response) => {
-        if (
-          response.data[0]?.order_by === [] ||
-          response.data?.status == false
-        ) {
-          setdata("");
+        if (response?.data?.status == false) {
+          setdata([]);
         } else {
           let list = response?.data ? response?.data?.reverse() : [];
           setdata(list);
@@ -89,16 +92,11 @@ const SalesOrders = ({ navigation }) => {
   };
   const GetOrderList = async (props) => {
     setLoading(true);
-    get_Orders()
+    get_Orders_new()
       .then((response) => {
-        console.log("response get_Orders list", JSON.stringify(response.data));
-        if (
-          response.data[0]?.order_by === [] ||
-          response.data?.status == false
-        ) {
-          setdata("");
+        if (response?.data?.status == false) {
+          setdata([]);
         } else {
-          // setdata(response.data);
           let list = response?.data ? response?.data?.reverse() : [];
           setdata(list);
         }
@@ -169,6 +167,25 @@ const SalesOrders = ({ navigation }) => {
       });
   };
 
+  const handleUpdateOrderStatus = (order_detail) => {
+    if (order_detail?.order_status == "pending" && selectedId == 1) {
+      setLoading(true);
+      update_order_status(order_detail?.id, "complete")
+        .then((res) => {
+          console.log("update_order_status : ", res?.data);
+          GetSalesList();
+          // GetOrderList();
+        })
+        .catch((err) => {
+          console.log("err : ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      console.log("selected id : ", selectedId);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader
@@ -218,33 +235,37 @@ const SalesOrders = ({ navigation }) => {
             data={data}
             renderItem={({ item }) => (
               <>
-                {item?.listing?.message == "No data available" ? null : (
+                {item?.listing_detail?.message == "No data available" ? null : (
                   <ExcahangeCard
                     onPress={() => {
                       if (selectedId == 2) {
                         //orders
-                        let seller_id = item?.listing?.user_id;
+                        let seller_id = item?.listing_detail?.user_id;
                         setSelected_user_id(seller_id);
                         setShowRatingModal(true);
                       } else {
                         //sales
                         let buyer_id = item?.order_by?.id;
                         navigation.navigate("ListingsDetails", {
-                          listing_id: item?.listing?.id,
+                          listing_id: item?.listing_detail?.id,
                           buyer_id: buyer_id,
                           type: "sale",
                         });
                       }
                     }}
                     image={
-                      typeof item?.listing?.images == "undefined" ||
-                      item?.listing?.images === []
+                      typeof item?.listing_images == "undefined"
                         ? null
-                        : IMAGE_URL + item?.listing?.images[0]
+                        : IMAGE_URL + item?.listing_images?.image
                     }
-                    maintext={item.listing.title}
-                    subtext={item.listing.description}
-                    pricetext={item.listing.price}
+                    maintext={item?.listing_detail?.title}
+                    subtext={item?.listing_detail?.description}
+                    // pricetext={item?.listing_detail?.price}
+                    pricetext={item?.order_detail?.total_cost}
+                    order_status={item?.order_detail?.order_status}
+                    onOrderStatusPress={() => {
+                      handleUpdateOrderStatus(item?.order_detail);
+                    }}
                   />
                 )}
               </>

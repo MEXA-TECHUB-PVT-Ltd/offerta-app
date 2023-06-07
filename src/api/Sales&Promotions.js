@@ -8,11 +8,20 @@ export const get_Sales = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "mySale.php?user_id=" + user_id);
 };
+export const get_Sales_new = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.get(BASE_URL + "getSellerOrders.php?seller_id=" + user_id);
+};
 
 //////////////Get Specific User //////////
 export const get_Orders = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "myOrder.php?user_id=" + user_id);
+};
+
+export const get_Orders_new = async () => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.get(BASE_URL + "getBuyerOrders.php?buyer_id=" + user_id);
 };
 
 //////////////Get ALL Users //////////

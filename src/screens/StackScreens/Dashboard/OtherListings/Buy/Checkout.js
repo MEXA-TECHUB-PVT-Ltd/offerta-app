@@ -33,6 +33,11 @@ import { appImages } from "../../../../../constant/images";
 import { setLoginUserShippingAddress } from "../../../../../redux/LoginUserActions";
 import { useDispatch, useSelector } from "react-redux";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
+import {
+  create_order_Listings,
+  create_order_Listings_new,
+} from "../../../../../api/Offer";
+import Loader from "../../../../../components/Loader/Loader";
 
 const Checkout = ({ navigation, route }) => {
   ////////////////redux/////////////
@@ -41,21 +46,71 @@ const Checkout = ({ navigation, route }) => {
     (state) => state.loginuserReducer
   );
 
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleNext = () => {
-    if (route?.params?.payment_type == "Paypal") {
-      navigation.navigate("PaypalPayment", {
-        fee: exchange_other_listing?.price,
-        type: "listing_paypal",
-      });
-    } else {
-      // navigation.replace("CardDetails");
-      navigation.replace("StripePayment", {
-        fee: exchange_other_listing?.price,
-        type: "listing_stripe",
-      });
+  // // new
+  const createListingOrder = async () => {
+    try {
+      console.log("createListingOrder  _________________________called...");
+
+      setLoading(true);
+      let mode = route?.params?.payment_type == "Paypal" ? "paypal" : "stripe";
+      create_order_Listings_new(
+        exchange_other_listing.user_id,
+        exchange_other_listing.id,
+        login_user_shipping_address.id,
+        "fixed_price",
+        mode
+      )
+        .then((response) => {
+          console.log("create order response :  ", response?.data);
+          if (response?.data?.success == true) {
+            // setModalVisible(true);
+            // handleNext();
+            if (route?.params?.payment_type == "Paypal") {
+              navigation.navigate("PaypalPayment", {
+                fee: exchange_other_listing?.price,
+                type: "listing_paypal",
+                order_details: response?.data,
+              });
+            } else {
+              // navigation.replace("CardDetails");
+              navigation.replace("StripePayment", {
+                fee: exchange_other_listing?.price,
+                type: "listing_stripe",
+                order_details: response?.data,
+              });
+            }
+          } else {
+            alert("Something went wrong");
+          }
+        })
+        .catch((err) => {
+          console.log("err : ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log("error : ", error);
     }
+  };
+
+  const handleNext = () => {
+    createListingOrder();
+    // if (route?.params?.payment_type == "Paypal") {
+    //   navigation.navigate("PaypalPayment", {
+    //     fee: exchange_other_listing?.price,
+    //     type: "listing_paypal",
+    //   });
+    // } else {
+    //   // navigation.replace("CardDetails");
+    //   navigation.replace("StripePayment", {
+    //     fee: exchange_other_listing?.price,
+    //     type: "listing_stripe",
+    //   });
+    // }
   };
 
   return (
@@ -64,6 +119,7 @@ const Checkout = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+        <Loader isLoading={loading} />
         <CustomHeader
           headerlabel={TranslationStrings.BUY}
           iconPress={() => {

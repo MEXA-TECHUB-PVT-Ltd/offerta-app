@@ -100,7 +100,7 @@ const Settings = ({ navigation }) => {
         icon={"shield-check"}
         labelPress={() => navigation.navigate("VerifyAccount")}
       /> */}
-      {verificationStatus == "subscribed" ? (
+      {/* {verificationStatus == "subscribed" ? (
         <SettingsMenu
           // label={"View Verification Docs"}
           label={TranslationStrings.VERIFY_ACCOUNT}
@@ -108,19 +108,19 @@ const Settings = ({ navigation }) => {
           color={"blue"}
           labelPress={() => navigation.navigate("VerificationDocuments")}
         />
-      ) : (
-        <SettingsMenu
-          // label={"Upload Verification Docs"}
-          label={TranslationStrings.VERIFY_ACCOUNT}
-          icon={"shield-alert-outline"}
-          color={"red"}
-          labelPress={() => {
-            navigation.navigate("AccountVerification", {
-              signup_role: userRole,
-            });
-          }}
-        />
-      )}
+      ) : ( */}
+      <SettingsMenu
+        // label={"Upload Verification Docs"}
+        label={TranslationStrings.VERIFY_ACCOUNT}
+        icon={"shield-alert-outline"}
+        color={"red"}
+        labelPress={() => {
+          navigation.replace("AccountVerification", {
+            signup_role: userRole,
+          });
+        }}
+      />
+      {/* )} */}
 
       {/* <SettingsMenu
        label={'Allow user to call you'}

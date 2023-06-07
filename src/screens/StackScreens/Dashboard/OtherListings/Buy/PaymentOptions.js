@@ -51,26 +51,43 @@ import Loader from "../../../../../components/Loader/Loader";
 import { get_specific_user_detail } from "../../../../../api/GetApis";
 
 const PaymentOptions = ({ navigation, route }) => {
+  const { exchange_other_listing } = useSelector((state) => state.userReducer);
+
   const [selected_index, setSelected_index] = useState(-1);
   const [loading, setLoading] = useState(false);
-  console.log("route?.params : ", route?.params);
 
-  const handlePress = async (index) => {
+  const [type, setType] = useState("");
+
+  const handlePress = async (index, type) => {
     setSelected_index(index);
     console.log("index  : ", index);
 
     if (index == 1) {
+      //coinbase
       getDAta();
     }
-    if (index == 0) {
-      navigation.replace("PaymentMethods1", {
-        index: index,
+    // if (index == 0) {
+    //   navigation.replace("PaymentMethods1", {
+    //     index: index,
+    //     listing_user_detail: route?.params?.listing_user_detail,
+    //   });
+    // } else
+    if (index == "stripe" || index == "paypal") {
+      navigation.replace("ConfirmAddress", {
+        index: 0,
         listing_user_detail: route?.params?.listing_user_detail,
+        payment_type: index == "stripe" ? "Credit_card" : "Paypal",
+        type: type ? type : "",
       });
-    } else if (index !== 1) {
+    } else if (
+      index !== 1 ||
+      exchange_other_listing?.giveaway == "true" ||
+      exchange_other_listing?.giveaway == true
+    ) {
       navigation.replace("ConfirmAddress", {
         index: index,
         listing_user_detail: route?.params?.listing_user_detail,
+        type: type ? type : "",
       });
     }
   };
@@ -109,15 +126,15 @@ const PaymentOptions = ({ navigation, route }) => {
       >
         <Loader isLoading={loading} />
         <CustomHeader
-          headerlabel={TranslationStrings.BUY}
-          // headerlabel={"fksdjfksdjk"}
+          headerlabel={TranslationStrings.CHOOSE_PAYMENT_METHOD}
+          // headerlabel={"Buy"}
           iconPress={() => {
             navigation.goBack();
           }}
           icon={"arrow-back"}
         />
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
+          {/* <Text
             style={{
               fontSize: 18,
               color: Colors.Appthemecolor,
@@ -126,10 +143,10 @@ const PaymentOptions = ({ navigation, route }) => {
             }}
           >
             {TranslationStrings.CHOOSE_PAYMENT_METHOD}
-          </Text>
+          </Text> */}
           {route?.params?.listing_user_detail?.verify_status == "verified" && (
             <>
-              {(route?.params?.listing_user_detail?.paypal == "true" ||
+              {/* {(route?.params?.listing_user_detail?.paypal == "true" ||
                 route?.params?.listing_user_detail?.bank == "true") && (
                 <TouchableOpacity
                   style={styles1.btn}
@@ -144,7 +161,36 @@ const PaymentOptions = ({ navigation, route }) => {
                     </View>
                   )}
                 </TouchableOpacity>
+              )} */}
+
+              {route?.params?.listing_user_detail?.bank == "true" && (
+                <TouchableOpacity
+                  style={styles1.btn}
+                  onPress={() => handlePress("stripe")}
+                >
+                  <Text style={styles1.btnText}>Stripe</Text>
+                  {selected_index == 0 && (
+                    <View style={styles1.checkedView}>
+                      <Checkbox status={"checked"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
               )}
+
+              {route?.params?.listing_user_detail?.paypal == "true" && (
+                <TouchableOpacity
+                  style={styles1.btn}
+                  onPress={() => handlePress("paypal")}
+                >
+                  <Text style={styles1.btnText}>Paypal</Text>
+                  {selected_index == 0 && (
+                    <View style={styles1.checkedView}>
+                      <Checkbox status={"checked"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              )}
+
               {route?.params?.listing_user_detail?.bitcoin == "true" && (
                 <TouchableOpacity
                   style={styles1.btn}
@@ -163,7 +209,13 @@ const PaymentOptions = ({ navigation, route }) => {
             </>
           )}
 
-          <TouchableOpacity style={styles1.btn} onPress={() => handlePress(2)}>
+          <TouchableOpacity
+            style={styles1.btn}
+            onPress={() => {
+              handlePress(2, "pay_on_delivery");
+              setType("pay_on_delivery");
+            }}
+          >
             <Text style={styles1.btnText}>
               {TranslationStrings.PAY_ON_DELIVERY}
             </Text>
@@ -173,7 +225,13 @@ const PaymentOptions = ({ navigation, route }) => {
               </View>
             )}
           </TouchableOpacity>
-          <TouchableOpacity style={styles1.btn} onPress={() => handlePress(3)}>
+          <TouchableOpacity
+            style={styles1.btn}
+            onPress={() => {
+              handlePress(3, "pay_on_pickup");
+              setType("pay_on_pickup");
+            }}
+          >
             <Text style={styles1.btnText}>
               {TranslationStrings.PAY_ON_PICKUP}
             </Text>

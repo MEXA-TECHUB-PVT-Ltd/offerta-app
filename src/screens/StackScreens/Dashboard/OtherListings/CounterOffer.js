@@ -50,6 +50,8 @@ import CustomModal from "../../../../components/Modal/CustomModal";
 import {
   counter_offer_Accept_OR_Reject,
   create_order_Listings,
+  create_order_Listings_new,
+  create_order_Transcation_Listings,
 } from "../../../../api/Offer";
 
 import {
@@ -58,6 +60,7 @@ import {
 } from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 import { get_Shipping_Address } from "../../../../api/ShippingAddress";
+import Loader from "../../../../components/Loader/Loader";
 
 //////////////////appImages.//////////////////
 
@@ -84,6 +87,8 @@ const CounterOffer = ({ navigation, route }) => {
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     checkData();
@@ -254,18 +259,115 @@ const CounterOffer = ({ navigation, route }) => {
   };
 
   const CreteOrder = async () => {
-    create_order_Listings(
-      route?.params?.sale_by,
-      route?.params?.listing_id,
-      shipping_id
+    // create_order_Listings(
+    //   route?.params?.sale_by,
+    //   route?.params?.listing_id,
+    //   shipping_id
+    // )
+    //   .then((response) => {
+    //     console.log("response ::::::", response?.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log("err : ", err);
+    //   });
+
+    createListingOrder("fixed_price");
+  };
+
+  // Order__________________________________________________________
+
+  const createListingOrder = async (type) => {
+    try {
+      console.log("createListingOrder  _________________________called...");
+
+      setLoading(true);
+
+      // route?.params?.sale_by,
+      // route?.params?.listing_id,
+      // shipping_id
+
+      create_order_Listings_new(
+        exchange_other_listing.user_id,
+        exchange_other_listing.id,
+        shipping_id,
+        type,
+        "no_payment_mode"
+      )
+        .then((response) => {
+          console.log("create order response :  ", response?.data);
+          if (response?.data?.success == true) {
+            //order created successfully
+            let order_id = response?.data?.order_id;
+            createListingTranscation(order_id, type);
+          } else {
+            alert("Something went wrong");
+          }
+        })
+        .catch((err) => {
+          console.log("err : ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
+  const createListingTranscation = async (order_id1, type) => {
+    console.log("order_id1_____________________________", order_id1);
+    setLoading(true);
+    let amount = 0;
+
+    if (type == "giveaway") {
+      amount = 0;
+    } else {
+      let shipping_cost = exchange_other_listing?.shipping_cost
+        ? parseInt(exchange_other_listing?.shipping_cost)
+        : 0;
+      amount =
+        parseInt(exchange_other_listing?.price) + parseInt(shipping_cost);
+    }
+    console.log("amount  : ", amount);
+
+    let order_id = order_id1;
+    let transaction_id = null;
+    let mode = "no_payment_mode";
+    let seller_id = exchange_other_listing.user_id;
+    create_order_Transcation_Listings(
+      order_id,
+      mode,
+      transaction_id,
+      seller_id,
+      amount
     )
-      .then((response) => {
-        console.log("response ::::::", response?.data);
+      .then((res) => {
+        console.log("res : ", res?.data);
+        if (res?.data?.status == true) {
+          // setsnackbarValue({
+          //   value: "Order submitted successfully",
+          //   color: "green",
+          // });
+          // setVisible(true);
+          // navigation.replace("SalesOrders");
+        } else {
+          console.log("create order response :  ", res?.data);
+          // setsnackbarValue({
+          //   value: "Something went wrong",
+          //   color: "red",
+          // });
+          // setVisible(true);
+        }
       })
       .catch((err) => {
-        console.log("err : ", err);
+        console.log("error : ", err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+
+  // Order__________________________________________________________
 
   const getListingDetail = async () => {
     // GetListingsDetails(route?.params?.listing_id)
@@ -296,6 +398,7 @@ const CounterOffer = ({ navigation, route }) => {
           type={"no_icon"}
           icon={"arrow-back"}
         />
+        <Loader isLoading={loading} />
         <View style={{ alignItems: "center", justifyContent: "center" }}>
           {route?.params?.item_img && (
             <Image

@@ -47,7 +47,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Snackbar } from "react-native-paper";
 import TranslationStrings from "../../../../../utills/TranslationStrings";
-import { checkout, create_order_Listings } from "../../../../../api/Offer";
+import {
+  checkout,
+  create_order_Listings,
+  create_order_Listings_new,
+  create_order_Transcation_Listings,
+} from "../../../../../api/Offer";
+import Loader from "../../../../../components/Loader/Loader";
 
 const ConfirmAddress = ({ navigation, route }) => {
   ///////////////data states////////////////////
@@ -83,6 +89,8 @@ const ConfirmAddress = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("useEffect  : ", isFocused);
@@ -126,11 +134,25 @@ const ConfirmAddress = ({ navigation, route }) => {
 
       navigation.replace("Checkout", {
         payment_type: route?.params?.payment_type,
+        type: route?.params?.type,
       });
     }
   };
 
   const handleSubmit = async () => {
+    console.log(" route?.params?.type :   ", route?.params?.type);
+
+    if (route?.params?.type == "giveaway") {
+      //handle give away scenario
+      createListingOrder("giveaway");
+      return;
+    } else if (
+      route?.params?.type == "pay_on_delivery" ||
+      route?.params?.type == "pay_on_pickup"
+    ) {
+      createListingOrder(route?.params?.type);
+      return;
+    }
     let type = "";
     if (route?.params?.index == 2) {
       type = "pay_on_delivery";
@@ -207,6 +229,94 @@ const ConfirmAddress = ({ navigation, route }) => {
     //   setVisible(true);
     // });
   };
+
+  const createListingOrder = async (type) => {
+    try {
+      console.log("createListingOrder  _________________________called...");
+
+      setLoading(true);
+
+      create_order_Listings_new(
+        exchange_other_listing.user_id,
+        exchange_other_listing.id,
+        login_user_shipping_address.id,
+        type,
+        "no_payment_mode"
+      )
+        .then((response) => {
+          console.log("create order response :  ", response?.data);
+          if (response?.data?.success == true) {
+            //order created successfully
+            let order_id = response?.data?.order_id;
+            createListingTranscation(order_id, type);
+          } else {
+            alert("Something went wrong");
+          }
+        })
+        .catch((err) => {
+          console.log("err : ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
+  const createListingTranscation = async (order_id1, type) => {
+    console.log("order_id1_____________________________", order_id1);
+    setLoading(true);
+    let amount = 0;
+
+    if (type == "giveaway") {
+      amount = 0;
+    } else {
+      let shipping_cost = exchange_other_listing?.shipping_cost
+        ? parseInt(exchange_other_listing?.shipping_cost)
+        : 0;
+      amount =
+        parseInt(exchange_other_listing?.price) + parseInt(shipping_cost);
+    }
+    console.log("amount  : ", amount);
+
+    let order_id = order_id1;
+    let transaction_id = null;
+    let mode = "no_payment_mode";
+    let seller_id = exchange_other_listing.user_id;
+    create_order_Transcation_Listings(
+      order_id,
+      mode,
+      transaction_id,
+      seller_id,
+      amount
+    )
+      .then((res) => {
+        console.log("res : ", res?.data);
+        if (res?.data?.status == true) {
+          setsnackbarValue({
+            value: "Order submitted successfully",
+            color: "green",
+          });
+          setVisible(true);
+          navigation.replace("SalesOrders");
+        } else {
+          console.log("create order response :  ", res?.data);
+          setsnackbarValue({
+            value: "Something went wrong",
+            color: "red",
+          });
+          setVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log("error : ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -252,6 +362,7 @@ const ConfirmAddress = ({ navigation, route }) => {
           }}
           icon={"arrow-back"}
         />
+        <Loader isLoading={loading} />
 
         <View
           style={[
@@ -478,6 +589,25 @@ const ConfirmAddress = ({ navigation, route }) => {
               topDistance={10}
               onPress={() => {
                 handleNext();
+              }}
+            />
+          ) : (route?.params?.type == "pay_on_delivery" ||
+              route?.params?.type == "pay_on_pickup") &&
+            exchange_other_listing?.shipping_cost != "0.0" ? (
+            // <CustomButtonhere
+            //   title={TranslationStrings.NEXT}
+            //   widthset={80}
+            //   topDistance={10}
+            //   onPress={() => {
+            //     handleNext();
+            //   }}
+            // />
+            <CustomButtonhere
+              title={TranslationStrings.SUBMIT}
+              widthset={80}
+              topDistance={10}
+              onPress={() => {
+                handleSubmit();
               }}
             />
           ) : (
