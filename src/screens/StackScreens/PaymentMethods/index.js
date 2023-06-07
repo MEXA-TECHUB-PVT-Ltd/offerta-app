@@ -46,7 +46,7 @@ const PaymentMethods = ({ navigation, route }) => {
     if (index == 1) {
       //paypal payment
       if (route?.params?.type == "account_verify") {
-        navigation?.navigate("PaypalMonthlySubscription", route?.params);
+        navigation?.replace("PaypalMonthlySubscription", route?.params);
       } else {
         navigation.navigate("PaypalPayment", route?.params);
       }
@@ -91,7 +91,8 @@ const PaymentMethods = ({ navigation, route }) => {
       >
         <CustomHeader
           //   headerlabel={TranslationStrings.BUY}
-          headerlabel={"Payment Method"}
+          // headerlabel={"Payment Method"}
+          headerlabel={TranslationStrings.CHOOSE_PAYMENT_METHOD}
           iconPress={() => {
             navigation.goBack();
           }}
@@ -99,7 +100,7 @@ const PaymentMethods = ({ navigation, route }) => {
         />
         <Loader isLoading={loading} />
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
+          {/* <Text
             style={{
               fontSize: 18,
               color: Colors.Appthemecolor,
@@ -108,7 +109,7 @@ const PaymentMethods = ({ navigation, route }) => {
             }}
           >
             {TranslationStrings.CHOOSE_PAYMENT_METHOD}
-          </Text>
+          </Text> */}
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(0)}>
             <Text style={styles1.btnText}>
               {TranslationStrings.CREDIT_CARD}
@@ -116,6 +117,15 @@ const PaymentMethods = ({ navigation, route }) => {
             {selected_index == 0 && (
               <View style={styles1.checkedView}>
                 <Checkbox status={"checked"} />
+              </View>
+            )}
+
+            {route?.params?.type == "account_verify" && (
+              <View style={styles.feeView}>
+                <Text style={styles.feeText}>
+                  {TranslationStrings.ACCOUNT_FEE} :{route?.params?.stripeFee}
+                  {"$/Month"}
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -127,6 +137,15 @@ const PaymentMethods = ({ navigation, route }) => {
                 <Checkbox status={"checked"} />
               </View>
             )}
+
+            {route?.params?.type == "account_verify" && (
+              <View style={styles.feeView}>
+                <Text style={styles.feeText}>
+                  {TranslationStrings.ACCOUNT_FEE} :{route?.params?.paypalFee}
+                  {"$/Month"}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
           <TouchableOpacity style={styles1.btn} onPress={() => handlePress(2)}>
             <Text style={styles1.btnText}>
@@ -136,6 +155,15 @@ const PaymentMethods = ({ navigation, route }) => {
             {selected_index == 2 && (
               <View style={styles1.checkedView}>
                 <Checkbox status={"checked"} />
+              </View>
+            )}
+
+            {route?.params?.type == "account_verify" && (
+              <View style={styles.feeView}>
+                <Text style={styles.feeText}>
+                  {TranslationStrings.ACCOUNT_FEE} :{route?.params?.coinbaseFee}
+                  {"$/Month"}
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -205,5 +233,14 @@ const styles = StyleSheet.create({
     fontSize: hp(1.8),
     fontFamily: fontFamily.Poppins_Medium,
     marginTop: wp("2%"),
+  },
+  feeView: {},
+  feeText: {
+    color: Colors.Appthemecolor,
+    // fontFamily: fontFamily.Poppins_SemiBold,
+    // fontSize: hp(1.2),
+
+    // color: "#000",
+    fontSize: 12,
   },
 });

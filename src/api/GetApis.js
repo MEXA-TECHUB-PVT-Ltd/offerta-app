@@ -13,6 +13,7 @@ export const get_Login_UserData = async () => {
   var user_id = await AsyncStorage.getItem("Userid");
   return axios.get(BASE_URL + "getUserById.php?user_id=" + user_id);
 };
+
 //////////////Get User Account Fee //////////
 export const Get_Account_Fees = async () => {
   return axios.get(BASE_URL + "getAccountFees.php");

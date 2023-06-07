@@ -18,6 +18,15 @@ export const post_Like_Listings_NEW = async (props) => {
     listing_id: props,
   });
 };
+export const check_subscription_status = async (props) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  return axios.post(BASE_URL + "stripefinal/checkstatus.php", {
+    user_id: user_id,
+  });
+};
+export const store_subscription_history = async (props) => {
+  return axios.post(BASE_URL + "stripefinal/paymentsubscription.php", props);
+};
 
 export const GET_LIKE_STATUS_NEW = async (props) => {
   var user_id = await AsyncStorage.getItem("Userid");

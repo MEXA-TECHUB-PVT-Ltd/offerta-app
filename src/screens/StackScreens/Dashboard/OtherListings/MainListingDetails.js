@@ -344,11 +344,21 @@ const MainListingsDetails = ({ navigation, route }) => {
       setShowBlockModal(true);
       return;
     }
-    // navigation.navigate("ConfirmAddress");
-    navigation.replace("PaymentOptions", {
-      user_id: listing_user_id,
-      listing_user_detail: listing_user_detail,
-    });
+
+    if (giveaway_status == true || giveaway_status == "true") {
+      navigation.replace("ConfirmAddress", {
+        index: -1,
+        user_id: listing_user_id,
+        listing_user_detail: listing_user_detail,
+        type: "giveaway",
+      });
+    } else {
+      // navigation.navigate("ConfirmAddress");
+      navigation.replace("PaymentOptions", {
+        user_id: listing_user_id,
+        listing_user_detail: listing_user_detail,
+      });
+    }
   };
 
   const handleRefresh = () => {

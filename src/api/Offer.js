@@ -47,6 +47,52 @@ export const create_order_Listings = async (
     shipping_id: shipping_id,
   });
 };
+export const create_order_Listings_new = async (
+  seller_id,
+  listing_id,
+  shipping_id,
+  type,
+  mode
+) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  let obj = {
+    seller_id: seller_id,
+    buyer_id: user_id,
+    listing_id: listing_id,
+    shipping_id: shipping_id,
+    type: type,
+    mode: mode,
+  };
+  console.log("obj : ", obj);
+  return axios.post(BASE_URL + "order.php", obj);
+};
+export const create_order_Transcation_Listings = async (
+  order_id,
+  mode,
+  transaction_id,
+  seller_id,
+  amount
+) => {
+  var user_id = await AsyncStorage.getItem("Userid");
+  let obj = {
+    order_id: order_id,
+    buyer_id: user_id,
+    mode: mode,
+    transaction_id: transaction_id,
+    seller_id: seller_id,
+    amount: amount,
+  };
+  console.log("obj : ", obj);
+  return axios.post(BASE_URL + "ordertransaction.php", obj);
+};
+export const update_order_status = async (order_id, status) => {
+  let obj = {
+    order_id: order_id,
+    status: status,
+  };
+  console.log("obj : ", obj);
+  return axios.post(BASE_URL + "orderstatusupdate.php", obj);
+};
 
 export const add_User_Stripe_Credentials = async () => {
   var user_id = await AsyncStorage.getItem("Userid");

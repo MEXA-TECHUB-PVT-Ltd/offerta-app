@@ -378,6 +378,8 @@ let TranslationStrings = new LocalizedStrings({
     ENTER_BITCOIN_WALLY: "Introduzca Bitcoin Wally",
     ENTER_PAYPAL_EMAIL: "Ingrese el correo electrónico de PayPal",
     ENTER_BANK_ACCOUNT_NUMBER: "Ingrese el número de cuenta bancaria",
+
+    SELECT_PAYOUT_METHODS: "Seleccionar métodos de pago",
   },
   en: {
     //home
@@ -739,6 +741,8 @@ let TranslationStrings = new LocalizedStrings({
     ENTER_BITCOIN_WALLY: "Enter Bitcoin Wally",
     ENTER_PAYPAL_EMAIL: "Enter PayPal Email",
     ENTER_BANK_ACCOUNT_NUMBER: "Enter Bank Account Number",
+
+    SELECT_PAYOUT_METHODS: "Select Payout Methods",
   },
 });
 

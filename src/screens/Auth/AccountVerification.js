@@ -76,6 +76,10 @@ import { cancel_user_verification } from "../../api/Sales&Promotions";
 import CPaperInput from "../../components/TextInput/CPaperInput";
 import paypalApi from "../../api/paypalApi";
 import { async } from "regenerator-runtime";
+import {
+  check_subscription_status,
+  store_subscription_history,
+} from "../../api/PostApis";
 
 const AccountVerification = ({ navigation, route }) => {
   const refRBSheet = useRef();
@@ -121,6 +125,13 @@ const AccountVerification = ({ navigation, route }) => {
   const [subscription, setSubscription] = useState(false);
 
   const [currentPlan, setCurrentPlan] = useState("");
+
+  const [paypalFee, setPaypalFee] = useState("0");
+  const [stripeFee, setStripeFee] = useState("0");
+  const [coinbaseFee, setCoinbaseFee] = useState("0");
+
+  const [subscription_id, setSubscription_id] = useState("");
+  const [subscription_mode, setSubscription_mode] = useState("");
 
   useEffect(() => {
     if (route?.params?.type == "login") {
@@ -239,13 +250,47 @@ const AccountVerification = ({ navigation, route }) => {
   const getUserDetail = async () => {
     let user_id = await AsyncStorage.getItem("Userid");
     get_specific_user_detail(user_id)
-      .then((response) => {
+      .then(async (response) => {
         let verify_status = response?.verify_status;
         console.log("verify_status  : ", verify_status);
         if (verify_status == null) {
           return false; // user details not found or error occured dugin get
         }
         if (verify_status == "unverified" || verify_status == "verified") {
+          let subscription_status = await getSubscriptionStatus();
+          console.log("subscription_status : ", subscription_status);
+
+          setSubscription_id(response?.subscription?.transaction_id);
+          setSubscription_mode(response?.subscription?.mode);
+          //check expiration of subscription.......
+          console.log("subscription_status  : ", subscription_status);
+          console.log(
+            " typeof response?.subscription?.transaction_id  : ",
+            typeof response?.subscription?.transaction_id
+          );
+          if (
+            subscription_status == false &&
+            typeof response?.subscription?.transaction_id != "undefined"
+          ) {
+            console.log(
+              "check expiration of subscription........................................."
+            );
+            //subscription is expired .now we store subscription history of next month again
+            if (response?.subscription?.mode == "paypal") {
+              console.log(
+                "paypal saveSubscriptionDetails  ________________________________________________________"
+              );
+              // create new subscription history
+              saveSubscriptionDetails(response?.subscription?.transaction_id);
+            } else {
+              //repeat subscription process in coinbase and stripe scenarios
+              console.log("else________________________________________");
+              return;
+            }
+          } else {
+            console.log("subscription is active.");
+          }
+
           setBitcoin(response?.bitcoin == "true" ? true : false);
           setPaypal(response?.paypal == "true" ? true : false);
           setBankAccount(response?.bank == "true" ? true : false);
@@ -311,11 +356,49 @@ const AccountVerification = ({ navigation, route }) => {
         });
     });
   };
+
+  //store subscription data .............
+  const saveSubscriptionDetails = async (subscription_id) => {
+    console.log(
+      "saveSubscriptionDetails__________________________________ called"
+    );
+    var user_id = await AsyncStorage.getItem("Userid");
+    let obj = {
+      user_id: user_id,
+      transaction_id: subscription_id,
+      mode: "paypal",
+    };
+    store_subscription_history(obj)
+      .then((response) => {
+        console.log("response____________________", response?.data);
+      })
+      .catch((err) => {
+        console.log("err in  store_subscription_history_________", err);
+      });
+  };
+
+  //get user subscription status
+
+  const getSubscriptionStatus = async () => {
+    return new Promise((resolve, reject) => {
+      check_subscription_status()
+        .then((user_response) => {
+          console.log("user_response     :", user_response?.data);
+          let status = user_response?.data?.subscription_status;
+          resolve(status);
+        })
+        .catch((err) => {
+          resolve(0);
+        });
+    });
+  };
+
   useFocusEffect(
     React.useCallback(() => {
-      // getUserFee();
+      getUserFee();
       getUserDetail();
       getPaypalPlans();
+      getSubscriptionStatus();
     }, [])
   );
 
@@ -341,6 +424,9 @@ const AccountVerification = ({ navigation, route }) => {
               setAccountFee(
                 res?.billing_cycles[0]?.pricing_scheme?.fixed_price?.value
               );
+              setPaypalFee(
+                res?.billing_cycles[0]?.pricing_scheme?.fixed_price?.value
+              );
               setCurrentPlan(res);
             });
           })
@@ -360,6 +446,9 @@ const AccountVerification = ({ navigation, route }) => {
     setLoading1(true);
     let fee = await getUserAccountFee();
     setAccountFee(fee);
+
+    setStripeFee(fee);
+    setCoinbaseFee(fee);
     setLoading1(false);
   };
 
@@ -403,6 +492,11 @@ const AccountVerification = ({ navigation, route }) => {
                 accountHolderName: accountHolderName,
                 zipCode: zipCode,
                 selectedPlan: currentPlan,
+
+                //fee
+                paypalFee: paypalFee,
+                stripeFee: stripeFee,
+                coinbaseFee: coinbaseFee,
               });
             })
             .catch((err) => {
@@ -425,16 +519,19 @@ const AccountVerification = ({ navigation, route }) => {
   };
 
   const handleCancelUserSubscription = async () => {
-    let subscription_id = await AsyncStorage.getItem("subscription_id");
-    console.log("subscription_id  : ", subscription_id);
+    setLoading1(true);
+    // let subscription_id = await AsyncStorage.getItem("subscription_id");
+    // console.log("subscription_id  : ", subscription_id);
 
     cancel_user_verification()
       .then(async (response) => {
         console.log("response : ", response?.data);
 
         //______________unsubscribe from paypal
-        const token = await paypalApi.generateToken();
-        await paypalApi.cancelSubscription(subscription_id, token);
+        if (subscription_mode == "paypal") {
+          const token = await paypalApi.generateToken();
+          await paypalApi.cancelSubscription(subscription_id, token);
+        }
         //______________unsubscribe from paypal
 
         setsnackbarValue({
@@ -448,6 +545,9 @@ const AccountVerification = ({ navigation, route }) => {
       })
       .catch((err) => {
         console.log("Error raised in handleCancelUserSubscription : ", err);
+      })
+      .finally(() => {
+        setLoading1(false);
       });
   };
   const onDismissSnackBar = () => setVisible(false);
@@ -455,7 +555,13 @@ const AccountVerification = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <Loader isLoading={loading1} />
-        <View style={{ flexDirection: "row", marginTop: hp(3) }}>
+        <View
+          style={{
+            flexDirection: "row",
+            // marginTop: hp(3),
+            alignItems: "center",
+          }}
+        >
           <Ionicons
             name={"arrow-back"}
             size={25}
@@ -463,28 +569,33 @@ const AccountVerification = ({ navigation, route }) => {
             style={{ marginLeft: wp(5) }}
             onPress={() => navigation.goBack()}
           />
-          <Text
-            style={{
-              color: "#000",
-              fontSize: hp(1.6),
-              marginHorizontal: wp(2),
-              fontFamily: fontFamily.Poppins_Regular,
-              flex: 1,
-            }}
-          >
-            {TranslationStrings.VERIFICATION_TOP_MESSAGE}
-          </Text>
+          {/* <View
+            style={[Logostyles.Logoview, { marginTop: hp(2), marginBottom: 2 }]}
+          > */}
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Image
+              source={appImages.logo}
+              style={Logostyles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          {/* </View> */}
         </View>
 
-        <View
-          style={[Logostyles.Logoview, { marginTop: hp(2), marginBottom: 2 }]}
+        <Text
+          style={{
+            color: "#000",
+            fontSize: hp(1.6),
+            marginHorizontal: wp(2),
+            fontFamily: fontFamily.Poppins_Regular,
+            flex: 1,
+            paddingHorizontal: 20,
+            marginVertical: 5,
+          }}
         >
-          <Image
-            source={appImages.logo}
-            style={Logostyles.logo}
-            resizeMode="contain"
-          />
-        </View>
+          {TranslationStrings.VERIFICATION_TOP_MESSAGE}
+        </Text>
+
         <Text
           style={{
             ...Authstyles.maintext,
@@ -493,17 +604,156 @@ const AccountVerification = ({ navigation, route }) => {
         >
           {TranslationStrings.VERIFY_ACCOUNT}
         </Text>
+
+        <View>
+          <Text
+            style={{
+              marginLeft: 30,
+              color: "#000",
+              fontSize: hp(2),
+              marginTop: 25,
+              fontFamily: fontFamily.Poppins_Regular,
+            }}
+          >
+            {TranslationStrings.PROFILE_PICTURE} :
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => {
+              setSelected(0);
+              refRBSheet?.current?.open();
+            }}
+          >
+            <View style={style.card}>
+              <View style={{ alignItems: "center" }}>
+                {userImage?.uri == "" ? (
+                  <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(0);
+                    }}
+                    // onPress={() => navigation.navigate("CameraViewScreen")}
+                  >
+                    <Image
+                      source={appImages.UploadIcpn}
+                      style={{
+                        width: wp("10%"),
+                        height: wp("10%"),
+                      }}
+                      resizeMode="contain"
+                    />
+                    <Text
+                      style={{
+                        color: Colors.appgreycolor,
+                        fontSize: hp(1.8),
+                        marginTop: hp(3),
+                        fontFamily: fontFamily.Poppins_Regular,
+                      }}
+                    >
+                      {TranslationStrings.UPLOAD_YOUR_PICTURE}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(0);
+                    }}
+                    style={style.imageView}
+                  >
+                    <Image
+                      source={{ uri: userImage.uri }}
+                      style={style.imageView}
+                      resizeMode={"stretch"}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Text
+            style={{
+              marginLeft: 30,
+              color: "#000",
+              fontSize: hp(2),
+              marginTop: 25,
+              fontFamily: fontFamily.Poppins_Regular,
+            }}
+          >
+            {TranslationStrings.UPLOAD_DOCUMENTS} :
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => {
+              setSelected(1);
+              refRBSheet?.current?.open();
+            }}
+          >
+            <View style={style.card}>
+              <View style={{ alignItems: "center" }}>
+                {cnicImage?.uri == "" ? (
+                  <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(1);
+                    }}
+                    // onPress={() => navigation.navigate("CameraViewScreen")}
+                  >
+                    <Image
+                      source={appImages.UploadIcpn}
+                      style={{
+                        width: wp("10%"),
+                        height: wp("10%"),
+                      }}
+                      resizeMode="contain"
+                    />
+
+                    <Text
+                      style={{
+                        color: Colors.appgreycolor,
+                        fontSize: hp(1.8),
+                        marginTop: hp(3),
+                        fontFamily: fontFamily.Poppins_Regular,
+                      }}
+                    >
+                      {TranslationStrings.UPLOAD_DOCUMENTS}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      refRBSheet?.current?.open();
+                      setSelected(1);
+                    }}
+                    style={style.imageView}
+                  >
+                    <Image
+                      source={{ uri: cnicImage.uri }}
+                      style={style.imageView}
+                      resizeMode={"stretch"}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+
         <Text
           style={{
             ...Authstyles.maintext,
             textAlign: "center",
             color: "#000",
-            fontSize: hp(2.6),
+            fontSize: hp(2.2),
             width: wp(100),
             marginBottom: 0,
           }}
         >
-          {TranslationStrings.PAYOUT}
+          {TranslationStrings.SELECT_PAYOUT_METHODS}
         </Text>
         <View
           style={{
@@ -588,162 +838,26 @@ const AccountVerification = ({ navigation, route }) => {
             )}
           </View>
         </View>
-        <View>
+
+        {/* <View
+          style={{
+            paddingHorizontal: 30,
+            // padding: 20,
+            alignItems: "flex-end",
+          }}
+        >
           <Text
             style={{
-              marginLeft: 30,
-              color: "#000",
+              color: Colors.Appthemecolor,
+              fontFamily: fontFamily.Poppins_SemiBold,
               fontSize: hp(2),
-              marginTop: 25,
-              fontFamily: fontFamily.Poppins_Regular,
             }}
           >
-            {TranslationStrings.PROFILE_PICTURE} :
+            {TranslationStrings.ACCOUNT_FEE} :{accountFee}
+            {"$"}
           </Text>
+        </View> */}
 
-          <TouchableOpacity
-            onPress={() => {
-              setSelected(0);
-              refRBSheet?.current?.open();
-            }}
-          >
-            <View style={style.card}>
-              <View style={{ alignItems: "center" }}>
-                {userImage?.uri == "" ? (
-                  <TouchableOpacity
-                    style={{ alignItems: "center" }}
-                    onPress={() => {
-                      refRBSheet?.current?.open();
-                      setSelected(0);
-                    }}
-                    // onPress={() => navigation.navigate("CameraViewScreen")}
-                  >
-                    <Image
-                      source={appImages.UploadIcpn}
-                      style={{
-                        width: wp("10%"),
-                        height: wp("10%"),
-                      }}
-                      resizeMode="contain"
-                    />
-                    <Text
-                      style={{
-                        color: Colors.appgreycolor,
-                        fontSize: hp(1.8),
-                        marginTop: hp(3),
-                        fontFamily: fontFamily.Poppins_Regular,
-                      }}
-                    >
-                      {TranslationStrings.UPLOAD_YOUR_PICTURE}
-                    </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      refRBSheet?.current?.open();
-                      setSelected(0);
-                    }}
-                    style={style.imageView}
-                  >
-                    <Image
-                      source={{ uri: userImage.uri }}
-                      style={style.imageView}
-                      resizeMode={"contain"}
-                    />
-                  </TouchableOpacity>
-                )}
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <Text
-            style={{
-              marginLeft: 30,
-              color: "#000",
-              fontSize: hp(2),
-              marginTop: 25,
-              fontFamily: fontFamily.Poppins_Regular,
-            }}
-          >
-            {TranslationStrings.UPLOAD_DOCUMENTS} :
-          </Text>
-
-          <TouchableOpacity
-            onPress={() => {
-              setSelected(1);
-              refRBSheet?.current?.open();
-            }}
-          >
-            <View style={style.card}>
-              <View style={{ alignItems: "center" }}>
-                {cnicImage?.uri == "" ? (
-                  <TouchableOpacity
-                    style={{ alignItems: "center" }}
-                    onPress={() => {
-                      refRBSheet?.current?.open();
-                      setSelected(1);
-                    }}
-                    // onPress={() => navigation.navigate("CameraViewScreen")}
-                  >
-                    <Image
-                      source={appImages.UploadIcpn}
-                      style={{
-                        width: wp("10%"),
-                        height: wp("10%"),
-                      }}
-                      resizeMode="contain"
-                    />
-
-                    <Text
-                      style={{
-                        color: Colors.appgreycolor,
-                        fontSize: hp(1.8),
-                        marginTop: hp(3),
-                        fontFamily: fontFamily.Poppins_Regular,
-                      }}
-                    >
-                      {TranslationStrings.UPLOAD_DOCUMENTS}
-                    </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      refRBSheet?.current?.open();
-                      setSelected(1);
-                    }}
-                    style={style.imageView}
-                  >
-                    <Image
-                      source={{ uri: cnicImage.uri }}
-                      style={style.imageView}
-                      resizeMode={"contain"}
-                    />
-                  </TouchableOpacity>
-                )}
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <View
-            style={{
-              paddingHorizontal: 30,
-              // padding: 20,
-              alignItems: "flex-end",
-            }}
-          >
-            <Text
-              style={{
-                color: Colors.Appthemecolor,
-                fontFamily: fontFamily.Poppins_SemiBold,
-                fontSize: hp(2),
-              }}
-            >
-              {TranslationStrings.ACCOUNT_FEE} :{accountFee}
-              {"$"}
-            </Text>
-          </View>
-        </View>
         <View style={{ height: 120 }}>
           {subscription == true ? (
             <CustomButtonhere

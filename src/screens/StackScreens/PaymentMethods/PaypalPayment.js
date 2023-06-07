@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import {
   add_User_Stripe_Credentials,
   create_order_Listings,
+  create_order_Transcation_Listings,
 } from "../../../api/Offer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -41,8 +42,6 @@ const PaypalPayment = ({ navigation, route }) => {
   const [payPalUrl, setPayPalUrl] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [paypalOrderDetail, setPaypalOrderDetail] = useState({});
-  console.log("  ....", route?.params);
-
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
@@ -71,9 +70,15 @@ const PaypalPayment = ({ navigation, route }) => {
         // value: rate?.rate,
         console.log("route?.params?.fee  : ", route?.params?.fee);
         let fees = route?.params?.fee ? route?.params?.fee : "1.00";
+        let shipping_cost = exchange_other_listing?.shipping_cost
+          ? exchange_other_listing?.shipping_cost
+          : 0;
+
+        fees = parseInt(fees) + parseInt(shipping_cost);
+
         // let fees = "1.00";
         fees = parseFloat(fees).toFixed(2).toString();
-
+        console.log("fees  ____________________", fees);
         let orderDetail = {
           intent: "CAPTURE",
           purchase_units: [
@@ -114,6 +119,7 @@ const PaypalPayment = ({ navigation, route }) => {
           .createOrder(token, orderDetail)
           .then((res) => {
             console.log("create order response::::", res);
+            //order id  =  res.id
             if (res?.links) {
               const link = res?.links?.find((data) => data?.rel == "approve");
               console.log("link  : ", link);
@@ -150,7 +156,7 @@ const PaypalPayment = ({ navigation, route }) => {
         console.log("urlValues", urlValues);
         const { PayerID, token } = urlValues.query;
         if (token) {
-          paymentSuccess(token);
+          paymentSuccess(token, PayerID);
           clearPaypalState();
           return;
         }
@@ -165,7 +171,7 @@ const PaypalPayment = ({ navigation, route }) => {
     setIsWebViewopen(false);
   };
 
-  const paymentSuccess = async (id) => {
+  const paymentSuccess = async (id, PayerID) => {
     try {
       setLoading(true);
       const res = await paypalApi
@@ -183,7 +189,7 @@ const PaypalPayment = ({ navigation, route }) => {
             SubmitVerificationDocument();
           } else if (route?.params?.type == "listing_paypal") {
             //handle listing payment
-            createListingOrder();
+            createListingOrder(PayerID);
           } else {
             console.log("route?.params?.type  not found", route?.params?.type);
           }
@@ -382,23 +388,71 @@ const PaypalPayment = ({ navigation, route }) => {
   };
 
   //listing order
-  const createListingOrder = async () => {
-    create_order_Listings(
-      exchange_other_listing.user_id,
-      exchange_other_listing.id,
-      login_user_shipping_address.id
-    ).then((response) => {
-      if (response?.data?.status == true) {
-        setModalVisible(true);
-      } else {
-        console.log("create order response :  ", response?.data);
-        setsnackbarValue({
-          value: "Something went wrong",
-          color: "red",
-        });
-        setVisible(true);
-      }
-    });
+  const createListingOrder = async (PayerID) => {
+    console.log("createListingOrder  _________________________called...");
+    createListingTranscation(PayerID);
+
+    // create_order_Listings(
+    //   exchange_other_listing.user_id,
+    //   exchange_other_listing.id,
+    //   login_user_shipping_address.id
+    // ).then((response) => {
+    //   if (response?.data?.status == true) {
+    //     setModalVisible(true);
+    //   } else {
+    //     console.log("create order response :  ", response?.data);
+    //     setsnackbarValue({
+    //       value: "Something went wrong",
+    //       color: "red",
+    //     });
+    //     setVisible(true);
+    //   }
+    // });
+  };
+
+  const createListingTranscation = async (PayerID) => {
+    //   order_id,
+    // mode,
+    // transaction_id,
+    // seller_id,
+    // amount
+    let fees = route?.params?.fee ? route?.params?.fee : "1.00";
+    let shipping_cost = exchange_other_listing?.shipping_cost
+      ? exchange_other_listing?.shipping_cost
+      : 0;
+
+    fees = parseInt(fees) + parseInt(shipping_cost);
+
+    // let fees = "1.00";
+    fees = parseFloat(fees).toFixed(2).toString();
+
+    let order_id = route?.params?.order_details?.order_id;
+    let transaction_id = PayerID;
+    let mode = "stripe";
+    let seller_id = exchange_other_listing.user_id;
+    create_order_Transcation_Listings(
+      order_id,
+      mode,
+      transaction_id,
+      seller_id,
+      fees
+    )
+      .then((res) => {
+        console.log("res : ", res?.data);
+        if (res?.data?.status == true) {
+          setModalVisible(true);
+        } else {
+          console.log("create order response :  ", res?.data);
+          setsnackbarValue({
+            value: "Something went wrong",
+            color: "red",
+          });
+          setVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log("error : ", err);
+      });
   };
 
   return (

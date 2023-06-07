@@ -18,7 +18,11 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import CustomModal from "../../../components/Modal/CustomModal";
-import { create_order_Listings } from "../../../api/Offer";
+import {
+  create_order_Listings,
+  create_order_Listings_new,
+  create_order_Transcation_Listings,
+} from "../../../api/Offer";
 import {
   post_Promotions_new,
   post_verification_detail,
@@ -32,6 +36,7 @@ import Colors from "../../../utills/Colors";
 
 import { Publishable_key } from "@env";
 import { async } from "regenerator-runtime";
+import { store_subscription_history } from "../../../api/PostApis";
 
 const StripePayment = ({ navigation, route }) => {
   const [loading1, setLoading1] = useState(false);
@@ -43,6 +48,8 @@ const StripePayment = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
   const onDismissSnackBar = () => setVisible(false);
+
+  const [currentPaymentIntent, setCurrentPaymentIntent] = useState("");
 
   console.log("Publishable_key  : ", Publishable_key);
   useEffect(() => {
@@ -62,6 +69,12 @@ const StripePayment = ({ navigation, route }) => {
       });
       const { paymentIntent, ephemeralKey, customer } =
         await fetchPaymentSheetParams(item);
+
+      if (paymentIntent) {
+        await AsyncStorage.setItem("paymentIntent", paymentIntent);
+      }
+
+      setCurrentPaymentIntent(paymentIntent);
 
       const { error } = await initPaymentSheet({
         appearance: {
@@ -109,7 +122,13 @@ const StripePayment = ({ navigation, route }) => {
   //createPaymentIntent
   const fetchPaymentSheetParams = async (item) => {
     try {
+      let shipping_cost = exchange_other_listing?.shipping_cost
+        ? exchange_other_listing?.shipping_cost
+        : 0;
+      console.log("shipping_cost _________ ", shipping_cost);
       let amount = route?.params?.fee ? route?.params?.fee : "1.00";
+      amount = parseInt(amount) + parseInt(shipping_cost);
+
       var user_id = await AsyncStorage.getItem("Userid");
       let user_detail = await get_specific_user_detail(user_id);
       let obj = {
@@ -290,6 +309,9 @@ const StripePayment = ({ navigation, route }) => {
         if (response?.status == true) {
           submit_varification_details();
 
+          let transaction_id = await AsyncStorage.getItem("paymentIntent");
+          saveSubscriptionDetails(transaction_id);
+
           setsnackbarValue({
             value: "Verification document submitted successfully!",
             color: "green",
@@ -325,6 +347,28 @@ const StripePayment = ({ navigation, route }) => {
           color: "red",
         });
         setVisible(true);
+      });
+  };
+
+  //store subscription data .............
+  const saveSubscriptionDetails = async (subscription_id) => {
+    var user_id = await AsyncStorage.getItem("Userid");
+
+    let obj = {
+      user_id: user_id,
+      transaction_id: subscription_id,
+      mode: "stripe",
+    };
+    console.log("obj passed............................... : ", obj);
+    store_subscription_history(obj)
+      .then((response) => {
+        console.log(
+          "response store_subscription_history____________________",
+          response?.data
+        );
+      })
+      .catch((err) => {
+        console.log("err in  store_subscription_history_________", err);
       });
   };
 
@@ -379,24 +423,95 @@ const StripePayment = ({ navigation, route }) => {
   };
 
   //listing order
+
+  // // new
+  // const createListingOrder = async () => {
+  //   console.log("createListingOrder  _________________________called...");
+
+  //   //   seller_id,
+  //   // listing_id,
+  //   // shipping_id,
+  //   // type
+  //   let type = exchange_other_listing.giveaway;
+  //   create_order_Listings_new(
+  //     exchange_other_listing.user_id,
+  //     exchange_other_listing.id,
+  //     login_user_shipping_address.id
+  //   ).then((response) => {
+  //     if (response?.data?.status == true) {
+  //       setModalVisible(true);
+  //     } else {
+  //       console.log("create order response :  ", response?.data);
+  //       setsnackbarValue({
+  //         value: "Something went wrong",
+  //         color: "red",
+  //       });
+  //       setVisible(true);
+  //     }
+  //   });
+  // };
+
+  // old
   const createListingOrder = async () => {
     console.log("createListingOrder  _________________________called...");
-    create_order_Listings(
-      exchange_other_listing.user_id,
-      exchange_other_listing.id,
-      login_user_shipping_address.id
-    ).then((response) => {
-      if (response?.data?.status == true) {
-        setModalVisible(true);
-      } else {
-        console.log("create order response :  ", response?.data);
-        setsnackbarValue({
-          value: "Something went wrong",
-          color: "red",
-        });
-        setVisible(true);
-      }
-    });
+    createListingTranscation();
+    // create_order_Listings(
+    //   exchange_other_listing.user_id,
+    //   exchange_other_listing.id,
+    //   login_user_shipping_address.id
+    // ).then((response) => {
+    //   if (response?.data?.status == true) {
+    //     setModalVisible(true);
+    //   } else {
+    //     console.log("create order response :  ", response?.data);
+    //     setsnackbarValue({
+    //       value: "Something went wrong",
+    //       color: "red",
+    //     });
+    //     setVisible(true);
+    //   }
+    // });
+  };
+
+  const createListingTranscation = async () => {
+    //   order_id,
+    // mode,
+    // transaction_id,
+    // seller_id,
+    // amount
+    let shipping_cost = exchange_other_listing?.shipping_cost
+      ? parseInt(exchange_other_listing?.shipping_cost)
+      : 0;
+    console.log("shipping_cost _________ ", shipping_cost);
+    let amount = route?.params?.fee ? route?.params?.fee : "0.00";
+    amount = parseInt(amount) + parseInt(shipping_cost);
+    let order_id = route?.params?.order_details?.order_id;
+    let transaction_id = await AsyncStorage.getItem("paymentIntent");
+    let mode = "stripe";
+    let seller_id = exchange_other_listing.user_id;
+    create_order_Transcation_Listings(
+      order_id,
+      mode,
+      transaction_id,
+      seller_id,
+      amount
+    )
+      .then((res) => {
+        console.log("res : ", res?.data);
+        if (res?.data?.status == true) {
+          setModalVisible(true);
+        } else {
+          console.log("create order response :  ", res?.data);
+          setsnackbarValue({
+            value: "Something went wrong",
+            color: "red",
+          });
+          setVisible(true);
+        }
+      })
+      .catch((err) => {
+        console.log("error : ", err);
+      });
   };
 
   return (

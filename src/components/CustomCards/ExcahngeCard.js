@@ -12,6 +12,9 @@ import {
 } from "react-native-responsive-screen";
 
 import { appImages } from "../../constant/images";
+import { fontFamily } from "../../constant/fonts";
+
+import Entypo from "react-native-vector-icons/Entypo";
 
 const ExcahangeCard = (props) => {
   const formatter = new Intl.NumberFormat("en-US", {
@@ -20,7 +23,7 @@ const ExcahangeCard = (props) => {
   });
   const formattedLikes =
     props.pricetext == null ? null : formatter.format(props.pricetext);
-
+  console.log("props?.image :  ", props?.image);
   return (
     // <TouchableOpacity
     //   onPress={() =>
@@ -48,18 +51,54 @@ const ExcahangeCard = (props) => {
             justifyContent: "center",
           }}
         >
-          <Image
-            source={{ uri: props.image }}
-            style={styles.Exchangeimage}
-            resizeMode="contain"
-          ></Image>
+          {props?.image ? (
+            <Image
+              source={{ uri: props.image }}
+              style={styles.Exchangeimage}
+              resizeMode="contain"
+            />
+          ) : (
+            <Image
+              source={require("../../assets/images/image.png")}
+              style={{
+                height: 40,
+                width: 40,
+                resizeMode: "contain",
+                tintColor: "#ccc",
+              }}
+            />
+          )}
         </View>
 
-        <View style={{ marginLeft: wp(3) }}>
+        <View style={{ marginLeft: wp(3), marginTop: 5 }}>
           <Text style={{ ...styles.Exchangetext }}>{props.maintext}</Text>
           <Text style={styles.Exchangesubtext}>{props.subtext}</Text>
         </View>
       </View>
+
+      {props?.order_status && (
+        <TouchableOpacity
+          onPress={props?.onOrderStatusPress}
+          style={{
+            backgroundColor: props?.order_status == "pending" ? "red" : "green",
+            position: "absolute",
+            right: 0,
+            borderBottomLeftRadius: 8,
+            paddingHorizontal: 15,
+            paddingTop: 3,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 12,
+              fontFamily: fontFamily.Poppins_Regular,
+              color: props?.promotion?.color == "#FFFFFF" ? "#000" : "#fff",
+            }}
+          >
+            {props?.order_status}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <View
         style={{
@@ -71,7 +110,10 @@ const ExcahangeCard = (props) => {
           <Text
             style={[
               styles.Exchangepricetext,
-              { right: props.pricetag != undefined ? wp(3) : wp(7) },
+              {
+                right: props.pricetag != undefined ? wp(3) : wp(2),
+                marginTop: 15,
+              },
             ]}
             //numberOfLines={1}
           >

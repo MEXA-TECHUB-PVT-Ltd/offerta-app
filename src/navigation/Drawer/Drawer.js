@@ -12,6 +12,7 @@ import BannerAdvertisment from "../../screens/Drawer/Banner/BannerAdvertisment";
 import ShippingAddressList from "../../screens/Drawer/ShippingAdress/ShippingAddressList";
 import Blogs from "../../screens/Drawer/Blogs";
 import StripePayments from "../../screens/Drawer/StripePayment";
+import PaypalMonthlySubscription from "../../screens/StackScreens/PaymentMethods/PaypalMonthlySubscription";
 
 const Drawer = createDrawerNavigator();
 
@@ -86,6 +87,13 @@ export default function Drawerroute() {
         }}
         name="StripePayments"
         component={StripePayments}
+      />
+      <Drawer.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="PaypalMonthlySubscription"
+        component={PaypalMonthlySubscription}
       />
     </Drawer.Navigator>
   );
