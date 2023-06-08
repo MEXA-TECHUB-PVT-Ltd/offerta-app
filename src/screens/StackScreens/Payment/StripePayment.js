@@ -65,7 +65,7 @@ const StripePayment = ({ navigation, route }) => {
       // publishableKey:
       //   "pk_test_51NDQiwGaIs51jJaWUMftnPOteL1EZZollLRlDFWc6ui0DiO5sUbIb2yu5YIDWjzyn3hi1kgopLXb7sFhRnXKwOP200Bx5PabHJ",
       initStripe({
-        publishableKey: Publishable_key,
+        publishableKey: 'pk_test_51Ml3wJGui44lwdb4K6apO4rnFrF2ckySwM1TfDcj0lVdSekGOVGrB1uHNlmaO7wZPxwHfRZani73KlHQKOiX4JmK00E0l7opJO',
       });
       const { paymentIntent, ephemeralKey, customer } =
         await fetchPaymentSheetParams(item);
