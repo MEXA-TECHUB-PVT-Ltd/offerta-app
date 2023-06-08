@@ -1,7 +1,8 @@
 // const baseUrl = 'https://api.sandbox.paypal.com';
 const baseUrl = "https://api-m.sandbox.paypal.com";
 var base64 = require("base-64");
-import { CLIENT_ID_PAYPAL, SECRET_KEY_PAYPAL, Publishable_key } from "@env";
+
+import { CLIENT_ID_PAYPAL, SECRET_KEY_PAYPAL } from "../utills/paymentKeys";
 
 import axios from "axios";
 import moment from "moment";

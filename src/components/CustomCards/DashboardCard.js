@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 
 ////////////react native paper/////////////
 import { Checkbox } from "react-native-paper";
@@ -41,17 +47,28 @@ const DashboardCard = (props) => {
         ]}
       >
         <View style={{ marginBottom: hp(0), marginTop: hp(0) }}>
-          <Image
-            source={{ uri: props.image }}
-            style={[
-              styles.dasboardimage,
-              {
-                width: props.type === "Exchange_Request" ? wp(90) : wp(45),
-                height: props.type === "Exchange_Request" ? hp(18) : hp(15),
-              },
-            ]}
+          <ImageBackground
+            blurRadius={4}
             resizeMode="cover"
-          ></Image>
+            source={{ uri: props.image }}
+            style={{
+              // ...styles.dasboardimage,
+              // flex: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              source={{ uri: props.image }}
+              style={[
+                // styles.dasboardimage,
+                {
+                  width: props.type === "Exchange_Request" ? wp(90) : wp(45),
+                  height: props.type === "Exchange_Request" ? hp(18) : hp(15),
+                },
+              ]}
+              resizeMode="contain"
+            ></Image>
+          </ImageBackground>
 
           {/* {(props?.tag == "sold" ||
             props?.tag == true ||

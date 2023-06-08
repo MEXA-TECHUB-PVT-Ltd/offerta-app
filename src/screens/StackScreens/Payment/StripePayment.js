@@ -34,7 +34,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../../../utills/ApiRootUrl";
 import Colors from "../../../utills/Colors";
 
-import { Publishable_key } from "@env";
+import { Publishable_key } from "../../../utills/paymentKeys";
 import { async } from "regenerator-runtime";
 import { store_subscription_history } from "../../../api/PostApis";
 

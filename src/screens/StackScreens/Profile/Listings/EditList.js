@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  ImageBackground,
 } from "react-native";
 
 ////////////////////paper////////////////////
@@ -268,22 +269,40 @@ const EditList = ({ navigation, route }) => {
           justifyContent: "center",
           marginHorizontal: wp(0),
           marginRight: index === item_images_array.length - 1 ? wp(0) : wp(2),
+          overflow: "hidden",
         }}
       >
-        <Image
+        <ImageBackground
+          blurRadius={4}
+          resizeMode="cover"
           source={
             route.params.navtype === "edit_list"
               ? { uri: item?.path ? item?.path : IMAGE_URL + item }
               : { uri: item.path }
           }
           style={{
-            height: hp(20),
+            flex: 1,
             width: wp(84),
-            borderRadius: wp(3),
-            alignSelf: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            borderRadius: 20,
           }}
-          resizeMode="cover"
-        />
+        >
+          <Image
+            source={
+              route.params.navtype === "edit_list"
+                ? { uri: item?.path ? item?.path : IMAGE_URL + item }
+                : { uri: item.path }
+            }
+            style={{
+              height: hp(20),
+              width: wp(84),
+
+              alignSelf: "center",
+            }}
+            resizeMode="contain"
+          />
+        </ImageBackground>
         <TouchableOpacity
           onPress={() => navigation.navigate("CameraViewScreen")}
           style={{
