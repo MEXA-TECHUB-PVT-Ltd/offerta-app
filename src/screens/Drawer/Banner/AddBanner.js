@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
+  ImageBackground,
 } from "react-native";
 
 /////////////render/////////////////
@@ -528,12 +529,24 @@ const AddBanner = ({ route }) => {
             </View>
           </TouchableOpacity>
         ) : (
-          <View style={Uploadstyles.mainview}>
-            <Image
-              source={{ uri: user_image }}
-              style={{ height: hp(20), width: wp(83), borderRadius: wp(3) }}
+          <View
+            style={{
+              ...Uploadstyles.mainview,
+              overflow: "hidden",
+            }}
+          >
+            <ImageBackground
+              blurRadius={4}
               resizeMode="cover"
-            />
+              source={{ uri: user_image }}
+              style={{ flex: 1, justifyContent: "center" }}
+            >
+              <Image
+                source={{ uri: user_image }}
+                style={{ height: hp(20), width: wp(83) }}
+                resizeMode="contain"
+              />
+            </ImageBackground>
           </View>
         )}
         <View>

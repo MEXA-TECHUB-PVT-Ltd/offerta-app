@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  ImageBackground,
 } from "react-native";
 // import Carousel, { Pagination } from "react-native-snap-carousel";
 
@@ -104,22 +105,25 @@ const CustomImageSlider = ({ imagearray }) => {
                   overflow: "hidden",
                 }}
               >
-                <Image
+                <ImageBackground
+                  blurRadius={4}
+                  resizeMode="cover"
                   source={{
                     uri: `${IMAGE_URL}${item?.app_img}`,
                   }}
-                  style={{
-                    width: wp(90),
-                    marginHorizontal: wp(5),
-                    height: hp(25),
-                    alignSelf: "center",
-                    borderRadius: hp(2.5),
-                    //   backgroundColor: item,
-                    borderWidth: 0.5,
-                    //   marginTop: 35,
-                    resizeMode: "contain",
-                  }}
-                />
+                  style={{ flex: 1, justifyContent: "center" }}
+                >
+                  <Image
+                    source={{
+                      uri: `${IMAGE_URL}${item?.app_img}`,
+                    }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                    resizeMode={"contain"}
+                  />
+                </ImageBackground>
               </TouchableOpacity>
             );
           }}

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
 
 ///////////////app code fields/////////////
@@ -662,11 +663,19 @@ const AccountVerification = ({ navigation, route }) => {
                     }}
                     style={style.imageView}
                   >
-                    <Image
+                    <ImageBackground
+                      blurRadius={4}
+                      resizeMode="cover"
                       source={{ uri: userImage.uri }}
-                      style={style.imageView}
-                      resizeMode={"stretch"}
-                    />
+                      style={{ flex: 1, justifyContent: "center" }}
+                    >
+                      <Image
+                        source={{ uri: userImage.uri }}
+                        // style={style.imageView}
+                        style={{ width: "100%", height: "100%" }}
+                        resizeMode={"contain"}
+                      />
+                    </ImageBackground>
                   </TouchableOpacity>
                 )}
               </View>
@@ -731,11 +740,21 @@ const AccountVerification = ({ navigation, route }) => {
                     }}
                     style={style.imageView}
                   >
-                    <Image
+                    <ImageBackground
+                      blurRadius={4}
+                      resizeMode="cover"
                       source={{ uri: cnicImage.uri }}
-                      style={style.imageView}
-                      resizeMode={"stretch"}
-                    />
+                      style={{ flex: 1, justifyContent: "center" }}
+                    >
+                      <Image
+                        source={{ uri: cnicImage.uri }}
+                        // style={style.imageView}
+                        // resizeMode={"stretch"}
+
+                        style={{ width: "100%", height: "100%" }}
+                        resizeMode={"contain"}
+                      />
+                    </ImageBackground>
                   </TouchableOpacity>
                 )}
               </View>
@@ -985,6 +1004,7 @@ const style = StyleSheet.create({
   imageView: {
     width: wp(85),
     height: wp(45),
+
     borderRadius: 20,
   },
   checkboxContainer: {

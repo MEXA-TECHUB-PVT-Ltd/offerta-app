@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   RefreshControl,
+  ImageBackground,
 } from "react-native";
 //////////////map////////////////
 import MapView, {

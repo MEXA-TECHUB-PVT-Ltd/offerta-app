@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import React, { useRef, useState, useEffect } from "react";
 

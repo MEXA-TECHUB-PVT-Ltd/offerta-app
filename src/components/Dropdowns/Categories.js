@@ -123,7 +123,9 @@ const Categories = (props) => {
         }}
       >
         <Text style={styles.bottomsheettext}>
-          {TranslationStrings.SELECT_CATEGORY}
+          {props?.type == "subcategory"
+            ? TranslationStrings.SELECT_SUB_CATEGORY
+            : TranslationStrings.SELECT_CATEGORY}
         </Text>
       </View>
       {props?.type == "subcategory" ? (

@@ -6,6 +6,7 @@ import {
   Dimensions,
   Animated,
   Easing,
+  ImageBackground,
 } from "react-native";
 import React from "react";
 

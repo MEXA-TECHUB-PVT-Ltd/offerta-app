@@ -6,6 +6,7 @@ import {
   Dimensions,
   Animated,
   Easing,
+  ImageBackground,
 } from "react-native";
 import React from "react";
 
@@ -31,11 +32,18 @@ const SlideItem = ({ item }) => {
 
   return (
     <View style={[styles.container]}>
-      <Animated.Image
-        source={{ uri: IMAGE_URL + item }}
+      <ImageBackground
+        blurRadius={3}
         resizeMode="cover"
-        style={[styles.image]}
-      />
+        source={{ uri: IMAGE_URL + item }}
+        style={{ flex: 1, justifyContent: "center" }}
+      >
+        <Animated.Image
+          source={{ uri: IMAGE_URL + item }}
+          resizeMode="contain"
+          style={[styles.image]}
+        />
+      </ImageBackground>
     </View>
   );
 };
