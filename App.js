@@ -101,6 +101,9 @@ import { navigationRef } from "./RootNavigation";
 import StripePayment from "./src/screens/StackScreens/Payment/StripePayment";
 import Coinbase from "./src/screens/StackScreens/Payment/Coinbase";
 
+import LiveStreaming from "./src/screens/LiveStreaming";
+import Live from "./src/screens/Live";
+
 const Stack = createNativeStackNavigator();
 function App() {
   // const dispatch = useDispatch();
@@ -159,6 +162,21 @@ function App() {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="LiveStreaming"
+            component={LiveStreaming}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Live"
+            component={Live}
+            options={{
+              headerShown: false,
+            }}
+          />
+
           <Stack.Screen
             name="Drawerroute"
             component={Drawerroute}

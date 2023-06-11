@@ -21,6 +21,9 @@
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="true"
       >
+
+
+
          <!-- _____________________________________________PUSH NOTIFICATION____________________________________ -->
 
    <!-- Change the value to true to enable pop-up for in foreground on receiving remote notifications (for prevent duplicating while showing local notifications set this to false) -->
