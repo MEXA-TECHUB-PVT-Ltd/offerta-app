@@ -26,6 +26,25 @@ export const post_Item_Images = async (props) => {
     body: formData,
   });
 };
+export const post_Listing_Video = async (listing_id, video) => {
+  const formData = new FormData();
+  formData.append("listing_id", listing_id);
+  var filename = video?.split("/").pop();
+  console.log("filename : ", filename);
+  formData.append(`video`, {
+    uri: video,
+    type: "video/mp4",
+    name: filename,
+  });
+  console.log("formData  : ", formData);
+  return fetch(BASE_URL + "videoupload.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  });
+};
 
 ////////////LISTING LIKES//////////
 export const edit_Item_Images = async (props) => {

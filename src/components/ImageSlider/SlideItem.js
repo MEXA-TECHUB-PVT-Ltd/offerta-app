@@ -17,6 +17,8 @@ import {
 
 const { width, height } = Dimensions.get("screen");
 
+import VideoPlayer from "react-native-video-player";
+
 //////////////////api url//////////////
 import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
@@ -32,18 +34,30 @@ const SlideItem = ({ item }) => {
 
   return (
     <View style={[styles.container]}>
-      <ImageBackground
-        blurRadius={3}
-        resizeMode="cover"
-        source={{ uri: IMAGE_URL + item }}
-        style={{ flex: 1, justifyContent: "center" }}
-      >
-        <Animated.Image
-          source={{ uri: IMAGE_URL + item }}
-          resizeMode="contain"
-          style={[styles.image]}
+      {item?.type == "video" ? (
+        <VideoPlayer
+          video={{
+            uri: IMAGE_URL + item?.path,
+          }}
+          style={{ backgroundColor: "#000" }}
+          videoWidth={wp(100)}
+          videoHeight={hp(45)}
+          thumbnail={{ uri: "https://i.picsum.photos/id/866/1600/900.jpg" }}
         />
-      </ImageBackground>
+      ) : (
+        <ImageBackground
+          blurRadius={3}
+          resizeMode="cover"
+          source={{ uri: IMAGE_URL + item }}
+          style={{ flex: 1, justifyContent: "center" }}
+        >
+          <Animated.Image
+            source={{ uri: IMAGE_URL + item }}
+            resizeMode="contain"
+            style={[styles.image]}
+          />
+        </ImageBackground>
+      )}
     </View>
   );
 };

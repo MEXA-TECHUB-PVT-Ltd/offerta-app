@@ -10,6 +10,8 @@ const appImages = {
   //////////////////Onboarding////////////
   Onboarding: require(IMAGES_DIR + "Onboarding.png"),
 
+  no_image: require(IMAGES_DIR + "image.png"),
+
   ////////textinput icons///////////
   email: require(IMAGES_DIR + "email.png"),
   lock: require(IMAGES_DIR + "lock.png"),

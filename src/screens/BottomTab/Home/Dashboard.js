@@ -65,6 +65,7 @@ import CustomImageSlider from "../../../components/ImageSlider/CustomImageSlider
 
 import TranslationStrings from "../../../utills/TranslationStrings";
 import moment from "moment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Home = ({ navigation }) => {
   const { name, age } = useSelector((state) => state.userReducer);
@@ -386,6 +387,7 @@ const Home = ({ navigation }) => {
             </View>
           </View>
         </View>
+
         <View style={{ justifyContent: "center", paddingHorizontal: wp(5) }}>
           <Text style={styles.welcometext}>{TranslationStrings.WELCOME}</Text>
           <Text style={styles.usertext}>{username}</Text>
@@ -430,7 +432,6 @@ const Home = ({ navigation }) => {
             numColumns={2}
             // item.user_id === login_user_id ? null :
             renderItem={({ item }) => {
-              console.log("item  : ", item.title, item?.images);
               return (
                 <DashboardCard
                   image={
@@ -465,6 +466,29 @@ const Home = ({ navigation }) => {
           />
         )}
       </ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          right: wp(6),
+          bottom: hp(4),
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Live")}
+          style={{
+            backgroundColor: "red",
+            width: wp(17),
+            height: wp(17),
+            borderRadius: wp(17) / 2,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontSize: 14, fontWeight: "600" }}>
+            Go Live
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
