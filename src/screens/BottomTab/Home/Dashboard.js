@@ -131,6 +131,7 @@ const Home = ({ navigation }) => {
         } else {
           const urgentList = list?.filter(
             (item) =>
+              item?.Promotion &&
               item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") <
                 moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
@@ -138,13 +139,14 @@ const Home = ({ navigation }) => {
 
           const urgentList_expire = list?.filter(
             (item) =>
+              item?.Promotion &&
               item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") >=
                 moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const orthersList = list?.filter(
-            (item) => item?.Promotion[0]?.tag !== "Urgent"
+            (item) => item?.Promotion && item?.Promotion[0]?.tag !== "Urgent"
           );
           const finallist = [
             ...urgentList,
@@ -174,6 +176,7 @@ const Home = ({ navigation }) => {
 
           const urgentList = list?.filter(
             (item) =>
+              item?.Promotion &&
               item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") <
                 moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
@@ -181,13 +184,14 @@ const Home = ({ navigation }) => {
 
           const urgentList_expire = list?.filter(
             (item) =>
+              item?.Promotion &&
               item?.Promotion[0]?.tag == "Urgent" &&
               moment(new Date())?.format("YYYY-MM-DD") >=
                 moment(item?.Promotion[0]?.Expirydate)?.format("YYYY-MM-DD")
           );
 
           const orthersList = list?.filter(
-            (item) => item?.Promotion[0]?.tag !== "Urgent"
+            (item) => item?.Promotion && item?.Promotion[0]?.tag !== "Urgent"
           );
           const finallist = [
             ...urgentList,

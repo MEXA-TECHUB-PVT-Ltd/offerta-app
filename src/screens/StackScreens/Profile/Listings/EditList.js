@@ -51,6 +51,7 @@ import {
 import {
   edit_Item_Images,
   post_Item_Images,
+  post_Listing_Video,
 } from "../../../../api/Upload Item";
 
 //////////////////////////app api/////////////////////////
@@ -68,6 +69,12 @@ import {
 } from "../../../../api/GetApis";
 import TranslationStrings from "../../../../utills/TranslationStrings";
 import Loader from "../../../../components/Loader/Loader";
+import CustomImageSlider from "../../../../components/ImageSlider/CustomImageSlider";
+import VideoBottomSheet from "../../../../components/CameraBottomSheet/VideoBottomSheet";
+import VideoPlayer from "react-native-video-player";
+
+import { Video } from "react-native-compressor";
+import RNVideoHelper from "react-native-video-helper";
 
 const EditList = ({ navigation, route }) => {
   /////////////redux states///////
@@ -83,6 +90,7 @@ const EditList = ({ navigation, route }) => {
     location_address,
     listing_id,
   } = useSelector((state) => state.userReducer);
+
   const dispatch = useDispatch();
   // console.log("item_images_array in edit item screen : ", item_images_array);
 
@@ -114,8 +122,28 @@ const EditList = ({ navigation, route }) => {
   const [description, setDescription] = React.useState("");
   const [shippingprice, setShippingPrice] = React.useState("");
 
+  const [videoFile, setVideoFile] = useState(null);
+  const [isVideoUpdated, setIsVideoUpdated] = useState(false);
+
+  const ref_UploadVideoBottomSheet = useRef(null);
+
   //////////////Api Calling////////////////////
   const UploadItemDetail = async () => {
+    // // post_Listing_Video("143", videoFile)
+    // //   .then((res) => res.json())
+    // //   .then((response) => {
+    // //     console.log(
+    // //       "upload video file response___________________________ : ",
+    // //       response
+    // //     );
+    // //   })
+    // //   .catch((err) => {
+    // //     console.log("upload video file error  : ", err);
+    // //   });
+    // setloading(false);
+    // setdisable(false);
+    // return;
+
     var user_id = await AsyncStorage.getItem("Userid");
     var c_lat = parseFloat(location_lat);
     var c_lng = parseFloat(location_lng);
@@ -168,16 +196,32 @@ const EditList = ({ navigation, route }) => {
     };
 
     axios(config).then(function (response) {
-      console.log(
-        JSON.stringify(response.data),
-        "................",
-        item_images_array
-      );
+      console.log("response _________________", response.data);
+      console.log("images_______________________", item_images_array);
       setModalVisible(true);
       // edit_Item_Images({
       //   item_id: listing_id,
       //   item_images: item_images_array,
       // })
+
+      if (videoFile && isVideoUpdated) {
+        post_Listing_Video(response.data.id, videoFile)
+          .then((res) => res.json())
+          .then((response) => {
+            console.log(
+              "upload video file response___________________________ : ",
+              response
+            );
+          })
+          .catch((err) => {
+            console.log("upload video file error  : ", err);
+          });
+      } else {
+        console.log("__________________________________", {
+          videoFile,
+          isVideoUpdated,
+        });
+      }
       post_Item_Images({
         item_id: response.data.id,
         item_images: item_images_array,
@@ -224,6 +268,11 @@ const EditList = ({ navigation, route }) => {
           data: res?.data[0],
         };
         dispatch(setItemImagesArray(response.data.images));
+
+        setVideoFile(
+          response?.data?.video ? IMAGE_URL + response?.data?.video : null
+        );
+
         dispatch(setLocationAddress(response.data.location));
         dispatch(setLocationLat(response.data.location_lat));
         dispatch(setLocationLng(response.data.location_log));
@@ -332,6 +381,35 @@ const EditList = ({ navigation, route }) => {
       </View>
     );
   };
+
+  const compressVideo = async (url) => {
+    try {
+      // setloading(true);
+
+      await Video.compress(
+        url?.path,
+        {
+          compressionMethod: "manual",
+          minimumFileSizeForCompress: 1,
+        },
+        (progress) => {
+          console.log("progress  ___________________ : ", progress);
+        }
+      )
+        .then(async (compressedVideoFileUrl) => {
+          console.log(
+            "compressedVideoFileUrl  ____________________ : ",
+            compressedVideoFileUrl
+          );
+          setVideoFile(compressedVideoFileUrl);
+          setIsVideoUpdated(true);
+        })
+        .finally(() => setloading(false));
+    } catch (error) {
+      console.log("Error: " + error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -362,28 +440,96 @@ const EditList = ({ navigation, route }) => {
             </View>
           </TouchableOpacity>
         ) : (
-          <View style={Uploadstyles.mainview}>
-            <View
+          <View style={{ marginBottom: 25 }}>
+            <CustomImageSlider
+              imagearray={item_images_array}
+              type="edit_item"
+            />
+          </View>
+
+          // <View style={Uploadstyles.mainview}>
+          //   <View
+          //     style={{
+          //       alignItems: "center",
+          //       justifyContent: "center",
+          //       marginTop: hp(0),
+          //     }}
+          //   >
+          //     <FlatList
+          //       data={item_images_array}
+          //       renderItem={renderItem}
+          //       keyExtractor={(item, index) => index}
+          //       showsVerticalScrollIndicator={false}
+          //       showsHorizontalScrollIndicator={false}
+          //       horizontal={true}
+          //     />
+
+          //   </View>
+          // </View>
+        )}
+
+        {videoFile ? (
+          <View
+            style={{
+              width: wp(90),
+              marginHorizontal: wp(5),
+              height: hp(24),
+              alignSelf: "center",
+              borderRadius: hp(2.5),
+              borderWidth: 0.5,
+              overflow: "hidden",
+              backgroundColor: "#000",
+            }}
+          >
+            <VideoPlayer
+              video={{
+                uri: videoFile,
+              }}
+              videoWidth={wp(90)}
+              videoHeight={hp(24)}
+              thumbnail={{ uri: "https://i.picsum.photos/id/866/1600/900.jpg" }}
+            />
+
+            <TouchableOpacity
+              onPress={() => ref_UploadVideoBottomSheet?.current?.open()}
               style={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                backgroundColor: "green",
+                borderRadius: wp(5),
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: hp(0),
+                zIndex: 999,
               }}
             >
-              <FlatList
-                data={item_images_array}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => index}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                horizontal={true}
-              />
-              {/* <Text style={Uploadstyles.uploadtext}>
-                  {item_images_array.length}
-                </Text>
-                <Text style={Uploadstyles.uploadtext}>Images Uploaded</Text> */}
-            </View>
+              <Text
+                style={{
+                  color: "white",
+                  paddingVertical: hp(0.8),
+                  paddingHorizontal: wp(3),
+                  fontWeight: "bold",
+                }}
+              >
+                Change
+              </Text>
+            </TouchableOpacity>
           </View>
+        ) : (
+          <TouchableOpacity
+            onPress={() => ref_UploadVideoBottomSheet?.current?.open()}
+            style={{ alignSelf: "center", padding: 10 }}
+          >
+            <Text
+              style={{
+                color: Colors.Appthemecolor,
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              Upload Video
+            </Text>
+          </TouchableOpacity>
         )}
 
         <View>
@@ -625,7 +771,17 @@ const EditList = ({ navigation, route }) => {
             )} */}
           </View>
         </View>
+        <VideoBottomSheet
+          refRBSheet={ref_UploadVideoBottomSheet}
+          onClose={() => ref_UploadVideoBottomSheet.current.close()}
+          onFilePicked={async (url) => {
+            console.log("url ::: ", url);
 
+            // compressVideo(url);
+            setVideoFile(url?.path);
+            setIsVideoUpdated(true);
+          }}
+        />
         {/* <View
           style={{
             flexDirection: "row",

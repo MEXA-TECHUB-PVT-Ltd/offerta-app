@@ -103,6 +103,8 @@ import Coinbase from "./src/screens/StackScreens/Payment/Coinbase";
 
 import LiveStreaming from "./src/screens/LiveStreaming";
 import Live from "./src/screens/Live";
+import AudiencePage from "./src/screens/LiveStreaming/AudiencePage";
+import HostPage from "./src/screens/LiveStreaming/HostPage";
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -172,6 +174,20 @@ function App() {
           <Stack.Screen
             name="Live"
             component={Live}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AudiencePage"
+            component={AudiencePage}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HostPage"
+            component={HostPage}
             options={{
               headerShown: false,
             }}
