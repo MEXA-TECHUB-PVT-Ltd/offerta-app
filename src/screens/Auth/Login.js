@@ -59,6 +59,7 @@ import WebView from "react-native-webview";
 const queryString = require("query-string");
 import { Checkbox } from "react-native-paper";
 import { useFocusEffect } from "@react-navigation/native";
+import LanguageSelector from "../../components/LanguageSelector";
 
 const Login = ({ navigation }) => {
   const [isRemembered, setIsRemembered] = useState(false);
@@ -107,6 +108,7 @@ const Login = ({ navigation }) => {
   ///////////////data states////////////////////
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [language, setLanguage] = useState("");
 
   //////////////Api Calling////////////////////
 
@@ -210,6 +212,11 @@ const Login = ({ navigation }) => {
       .then(async function (response) {
         // console.log("response", JSON.stringify(response.data));
         console.log("login api response  : ", response?.data);
+        console.log(
+          "response?.data?.message   __________________ :  ",
+          response?.data?.message
+        );
+
         setloading(0);
         setdisable(0);
         if (response.data.status == true) {
@@ -371,6 +378,10 @@ const Login = ({ navigation }) => {
             navigation.replace("Drawerroute");
             saveUserPreferences(props, "google123");
           } else {
+            if (response?.data?.message == "Password Incorrect") {
+              setEmail(props);
+            }
+
             setloading(0);
             setdisable(0);
             // setModalVisible(true);
@@ -532,6 +543,12 @@ const Login = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+
+        <LanguageSelector
+          onChange={(value) => {
+            setLanguage(value);
+          }}
+        />
 
         <View style={Logostyles.Logoview}>
           <Image

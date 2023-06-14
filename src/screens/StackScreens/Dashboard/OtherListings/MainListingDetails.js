@@ -107,6 +107,9 @@ const MainListingsDetails = ({ navigation, route }) => {
     { id: "2", label: TranslationStrings.REPORT_ITEM, icon: "alert" },
     { id: "3", label: TranslationStrings.SHARE, icon: "share-variant" },
   ];
+
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+
   ///////////////PREVIOUS DATA////////////
   const [predata] = useState(route.params);
 

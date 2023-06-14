@@ -36,6 +36,7 @@ const DashboardCard = (props) => {
     compactDisplay: "short",
   });
   const formattedLikes = formatter.format(props.price);
+
   return (
     <TouchableOpacity onPress={props.onpress} activeOpacity={0.9}>
       <View
@@ -214,18 +215,27 @@ const DashboardCard = (props) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              marginTop: props?.added_by == "admin" ? 15 : 0,
             }}
           >
             <Text numberOfLines={1} style={styles.dashboardmaintext}>
               {props.maintext}
             </Text>
             <Text numberOfLines={1} style={styles.pricetext}>
-              {formattedLikes === "0" ? "free" : "$" + formattedLikes}
+              {props?.added_by == "admin"
+                ? ""
+                : formattedLikes === "0"
+                ? "free"
+                : "$" + formattedLikes}
               {/* //+"$"  */}
             </Text>
           </View>
-          {props.type === "Exchange_Request" ? null : (
-            <View style={{ flexDirection: "row" }}>
+          {props.type === "Exchange_Request" ? null : props.subtext ? (
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
               <Ionicons
                 name={"location"}
                 size={15}
@@ -236,6 +246,8 @@ const DashboardCard = (props) => {
                 {props.subtext}
               </Text>
             </View>
+          ) : (
+            <View style={{}}></View>
           )}
         </View>
       </View>
