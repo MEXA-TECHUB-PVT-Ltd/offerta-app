@@ -238,7 +238,7 @@ const MainListingsDetails = ({ navigation, route }) => {
 
   const [showBlockModal, setShowBlockModal] = useState(false);
 
-  const [listing_files, setListing_files] = useState();
+  const [listing_files, setListing_files] = useState([]);
 
   const GetLikeStatus = async () => {
     var user_id = await AsyncStorage.getItem("Userid");
@@ -279,6 +279,8 @@ const MainListingsDetails = ({ navigation, route }) => {
         setListing_SubCategory(response.data.subcategory.sub_category_name);
         setListing_Condition(response.data.product_condition);
         setListing_Images(response.data.images);
+
+        console.log("response.data.images : ", response.data.images);
 
         setVideoFile(response.data?.video);
 

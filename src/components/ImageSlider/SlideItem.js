@@ -36,8 +36,9 @@ const SlideItem = ({ item }) => {
     <View style={[styles.container]}>
       {item?.type == "video" ? (
         <VideoPlayer
+          // uri: IMAGE_URL + item?.path,
           video={{
-            uri: IMAGE_URL + item?.path,
+            uri: item?.path,
           }}
           style={{ backgroundColor: "#000" }}
           videoWidth={wp(100)}

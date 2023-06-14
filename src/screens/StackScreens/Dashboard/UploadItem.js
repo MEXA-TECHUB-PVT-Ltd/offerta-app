@@ -69,6 +69,8 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import VideoPlayer from "react-native-video-player";
 import VideoBottomSheet from "../../../components/CameraBottomSheet/VideoBottomSheet";
 
+import { Video } from "react-native-compressor";
+
 const UploadItem = ({ navigation, route }) => {
   const refRBSheetSubCat = useRef(null);
   const [subCatList, setSubCatList] = useState([]);
@@ -361,7 +363,9 @@ const UploadItem = ({ navigation, route }) => {
       UploadItemDetail();
     }
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(setItemImagesArray([]));
+  }, []);
   const renderItem = ({ item, index }) => {
     return (
       <View
@@ -459,6 +463,33 @@ const UploadItem = ({ navigation, route }) => {
       .finally(() => {
         //handle final
       });
+  };
+
+  const compressVideo = async (url) => {
+    try {
+      await Video.compress(
+        url?.path,
+        {
+          compressionMethod: "auto",
+        },
+        (progress) => {
+          if (backgroundMode) {
+            console.log("Compression Progress: ", progress);
+          } else {
+            console.log("progress  ___________________ : ", progress);
+          }
+        }
+      ).then(async (compressedVideoFileUrl) => {
+        console.log(
+          "compressedVideoFileUrl  ____________________ : ",
+          compressedVideoFileUrl
+        );
+        setVideoFile(compressedVideoFileUrl);
+        setIsVideoUpdated(true);
+      });
+    } catch (error) {
+      console.log("Error: " + error);
+    }
   };
 
   return (
@@ -868,10 +899,11 @@ const UploadItem = ({ navigation, route }) => {
         </View>
         <VideoBottomSheet
           refRBSheet={ref_UploadVideoBottomSheet}
-          onClose={() => refRBSheet.current.close()}
+          onClose={() => ref_UploadVideoBottomSheet.current.close()}
           onFilePicked={(url) => {
             console.log("url ::: ", url);
             setVideoFile(url?.path);
+            // compressVideo(url);
           }}
         />
         <CamerBottomSheet

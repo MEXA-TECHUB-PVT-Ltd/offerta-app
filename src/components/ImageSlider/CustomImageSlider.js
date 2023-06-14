@@ -86,41 +86,12 @@ const CustomImageSlider = ({ imagearray, type }) => {
             return (
               <>
                 {type == "upload_item" ? (
-                  <View
-                    onPress={() => {}}
-                    style={{
-                      width: wp(90),
-                      marginHorizontal: wp(5),
-                      height: hp(25),
-                      alignSelf: "center",
-                      borderRadius: hp(2.5),
-                      borderWidth: 0.5,
-                      overflow: "hidden",
-                    }}
-                  >
+                  <View onPress={() => {}} style={styles.sliderCard}>
                     <TouchableOpacity
                       onPress={() => navigation.navigate("CameraViewScreen")}
-                      style={{
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        backgroundColor: "green",
-                        borderRadius: wp(5),
-                        alignItems: "center",
-                        justifyContent: "center",
-                        zIndex: 999,
-                      }}
+                      style={styles.btnChange}
                     >
-                      <Text
-                        style={{
-                          color: "white",
-                          paddingVertical: hp(0.8),
-                          paddingHorizontal: wp(3),
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Change
-                      </Text>
+                      <Text style={styles.btnChangeText}>Change</Text>
                     </TouchableOpacity>
                     <ImageBackground
                       blurRadius={4}
@@ -142,6 +113,34 @@ const CustomImageSlider = ({ imagearray, type }) => {
                       />
                     </ImageBackground>
                   </View>
+                ) : type == "edit_item" ? (
+                  <View style={styles.sliderCard}>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("CameraViewScreen")}
+                      style={styles.btnChange}
+                    >
+                      <Text style={styles.btnChangeText}>Change</Text>
+                    </TouchableOpacity>
+                    <ImageBackground
+                      blurRadius={4}
+                      resizeMode="cover"
+                      source={{
+                        uri: item?.path ? item?.path : IMAGE_URL + item,
+                      }}
+                      style={{ flex: 1, justifyContent: "center" }}
+                    >
+                      <Image
+                        source={{
+                          uri: item?.path ? item?.path : IMAGE_URL + item,
+                        }}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        resizeMode={"contain"}
+                      />
+                    </ImageBackground>
+                  </View>
                 ) : (
                   <TouchableOpacity
                     onPress={() => {
@@ -153,17 +152,7 @@ const CustomImageSlider = ({ imagearray, type }) => {
                         setVisible(true);
                       });
                     }}
-                    style={{
-                      width: wp(90),
-                      marginHorizontal: wp(5),
-                      height: hp(25),
-                      alignSelf: "center",
-                      borderRadius: hp(2.5),
-                      //   backgroundColor: item,
-                      borderWidth: 0.5,
-                      // marginTop: 35,
-                      overflow: "hidden",
-                    }}
+                    style={styles.sliderCard}
                   >
                     <ImageBackground
                       blurRadius={4}
@@ -255,6 +244,33 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     // marginVertical: 10,
+  },
+  btnChange: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "green",
+    borderRadius: wp(5),
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 999,
+  },
+  btnChangeText: {
+    color: "white",
+    paddingVertical: hp(0.8),
+    paddingHorizontal: wp(3),
+    fontWeight: "bold",
+  },
+  sliderCard: {
+    width: wp(90),
+    marginHorizontal: wp(5),
+    height: hp(25),
+    alignSelf: "center",
+    borderRadius: hp(2.5),
+    //   backgroundColor: item,
+    borderWidth: 0.5,
+    // marginTop: 35,
+    overflow: "hidden",
   },
 });
 
