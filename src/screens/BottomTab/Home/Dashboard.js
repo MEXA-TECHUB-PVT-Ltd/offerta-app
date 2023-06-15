@@ -8,6 +8,8 @@ import {
   Text,
   RefreshControl,
   LogBox,
+  Linking,
+  Image,
 } from "react-native";
 
 //////////////////app icons////////////////
@@ -66,6 +68,7 @@ import CustomImageSlider from "../../../components/ImageSlider/CustomImageSlider
 import TranslationStrings from "../../../utills/TranslationStrings";
 import moment from "moment";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { appImages } from "../../../constant/images";
 
 const Home = ({ navigation }) => {
   const { name, age } = useSelector((state) => state.userReducer);
@@ -335,7 +338,15 @@ const Home = ({ navigation }) => {
   // useEffect(() => {
   //   ChangeAppLanguage("es");
   // }, []);
-
+  const openAffiliateLink = async (url) => {
+    await Linking.openURL(url)
+      .then((res) => {
+        console.log("res : ", res);
+      })
+      .catch((err) => {
+        alert(`Invalid affiliate link`);
+      });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -370,7 +381,7 @@ const Home = ({ navigation }) => {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              width: wp(28),
+              width: wp(40),
             }}
           >
             <View style={styles.headericonsview}>
@@ -389,6 +400,20 @@ const Home = ({ navigation }) => {
                 onPress={() => navigation.navigate("Search")}
               />
             </View>
+            <TouchableOpacity
+              onPress={() => navigation?.navigate("LiveStreaming")}
+              style={styles.headericonsview}
+            >
+              <Image
+                source={appImages.live}
+                style={{
+                  width: 27,
+                  height: 27,
+                  resizeMode: "contain",
+                  tintColor: Colors.Appthemecolor,
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -449,17 +474,22 @@ const Home = ({ navigation }) => {
                   // image={item}
                   maintext={item.title}
                   subtext={item.location}
+                  added_by={item?.added_by}
                   price={item.price}
                   onpress={() => {
-                    dispatch(setListingId(item.id));
-                    if (item.user_id === login_user_id) {
-                      navigation.navigate("ListingsDetails", {
-                        listing_id: item.id,
-                      });
+                    if (item?.added_by == "admin") {
+                      openAffiliateLink(item?.description);
                     } else {
-                      navigation.navigate("MainListingsDetails", {
-                        listing_id: item.id,
-                      });
+                      dispatch(setListingId(item.id));
+                      if (item.user_id === login_user_id) {
+                        navigation.navigate("ListingsDetails", {
+                          listing_id: item.id,
+                        });
+                      } else {
+                        navigation.navigate("MainListingsDetails", {
+                          listing_id: item.id,
+                        });
+                      }
                     }
                   }}
                 />
@@ -480,17 +510,19 @@ const Home = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate("Live")}
           style={{
-            backgroundColor: "red",
+            backgroundColor: Colors.Appthemecolor,
             width: wp(17),
             height: wp(17),
             borderRadius: wp(17) / 2,
             justifyContent: "center",
             alignItems: "center",
+            elevation: 3,
           }}
         >
-          <Text style={{ color: "#fff", fontSize: 14, fontWeight: "600" }}>
-            Go Live
-          </Text>
+          <Image
+            source={appImages.live}
+            style={{ width: "65%", height: "70%", resizeMode: "contain" }}
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
