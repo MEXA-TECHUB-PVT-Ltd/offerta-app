@@ -24,7 +24,7 @@ import {
 const appId = "2103cc766ad141bf90843544931573d8";
 const channelName = "Test";
 const token =
-  "007eJxTYDDe8kIt//P17hkKERIPX1gofjkiuc15knF7gcj62l3VlscUGIwMDYyTk83NzBJTDE0Mk9IsDSxMjE1NTCyNDU3NjVMseMo6UxoCGRkWWv9hZGSAQBCfhSEktbiEgQEAPZQeoQ==";
+  "007eJxTYNCof8+Tseeu768JKoXGsude3zplWfjM7tmceyL23B+2bU5XYDAyNDBOTjY3M0tMMTQxTEqzNLAwMTY1MbE0NjQ1N06xOPm/K6UhkJHBUOMvCyMDBIL4LAwhqcUlDAwAo8MgdA==";
 const uid = 0;
 
 const LiveStreaming = () => {

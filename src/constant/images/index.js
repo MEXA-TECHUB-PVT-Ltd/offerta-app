@@ -97,5 +97,7 @@ const appImages = {
   pending_account: require(IMAGES_DIR + "pending_account.png"),
 
   live: require(IMAGES_DIR + "live.png"),
+  live_stream_bg: require(IMAGES_DIR + "live_stream_bg.png"),
+  user2: require(IMAGES_DIR + "user2.png"),
 };
 export { appImages };

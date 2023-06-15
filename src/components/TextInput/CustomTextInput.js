@@ -91,7 +91,6 @@ const CustomTextInput = ({
           disabled={disable}
           returnKeyType={returnType}
           keyboardType={keyboard_type}
-          // keyboardType="number-pad"
           placeholderTextColor={Colors.inputplaceholder}
           onFocus={() => setisFocused(true)}
           onChangeText={onTermChange}
