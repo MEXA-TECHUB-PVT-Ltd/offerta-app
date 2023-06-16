@@ -12,6 +12,7 @@ import {
   RefreshControl,
   useWindowDimensions,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
 
 import CustomHeader from "../../components/Header/CustomHeader";
@@ -28,6 +29,10 @@ import Loader from "../../components/Loader/Loader";
 import { appImages } from "../../constant/images";
 
 import { Rating } from "react-native-rating-element";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { fontFamily } from "../../constant/fonts";
 
 const LiveUsers = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
@@ -38,7 +43,7 @@ const LiveUsers = ({ navigation, route }) => {
       name: "Test",
       email: "test@gmail.com",
       rating: 3.2,
-      profile: appImages.draweruser,
+      profile: appImages.user2,
     },
     {
       id: 1,
@@ -54,6 +59,34 @@ const LiveUsers = ({ navigation, route }) => {
       rating: 5,
       profile: appImages.draweruser,
     },
+    {
+      id: 3,
+      name: "Harry",
+      email: "harry@gmail.com",
+      rating: 5,
+      profile: appImages.user2,
+    },
+    {
+      id: 4,
+      name: "Harry",
+      email: "harry@gmail.com",
+      rating: 5,
+      profile: appImages.user2,
+    },
+    {
+      id: 4,
+      name: "Harry",
+      email: "harry@gmail.com",
+      rating: 5,
+      profile: appImages.user2,
+    },
+    {
+      id: 4,
+      name: "Harry",
+      email: "harry@gmail.com",
+      rating: 5,
+      profile: appImages.user2,
+    },
   ]);
 
   return (
@@ -62,53 +95,96 @@ const LiveUsers = ({ navigation, route }) => {
         backgroundColor={Colors.Appthemecolor}
         barStyle="light-content"
       />
-      <CustomHeader type={"profile"} headerlabel={"Live Streaming"} />
 
-      <View style={{ padding: 5, backgroundColor: "white", height: hp(100) }}>
+      <View
+        style={{
+          backgroundColor: "white",
+          height: hp(100),
+          alignItems: "center",
+        }}
+      >
+        {/* <CustomHeader type={"profile"} headerlabel={"Live Streaming"} /> */}
         <Loader isLoading={loading} />
         <FlatList
+          ListHeaderComponent={
+            <CustomHeader
+              type={"profile"}
+              headerlabel={"Live Streaming"}
+              iconPress={() => {
+                navigation.goBack();
+              }}
+              icon={"arrow-back"}
+            />
+          }
           data={data}
           keyExtractor={(item, index) => index.toString()}
+          numColumns={2}
           renderItem={({ item, index }) => {
             return (
               <Card
                 style={styles.card}
-                onPress={() => {
-                  navigation.navigate("Live");
-                }}
+                // onPress={() => {
+                //   navigation.navigate("Live");
+                // }}
               >
-                <Card.Title
-                  title={item.name}
-                  subtitle={item.email}
-                  left={(props) => (
-                    <Avatar.Image {...props} source={item.profile} />
-                  )}
-                />
-                <View
+                <ImageBackground
                   style={{
-                    marginLeft: wp(20),
-                    marginTop: -10,
-                    marginBottom: 5,
+                    width: "100%",
+                    height: "100%",
+                    justifyContent: "flex-end",
                   }}
+                  resizeMode="stretch"
+                  source={appImages.live_stream_bg}
                 >
-                  <Rating
-                    rated={item?.rating}
-                    totalCount={5}
-                    ratingColor="#f1c644"
-                    ratingBackgroundColor="#d4d4d4"
-                    size={12}
-                    readonly // by default is false
-                    icon="ios-star"
-                    direction="row" // anyOf["row" (default), "row-reverse", "column", "column-reverse"]
-                  />
-                </View>
-                <View style={styles.liveView}>
-                  <Text style={styles.liveText}>Live</Text>
-                </View>
+                  <View
+                    style={{
+                      margin: 10,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Avatar.Image source={item.profile} size={35} />
+                    <View
+                      style={{
+                        backgroundColor: "#FFFFFF5C",
+                        padding: 3,
+                        paddingHorizontal: 8,
+                        borderRadius: 18,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Ionicons
+                        name="md-eye-outline"
+                        color={"white"}
+                        size={20}
+                      />
+                      <Text
+                        style={{
+                          color: "white",
+                          marginLeft: 5,
+                          fontFamily: fontFamily.Poppins_Regular,
+                          marginBottom: -3,
+                        }}
+                      >
+                        29K
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
               </Card>
             );
           }}
         />
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => navigation.navigate("CreateLive")}
+        >
+          <AntDesign name="plus" color={"white"} size={20} />
+          <Text style={styles.btnText}>Start Live</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -117,7 +193,16 @@ const LiveUsers = ({ navigation, route }) => {
 export default LiveUsers;
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: "white", margin: 10 },
+  card: {
+    backgroundColor: "white",
+    margin: 10,
+    marginLeft: 13,
+    height: hp(28),
+    // flex: 1,
+    width: wp(42.5),
+    borderRadius: 10,
+    overflow: "hidden",
+  },
   liveView: {
     backgroundColor: "red",
     position: "absolute",
@@ -127,4 +212,21 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   liveText: { color: "#fff", fontWeight: "500" },
+  btn: {
+    width: wp(85),
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 30,
+    backgroundColor: Colors.Appthemecolor,
+    position: "absolute",
+    bottom: 20,
+    flexDirection: "row",
+  },
+  btnText: {
+    color: "white",
+    marginLeft: 7,
+    fontFamily: fontFamily.Poppins_Medium,
+    marginBottom: -3,
+  },
 });
