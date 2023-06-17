@@ -508,7 +508,8 @@ const Home = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => navigation.navigate("Live")}
+          // onPress={() => navigation.navigate("Live")}
+          onPress={() => navigation.navigate("LiveUsers")}
           style={{
             backgroundColor: Colors.Appthemecolor,
             width: wp(17),

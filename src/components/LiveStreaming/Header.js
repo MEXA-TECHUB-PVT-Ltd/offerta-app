@@ -5,6 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Avatar } from "react-native-paper";
 import { fontFamily } from "../../constant/fonts";
+import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
 const Header = ({ userName, profile, totalViewers, duration, onBackPress }) => {
   return (
@@ -21,7 +22,11 @@ const Header = ({ userName, profile, totalViewers, duration, onBackPress }) => {
         </TouchableOpacity>
 
         <View style={styles.userContainer}>
-          <Avatar.Image source={appImages.user2} size={30} />
+          {profile ? (
+            <Avatar.Image source={{ uri: IMAGE_URL + profile }} size={30} />
+          ) : (
+            <Avatar.Image source={appImages.user2} size={30} />
+          )}
           <Text style={styles.name}>{userName}</Text>
         </View>
       </View>

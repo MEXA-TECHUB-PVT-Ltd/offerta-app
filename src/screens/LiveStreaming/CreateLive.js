@@ -40,6 +40,14 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import CustomTextInput from "../../components/TextInput/CustomTextInput";
 import CustomButtonhere from "../../components/Button/CustomButton";
 import TranslationStrings from "../../utills/TranslationStrings";
+
+import firestore from "@react-native-firebase/firestore";
+import { createLiveStream } from "../../api/LiveStreamingApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { get_User_Listings, get_all_listings } from "../../api/GetApis";
+import { BASE_URL, IMAGE_URL } from "../../utills/ApiRootUrl";
+import axios from "axios";
+
 const CreateLive = ({ navigation, route }) => {
   const ref_RBSheet = useRef();
   const [quantity, setQuantity] = useState("");
@@ -53,34 +61,57 @@ const CreateLive = ({ navigation, route }) => {
   const [selectedItem, setSelectedItem] = useState("");
 
   const [data, setData] = useState([
-    {
-      id: 0,
-      name: "Item Name",
-      quantity: 0,
-      image: appImages.live_stream_bg,
-      price: 20,
-      fixedPrice: true,
-      giveAway: true,
-    },
-    {
-      id: 1,
-      name: "Item Name",
-      quantity: 10,
-      image: appImages.live_stream_bg,
-      price: 20,
-      fixedPrice: true,
-      giveAway: false,
-    },
-    {
-      id: 3,
-      name: "Item Name",
-      quantity: 10,
-      image: appImages.live_stream_bg,
-      price: 5,
-      fixedPrice: false,
-      giveAway: true,
-    },
+    // {
+    //   id: 0,
+    //   name: "Item Name",
+    //   quantity: 0,
+    //   image: appImages.live_stream_bg,
+    //   price: 20,
+    //   fixedPrice: true,
+    //   giveAway: true,
+    // },
+    // {
+    //   id: 1,
+    //   name: "Item Name",
+    //   quantity: 10,
+    //   image: appImages.live_stream_bg,
+    //   price: 20,
+    //   fixedPrice: true,
+    //   giveAway: false,
+    // },
+    // {
+    //   id: 3,
+    //   name: "Item Name",
+    //   quantity: 10,
+    //   image: appImages.live_stream_bg,
+    //   price: 5,
+    //   fixedPrice: false,
+    //   giveAway: true,
+    // },
   ]);
+
+  useEffect(() => {
+    getCurrentUserProducts();
+  }, []);
+
+  const getCurrentUserProducts = async () => {
+    setLoading(true);
+    get_User_Listings()
+      .then((response) => {
+        console.log("response  :  ", response?.data);
+        if (response?.data?.status == true) {
+          setData([]);
+        } else {
+          setData(response?.data);
+        }
+      })
+      .catch((err) => {
+        console.log("error : ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const CustomCheckBox = ({ checked, size, onPress }) => (
     <CheckBox
@@ -108,25 +139,70 @@ const CreateLive = ({ navigation, route }) => {
     if (quantity?.length == 0 || quantity == 0) {
       alert("Please Enter Quantity");
     } else {
-      const newData = data?.map((item) => {
-        if (item?.id == selectedItem?.id) {
-          return {
-            ...item,
-            quantity: quantity,
-            fixedPrice: fixedPrice,
-            giveAway: giveAway,
-            selected: true,
-          };
-        } else {
-          return {
-            ...item,
-          };
-        }
-      });
-      setData(newData);
       ref_RBSheet?.current?.close();
+      setLoading(true);
+      var data1 = JSON.stringify({
+        id: selectedItem?.id,
+        user_id: selectedItem?.user_id,
+        title: selectedItem?.title,
+        description: selectedItem?.description,
+        price: selectedItem?.price,
+        category_id: selectedItem?.category?.category_id,
+        // quantity: selectedItem?.quantity,
+        subcategory_id: selectedItem?.subcategory?.sub_category_id,
+        product_condition: selectedItem?.product_condition,
+        // fixed_price: selectedItem?.fixed_price,
+        location: selectedItem?.location,
+        exchange: selectedItem?.exchange,
+        // giveaway: selectedItem?.giveaway,
+        shipping_cost: selectedItem?.shipping_cost,
+        youtube_link: selectedItem?.youtube_link,
+        //
+        quantity: quantity,
+        fixed_price: fixedPrice,
+        giveaway: giveAway,
+      });
+      var config = {
+        method: "put",
+        url: BASE_URL + "updateList.php",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data1,
+      };
+
+      axios(config)
+        .then((response) => {
+          console.log("response  :  ", response?.data);
+          if (response?.data?.status == false) {
+          } else {
+            const newData = data?.map((item) => {
+              if (item?.id == selectedItem?.id) {
+                return {
+                  ...item,
+                  quantity: quantity,
+                  fixed_price: fixedPrice,
+                  giveaway: giveAway,
+                  selected: true,
+                };
+              } else {
+                return {
+                  ...item,
+                };
+              }
+            });
+            setData(newData);
+          }
+        })
+        .catch((err) => {
+          console.log("err :  ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
+
   const handleUnSelectItem = async (id) => {
     const newData = data?.map((item) => {
       if (item?.id == id) {
@@ -143,13 +219,78 @@ const CreateLive = ({ navigation, route }) => {
     setData(newData);
   };
 
+  const handleGoLive = async () => {
+    var user_id = await AsyncStorage.getItem("Userid");
+    setLoading(true);
+    let selectedListings = data
+      ?.filter((item) => item?.selected == true)
+      ?.map((element) => element?.id);
+    let obj = {
+      expireTimeInSeconds: 172800, //2 days seconds
+      appID: "2103cc766ad141bf90843544931573d8",
+      appCertificate: "9b9ad3f820ab41ada65255fe2d1ef452",
+      channelName: "xyz",
+      uid: user_id,
+      user_id: user_id,
+      uidStr: user_id,
+
+      active_status: "active",
+      list_id: selectedListings,
+      quantity: "0",
+      currentDateTime: new Date(),
+    };
+    createLiveStream(obj)
+      .then((response) => {
+        console.log("response : ", response?.data);
+        if (response?.data?.stream) {
+          let stream_id = response?.data?.stream[0]?.insertedId;
+          console.log("stream_id  : ", stream_id);
+          console.log(
+            "firestore.FieldValue.serverTimestamp() :  ",
+            firestore.FieldValue.serverTimestamp()
+          );
+          let obj = {
+            ...response?.data?.stream[0],
+            createdAt: firestore.FieldValue.serverTimestamp(),
+          };
+          console.log("obj : ", obj);
+          firestore()
+            .collection("live_stream")
+            .doc(stream_id?.toString())
+            .collection("stream_detail")
+            .add(obj);
+          navigation.navigate("WatchLiveStream", {
+            response: response?.data,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("err : ", err);
+        alert("Something went wrong");
+      })
+      .finally(() => setLoading(false));
+
+    // let obj = {
+    //   id: 0,
+    //   name: "test",
+    //   createdAt: firestore.FieldValue.serverTimestamp(),
+    // };
+
+    // firestore()
+    //   .collection("live_stream")
+    //   .doc("stream_id")
+    //   .collection("stream_detail")
+    //   .add(obj);
+    // navigation.navigate("WatchLiveStream");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
         backgroundColor={Colors.Appthemecolor}
         barStyle="light-content"
       />
-
+      <Loader isLoading={loading} />
       <View
         style={{
           backgroundColor: "white",
@@ -197,33 +338,66 @@ const CreateLive = ({ navigation, route }) => {
                       if (!item?.selected) {
                         setSelectedItem(item);
                         setQuantity(item?.quantity);
-                        setFixedPrice(item?.fixedPrice);
-                        setGiveAway(item?.giveAway);
+                        setFixedPrice(
+                          item?.fixed_price == "true" ||
+                            item?.fixed_price == true
+                            ? true
+                            : false
+                        );
+                        setGiveAway(
+                          item?.giveaway == "true" || item?.giveaway == true
+                            ? true
+                            : false
+                        );
                         ref_RBSheet.current?.open();
                       } else {
                         handleUnSelectItem(item?.id);
                       }
                     }}
                   />
-
-                  <Image source={item?.image} style={styles.cardImage} />
+                  {/* <View style={styles.cardImageView}> */}
+                  {item?.images?.length > 0 ? (
+                    <Image
+                      source={{ uri: IMAGE_URL + item?.images[0] }}
+                      style={styles.cardImage}
+                    />
+                  ) : (
+                    <Image
+                      source={appImages.no_image}
+                      style={{
+                        ...styles.cardImage,
+                        // height: 50,
+                        // width: 50,
+                        // resizeMode: "contain",
+                      }}
+                    />
+                  )}
+                  {/* </View> */}
 
                   <View style={{ flex: 1 }}>
                     <View style={styles.rowView}>
-                      <Text style={styles.boldText}>{item?.name}</Text>
+                      <Text
+                        style={{ ...styles.boldText, flex: 0.7 }}
+                        numberOfLines={1}
+                      >
+                        {item?.title}
+                      </Text>
                       <Text style={styles.boldText}>{item?.price}$</Text>
                     </View>
                     <View style={styles.rowView}>
                       <Text style={styles.mediumText}>Quantity:</Text>
-                      <Text style={styles.mediumText}>{item?.quantity}</Text>
+                      <Text style={styles.mediumText}>
+                        {item?.quantity == "" ? 0 : item?.quantity}
+                      </Text>
                     </View>
                     <View style={styles.tagView}>
-                      {item?.fixedPrice && (
-                        <View style={styles.tag}>
-                          <Text style={styles.tagText}>Fixed Price</Text>
-                        </View>
-                      )}
-                      {item?.giveAway && (
+                      {item?.fixed_price != "false" &&
+                        item?.fixed_price != false && (
+                          <View style={styles.tag}>
+                            <Text style={styles.tagText}>Fixed Price</Text>
+                          </View>
+                        )}
+                      {item?.giveaway != "false" && item?.giveaway != false && (
                         <View style={styles.tag}>
                           <Text style={styles.tagText}>Giving Away</Text>
                         </View>
@@ -234,11 +408,19 @@ const CreateLive = ({ navigation, route }) => {
               </Card>
             );
           }}
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ color: "#000" }}>No Record Found</Text>
+            </View>
+          )}
         />
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => navigation.navigate("WatchLiveStream")}
-        >
+        <TouchableOpacity style={styles.btn} onPress={() => handleGoLive()}>
           <Text style={styles.btnText}>GO LIVE NOW</Text>
         </TouchableOpacity>
 
@@ -263,10 +445,23 @@ const CreateLive = ({ navigation, route }) => {
                 marginVertical: 10,
               }}
             >
-              <Image source={selectedItem?.image} style={styles.cardImage} />
+              {selectedItem?.images?.length > 0 ? (
+                <Image
+                  source={{ uri: IMAGE_URL + selectedItem?.images[0] }}
+                  style={styles.cardImage}
+                />
+              ) : (
+                <Image
+                  source={appImages.no_image}
+                  style={{
+                    ...styles.cardImage,
+                  }}
+                />
+              )}
+
               <View style={{ flex: 1 }}>
                 <View style={styles.rowView}>
-                  <Text style={styles.mediumText}>{selectedItem?.name}</Text>
+                  <Text style={styles.mediumText}>{selectedItem?.title}</Text>
                   <Text style={styles.boldText}>{selectedItem?.price}$</Text>
                 </View>
                 <View
@@ -285,7 +480,7 @@ const CreateLive = ({ navigation, route }) => {
                       marginBottom: -3,
                     }}
                   >
-                    Lorem ipsum Lorem Ipsum
+                    {selectedItem?.location}
                   </Text>
                 </View>
               </View>
@@ -314,7 +509,7 @@ const CreateLive = ({ navigation, route }) => {
               }}
             >
               <View style={{ ...styles.rowView, marginBottom: 10 }}>
-                <Text style={styles.mediumText}>Fixed Price</Text>
+                <Text style={styles.mediumText}>Fixed Price{fixedPrice}</Text>
                 <CustomCheckBox
                   checked={fixedPrice}
                   onPress={() => setFixedPrice(!fixedPrice)}
@@ -356,14 +551,25 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     padding: 10,
   },
-  cardImage: {
-    height: 70,
-    width: 70,
+  cardImageView: {
+    height: 50,
+    width: 50,
     borderRadius: 10,
     resizeMode: "stretch",
     // marginHorizontal: 10,
     marginLeft: 10,
     marginRight: 12,
+    backgroundColor: "#Ccc",
+  },
+  cardImage: {
+    height: 55,
+    width: 55,
+    borderRadius: 10,
+    resizeMode: "stretch",
+    // marginHorizontal: 10,
+    marginLeft: 10,
+    marginRight: 12,
+    backgroundColor: "#Ccc",
   },
   liveView: {
     backgroundColor: "red",

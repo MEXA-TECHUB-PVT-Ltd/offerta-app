@@ -33,62 +33,125 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { fontFamily } from "../../constant/fonts";
+import { getALLLiveStreams } from "../../api/LiveStreamingApi";
+import { IMAGE_URL } from "../../utills/ApiRootUrl";
+import { async } from "regenerator-runtime";
+import moment from "moment";
+import { useFocusEffect } from "@react-navigation/native";
 
 const LiveUsers = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([
-    {
-      id: 0,
-      name: "Test",
-      email: "test@gmail.com",
-      rating: 3.2,
-      profile: appImages.user2,
-    },
-    {
-      id: 1,
-      name: "John",
-      email: "johndoe@gmail.com",
-      rating: 4.5,
-      profile: appImages.dogIcon,
-    },
-    {
-      id: 2,
-      name: "Harry",
-      email: "harry@gmail.com",
-      rating: 5,
-      profile: appImages.draweruser,
-    },
-    {
-      id: 3,
-      name: "Harry",
-      email: "harry@gmail.com",
-      rating: 5,
-      profile: appImages.user2,
-    },
-    {
-      id: 4,
-      name: "Harry",
-      email: "harry@gmail.com",
-      rating: 5,
-      profile: appImages.user2,
-    },
-    {
-      id: 4,
-      name: "Harry",
-      email: "harry@gmail.com",
-      rating: 5,
-      profile: appImages.user2,
-    },
-    {
-      id: 4,
-      name: "Harry",
-      email: "harry@gmail.com",
-      rating: 5,
-      profile: appImages.user2,
-    },
+    // {
+    //   id: 0,
+    //   name: "Test",
+    //   email: "test@gmail.com",
+    //   rating: 3.2,
+    //   profile: appImages.user2,
+    // },
+    // {
+    //   id: 1,
+    //   name: "John",
+    //   email: "johndoe@gmail.com",
+    //   rating: 4.5,
+    //   profile: appImages.dogIcon,
+    // },
+    // {
+    //   id: 2,
+    //   name: "Harry",
+    //   email: "harry@gmail.com",
+    //   rating: 5,
+    //   profile: appImages.draweruser,
+    // },
+    // {
+    //   id: 3,
+    //   name: "Harry",
+    //   email: "harry@gmail.com",
+    //   rating: 5,
+    //   profile: appImages.user2,
+    // },
+    // {
+    //   id: 4,
+    //   name: "Harry",
+    //   email: "harry@gmail.com",
+    //   rating: 5,
+    //   profile: appImages.user2,
+    // },
+    // {
+    //   id: 4,
+    //   name: "Harry",
+    //   email: "harry@gmail.com",
+    //   rating: 5,
+    //   profile: appImages.user2,
+    // },
+    // {
+    //   id: 4,
+    //   name: "Harry",
+    //   email: "harry@gmail.com",
+    //   rating: 5,
+    //   profile: appImages.user2,
+    // },
   ]);
 
+  useEffect(() => {
+    setLoading(true);
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getLiveStreamsData();
+    }, [])
+  );
+
+  const getLiveStreamsData = async () => {
+    getALLLiveStreams()
+      .then((response) => {
+        let list = [];
+        if (response?.data?.error == false) {
+          for (const item of response?.data?.stream) {
+            if (
+              item?.active_status == "active" &&
+              item?.uid != "0" &&
+              item?.user != null
+            ) {
+              let obj = {
+                stream: [
+                  {
+                    list_id: "165",
+                    insertedId: item?.id,
+                    token: item?.token,
+                    // appID: "2103cc766ad141bf90843544931573d8",
+                    quantity: item?.quantity,
+                    // appCertificate: "9b9ad3f820ab41ada65255fe2d1ef452",
+                    channelName: item?.channelName,
+                    uid: item?.uid,
+                    active_status: item?.active_status,
+                    currentDateTime: item?.start_time,
+                    view: item?.view,
+                    thumbnail: item?.thumbnail,
+                    // streamkey: null,
+                  },
+                ],
+                user: item?.user,
+                Listing: item?.listing,
+              };
+              list.push(obj);
+            }
+          }
+        }
+        setData(list);
+      })
+      .finally(() => {
+        setLoading(false);
+        setRefreshing(false);
+      });
+  };
+
+  const refreshData = async () => {
+    setRefreshing(true);
+    getLiveStreamsData();
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -106,6 +169,12 @@ const LiveUsers = ({ navigation, route }) => {
         {/* <CustomHeader type={"profile"} headerlabel={"Live Streaming"} /> */}
         <Loader isLoading={loading} />
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => refreshData()}
+            />
+          }
           ListHeaderComponent={
             <CustomHeader
               type={"profile"}
@@ -123,60 +192,119 @@ const LiveUsers = ({ navigation, route }) => {
             return (
               <Card
                 style={styles.card}
-                // onPress={() => {
-                //   navigation.navigate("Live");
-                // }}
+                onPress={() => {
+                  navigation.navigate("WatchLiveStream", {
+                    host: false,
+                    response: item,
+                  });
+                  // let start_time = item?.stream[0]?.currentDateTime;
+                  // let x = new Date();
+                  // let y = new Date(start_time);
+                  // let dif = Math.abs(x - y) / 1000;
+                  // console.log("seconds  :  ", dif);
+
+                  // let start_time = item?.stream[0]?.currentDateTime;
+                  // console.log("start_time :   ", start_time);
+                  // let dt = new Date();
+                  // let seconds = Math.floor(dt / 1000);
+                  // seconds = seconds.toFixed(0);
+                  // console.log("seconds :  ", moment.duration(new Date()));
+                }}
               >
                 <ImageBackground
+                  blurRadius={3}
+                  // source={
+                  //   item?.stream && item?.stream[0]?.thumbnail == null
+                  //     ? appImages.live_stream_bg
+                  //     : { uri: IMAGE_URL + item?.stream[0]?.thumbnail }
+                  source={
+                    item?.user && item?.user[0]?.image == null
+                      ? appImages.live_stream_bg
+                      : { uri: IMAGE_URL + item?.user[0]?.image }
+                  }
                   style={{
                     width: "100%",
                     height: "100%",
-                    justifyContent: "flex-end",
+                    justifyContent: "center",
                   }}
-                  resizeMode="stretch"
-                  source={appImages.live_stream_bg}
+                  resizeMode="cover"
                 >
-                  <View
+                  <ImageBackground
                     style={{
-                      margin: 10,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      width: "100%",
+                      height: "100%",
+                      justifyContent: "flex-end",
                     }}
+                    resizeMode="contain"
+                    // source={
+                    //   item?.stream && item?.stream[0]?.thumbnail == null
+                    //     ? appImages.live_stream_bg
+                    //     : { uri: IMAGE_URL + item?.stream[0]?.thumbnail }
+                    // }
+
+                    source={
+                      item?.user && item?.user[0]?.image == null
+                        ? appImages.live_stream_bg
+                        : { uri: IMAGE_URL + item?.user[0]?.image }
+                    }
                   >
-                    <Avatar.Image source={item.profile} size={35} />
                     <View
                       style={{
-                        backgroundColor: "#FFFFFF5C",
-                        padding: 3,
-                        paddingHorizontal: 8,
-                        borderRadius: 18,
+                        margin: 10,
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "center",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <Ionicons
-                        name="md-eye-outline"
-                        color={"white"}
-                        size={20}
+                      <Avatar.Image
+                        source={{ uri: IMAGE_URL + item?.user[0]?.image }}
+                        size={35}
                       />
-                      <Text
+                      <View
                         style={{
-                          color: "white",
-                          marginLeft: 5,
-                          fontFamily: fontFamily.Poppins_Regular,
-                          marginBottom: -3,
+                          backgroundColor: "#FFFFFF5C",
+                          padding: 3,
+                          paddingHorizontal: 8,
+                          borderRadius: 18,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        29K
-                      </Text>
+                        <Ionicons
+                          name="md-eye-outline"
+                          color={"white"}
+                          size={20}
+                        />
+                        <Text
+                          style={{
+                            color: "white",
+                            marginLeft: 5,
+                            fontFamily: fontFamily.Poppins_Regular,
+                            marginBottom: -3,
+                          }}
+                        >
+                          {item?.stream[0]?.view}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
+                  </ImageBackground>
                 </ImageBackground>
               </Card>
             );
           }}
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ color: "#000" }}>No Record Found</Text>
+            </View>
+          )}
         />
         <TouchableOpacity
           style={styles.btn}

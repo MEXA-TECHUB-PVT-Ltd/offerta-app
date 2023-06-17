@@ -175,6 +175,7 @@ const UploadItem = ({ navigation, route }) => {
           ? shippingprice
           : "0.0",
       youtube_link: youtubelink,
+      quantity: "0",
     });
 
     console.log("data : ", data);

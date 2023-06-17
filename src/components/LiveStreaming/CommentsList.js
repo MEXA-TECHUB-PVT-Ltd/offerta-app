@@ -5,10 +5,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { Avatar } from "react-native-paper";
 import { appImages } from "../../constant/images";
 import { fontFamily } from "../../constant/fonts";
+import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
 const CommentsList = ({ data }) => {
   const ref_CommentFlatList = useRef(null);
@@ -34,7 +35,14 @@ const CommentsList = ({ data }) => {
                 alignItems: "center",
               }}
             >
-              <Avatar.Image source={appImages.user2} size={30} />
+              {item?.profile ? (
+                <Avatar.Image
+                  source={{ uri: IMAGE_URL + item?.profile }}
+                  size={30}
+                />
+              ) : (
+                <Avatar.Image source={appImages.user2} size={30} />
+              )}
               <View
                 style={{
                   justifyContent: "center",
@@ -68,6 +76,6 @@ const CommentsList = ({ data }) => {
   );
 };
 
-export default CommentsList;
+export default memo(CommentsList);
 
 const styles = StyleSheet.create({});
