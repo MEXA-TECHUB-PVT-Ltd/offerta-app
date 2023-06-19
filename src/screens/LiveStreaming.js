@@ -14,27 +14,40 @@ import {
   IRtcEngine,
   RtcSurfaceView,
   ChannelProfileType,
+  VideoCanvas,
 } from "react-native-agora";
 
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import LiveStreamingKeys from "../utills/LiveStreamingKeys";
 
-const appId = "2103cc766ad141bf90843544931573d8";
-const channelName = "Test";
-const token =
-  "007eJxTYNCof8+Tseeu768JKoXGsude3zplWfjM7tmceyL23B+2bU5XYDAyNDBOTjY3M0tMMTQxTEqzNLAwMTY1MbE0NjQ1N06xOPm/K6UhkJHBUOMvCyMDBIL4LAwhqcUlDAwAo8MgdA==";
-const uid = 0;
+const appId = LiveStreamingKeys.appId;
+const channelName = LiveStreamingKeys.channelName;
+const token = LiveStreamingKeys.token;
+const uid = LiveStreamingKeys.uid;
+
+// const channelName = "new1234";
+// const token =
+//   "0062103cc766ad141bf90843544931573d8IADHm/QlshZvnLvfQbSiu3Jrh2VNt6PDsoxgTpfUOBGPCU91ie8AAAAAIgC59gAALN6OZAQAAQAQDgAAAwAQDgAAAgAQDgAABAAQDgAA";
+// const uid = 0;
+
+//api with uid 0
+// const channelName = "Test";
+// const token =
+//   "0062103cc766ad141bf90843544931573d8IABdWZ8Cuq86ufPNijsinYhrwE/RDQn9kyJ9iU+JAHuscDLRTXgAAAAAIgAbaQEA3tSOZAQAAQAQbExkAwAQbExkAgAQbExkBAAQbExk";
+// const uid = 0;
 
 const LiveStreaming = () => {
   const agoraEngineRef = useRef(null); // Agora engine instance
   const [isJoined, setIsJoined] = useState(false); // Indicates if the local user has joined the channel
   const [isHost, setIsHost] = useState(true); // Client role
-  const [remoteUid, setRemoteUid] = useState(0); // Uid of the remote user
+  const [remoteUid, setRemoteUid] = useState(117); // Uid of the remote user
   const [message, setMessage] = useState(""); // Message to the user
 
   function showMessage(msg) {
+    console.log(":::: ,msg", msg);
     setMessage(msg);
   }
   const getPermission = async () => {

@@ -140,8 +140,6 @@ const ConfirmAddress = ({ navigation, route }) => {
   };
 
   const handleSubmit = async () => {
-    console.log(" route?.params?.type :   ", route?.params?.type);
-
     if (route?.params?.type == "giveaway") {
       //handle give away scenario
       createListingOrder("giveaway");
@@ -602,23 +600,31 @@ const ConfirmAddress = ({ navigation, route }) => {
             //     handleNext();
             //   }}
             // />
-            <CustomButtonhere
-              title={TranslationStrings.SUBMIT}
-              widthset={80}
-              topDistance={10}
-              onPress={() => {
-                handleSubmit();
-              }}
-            />
+            <>
+              {shippinglist?.length == 0 ? null : (
+                <CustomButtonhere
+                  title={TranslationStrings.SUBMIT}
+                  widthset={80}
+                  topDistance={10}
+                  onPress={() => {
+                    handleSubmit();
+                  }}
+                />
+              )}
+            </>
           ) : (
-            <CustomButtonhere
-              title={TranslationStrings.SUBMIT}
-              widthset={80}
-              topDistance={10}
-              onPress={() => {
-                handleSubmit();
-              }}
-            />
+            <>
+              {shippinglist?.length == 0 ? null : (
+                <CustomButtonhere
+                  title={TranslationStrings.SUBMIT}
+                  widthset={80}
+                  topDistance={10}
+                  onPress={() => {
+                    handleSubmit();
+                  }}
+                />
+              )}
+            </>
           )}
         </View>
       </ScrollView>

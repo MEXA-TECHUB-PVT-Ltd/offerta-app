@@ -6,12 +6,56 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { Card } from "react-native-paper";
 import { fontFamily } from "../../constant/fonts";
 import Colors from "../../utills/Colors";
+import { IMAGE_URL } from "../../utills/ApiRootUrl";
+import { appImages } from "../../constant/images";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setExchangeOffer_OtherListing } from "../../redux/actions";
+import { get_specific_user_detail } from "../../api/GetApis";
+import { useNavigation } from "@react-navigation/native";
 
-const ProductList = ({ data }) => {
+const ProductList = ({ data, isHost }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const handleBuyNow = async (
+    giveaway_status,
+    listing_user_id,
+    item,
+    listing_user_detail
+  ) => {
+    console.log({ giveaway_status, listing_user_id });
+    let user_detail = await get_specific_user_detail(listing_user_id);
+    dispatch(setExchangeOffer_OtherListing(item));
+
+    // let user_status = await AsyncStorage.getItem("account_status");
+
+    // // if (user_status == "block") {
+    // //   setShowBlockModal(true);
+    // //   return;
+    // // }
+
+    if (giveaway_status == true || giveaway_status == "true") {
+      navigation.replace("ConfirmAddress", {
+        index: -1,
+        user_id: listing_user_id,
+        listing_user_detail: user_detail,
+        type: "giveaway",
+        buy_type: "live_stream",
+      });
+    } else {
+      // navigation.navigate("ConfirmAddress");
+      navigation.replace("PaymentOptions", {
+        user_id: listing_user_id,
+        listing_user_detail: user_detail,
+        buy_type: "live_stream",
+      });
+    }
+  };
+
   return (
     <View>
       <FlatList
@@ -25,7 +69,7 @@ const ProductList = ({ data }) => {
               <Card
                 style={{
                   ...styles.card,
-                  opacity: item?.sold ? 0.5 : 1,
+                  opacity: item?.quantity == "0" ? 0.5 : 1,
                 }}
               >
                 <View
@@ -34,11 +78,26 @@ const ProductList = ({ data }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Image source={item?.image} style={styles.cardImage} />
+                  {item?.images?.length > 0 ? (
+                    <Image
+                      source={{ uri: IMAGE_URL + item?.images[0] }}
+                      style={styles.cardImage}
+                    />
+                  ) : (
+                    <Image
+                      source={appImages.no_image}
+                      style={{
+                        ...styles.cardImage,
+                        // height: 50,
+                        // width: 50,
+                        // resizeMode: "contain",
+                      }}
+                    />
+                  )}
 
                   <View style={{ flex: 1 }}>
                     <View style={styles.rowView}>
-                      <Text style={styles.boldText}>{item?.name}</Text>
+                      <Text style={styles.boldText}>{item?.title}</Text>
                       <Text style={styles.boldText}>{item?.price}$</Text>
                     </View>
                     <View style={styles.rowView}>
@@ -47,14 +106,21 @@ const ProductList = ({ data }) => {
                         <Text style={styles.lightText}>{item?.quantity}</Text>
                       </Text>
 
-                      <TouchableOpacity style={styles.tag}>
-                        <Text style={styles.tagText}>Buy</Text>
-                      </TouchableOpacity>
+                      {!isHost && (
+                        <TouchableOpacity
+                          style={styles.tag}
+                          onPress={() =>
+                            handleBuyNow(item?.giveaway, item?.user_id, item)
+                          }
+                        >
+                          <Text style={styles.tagText}>Buy</Text>
+                        </TouchableOpacity>
+                      )}
                     </View>
                   </View>
                 </View>
               </Card>
-              {item?.sold && (
+              {item?.quantity == "0" && (
                 <View
                   style={{
                     position: "absolute",
@@ -94,7 +160,7 @@ const ProductList = ({ data }) => {
   );
 };
 
-export default ProductList;
+export default memo(ProductList);
 
 const styles = StyleSheet.create({
   card: {
@@ -133,4 +199,15 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Regular,
     color: Colors.Appthemecolor,
   },
+
+  tagView: { flexDirection: "row" },
+  tag: {
+    backgroundColor: Colors.Appthemecolor,
+    marginTop: 10,
+    padding: 18,
+    paddingVertical: 5,
+    borderRadius: 20,
+    // marginRight: 10,
+  },
+  tagText: { color: "white", fontSize: 10 },
 });

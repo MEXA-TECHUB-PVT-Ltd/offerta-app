@@ -19,6 +19,11 @@ import {
 const { width, height } = Dimensions.get("screen");
 
 import VideoPlayer from "react-native-video-player";
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from "react-native-google-mobile-ads";
 
 //////////////////api url//////////////
 import { IMAGE_URL } from "../../utills/ApiRootUrl";
@@ -58,10 +63,10 @@ const SlideItem = ({ item }) => {
           }}
           style={{ backgroundColor: "#000" }}
           videoWidth={wp(100)}
-          videoHeight={hp(45)}
+          videoHeight={hp(39)}
           thumbnail={{ uri: "https://i.picsum.photos/id/866/1600/900.jpg" }}
           // disableSeek
-          // showDuration
+          // showDursation
           pauseOnPress
           disableControlsAutoHide
           onStart={() => {
@@ -99,6 +104,21 @@ const SlideItem = ({ item }) => {
           />
         </ImageBackground>
       )}
+
+      <View
+        style={{
+          alignSelf: "center",
+          // marginTop: 20,
+        }}
+      >
+        <BannerAd
+          unitId={TestIds.BANNER}
+          size={BannerAdSize.BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
     </View>
   );
 };
