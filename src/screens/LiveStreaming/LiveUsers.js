@@ -23,7 +23,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Avatar, Button, Card } from "react-native-paper";
+import { Avatar, Button, Card, Modal } from "react-native-paper";
 
 import Loader from "../../components/Loader/Loader";
 import { appImages } from "../../constant/images";
@@ -38,6 +38,9 @@ import { IMAGE_URL } from "../../utills/ApiRootUrl";
 import { async } from "regenerator-runtime";
 import moment from "moment";
 import { useFocusEffect } from "@react-navigation/native";
+import CPaperInput from "../../components/TextInput/CPaperInput";
+import CustomTextInput from "../../components/TextInput/CustomTextInput";
+import CustomButtonhere from "../../components/Button/CustomButton";
 
 const LiveUsers = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
@@ -219,7 +222,7 @@ const LiveUsers = ({ navigation, route }) => {
                   //     : { uri: IMAGE_URL + item?.stream[0]?.thumbnail }
                   source={
                     item?.user && item?.user[0]?.image == null
-                      ? appImages.live_stream_bg
+                      ? appImages.no_image
                       : { uri: IMAGE_URL + item?.user[0]?.image }
                   }
                   style={{
@@ -244,7 +247,7 @@ const LiveUsers = ({ navigation, route }) => {
 
                     source={
                       item?.user && item?.user[0]?.image == null
-                        ? appImages.live_stream_bg
+                        ? appImages.no_image
                         : { uri: IMAGE_URL + item?.user[0]?.image }
                     }
                   >
@@ -305,6 +308,7 @@ const LiveUsers = ({ navigation, route }) => {
               <Text style={{ color: "#000" }}>No Record Found</Text>
             </View>
           )}
+          ListFooterComponent={() => <View style={{ height: 70 }} />}
         />
         <TouchableOpacity
           style={styles.btn}

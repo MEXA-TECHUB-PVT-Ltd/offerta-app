@@ -6,7 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { Card } from "react-native-paper";
 import { fontFamily } from "../../constant/fonts";
 import Colors from "../../utills/Colors";
@@ -17,47 +17,98 @@ import { useDispatch } from "react-redux";
 import { setExchangeOffer_OtherListing } from "../../redux/actions";
 import { get_specific_user_detail } from "../../api/GetApis";
 import { useNavigation } from "@react-navigation/native";
+import QuantityModal from "../../components/LiveStreaming/QuantityModal";
+import { heightPercentageToDP } from "react-native-responsive-screen";
+import Loader from "../../components/Loader/Loader";
 
-const ProductList = ({ data, isHost }) => {
+const ProductList = ({ data, isHost, streamId }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  //quantity modal
+  const [quantity, setQuantity] = useState("");
+  const [showQuantityModal, setShowQuantityModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+
   const handleBuyNow = async (
     giveaway_status,
     listing_user_id,
     item,
-    listing_user_detail
+    quantity
   ) => {
-    console.log({ giveaway_status, listing_user_id });
-    let user_detail = await get_specific_user_detail(listing_user_id);
-    dispatch(setExchangeOffer_OtherListing(item));
-
-    // let user_status = await AsyncStorage.getItem("account_status");
-
-    // // if (user_status == "block") {
-    // //   setShowBlockModal(true);
-    // //   return;
-    // // }
-
-    if (giveaway_status == true || giveaway_status == "true") {
-      navigation.replace("ConfirmAddress", {
-        index: -1,
-        user_id: listing_user_id,
-        listing_user_detail: user_detail,
-        type: "giveaway",
-        buy_type: "live_stream",
-      });
+    if (quantity?.length == 0) {
+      alert("Please Enter quantity");
     } else {
-      // navigation.navigate("ConfirmAddress");
-      navigation.replace("PaymentOptions", {
-        user_id: listing_user_id,
-        listing_user_detail: user_detail,
-        buy_type: "live_stream",
-      });
+      console.log({ giveaway_status, listing_user_id });
+      setLoading(true);
+      let user_detail = await get_specific_user_detail(listing_user_id);
+      dispatch(setExchangeOffer_OtherListing(item));
+
+      // let user_status = await AsyncStorage.getItem("account_status");
+
+      // // if (user_status == "block") {
+      // //   setShowBlockModal(true);
+      // //   return;
+      // // }
+
+      console.log("quantity  :   ", quantity);
+      setLoading(false);
+      setShowQuantityModal(false);
+      setQuantity("");
+      if (giveaway_status == true || giveaway_status == "true") {
+        navigation.navigate("ConfirmAddress", {
+          index: -1,
+          user_id: listing_user_id,
+          listing_user_detail: user_detail,
+          type: "giveaway",
+          buy_type: "live_stream",
+          quantity: quantity,
+          streamId: streamId,
+        });
+      } else {
+        // navigation.navigate("ConfirmAddress");
+        navigation.navigate("PaymentOptions", {
+          user_id: listing_user_id,
+          listing_user_detail: user_detail,
+          buy_type: "live_stream",
+          quantity: quantity,
+          streamId: streamId,
+        });
+      }
     }
   };
 
   return (
     <View>
+      <View
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: -heightPercentageToDP(30),
+          // bottom: 400,
+          height: heightPercentageToDP(35),
+          zIndex: 999,
+        }}
+      >
+        <QuantityModal
+          visible={showQuantityModal}
+          setVisible={setShowQuantityModal}
+          value={quantity}
+          setValue={setQuantity}
+          onPress={() => {
+            handleBuyNow(
+              selectedItem?.giveaway,
+              selectedItem?.user_id,
+              selectedItem,
+              quantity
+            );
+          }}
+        />
+      </View>
+      <Loader isLoading={loading} />
+
       <FlatList
         fadingEdgeLength={100}
         showsVerticalScrollIndicator={false}
@@ -69,7 +120,12 @@ const ProductList = ({ data, isHost }) => {
               <Card
                 style={{
                   ...styles.card,
-                  opacity: item?.quantity == "0" ? 0.5 : 1,
+                  opacity:
+                    item?.quantity == "0" ||
+                    item?.quantity?.length == 0 ||
+                    item?.quantity == 0
+                      ? 0.5
+                      : 1,
                 }}
               >
                 <View
@@ -103,15 +159,19 @@ const ProductList = ({ data, isHost }) => {
                     <View style={styles.rowView}>
                       <Text style={styles.mediumText}>
                         Quantity:
-                        <Text style={styles.lightText}>{item?.quantity}</Text>
+                        <Text style={styles.lightText}>
+                          {item?.quantity ? item?.quantity : 0}
+                        </Text>
                       </Text>
 
                       {!isHost && (
                         <TouchableOpacity
                           style={styles.tag}
-                          onPress={() =>
-                            handleBuyNow(item?.giveaway, item?.user_id, item)
-                          }
+                          onPress={() => {
+                            // handleBuyNow(item?.giveaway, item?.user_id, item)
+                            setSelectedItem(item);
+                            setShowQuantityModal(true);
+                          }}
                         >
                           <Text style={styles.tagText}>Buy</Text>
                         </TouchableOpacity>
@@ -120,7 +180,9 @@ const ProductList = ({ data, isHost }) => {
                   </View>
                 </View>
               </Card>
-              {item?.quantity == "0" && (
+              {(item?.quantity == "0" ||
+                item?.quantity?.length == 0 ||
+                item?.quantity == 0) && (
                 <View
                   style={{
                     position: "absolute",
