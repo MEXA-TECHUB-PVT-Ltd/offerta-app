@@ -52,6 +52,7 @@ import ViewShot from "react-native-view-shot";
 import {
   addThumbnail,
   endStream,
+  getStreamDetail,
   updateStreamViews,
 } from "../../api/LiveStreamingApi";
 
@@ -63,6 +64,8 @@ const appId = "2103cc766ad141bf90843544931573d8";
 
 import AgoraUIKit from "agora-rn-uikit";
 import LiveStreamingKeys from "../../utills/LiveStreamingKeys";
+
+import { doc, onSnapshot } from "firebase/firestore";
 
 const WatchLiveStream = ({ navigation, route }) => {
   const [videoCall, setVideoCall] = useState(true);
@@ -326,6 +329,15 @@ const WatchLiveStream = ({ navigation, route }) => {
       });
   };
 
+  const getProductsAddedInStream = async (streamId) => {
+    console.log("getProductsAddedInStream  ____________");
+    getStreamDetail(streamId).then((response) => {
+      let list = response?.data?.stream ? response?.data?.stream : [];
+      let listings = list[0]?.listing ? list[0]?.listing : [];
+      setProductsList(listings);
+    });
+  };
+
   // _____________________________________________________FIREBASE_______________________________________________
   const addUserToFirebase = async (isHost, streamID) => {
     var user_id = await AsyncStorage.getItem("Userid");
@@ -397,7 +409,7 @@ const WatchLiveStream = ({ navigation, route }) => {
       });
       setCommentsList(allmsg);
     });
-  }, [commentUpdate]);
+  }, [viewersUpdate, commentUpdate]);
 
   useEffect(() => {
     const usersRef = firestore()
@@ -413,6 +425,23 @@ const WatchLiveStream = ({ navigation, route }) => {
       });
       setViewersCount(allmsg?.length);
       updateViewsCount(stream_id?.toString(), allmsg.length);
+    });
+  }, [viewersUpdate]);
+
+  useEffect(() => {
+    const purchaseRef = firestore()
+      .collection("live_stream")
+      .doc(stream_id?.toString())
+      .collection("last_purchase")
+      .doc(stream_id?.toString());
+
+    purchaseRef.onSnapshot((querySnap) => {
+      const allmsg = querySnap?.docs?.map((docsnap) => {
+        const data = docsnap.data();
+        return data;
+      });
+      // console.log("new listing purchase......___________");
+      getProductsAddedInStream(stream_id);
     });
   }, [viewersUpdate]);
 
@@ -464,7 +493,8 @@ const WatchLiveStream = ({ navigation, route }) => {
       setHostId(uid);
       setChannelName(channelName1);
       setHostDetail(route?.params?.response?.user[0]);
-      setProductsList(route?.params?.response?.Listing);
+      // setProductsList(route?.params?.response?.Listing);
+      getProductsAddedInStream(stream_id1);
     } else {
       console.log("data not found");
     }
@@ -773,7 +803,11 @@ const WatchLiveStream = ({ navigation, route }) => {
                 {selectedTab == 0 ? (
                   <CommentsList data={commentsList} />
                 ) : (
-                  <ProductList data={productsList} isHost={isHost} />
+                  <ProductList
+                    data={productsList}
+                    isHost={isHost}
+                    streamId={stream_id}
+                  />
                 )}
               </View>
             )}

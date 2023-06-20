@@ -10,6 +10,12 @@ export const createLiveStream = async (obj) => {
 export const getALLLiveStreams = async (obj) => {
   return axios.post(BASE_URL + "livestreaming/sample/getallstreams.php", obj);
 };
+export const getStreamDetail = async (id) => {
+  let obj = {
+    id: id,
+  };
+  return axios.post(BASE_URL + "getsinglestream.php", obj);
+};
 export const updateStreamViews = async (id, views) => {
   const formData = new FormData();
   formData.append("id", id);

@@ -239,6 +239,7 @@ const CreateLive = ({ navigation, route }) => {
       quantity: "0",
       currentDateTime: new Date(),
     };
+    console.log("obj to create live ::: ", obj);
     createLiveStream(obj)
       .then((response) => {
         console.log("response : ", response?.data);
@@ -419,6 +420,7 @@ const CreateLive = ({ navigation, route }) => {
               <Text style={{ color: "#000" }}>No Record Found</Text>
             </View>
           )}
+          ListFooterComponent={() => <View style={{ height: 70 }} />}
         />
         <TouchableOpacity style={styles.btn} onPress={() => handleGoLive()}>
           <Text style={styles.btnText}>GO LIVE NOW</Text>
